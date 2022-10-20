@@ -1,0 +1,48 @@
+// color
+$colors: (
+  green: (
+    base: #32c7b8,
+  ),
+  blue: (
+    bg: #1b222e,
+    overlay: #27303e,
+    navy: #3b475a,
+  ),
+  yellow: (
+    light: #fabc3c,
+    dark: #83621d,
+  ),
+  red: (
+    base: #ff2c55,
+  ),
+  gray: (
+    type1: #ccc,
+    type2: #999,
+    type3: #625f5f,
+  ),
+  black: (
+    base: #000,
+  ),
+  white: (
+    base: #fff,
+  )
+);
+
+// font-size
+$font-size: (
+  10: 10px,
+  11: 11px,
+  12: 12px,
+  14: 14px,
+  16: 16px,
+  18: 18px,
+  22: 22px
+);
+
+// font-family
+$font-family: -apple-system, 'BlinkMacSystemFont', roboto, 'SF Pro Text', 'Hiragino Sans', 'Noto Sans JP', sans-serif;
+$font-hurricane: 'Hurricane-Regular';
+$font-dm-serif-display: 'DM Serif Display';
+
+// transition
+$transition-duration: 0.25s;
