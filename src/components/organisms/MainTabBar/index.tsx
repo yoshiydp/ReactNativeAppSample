@@ -19,7 +19,7 @@ const MainNavBar = (props: Props) => {
   return (
     <View style={[styles.container]}>
       <View style={styles.list}>
-      <Button title="RecordAudio" onPress={() => navigation.navigate('RecordAudio')} />
+      {/* <Button title="RecordAudio" onPress={() => navigation.navigate('RecordAudio')} /> */}
       </View>
     </View>
   );

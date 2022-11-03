@@ -92,12 +92,12 @@ const App = () => {
             <TrackListScreen />
           }
         />
-        {/* <Stack.Screen
+        <Stack.Screen
           name="RecordAudio"
           component={() =>
             <RecordAudioScreen />
           }
-        /> */}
+        />
         {/* <Stack.Screen
           name="MyAccount"
           component={() =>

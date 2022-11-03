@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text } from 'react-native';
+import { View, ScrollView } from 'react-native';
 
 // Components
 import HeaderTitle from '../../components/organisms/HeaderTitle';
+import MainTabBar from '../../components/organisms/MainTabBar';
 
 // Constants
 import * as TEXT from '../../constants/text';
@@ -10,16 +11,24 @@ import * as TEXT from '../../constants/text';
 // Styles
 import styles from './TrackList.scss';
 
-const TrackList = () => {
+interface Props {
+  navigation: any;
+}
+
+const TrackList = (props: Props) => {
 
   useEffect(() => {
   }, []);
 
   return (
     <View style={styles.container}>
-      <HeaderTitle
-        title={TEXT.TITLE_TRACK_LIST}
-      />
+      <ScrollView>
+        <HeaderTitle
+          title={TEXT.TITLE_TRACK_LIST}
+        />
+        {/* <View style={styles.block}></View> */}
+      </ScrollView>
+      <MainTabBar />
     </View>
   );
 };
