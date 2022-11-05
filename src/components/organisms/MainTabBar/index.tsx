@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { View, Button } from 'react-native';
+import { View } from 'react-native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
 const Tab = createBottomTabNavigator();
@@ -13,35 +13,38 @@ import MyAccountScreen from '../../../screens/MyAccount';
 // Styles
 import styles from './MainTabBar.scss';
 
-// interface Props {
-//   navigation: any;
-// }
-
 const MainNavBar = () => {
 
   useEffect(() => {
   }, []);
 
   return (
-    <Tab.Navigator
-      screenOptions={{ headerShown: false }}>
-      <Tab.Screen
-        name="MyProjects"
-        component={ MyProjectsScreen }
-      />
-      <Tab.Screen
-        name="TrackList"
-        component={ TrackListScreen }
-      />
-      <Tab.Screen
-        name="RecordAudio"
-        component={ RecordAudioScreen }
-      />
-      <Tab.Screen
-        name="MyAccount"
-        component={ MyAccountScreen }
-      />
-    </Tab.Navigator>
+    <View style={styles.container}>
+      <Tab.Navigator
+        screenOptions={{
+          headerShown: false,
+          tabBarStyle: styles.containerTabBar
+        }}
+        initialRouteName={ "MyProjects" }
+        >
+        <Tab.Screen
+          name="MyProjects"
+          component={ MyProjectsScreen }
+        />
+        <Tab.Screen
+          name="TrackList"
+          component={ TrackListScreen }
+        />
+        <Tab.Screen
+          name="RecordAudio"
+          component={ RecordAudioScreen }
+        />
+        <Tab.Screen
+          name="MyAccount"
+          component={ MyAccountScreen }
+        />
+      </Tab.Navigator>
+    </View>
   );
 };
 
