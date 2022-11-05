@@ -8,6 +8,8 @@ import SignUpScreen from '../screens/SignUp';
 
 // Lower Screens
 import NewProjectScreen from '../screens/MyProjects/NewProject';
+import EditProjectScreen from '../screens/MyProjects/EditProject';
+import RecordingScreen from '../screens/MyProjects/Recording';
 import NewTrackScreen from '../screens/TrackList/NewTrack';
 import EditTrackScreen from '../screens/TrackList/EditTrack';
 import EditMyAccountScreen from '../screens/MyAccount/EditMyAccount';
@@ -40,6 +42,14 @@ const StackNavigator = () => {
       <Stack.Screen
         name="NewProject"
         component={ NewProjectScreen }
+      />
+      <Stack.Screen
+        name="EditProject"
+        component={ EditProjectScreen }
+      />
+      <Stack.Screen
+        name="Recording"
+        component={ RecordingScreen }
       />
       <Stack.Screen
         name="NewTrack"

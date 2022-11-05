@@ -5,14 +5,14 @@ import { View, ScrollView, Button } from 'react-native';
 import HeaderTitle from '../../organisms/HeaderTitle';
 
 // Styles
-import styles from './MainScreen.scss';
+import styles from './LowerScreen.scss';
 
 interface Props {
   navigation: any;
   title: string;
 }
 
-const MainScreen = (props: Props) => {
+const LowerScreen = (props: Props) => {
 
   useEffect(() => {
   }, []);
@@ -36,4 +36,4 @@ const MainScreen = (props: Props) => {
   );
 };
 
-export default MainScreen;
+export default LowerScreen;
