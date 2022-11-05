@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 
 // Components
-import MainScreen from '../../components/templates/MainScreen';
+import LowerScreen from '../../components/templates/LowerScreen';
 
 // Constants
 import * as TEXT from '../../constants/text';
@@ -17,7 +17,7 @@ const PasswordReset = (props: Props) => {
 
   return (
     <>
-      <MainScreen
+      <LowerScreen
         title={ TEXT.TITLE_PASSWORD_RESET }
         navigation={ props.navigation }
       />

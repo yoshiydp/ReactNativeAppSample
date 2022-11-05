@@ -10,7 +10,7 @@ interface Props {
   navigation: any;
 }
 
-const NewProject = (props: Props) => {
+const Recording = (props: Props) => {
 
   useEffect(() => {
   }, []);
@@ -18,11 +18,11 @@ const NewProject = (props: Props) => {
   return (
     <>
       <LowerScreen
-        title={ TEXT.TITLE_NEW_PROJECT }
+        title={ 'Recording' }
         navigation={ props.navigation }
       />
     </>
   );
 };
 
-export default NewProject;
+export default Recording;
