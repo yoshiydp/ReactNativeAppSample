@@ -18,7 +18,8 @@ const TrackList = (props: Props) => {
   return (
     <>
       <MainScreen
-        title={TEXT.TITLE_TRACK_LIST}
+        title={ TEXT.TITLE_TRACK_LIST }
+        navigation={ props.navigation }
       />
     </>
   );

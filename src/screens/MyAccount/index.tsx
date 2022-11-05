@@ -18,7 +18,8 @@ const MyAccount = (props: Props) => {
   return (
     <>
       <MainScreen
-        title={TEXT.TITLE_MY_ACCOUNT}
+        title={ TEXT.TITLE_MY_ACCOUNT }
+        navigation={ props.navigation }
       />
     </>
   );

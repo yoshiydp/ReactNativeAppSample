@@ -18,7 +18,8 @@ const RecordAudio = (props: Props) => {
   return (
     <>
       <MainScreen
-        title={TEXT.TITLE_RECORD_AUDIO}
+        title={ TEXT.TITLE_RECORD_AUDIO }
+        navigation={ props.navigation }
       />
     </>
   );

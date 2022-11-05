@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { View, ScrollView } from 'react-native';
+import { View, ScrollView, Button } from 'react-native';
 
 // Components
 import HeaderTitle from '../../organisms/HeaderTitle';
@@ -8,6 +8,7 @@ import HeaderTitle from '../../organisms/HeaderTitle';
 import styles from './MainScreen.scss';
 
 interface Props {
+  navigation: any;
   title: string;
 }
 
@@ -22,7 +23,7 @@ const MainScreen = (props: Props) => {
         title={ props.title }
       />
       <ScrollView>
-        {/* <Button title="RecordAudio" onPress={() => props.navigation.navigate('RecordAudio')} /> */}
+        <Button title="RecordAudio" onPress={() => props.navigation.navigate('RecordAudio')} />
         {/* <View style={styles.block }></View> */}
       </ScrollView>
     </View>

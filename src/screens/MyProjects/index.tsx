@@ -18,7 +18,8 @@ const MyProjects = (props: Props) => {
   return (
     <>
       <MainScreen
-        title={TEXT.TITLE_MY_PROJECTS}
+        title={ TEXT.TITLE_MY_PROJECTS }
+        navigation={ props.navigation }
       />
     </>
   );
