@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text } from 'react-native';
+import { View, ScrollView } from 'react-native';
 
 // Components
 import HeaderTitle from '../../components/organisms/HeaderTitle';
@@ -20,6 +20,10 @@ const RecordAudio = () => {
       <HeaderTitle
         title={TEXT.TITLE_RECORD_AUDIO}
       />
+      <ScrollView>
+        {/* <Button title="RecordAudio" onPress={() => props.navigation.navigate('RecordAudio')} /> */}
+        {/* <View style={styles.block}></View> */}
+      </ScrollView>
     </View>
   );
 };

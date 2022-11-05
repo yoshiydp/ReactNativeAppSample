@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text } from 'react-native';
+import { View, ScrollView } from 'react-native';
 
 // Components
 import HeaderTitle from '../../components/organisms/HeaderTitle';
@@ -10,7 +10,11 @@ import * as TEXT from '../../constants/text';
 // Styles
 import styles from './MyProjects.scss';
 
-const MyProjects = () => {
+interface Props {
+  navigation: any;
+}
+
+const MyProjects = (props: Props) => {
 
   useEffect(() => {
   }, []);
@@ -20,6 +24,10 @@ const MyProjects = () => {
       <HeaderTitle
         title={TEXT.TITLE_MY_PROJECTS}
       />
+      <ScrollView>
+        {/* <Button title="RecordAudio" onPress={() => props.navigation.navigate('RecordAudio')} /> */}
+        <View style={styles.block}></View>
+      </ScrollView>
     </View>
   );
 };

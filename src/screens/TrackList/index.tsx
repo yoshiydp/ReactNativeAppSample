@@ -3,7 +3,6 @@ import { View, ScrollView } from 'react-native';
 
 // Components
 import HeaderTitle from '../../components/organisms/HeaderTitle';
-import MainTabBar from '../../components/organisms/MainTabBar';
 
 // Constants
 import * as TEXT from '../../constants/text';
@@ -22,13 +21,13 @@ const TrackList = (props: Props) => {
 
   return (
     <View style={styles.container}>
+      <HeaderTitle
+        title={TEXT.TITLE_TRACK_LIST}
+      />
       <ScrollView>
-        <HeaderTitle
-          title={TEXT.TITLE_TRACK_LIST}
-        />
+        {/* <Button title="RecordAudio" onPress={() => props.navigation.navigate('RecordAudio')} /> */}
         {/* <View style={styles.block}></View> */}
       </ScrollView>
-      <MainTabBar />
     </View>
   );
 };
