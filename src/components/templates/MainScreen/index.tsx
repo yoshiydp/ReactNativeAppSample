@@ -23,7 +23,11 @@ const MainScreen = (props: Props) => {
         title={ props.title }
       />
       <ScrollView>
-        <Button title="RecordAudio" onPress={() => props.navigation.navigate('RecordAudio')} />
+        <Button title="NewProject" onPress={() => props.navigation.navigate('NewProject')} />
+        <Button title="NewTrack" onPress={() => props.navigation.navigate('NewTrack')} />
+        <Button title="EditTrack" onPress={() => props.navigation.navigate('EditTrack')} />
+        <Button title="EditMyAccount" onPress={() => props.navigation.navigate('EditMyAccount')} />
+        <Button title="PasswordReset" onPress={() => props.navigation.navigate('PasswordReset')} />
         {/* <View style={styles.block }></View> */}
       </ScrollView>
     </View>
