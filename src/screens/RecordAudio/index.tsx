@@ -1,30 +1,26 @@
 import React, { useEffect, useState } from 'react';
-import { View, ScrollView } from 'react-native';
 
 // Components
-import HeaderTitle from '../../components/organisms/HeaderTitle';
+import MainScreen from '../../components/templates/MainScreen';
 
 // Constants
 import * as TEXT from '../../constants/text';
 
-// Styles
-import styles from './RecordAudio.scss';
+interface Props {
+  navigation: any;
+}
 
-const RecordAudio = () => {
+const RecordAudio = (props: Props) => {
 
   useEffect(() => {
   }, []);
 
   return (
-    <View style={styles.container}>
-      <HeaderTitle
+    <>
+      <MainScreen
         title={TEXT.TITLE_RECORD_AUDIO}
       />
-      <ScrollView>
-        {/* <Button title="RecordAudio" onPress={() => props.navigation.navigate('RecordAudio')} /> */}
-        {/* <View style={styles.block}></View> */}
-      </ScrollView>
-    </View>
+    </>
   );
 };
 

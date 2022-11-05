@@ -1,30 +1,26 @@
 import React, { useEffect, useState } from 'react';
-import { View, ScrollView } from 'react-native';
 
 // Components
-import HeaderTitle from '../../components/organisms/HeaderTitle';
+import MainScreen from '../../components/templates/MainScreen';
 
 // Constants
 import * as TEXT from '../../constants/text';
 
-// Styles
-import styles from './MyAccount.scss';
+interface Props {
+  navigation: any;
+}
 
-const MyAccount = () => {
+const MyAccount = (props: Props) => {
 
   useEffect(() => {
   }, []);
 
   return (
-    <View style={styles.container}>
-      <HeaderTitle
+    <>
+      <MainScreen
         title={TEXT.TITLE_MY_ACCOUNT}
       />
-      <ScrollView>
-        {/* <Button title="RecordAudio" onPress={() => props.navigation.navigate('RecordAudio')} /> */}
-        {/* <View style={styles.block}></View> */}
-      </ScrollView>
-    </View>
+    </>
   );
 };
 
