@@ -31,7 +31,7 @@ interface Props {
   viewBox: string;
   gTransform?: string;
   pathD: string;
-  pathTransform: string;
+  pathTransform?: string;
   pathFill: string;
 }
 

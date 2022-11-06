@@ -1,6 +1,7 @@
 @use '../../../globalStyles/' as g;
 
 .container {
+  position: relative;
   flex: 1;
   background: g.colors(blue, bg);
   &TabBar {
@@ -10,17 +11,24 @@
     border-radius: 5px 5px 0 0;
     background: g.colors(blue, overlay);
   }
-}
-
-.list {
-  display: flex;
+  &MainTabMenu {
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    flex: 1;
+    justify-content: center;
+    align-items: center;
+    width: 20%;
+    height: 60px;
+    // background: g.colors(white, base);
+  }
 }
 
 .tabBarLabel {
   flex: 1;
   justify-content: center;
   align-items: center;
+  padding-top: 10px;
   height: 60px;
-  margin-right: 20px;
-  background-color: g.colors(green, base);
+  // background: g.colors(green, base);
 }

@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { View } from 'react-native';
+import { View, TouchableOpacity } from 'react-native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
 const Tab = createBottomTabNavigator();
@@ -17,21 +17,25 @@ import Icon from '../../atoms/Icon';
 import * as COLOR from '../../../constants/color';
 import * as SVGPATH from '../../../constants/svgPath';
 
-
 // Styles
 import styles from './MainTabBar.scss';
 
 const MainNavBar = () => {
+  const [targetWidth, setTargetWidth] = useState(0);
+
+  const getTargetWidth = (object: any) => {
+    setTargetWidth(object.nativeEvent.layout.width);
+  }
 
   useEffect(() => {
-  }, []);
+  }, [targetWidth]);
 
   return (
     <View style={styles.container}>
       <Tab.Navigator
         screenOptions={{
           headerShown: false,
-          tabBarStyle: styles.containerTabBar
+          tabBarStyle: styles.containerTabBar,
         }}
         initialRouteName={ "MyProjects" }
         >
@@ -59,7 +63,7 @@ const MainNavBar = () => {
           component={ TrackListScreen }
           options={{
             tabBarLabel: '',
-            tabBarItemStyle: styles.tabBarLabel,
+            tabBarItemStyle: [styles.tabBarLabel, { marginRight: targetWidth / 2 }],
             tabBarIcon: () => (
               <Icon
                 width="8"
@@ -78,7 +82,7 @@ const MainNavBar = () => {
           component={ RecordAudioScreen }
           options={{
             tabBarLabel: '',
-            tabBarItemStyle: styles.tabBarLabel,
+            tabBarItemStyle: [styles.tabBarLabel, { marginLeft: targetWidth / 2 }],
             tabBarIcon: () => (
               <Icon
                 width="8"
@@ -112,6 +116,20 @@ const MainNavBar = () => {
           }}
         />
       </Tab.Navigator>
+      <TouchableOpacity
+        style={[
+          styles.containerMainTabMenu,
+          { transform: [{ translateX: - (targetWidth / 2) }] }
+        ]}
+        onLayout={ getTargetWidth }>
+        <Icon
+          width="28"
+          height="28"
+          viewBox="0 0 28 28"
+          pathD={SVGPATH.ICON_PLUS_CIRCLE}
+          pathFill={COLOR.COLOR_GRAY_TYPE3}
+        />
+      </TouchableOpacity>
     </View>
   );
 };
