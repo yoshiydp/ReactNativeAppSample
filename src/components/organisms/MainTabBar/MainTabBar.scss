@@ -16,7 +16,11 @@
   display: flex;
 }
 
-.items {
-  width: 20%;
-  color: g.colors(white, base);
+.tabBarLabel {
+  flex: 1;
+  justify-content: center;
+  align-items: center;
+  height: 60px;
+  margin-right: 20px;
+  background-color: g.colors(green, base);
 }
