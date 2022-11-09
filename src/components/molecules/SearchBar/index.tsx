@@ -90,6 +90,7 @@ const SearchBar = (props: Props) => {
           animatedWidthStyle
         ]}>
         <Icon
+          svgType={1}
           containerStyle={styles.icon}
           width="14"
           height="14"
