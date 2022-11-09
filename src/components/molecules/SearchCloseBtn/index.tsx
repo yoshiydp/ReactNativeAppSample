@@ -15,6 +15,7 @@ const SearchCloseBtn = () => {
   return (
     <View style={styles.container}>
       <Icon
+        svgType={1}
         width="8"
         height="14.034"
         viewBox="0 0 8 14.034"
