@@ -21,7 +21,7 @@ DerivedData
 *.ipa
 *.xcuserstate
 ios/.xcode.env.local
-ios/Podfile.lock
+Podfile.lock
 
 # Android/IntelliJ
 #
