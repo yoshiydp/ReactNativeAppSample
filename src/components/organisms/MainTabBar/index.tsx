@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { View, Button } from 'react-native';
+import { View, TouchableOpacity } from 'react-native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
 const Tab = createBottomTabNavigator();
@@ -10,38 +10,164 @@ import TrackListScreen from '../../../screens/TrackList';
 import RecordAudioScreen from '../../../screens/RecordAudio';
 import MyAccountScreen from '../../../screens/MyAccount';
 
+// Components
+import Icon from '../../atoms/Icon';
+
+// Constants
+import * as COLOR from '../../../constants/color';
+import * as SVGPATH from '../../../constants/svgPath';
+
 // Styles
 import styles from './MainTabBar.scss';
 
-// interface Props {
-//   navigation: any;
-// }
-
 const MainNavBar = () => {
+  const [targetWidth, setTargetWidth] = useState(0);
+
+  const getTargetWidth = (object: any) => {
+    setTargetWidth(object.nativeEvent.layout.width);
+  }
 
   useEffect(() => {
-  }, []);
+  }, [targetWidth]);
 
   return (
-    <Tab.Navigator
-      screenOptions={{ headerShown: false }}>
-      <Tab.Screen
-        name="MyProjects"
-        component={ MyProjectsScreen }
-      />
-      <Tab.Screen
-        name="TrackList"
-        component={ TrackListScreen }
-      />
-      <Tab.Screen
-        name="RecordAudio"
-        component={ RecordAudioScreen }
-      />
-      <Tab.Screen
-        name="MyAccount"
-        component={ MyAccountScreen }
-      />
-    </Tab.Navigator>
+    <View style={styles.container}>
+      <Tab.Navigator
+        screenOptions={{
+          headerShown: false,
+          tabBarStyle: styles.containerTabBar,
+          tabBarActiveTintColor: COLOR.COLOR_GREEN_BASE,
+          tabBarInactiveTintColor: COLOR.COLOR_GRAY_TYPE3
+        }}
+        initialRouteName={ "MyProjects" }
+        >
+        <Tab.Screen
+          name="MyProjects"
+          component={ MyProjectsScreen }
+          options={{
+            tabBarLabel: '',
+            tabBarItemStyle: styles.tabBarLabel,
+            tabBarIcon: ({ color }) => (
+              <Icon
+                svgType={3}
+                width="20"
+                height="16.219"
+                viewBox="0 0 20 16.219"
+                parentGTransform1="translate(0 0)"
+                parentGTransform2="translate(0.263 4.438)"
+                childGTransform1="translate(0 0)"
+                childGTransform2="translate(0 0)"
+                pathD1={SVGPATH.ICON_FOLDER_PATH1}
+                pathD2={SVGPATH.ICON_FOLDER_PATH2}
+                pathTransform1="translate(0 -48.403)"
+                pathTransform2="translate(-6.746 -162.01)"
+                pathFill={
+                  color
+                  ? color
+                  : COLOR.COLOR_GRAY_TYPE3
+                }
+              />
+            ),
+          }}
+        />
+        <Tab.Screen
+          name="TrackList"
+          component={ TrackListScreen }
+          options={{
+            tabBarLabel: '',
+            tabBarItemStyle: [styles.tabBarLabel, { marginRight: targetWidth / 2 }],
+            tabBarIcon: ({ color }) => (
+              <Icon
+                svgType={2}
+                width="20"
+                height="20"
+                viewBox="0 0 20 20"
+                parentGTransform="translate(0 -0.004)"
+                childGTransform="translate(0 0.004)"
+                pathD={SVGPATH.ICON_MUSIC}
+                pathTransform="translate(0 -0.004)"
+                pathFill={
+                  color
+                  ? color
+                  : COLOR.COLOR_GRAY_TYPE3
+                }
+              />
+            ),
+          }}
+        />
+        <Tab.Screen
+          name="RecordAudio"
+          component={ RecordAudioScreen }
+          options={{
+            tabBarLabel: '',
+            tabBarItemStyle: [styles.tabBarLabel, { marginLeft: targetWidth / 2 }],
+            tabBarIcon: ({ color }) => (
+              <Icon
+                svgType={4}
+                width="20"
+                height="20"
+                viewBox="0 0 20 20"
+                pathD1={SVGPATH.ICON_SOUND_PATH1}
+                pathD2={SVGPATH.ICON_SOUND_PATH2}
+                pathD3={SVGPATH.ICON_SOUND_PATH3}
+                pathD4={SVGPATH.ICON_SOUND_PATH4}
+                pathD5={SVGPATH.ICON_SOUND_PATH5}
+                pathTransform1="translate(0 -156.948)"
+                pathTransform2="translate(-104.631 -78.471)"
+                pathTransform3="translate(-209.267 0.007)"
+                pathTransform4="translate(-313.905 -78.471)"
+                pathTransform5="translate(-418.541 -156.948)"
+                pathFill={
+                  color
+                  ? color
+                  : COLOR.COLOR_GRAY_TYPE3
+                }
+              />
+            ),
+          }}
+        />
+        <Tab.Screen
+          name="MyAccount"
+          component={ MyAccountScreen }
+          options={{
+            tabBarLabel: '',
+            tabBarItemStyle: styles.tabBarLabel,
+            tabBarIcon: ({ color }) => (
+              <Icon
+                svgType={4}
+                width="17"
+                height="20.376"
+                viewBox="0 0 17 20.376"
+                pathD1={SVGPATH.ICON_PERSON_PATH1}
+                pathD2={SVGPATH.ICON_PERSON_PATH2}
+                pathTransform1="translate(-83.568)"
+                pathTransform2="translate(0 -237.474)"
+                pathFill={
+                  color
+                  ? color
+                  : COLOR.COLOR_GRAY_TYPE3
+                }
+              />
+            ),
+          }}
+        />
+      </Tab.Navigator>
+      <TouchableOpacity
+        style={[
+          styles.containerMainTabMenu,
+          { transform: [{ translateX: - (targetWidth / 2) }] }
+        ]}
+        onLayout={ getTargetWidth }>
+        <Icon
+          svgType={1}
+          width="28"
+          height="28"
+          viewBox="0 0 28 28"
+          pathD={SVGPATH.ICON_PLUS_CIRCLE}
+          pathFill={COLOR.COLOR_GRAY_TYPE3}
+        />
+      </TouchableOpacity>
+    </View>
   );
 };
 

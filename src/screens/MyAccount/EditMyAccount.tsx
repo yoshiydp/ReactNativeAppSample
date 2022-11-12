@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 
 // Components
-import MainScreen from '../../components/templates/MainScreen';
+import LowerScreen from '../../components/templates/LowerScreen';
 
 // Constants
 import * as TEXT from '../../constants/text';
@@ -10,19 +10,19 @@ interface Props {
   navigation: any;
 }
 
-const RecordAudio = (props: Props) => {
+const EditMyAccount = (props: Props) => {
 
   useEffect(() => {
   }, []);
 
   return (
     <>
-      <MainScreen
-        title={ TEXT.TITLE_RECORD_AUDIO }
+      <LowerScreen
+        title={ TEXT.TITLE_EDIT_MY_ACCOUNT }
         navigation={ props.navigation }
       />
     </>
   );
 };
 
-export default RecordAudio;
+export default EditMyAccount;
