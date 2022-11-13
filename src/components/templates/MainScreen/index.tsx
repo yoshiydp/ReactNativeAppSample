@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { View, ScrollView, Button } from 'react-native';
+import { View, Button, ScrollView, Modal, Text, Pressable, Alert } from 'react-native';
+// import { Overlay } from '@rneui/themed';
 
 // Components
 import HeaderTitle from '../../organisms/HeaderTitle';
@@ -13,9 +14,14 @@ interface Props {
 }
 
 const MainScreen = (props: Props) => {
+  const [visible, setVisible] = useState(false);
 
   useEffect(() => {
   }, []);
+
+  const toggleOverlay = () => {
+    setVisible(!visible);
+  };
 
   return (
     <View style={ styles.container }>
@@ -32,6 +38,15 @@ const MainScreen = (props: Props) => {
         <Button title="PasswordReset" onPress={() => props.navigation.navigate('PasswordReset')} />
         {/* <View style={styles.block }></View> */}
       </ScrollView>
+      {/* <Overlay
+        isVisible={visible}
+        onBackdropPress={toggleOverlay}
+        style={styles.overlay}>
+        <Text style={styles.textPrimary}>Hello!</Text>
+        <Text style={styles.textSecondary}>
+          Welcome to React Native Elements
+        </Text>
+      </Overlay> */}
     </View>
   );
 };
