@@ -1,6 +1,9 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { View, TouchableOpacity } from 'react-native';
+import { connect, ConnectedProps } from 'react-redux';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { showOverlay } from '../../../actions/OverlayAction';
+import { RootState } from '../../../reducers/OverlayReducer';
 
 const Tab = createBottomTabNavigator();
 
@@ -20,7 +23,20 @@ import * as SVGPATH from '../../../constants/svgPath';
 // Styles
 import styles from './MainTabBar.scss';
 
-const MainNavBar = () => {
+const mapStateToProps = (state: RootState) => ({
+  isShow: state.isShow.isShow,
+});
+
+const mapDispatchToProps = {
+  dispatchShowOverlay: showOverlay,
+};
+
+const connector = connect(mapStateToProps, mapDispatchToProps);
+
+type OverlayProps = {} & ConnectedProps<typeof connector>;
+
+const MainNavBar = (props: OverlayProps) => {
+  const { dispatchShowOverlay, isShow } = props;
   const [targetWidth, setTargetWidth] = useState(0);
 
   const getTargetWidth = (object: any) => {
@@ -29,6 +45,10 @@ const MainNavBar = () => {
 
   useEffect(() => {
   }, [targetWidth]);
+
+  const onOpenButtonClick = () => {
+    dispatchShowOverlay();
+  };
 
   return (
     <View style={styles.container}>
@@ -153,11 +173,13 @@ const MainNavBar = () => {
         />
       </Tab.Navigator>
       <TouchableOpacity
+        activeOpacity={1}
         style={[
           styles.containerMainTabMenu,
           { transform: [{ translateX: - (targetWidth / 2) }] }
         ]}
-        onLayout={ getTargetWidth }>
+        onLayout={ getTargetWidth }
+        onPress={ onOpenButtonClick }>
         <Icon
           svgType={1}
           width="28"
@@ -171,4 +193,4 @@ const MainNavBar = () => {
   );
 };
 
-export default MainNavBar;
+export default connector(MainNavBar);

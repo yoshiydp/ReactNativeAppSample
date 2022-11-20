@@ -1,4 +1,5 @@
 import React from 'react';
+import { connect, ConnectedProps } from 'react-redux';
 import { createStackNavigator } from '@react-navigation/stack';
 
 // Main Screens
@@ -21,7 +22,19 @@ import Overlay from '../components/atoms/Overlay';
 
 const Stack = createStackNavigator();
 
-const StackNavigator = () => {    
+import { showOverlay } from '../actions/OverlayAction';
+
+const mapDispatchToProps = {
+  dispatchShowOverlay: showOverlay,
+};
+
+const connector = connect(undefined, mapDispatchToProps);
+
+type AppProps = {} & ConnectedProps<typeof connector>;
+
+const StackNavigator = (props: AppProps) => {
+  const { dispatchShowOverlay } = props;
+
   return (
     <>
       <Stack.Navigator screenOptions={{ headerShown: false }}>
@@ -75,4 +88,4 @@ const StackNavigator = () => {
   );
 };
 
-export default StackNavigator;
+export default connector(StackNavigator);
