@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { View, ScrollView, Button } from 'react-native';
+import { View, Button, ScrollView } from 'react-native';
 
 // Components
 import HeaderTitle from '../../organisms/HeaderTitle';
@@ -13,9 +13,14 @@ interface Props {
 }
 
 const MainScreen = (props: Props) => {
+  const [visible, setVisible] = useState(false);
 
   useEffect(() => {
   }, []);
+
+  const toggleOverlay = () => {
+    setVisible(!visible);
+  };
 
   return (
     <View style={ styles.container }>
@@ -30,7 +35,6 @@ const MainScreen = (props: Props) => {
         <Button title="EditTrack" onPress={() => props.navigation.navigate('EditTrack')} />
         <Button title="EditMyAccount" onPress={() => props.navigation.navigate('EditMyAccount')} />
         <Button title="PasswordReset" onPress={() => props.navigation.navigate('PasswordReset')} />
-        {/* <View style={styles.block }></View> */}
       </ScrollView>
     </View>
   );
