@@ -1,6 +1,7 @@
 @use '../../../globalStyles/' as g;
 
 .container {
+  position: relative;
   flex: 1;
   background: g.colors(blue, bg);
 }
