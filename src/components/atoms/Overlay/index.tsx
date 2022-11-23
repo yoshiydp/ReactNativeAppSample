@@ -1,8 +1,11 @@
 import React, { useEffect, useRef } from 'react';
-import { connect, ConnectedProps } from 'react-redux';
 import { Animated, TouchableOpacity, useWindowDimensions } from 'react-native';
-import { hideOverlay } from '../../../actions/OverlayAction';
-import { RootState } from '../../../reducers/OverlayReducer';
+import { useDispatch } from 'react-redux';
+
+// Stores
+import { useSelector } from '../../../stores';
+import { hideOverlay } from '../../../stores/OverlaySlice';
+import { hideMainTabMenu } from '../../../stores/MainTabMenuSlice';
 
 // Constants
 import * as VALUE from '../../../constants/value';
@@ -10,20 +13,12 @@ import * as VALUE from '../../../constants/value';
 // Styles
 import styles from './Overlay.scss';
 
-const mapStateToProps = (state: RootState) => ({
-  isShow: state.isShow.isShow,
-});
+interface Props {
+  isShow: boolean;
+}
 
-const mapDispatchToProps = {
-  dispatchhideOverlay: hideOverlay,
-};
-
-const connector = connect(mapStateToProps, mapDispatchToProps);
-
-type OverlayProps = {} & ConnectedProps<typeof connector>;
-
-const Overlay = (props: OverlayProps) => {
-  const { dispatchhideOverlay, isShow } = props;
+const Overlay = (props: Props) => {
+  const dispatch = useDispatch();
   const opacityValue = useRef(new Animated.Value(0)).current;
   const windowWidth = useWindowDimensions().width;
   const windowHeight = useWindowDimensions().height;
@@ -31,7 +26,7 @@ const Overlay = (props: OverlayProps) => {
   const heightValue = useRef(new Animated.Value(0)).current;
 
   useEffect(() => {
-    isShow ?
+    props.isShow ?
     (
       maxOpacityAnimated(),
       sizesAnimatedFunc(widthValue, windowWidth, 0),
@@ -43,7 +38,7 @@ const Overlay = (props: OverlayProps) => {
       sizesAnimatedFunc(widthValue, 0, VALUE.DURATION_200),
       sizesAnimatedFunc(heightValue, 0, VALUE.DURATION_200)
     )
-  }, [isShow]);
+  }, [props.isShow]);
 
   const minOpacityAnimated = () => {
     opacityAnimatedFunc(opacityValue, 0);
@@ -87,8 +82,9 @@ const Overlay = (props: OverlayProps) => {
     height: heightValue,
   }
 
-  const onCloseButtonClick = () => {
-    dispatchhideOverlay();
+  const onPressHide = () => {
+    dispatch(hideOverlay());
+    dispatch(hideMainTabMenu());
   };
 
   return (
@@ -100,10 +96,10 @@ const Overlay = (props: OverlayProps) => {
         animatedHeightStyle]}>
       <TouchableOpacity
         style={styles.touchable}
-        onPress={onCloseButtonClick}>
+        onPress={ onPressHide }>
       </TouchableOpacity>
     </Animated.View>
   );
 };
 
-export default connector(Overlay);
+export default Overlay;

@@ -1,11 +1,14 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { View, TouchableOpacity } from 'react-native';
-import { connect, ConnectedProps } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { showOverlay } from '../../../actions/OverlayAction';
-import { RootState } from '../../../reducers/OverlayReducer';
 
 const Tab = createBottomTabNavigator();
+
+// Stores
+import { useSelector } from '../../../stores';
+import { showOverlay } from '../../../stores/OverlaySlice';
+import { showMainTabMenu } from '../../../stores/MainTabMenuSlice';
 
 // Screens
 import MyProjectsScreen from '../../../screens/MyProjects';
@@ -14,6 +17,8 @@ import RecordAudioScreen from '../../../screens/RecordAudio';
 import MyAccountScreen from '../../../screens/MyAccount';
 
 // Components
+import MainTabMenu from '../../organisms/MainTabMenu';
+import Overlay from '../../atoms/Overlay';
 import Icon from '../../atoms/Icon';
 
 // Constants
@@ -23,20 +28,10 @@ import * as SVGPATH from '../../../constants/svgPath';
 // Styles
 import styles from './MainTabBar.scss';
 
-const mapStateToProps = (state: RootState) => ({
-  isShow: state.isShow.isShow,
-});
-
-const mapDispatchToProps = {
-  dispatchShowOverlay: showOverlay,
-};
-
-const connector = connect(mapStateToProps, mapDispatchToProps);
-
-type OverlayProps = {} & ConnectedProps<typeof connector>;
-
-const MainNavBar = (props: OverlayProps) => {
-  const { dispatchShowOverlay, isShow } = props;
+const MainNavBar = () => {
+  const dispatch = useDispatch();
+  const overlay = useSelector((state) => state.overlay.overlay);
+  const mainTabMenu = useSelector((state) => state.mainTabMenu.mainTabMenu);
   const [targetWidth, setTargetWidth] = useState(0);
 
   const getTargetWidth = (object: any) => {
@@ -44,10 +39,13 @@ const MainNavBar = (props: OverlayProps) => {
   }
 
   useEffect(() => {
+    console.log('overlay '+overlay);
+    console.log('mainTabbar '+mainTabMenu);
   }, [targetWidth]);
 
-  const onOpenButtonClick = () => {
-    dispatchShowOverlay();
+  const onPressShow = () => {
+    dispatch(showOverlay());
+    dispatch(showMainTabMenu());
   };
 
   return (
@@ -179,7 +177,7 @@ const MainNavBar = (props: OverlayProps) => {
           { transform: [{ translateX: - (targetWidth / 2) }] }
         ]}
         onLayout={ getTargetWidth }
-        onPress={ onOpenButtonClick }>
+        onPress={ onPressShow }>
         <Icon
           svgType={1}
           width="28"
@@ -189,8 +187,12 @@ const MainNavBar = (props: OverlayProps) => {
           pathFill={COLOR.COLOR_GRAY_TYPE3}
         />
       </TouchableOpacity>
+      <MainTabMenu />
+      <Overlay
+        isShow={overlay}
+      />
     </View>
   );
 };
 
-export default connector(MainNavBar);
+export default MainNavBar;
