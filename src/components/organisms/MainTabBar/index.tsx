@@ -28,7 +28,11 @@ import * as SVGPATH from '../../../constants/svgPath';
 // Styles
 import styles from './MainTabBar.scss';
 
-const MainNavBar = () => {
+interface Props {
+  navigation: any;
+}
+
+const MainNavBar = (props: Props) => {
   const dispatch = useDispatch();
   const overlay = useSelector((state) => state.overlay.overlay);
   const mainTabMenu = useSelector((state) => state.mainTabMenu.mainTabMenu);
@@ -187,7 +191,10 @@ const MainNavBar = () => {
           pathFill={COLOR.COLOR_GRAY_TYPE3}
         />
       </TouchableOpacity>
-      <MainTabMenu />
+      <MainTabMenu
+        isShow={mainTabMenu}
+        navigation={ props.navigation }
+      />
       <Overlay
         isShow={overlay}
       />

@@ -3,7 +3,6 @@ import { Animated, TouchableOpacity, useWindowDimensions } from 'react-native';
 import { useDispatch } from 'react-redux';
 
 // Stores
-import { useSelector } from '../../../stores';
 import { hideOverlay } from '../../../stores/OverlaySlice';
 import { hideMainTabMenu } from '../../../stores/MainTabMenuSlice';
 
