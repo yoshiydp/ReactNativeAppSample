@@ -1,5 +1,4 @@
 import React from 'react';
-import { connect, ConnectedProps } from 'react-redux';
 import { createStackNavigator } from '@react-navigation/stack';
 
 // Main Screens
@@ -18,74 +17,59 @@ import PasswordResetScreen from '../screens/SignUp/PasswordReset';
 
 // Components
 import MainTabBar from '../components/organisms/MainTabBar';
-import Overlay from '../components/atoms/Overlay';
 
 const Stack = createStackNavigator();
 
-import { showOverlay } from '../actions/OverlayAction';
-
-const mapDispatchToProps = {
-  dispatchShowOverlay: showOverlay,
-};
-
-const connector = connect(undefined, mapDispatchToProps);
-
-type AppProps = {} & ConnectedProps<typeof connector>;
-
-const StackNavigator = (props: AppProps) => {
-  const { dispatchShowOverlay } = props;
+const StackNavigator = () => {
 
   return (
-    <>
-      <Stack.Navigator screenOptions={{ headerShown: false }}>
-        <Stack.Screen
-          name="MainTabBar"
-          component={ MainTabBar }
-        />
-        <Stack.Screen
-          name="Loading"
-          component={ LoadingScreen }
-        />
-        <Stack.Screen
-          name="Login"
-          component={ LoginScreen }
-        />
-        <Stack.Screen
-          name="SignUp"
-          component={ SignUpScreen }
-        />
-        <Stack.Screen
-          name="NewProject"
-          component={ NewProjectScreen }
-        />
-        <Stack.Screen
-          name="EditProject"
-          component={ EditProjectScreen }
-        />
-        <Stack.Screen
-          name="Recording"
-          component={ RecordingScreen }
-        />
-        <Stack.Screen
-          name="NewTrack"
-          component={ NewTrackScreen }
-        />
-        <Stack.Screen
-          name="EditTrack"
-          component={ EditTrackScreen }
-        />
-        <Stack.Screen
-          name="EditMyAccount"
-          component={ EditMyAccountScreen }
-        />
-        <Stack.Screen
-          name="PasswordReset"
-          component={ PasswordResetScreen }
-        />
-      </Stack.Navigator>
-      <Overlay />
-    </>
+    <Stack.Navigator screenOptions={{ headerShown: false }}>
+      <Stack.Screen
+        name="MainTabBar"
+        component={ MainTabBar }
+      />
+      <Stack.Screen
+        name="Loading"
+        component={ LoadingScreen }
+      />
+      <Stack.Screen
+        name="Login"
+        component={ LoginScreen }
+      />
+      <Stack.Screen
+        name="SignUp"
+        component={ SignUpScreen }
+      />
+      <Stack.Screen
+        name="NewProject"
+        component={ NewProjectScreen }
+      />
+      <Stack.Screen
+        name="EditProject"
+        component={ EditProjectScreen }
+      />
+      <Stack.Screen
+        name="Recording"
+        component={ RecordingScreen }
+      />
+      <Stack.Screen
+        name="NewTrack"
+        component={ NewTrackScreen }
+      />
+      <Stack.Screen
+        name="EditTrack"
+        component={ EditTrackScreen }
+      />
+      <Stack.Screen
+        name="EditMyAccount"
+        component={ EditMyAccountScreen }
+      />
+      <Stack.Screen
+        name="PasswordReset"
+        component={ PasswordResetScreen }
+      />
+    </Stack.Navigator>
   );
 };
 
-export default connector(StackNavigator);
+export default StackNavigator;
