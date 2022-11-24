@@ -20,8 +20,8 @@ const SearchCloseBtn = () => {
         height="14.034"
         viewBox="0 0 8 14.034"
         gTransform="translate(-97.139 0)"
-        pathD={SVGPATH.ICON_ARROW_RIGHT}
-        pathTransform="translate(0 0)"
+        pathD1={SVGPATH.ICON_ARROW_RIGHT}
+        pathTransform1="translate(0 0)"
         pathFill={COLOR.COLOR_GRAY_TYPE1}
       />
     </View>

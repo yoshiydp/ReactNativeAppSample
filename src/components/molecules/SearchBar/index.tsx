@@ -95,8 +95,8 @@ const SearchBar = (props: Props) => {
           width="14"
           height="14"
           viewBox="0 0 14 14"
-          pathD={SVGPATH.ICON_SEARCH}
-          pathTransform="translate(-0.006)"
+          pathD1={SVGPATH.ICON_SEARCH}
+          pathTransform1="translate(-0.006)"
           pathFill={COLOR.COLOR_GRAY_TYPE2}
         />
         <TextInput
