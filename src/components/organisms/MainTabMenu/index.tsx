@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { Animated, TouchableOpacity, Button } from 'react-native';
+import { Animated, View, TouchableOpacity, Text } from 'react-native';
 import { useDispatch } from 'react-redux';
 
 // Stores
@@ -93,7 +93,50 @@ const MainTabMenu = (props: Props) => {
         animatedTranlateStyle
       ]}
       onLayout={ getContainerHeight }>
-      <Button title="NewTrack" onPress={() => props.navigation.navigate('NewTrack')} />
+      <View style={styles.nav}>
+        <TouchableOpacity
+          activeOpacity={1}
+          style={styles.navItem}
+          onPress={() => props.navigation.navigate('NewProject')}>
+          <View style={styles.navIcon}>
+            <Icon
+              svgType={1}
+              width="12"
+              height="15"
+              viewBox="0 0 12 15"
+              gTransform="translate(-4 -1)"
+              pathD1={SVGPATH.ICON_NEW_DOCUMENT_PATH1}
+              pathTransform1="translate(0 0)"
+              pathD2={SVGPATH.ICON_NEW_DOCUMENT_PATH2}
+              pathTransform2="translate(-3.5 -5.5)"
+              pathFill={COLOR.COLOR_BLUE_OVERLAY}
+            />
+          </View>
+          <Text style={styles.navText}>新しいプロジェクトを作成</Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          activeOpacity={1}
+          style={styles.navItem}
+          onPress={() => props.navigation.navigate('NewTrack')}>
+          <View style={styles.navIcon}>
+            <Icon
+              svgType={1}
+              width="14"
+              height="14"
+              viewBox="0 0 14 14"
+              gTransform="translate(-1.25 -1.25)"
+              pathD1={SVGPATH.ICON_NEW_MUSIC_PATH1}
+              pathTransform1="translate(-1.047 -1.048)"
+              pathD2={SVGPATH.ICON_NEW_MUSIC_PATH2}
+              pathTransform2="translate(0)"
+              pathD3={SVGPATH.ICON_NEW_MUSIC_PATH3}
+              pathTransform3="translate(-4.884 -4.884)"
+              pathFill={COLOR.COLOR_BLUE_OVERLAY}
+            />
+          </View>
+          <Text style={styles.navText}>新しいトラックを追加</Text>
+        </TouchableOpacity>
+      </View>
       <TouchableOpacity
         activeOpacity={1}
         style={[
@@ -108,7 +151,7 @@ const MainTabMenu = (props: Props) => {
           height="39.598"
           viewBox="0 0 39.598 39.598"
           gTransform="translate(19.799) rotate(45)"
-          pathD={SVGPATH.ICON_CLOSE_CIRCLE}
+          pathD1={SVGPATH.ICON_CLOSE_CIRCLE}
           pathFill={COLOR.COLOR_GREEN_BASE}
         />
       </TouchableOpacity>

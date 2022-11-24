@@ -187,7 +187,7 @@ const MainNavBar = (props: Props) => {
           width="28"
           height="28"
           viewBox="0 0 28 28"
-          pathD={SVGPATH.ICON_PLUS_CIRCLE}
+          pathD1={SVGPATH.ICON_PLUS_CIRCLE}
           pathFill={COLOR.COLOR_GRAY_TYPE3}
         />
       </TouchableOpacity>

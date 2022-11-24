@@ -34,8 +34,12 @@ interface svgCommonProps {
 }
 interface svgType1 extends svgCommonProps {
   gTransform?: string;
-  pathD?: string;
-  pathTransform?: string;
+  pathD1?: string;
+  pathTransform1?: string;
+  pathD2?: string;
+  pathTransform2?: string;
+  pathD3?: string;
+  pathTransform3?: string;
 }
 
 interface svgType2 extends svgCommonProps {
@@ -82,8 +86,18 @@ const Icon = (props: (svgType1 & svgType2 & svgType3 & svgType4)) => {
             viewBox={props.viewBox}>
             <G transform={props.gTransform}>
               <Path
-                d={props.pathD}
-                transform={props.pathTransform}
+                d={props.pathD1}
+                transform={props.pathTransform1}
+                fill={props.pathFill}
+              />
+              <Path
+                d={props.pathD2}
+                transform={props.pathTransform2}
+                fill={props.pathFill}
+              />
+              <Path
+                d={props.pathD3}
+                transform={props.pathTransform3}
                 fill={props.pathFill}
               />
             </G>
