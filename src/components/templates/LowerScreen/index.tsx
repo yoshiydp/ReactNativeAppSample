@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { View, ScrollView, Button } from 'react-native';
 
 // Components
-import HeaderTitle from '../../organisms/HeaderTitle';
+import LowerTitleHeader from '../../molecules/LowerTitleHeader';
 
 // Styles
 import styles from './LowerScreen.scss';
@@ -19,8 +19,9 @@ const LowerScreen = (props: Props) => {
 
   return (
     <View style={ styles.container }>
-      <HeaderTitle
+      <LowerTitleHeader
         title={ props.title }
+        navigation={ props.navigation }
       />
       <ScrollView>
         <Button title="NewProject" onPress={() => props.navigation.navigate('NewProject')} />
