@@ -8,13 +8,13 @@ import SearchBar from '../../molecules/SearchBar';
 import * as VALUE from '../../../constants/value';
 
 // Styles
-import styles from './HeaderTitle.scss';
+import styles from './MainTitleHeader.scss';
 
 interface Props {
   title: string;
 }
 
-const HeaderTitle = (props: Props) => {
+const MainTitleHeader = (props: Props) => {
   const [isHidden, setIsHidden] = useState(false);
   const opacityValue = useRef(new Animated.Value(1)).current;
 
@@ -62,4 +62,4 @@ const HeaderTitle = (props: Props) => {
   );
 };
 
-export default HeaderTitle;
+export default MainTitleHeader;
