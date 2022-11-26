@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { View, Button, ScrollView } from 'react-native';
 
 // Components
-import HeaderTitle from '../../organisms/HeaderTitle';
+import MainTitleHeader from '../../organisms/MainTitleHeader';
 
 // Styles
 import styles from './MainScreen.scss';
@@ -24,7 +24,7 @@ const MainScreen = (props: Props) => {
 
   return (
     <View style={ styles.container }>
-      <HeaderTitle
+      <MainTitleHeader
         title={ props.title }
       />
       <ScrollView>
