@@ -43,8 +43,6 @@ const MainNavBar = (props: Props) => {
   }
 
   useEffect(() => {
-    console.log('overlay '+overlay);
-    console.log('mainTabbar '+mainTabMenu);
   }, [targetWidth]);
 
   const onPressShow = () => {
