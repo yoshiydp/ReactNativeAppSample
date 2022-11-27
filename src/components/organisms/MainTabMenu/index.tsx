@@ -2,17 +2,17 @@ import React, { useEffect, useRef, useState } from 'react';
 import { Animated, View, TouchableOpacity, Text } from 'react-native';
 import { useDispatch } from 'react-redux';
 
-// Stores
-import { hideOverlay } from '../../../stores/OverlaySlice';
-import { hideMainTabMenu } from '../../../stores/MainTabMenuSlice';
+// Store
+import { hideOverlay } from 'store/OverlaySlice';
+import { hideMainTabMenu } from 'store/MainTabMenuSlice';
 
 // Components
-import Icon from '../../atoms/Icon';
+import Icon from 'components/atoms/Icon';
 
 // Constants
-import * as COLOR from '../../../constants/color';
-import * as SVGPATH from '../../../constants/svgPath';
-import * as VALUE from '../../../constants/value';
+import * as COLOR from 'constants/color';
+import * as SVGPATH from 'constants/svgPath';
+import * as VALUE from 'constants/value';
 
 // Styles
 import styles from './MainTabMenu.scss';

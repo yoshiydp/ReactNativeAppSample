@@ -2,14 +2,14 @@ import React, { useEffect, useRef, useState } from 'react';
 import { View, TextInput, TouchableOpacity, Animated, useWindowDimensions } from 'react-native';
 
 // Components
-import SearchCloseBtn from '../SearchCloseBtn';
-import Icon from '../../atoms/Icon';
+import SearchCloseBtn from 'components/molecules/SearchCloseBtn';
+import Icon from 'components/atoms/Icon';
 
 // Constants
-import * as TEXT from '../../../constants/text';
-import * as COLOR from '../../../constants/color';
-import * as SVGPATH from '../../../constants/svgPath';
-import * as VALUE from '../../../constants/value';
+import * as TEXT from 'constants/text';
+import * as COLOR from 'constants/color';
+import * as SVGPATH from 'constants/svgPath';
+import * as VALUE from 'constants/value';
 
 // Styles
 import styles from './SearchBar.scss';

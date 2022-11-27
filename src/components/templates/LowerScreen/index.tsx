@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { View, ScrollView, Button } from 'react-native';
 
 // Components
-import LowerTitleHeader from '../../molecules/LowerTitleHeader';
+import LowerTitleHeader from 'components/molecules/LowerTitleHeader';
 
 // Styles
 import styles from './LowerScreen.scss';

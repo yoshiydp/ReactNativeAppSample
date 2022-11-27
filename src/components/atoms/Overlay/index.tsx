@@ -2,12 +2,12 @@ import React, { useEffect, useRef } from 'react';
 import { Animated, TouchableOpacity, useWindowDimensions } from 'react-native';
 import { useDispatch } from 'react-redux';
 
-// Stores
-import { hideOverlay } from '../../../stores/OverlaySlice';
-import { hideMainTabMenu } from '../../../stores/MainTabMenuSlice';
+// Store
+import { hideOverlay } from 'store/OverlaySlice';
+import { hideMainTabMenu } from 'store/MainTabMenuSlice';
 
 // Constants
-import * as VALUE from '../../../constants/value';
+import * as VALUE from 'constants/value';
 
 // Styles
 import styles from './Overlay.scss';

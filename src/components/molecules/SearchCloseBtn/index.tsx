@@ -2,11 +2,11 @@ import React from 'react';
 import { View } from 'react-native';
 
 // Components
-import Icon from '../../atoms/Icon';
+import Icon from 'components/atoms/Icon';
 
 // Constants
-import * as COLOR from '../../../constants/color';
-import * as SVGPATH from '../../../constants/svgPath';
+import * as COLOR from 'constants/color';
+import * as SVGPATH from 'constants/svgPath';
 
 // Styles
 import styles from './SearchCloseBtn.scss';
