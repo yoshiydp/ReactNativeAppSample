@@ -3,16 +3,16 @@ import { Animated, View, TouchableOpacity, Text } from 'react-native';
 import { useDispatch } from 'react-redux';
 
 // Stores
-import { hideOverlay } from '../../../stores/OverlaySlice';
-import { hideMainTabMenu } from '../../../stores/MainTabMenuSlice';
+import { hideOverlay } from '@src/stores/OverlaySlice';
+import { hideMainTabMenu } from '@src/stores/MainTabMenuSlice';
 
 // Components
-import Icon from '../../atoms/Icon';
+import Icon from '@src/components/atoms/Icon';
 
 // Constants
-import * as COLOR from '../../../constants/color';
-import * as SVGPATH from '../../../constants/svgPath';
-import * as VALUE from '../../../constants/value';
+import * as COLOR from '@src/constants/color';
+import * as SVGPATH from '@src/constants/svgPath';
+import * as VALUE from '@src/constants/value';
 
 // Styles
 import styles from './MainTabMenu.scss';

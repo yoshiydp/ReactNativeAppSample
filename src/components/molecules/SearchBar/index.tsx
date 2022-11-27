@@ -3,13 +3,13 @@ import { View, TextInput, TouchableOpacity, Animated, useWindowDimensions } from
 
 // Components
 import SearchCloseBtn from '../SearchCloseBtn';
-import Icon from '../../atoms/Icon';
+import Icon from '@src/components/atoms/Icon';
 
 // Constants
-import * as TEXT from '../../../constants/text';
-import * as COLOR from '../../../constants/color';
-import * as SVGPATH from '../../../constants/svgPath';
-import * as VALUE from '../../../constants/value';
+import * as TEXT from '@src/constants/text';
+import * as COLOR from '@src/constants/color';
+import * as SVGPATH from '@src/constants/svgPath';
+import * as VALUE from '@src/constants/value';
 
 // Styles
 import styles from './SearchBar.scss';

@@ -2,10 +2,10 @@ import React, { useEffect, useRef, useState } from 'react';
 import { View, Animated } from 'react-native';
 
 // Components
-import SearchBar from '../../molecules/SearchBar';
+import SearchBar from '@src/components/molecules/SearchBar';
 
 // Constants
-import * as VALUE from '../../../constants/value';
+import * as VALUE from '@src/constants/value';
 
 // Styles
 import styles from './MainTitleHeader.scss';

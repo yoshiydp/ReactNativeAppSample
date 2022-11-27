@@ -2,7 +2,7 @@ import React from 'react';
 import { View, Text } from 'react-native';
 
 // Constants
-import * as TEXT from '../../../constants/text';
+import * as TEXT from '@src/constants/text';
 
 interface Props {
   style: any;
