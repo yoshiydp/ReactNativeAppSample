@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react';
 
 // Components
-import LowerScreen from '@src/components/templates/LowerScreen';
+import LowerScreen from 'components/templates/LowerScreen';
 
 // Constants
-import * as TEXT from '@src/constants/text';
+import * as TEXT from 'constants/text';
 
 interface Props {
   navigation: any;

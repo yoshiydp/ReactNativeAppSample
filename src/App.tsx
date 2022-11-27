@@ -3,7 +3,7 @@ import React, { useEffect } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import StackNavigator from './navigators/StackNavigator';
 import { Provider } from 'react-redux';
-import { store } from './stores';
+import { store } from './store';
 
 const App = () => {
 

@@ -2,10 +2,10 @@ import React, { useEffect, useState } from 'react';
 import { View, Text } from 'react-native';
 
 // Components
-import MainTitleHeader from '@src/components/organisms/MainTitleHeader';
+import MainTitleHeader from 'components/organisms/MainTitleHeader';
 
 // Constants
-import * as TEXT from '@src/constants/text';
+import * as TEXT from 'constants/text';
 
 // Styles
 import styles from './SignUp.scss';

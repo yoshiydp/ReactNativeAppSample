@@ -2,7 +2,14 @@
 {
   "extends": "@tsconfig/react-native/tsconfig.json",
   "compilerOptions": {
-    "baseUrl": "src",
+    "baseUrl": ".",
+    "paths": {
+      "src/*": ["src/*"],
+      "components/*": ["src/components/*"],
+      "screens/*": ["src/screens/*"],
+      "constants/*": ["src/constants/*"],
+      "store/*": ["src/store/*"],
+    },
     "target": "es6",
     "module": "es2015",
     "lib": [
@@ -16,7 +23,7 @@
     "allowSyntheticDefaultImports": true,
     "strict": true,
     "forceConsistentCasingInFileNames": true,
-    "moduleResolution": "node",//node environment
+    "moduleResolution": "node",
     "resolveJsonModule": true,
     "isolatedModules": true,
     "noEmit": true,
@@ -24,8 +31,7 @@
   },
   "exclude": ["node_modules"],
   "include": [
-    "src",
     "src/**/*.ts",
-    "src/**/*.tsx"
+    "src/**/*.tsx",
   ]
 }

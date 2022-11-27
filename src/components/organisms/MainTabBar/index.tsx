@@ -5,25 +5,25 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
 const Tab = createBottomTabNavigator();
 
-// Stores
-import { useSelector } from '@src/stores';
-import { showOverlay } from '@src/stores/OverlaySlice';
-import { showMainTabMenu } from '@src/stores/MainTabMenuSlice';
+// Store
+import { useSelector } from 'store/index';
+import { showOverlay } from 'store/OverlaySlice';
+import { showMainTabMenu } from 'store/MainTabMenuSlice';
 
 // Screens
-import MyProjectsScreen from '@src/screens/MyProjects';
-import TrackListScreen from '@src/screens/TrackList';
-import RecordAudioScreen from '@src/screens/RecordAudio';
-import MyAccountScreen from '@src/screens/MyAccount';
+import MyProjectsScreen from 'screens/MyProjects';
+import TrackListScreen from 'screens/TrackList';
+import RecordAudioScreen from 'screens/RecordAudio';
+import MyAccountScreen from 'screens/MyAccount';
 
 // Components
-import MainTabMenu from '@src/components/organisms/MainTabMenu';
-import Overlay from '@src/components/atoms/Overlay';
-import Icon from '@src/components/atoms/Icon';
+import MainTabMenu from 'components/organisms/MainTabMenu';
+import Overlay from 'components/atoms/Overlay';
+import Icon from 'components/atoms/Icon';
 
 // Constants
-import * as COLOR from '@src/constants/color';
-import * as SVGPATH from '@src/constants/svgPath';
+import * as COLOR from 'constants/color';
+import * as SVGPATH from 'constants/svgPath';
 
 // Styles
 import styles from './MainTabBar.scss';

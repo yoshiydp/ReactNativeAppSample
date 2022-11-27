@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { View, Button, ScrollView } from 'react-native';
 
 // Components
-import MainTitleHeader from '@src/components/organisms/MainTitleHeader';
+import MainTitleHeader from 'components/organisms/MainTitleHeader';
 
 // Styles
 import styles from './MainScreen.scss';
