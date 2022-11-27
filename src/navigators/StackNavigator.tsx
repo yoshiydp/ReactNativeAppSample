@@ -2,21 +2,21 @@ import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 
 // Main Screens
-import LoadingScreen from '../screens/Loading';
-import LoginScreen from '../screens/Login';
-import SignUpScreen from '../screens/SignUp';
+import LoadingScreen from 'screens/Loading';
+import LoginScreen from 'screens/Login';
+import SignUpScreen from 'screens/SignUp';
 
 // Lower Screens
-import NewProjectScreen from '../screens/MyProjects/NewProject';
-import EditProjectScreen from '../screens/MyProjects/EditProject';
-import RecordingScreen from '../screens/MyProjects/Recording';
-import NewTrackScreen from '../screens/TrackList/NewTrack';
-import EditTrackScreen from '../screens/TrackList/EditTrack';
-import EditMyAccountScreen from '../screens/MyAccount/EditMyAccount';
-import PasswordResetScreen from '../screens/SignUp/PasswordReset';
+import NewProjectScreen from 'screens/MyProjects/NewProject';
+import EditProjectScreen from 'screens/MyProjects/EditProject';
+import RecordingScreen from 'screens/MyProjects/Recording';
+import NewTrackScreen from 'screens/TrackList/NewTrack';
+import EditTrackScreen from 'screens/TrackList/EditTrack';
+import EditMyAccountScreen from 'screens/MyAccount/EditMyAccount';
+import PasswordResetScreen from 'screens/SignUp/PasswordReset';
 
 // Components
-import MainTabBar from '../components/organisms/MainTabBar';
+import MainTabBar from 'components/organisms/MainTabBar';
 
 const Stack = createStackNavigator();
 
