@@ -13,14 +13,9 @@ interface Props {
 }
 
 const MainScreen = (props: Props) => {
-  const [visible, setVisible] = useState(false);
 
   useEffect(() => {
   }, []);
-
-  const toggleOverlay = () => {
-    setVisible(!visible);
-  };
 
   return (
     <View style={ styles.container }>
