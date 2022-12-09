@@ -1,10 +1,13 @@
 require_relative '../node_modules/react-native/scripts/react_native_pods'
 require_relative '../node_modules/@react-native-community/cli-platform-ios/native_modules'
 
-platform :ios, '12.4'
+platform :ios, '16.1'
 install! 'cocoapods', :deterministic_uuids => false
 
 target 'LyricsApp' do
+  pod 'FirebaseCore', :modular_headers => true
+  pod 'FirebaseCoreInternal', :modular_headers => true
+  pod 'GoogleUtilities', :modular_headers => true
   config = use_native_modules!
 
   # Flags change depending on the env values.

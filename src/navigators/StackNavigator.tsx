@@ -1,5 +1,7 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
+import { onAuthStateChanged } from 'firebase/auth';
+import { auth } from "../config/firebase";
 
 // Main Screens
 import LoadingScreen from 'screens/Loading';
@@ -21,21 +23,39 @@ import MainTabBar from 'components/organisms/MainTabBar';
 const Stack = createStackNavigator();
 
 const StackNavigator = () => {
+  const [user, setUser] = useState('');
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      setLoading(false);
+      if (user) {
+        console.log(user);
+        setUser(user);
+      } else {
+        setUser('');
+      }
+    });
+    return () => unsubscribe();
+  }, []);
 
   return (
     <Stack.Navigator screenOptions={{ headerShown: false }}>
+      {user ?
+        <Stack.Screen
+          name="MainTabBar"
+          component={ MainTabBar }
+        />
+        :
+        <Stack.Screen
+          name="Login"
+          component={ LoginScreen }
+        />
+      }
       <Stack.Screen
-        name="MainTabBar"
-        component={ MainTabBar }
-      />
-      <Stack.Screen
-        name="Loading"
-        component={ LoadingScreen }
-      />
-      <Stack.Screen
-        name="Login"
-        component={ LoginScreen }
-      />
+          name="Loading"
+          component={ LoadingScreen }
+        />
       <Stack.Screen
         name="SignUp"
         component={ SignUpScreen }

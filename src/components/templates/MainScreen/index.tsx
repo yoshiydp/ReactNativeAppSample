@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import { View, Button, ScrollView } from 'react-native';
+import { View, Button, ScrollView, Text } from 'react-native';
+
+import { firebaseConfig } from '../../../config';
 
 // Components
 import MainTitleHeader from 'components/organisms/MainTitleHeader';
