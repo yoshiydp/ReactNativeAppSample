@@ -47,18 +47,20 @@ const StackNavigator = () => {
           component={ MainTabBar }
         />
         :
-        <Stack.Screen
-          name="Login"
-          component={ LoginScreen }
-        />
+        <>
+          <Stack.Screen
+            name="Login"
+            component={ LoginScreen }
+          />
+          <Stack.Screen
+            name="SignUp"
+            component={ SignUpScreen }
+          />
+        </>
       }
       <Stack.Screen
-          name="Loading"
-          component={ LoadingScreen }
-        />
-      <Stack.Screen
-        name="SignUp"
-        component={ SignUpScreen }
+        name="Loading"
+        component={ LoadingScreen }
       />
       <Stack.Screen
         name="NewProject"
