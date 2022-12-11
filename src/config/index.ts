@@ -1,4 +1,4 @@
-export const FIREBASE_CONFIG = {
+export const firebaseConfig = {
   apiKey: "AIzaSyBShdE1r8BsejhjilhlFbBTxG9gK9ZnLME",
   authDomain: "lyrics-a7ae4.firebaseapp.com",
   databaseURL: "https://lyrics-a7ae4.firebaseio.com",
