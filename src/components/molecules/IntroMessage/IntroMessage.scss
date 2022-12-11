@@ -1,0 +1,30 @@
+@use '../../../globalStyles/' as g;
+
+.container {
+  // flex: 1;
+}
+
+%text {
+  text-align: center;
+  color: g.colors(white, base);
+}
+
+.text {
+  font-family: g.$font-dm-serif-display;
+  font-style: italic;
+  font-size: 16px;
+  @extend %text;
+}
+
+.logo {
+  font-family: g.$font-hurricane;
+  font-size: 70px;
+  @extend %text;
+}
+
+.message {
+  margin-top: 20px;
+  font-size: 14px;
+  font-weight: bold;
+  @extend %text;
+}

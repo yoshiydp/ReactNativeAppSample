@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import { View, Button, ScrollView } from 'react-native';
+import { View, Button, ScrollView, Text, TouchableOpacity } from 'react-native';
+import { signOut } from 'firebase/auth';
+import { auth } from '../../../config/firebase';
 
 // Components
 import MainTitleHeader from 'components/organisms/MainTitleHeader';
@@ -13,13 +15,18 @@ interface Props {
 }
 
 const MainScreen = (props: Props) => {
-  const [visible, setVisible] = useState(false);
 
   useEffect(() => {
   }, []);
 
-  const toggleOverlay = () => {
-    setVisible(!visible);
+  const handleLogout = () => {
+    signOut(auth)
+      .then(() => {
+        console.log('logout');
+      })
+      .catch((error) => {
+        console.log(error.message);
+      });
   };
 
   return (
@@ -35,6 +42,18 @@ const MainScreen = (props: Props) => {
         <Button title="EditTrack" onPress={() => props.navigation.navigate('EditTrack')} />
         <Button title="EditMyAccount" onPress={() => props.navigation.navigate('EditMyAccount')} />
         <Button title="PasswordReset" onPress={() => props.navigation.navigate('PasswordReset')} />
+        <TouchableOpacity
+          onPress={handleLogout}
+          style={{
+            marginTop: 10,
+            padding: 10,
+            backgroundColor: '#88cb7f',
+            borderRadius: 10,
+            width: 100,
+          }}
+        >
+          <Text style={{ color: 'white' }}>ログアウト</Text>
+        </TouchableOpacity>
       </ScrollView>
     </View>
   );
