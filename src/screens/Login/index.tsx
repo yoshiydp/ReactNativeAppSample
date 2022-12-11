@@ -11,10 +11,8 @@ import { signInWithEmailAndPassword } from 'firebase/auth';
 import { auth } from '../../config/firebase';
 
 // Components
-import MainTitleHeader from 'components/organisms/MainTitleHeader';
-
-// Constants
-import * as TEXT from 'constants/text';
+import IntroMessage from 'src/components/molecules/IntroMessage';
+import AuthForm from 'src/components/templates/AuthForm';
 
 // Styles
 import styles from './Login.scss';
@@ -40,9 +38,8 @@ const Login = (props: Props) => {
 
   return (
     <View style={styles.container}>
-      <MainTitleHeader
-        title={TEXT.TITLE_LOGIN}
-      />
+      <IntroMessage />
+      <AuthForm />
       <KeyboardAvoidingView
         behavior="padding"
         style={{
@@ -51,7 +48,6 @@ const Login = (props: Props) => {
         flex: 1,
         }}
       >
-        <Text style={{ fontSize: 20, marginBottom: 20 }}>ログイン画面</Text>
         <View style={{ marginBottom: 20 }}>
           <TextInput
             style={{
