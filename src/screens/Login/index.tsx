@@ -28,11 +28,14 @@ const Login = (props: Props) => {
   useEffect(() => {
   }, []);
 
-  const handleLogin = async () => {
+  const signIn = async () => {
     try {
       await signInWithEmailAndPassword(auth, email, password);
     } catch (error: any) {
-      console.log(error.message);
+      if (error.code === 'auth/invalid-email') console.log('メールアドレスまたはユーザー名が間違っています');
+      if (error.code === 'auth/wrong-password') console.log('パスワードが間違っています');
+      if (error.code === 'auth/user-not-found') console.log('ユーザーが見つかりませんでした');
+      console.log(error.code);
     }
   };
 
@@ -86,7 +89,7 @@ const Login = (props: Props) => {
             backgroundColor: '#88cb7f',
             borderRadius: 10,
           }}
-          onPress={handleLogin}
+          onPress={signIn}
           // disabled={!email || !password}
         >
           <Text style={{ color: 'white' }}>ログイン</Text>
