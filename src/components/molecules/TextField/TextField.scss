@@ -1,0 +1,25 @@
+@use '../../../globalStyles/' as g;
+
+.container {
+  position: relative;
+  width: 100%;
+  min-height: 53px;
+  padding: 8px 12px;
+  border-radius: 5px;
+  background: g.colors(blue, overlay);
+}
+
+.label {
+  position: absolute;
+  top: 8px;
+  left: 12px;
+  font-size: 12px;
+  color: g.colors(white, base);
+}
+
+.input {
+  width: 100%;
+  padding-top: 26px;
+  color: g.colors(gray, type1);
+  font-size: 16px;
+}
