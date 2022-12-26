@@ -14,6 +14,9 @@ import { auth } from '../../config/firebase';
 import IntroMessage from 'src/components/molecules/IntroMessage';
 import AuthForm from 'src/components/templates/AuthForm';
 
+// Constants
+import * as TEXT from 'constants/text';
+
 // Styles
 import styles from './Login.scss';
 
@@ -22,8 +25,24 @@ interface Props {
 }
 
 const Login = (props: Props) => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [email, setEmail] = useState<string>('');
+  const [password, setPassword] = useState<string>('');
+
+  const inputFieldItems = [
+    {
+      label: TEXT.LABEL_INPUT_USERNAME_EMAIL,
+      placeholder: TEXT.PLACEHOLDER_INPUT_USERNAME_EMAIL,
+      onChangeText: setEmail,
+      value: email,
+    },
+    {
+      label: TEXT.LABEL_INPUT_PASSWORD,
+      placeholder: TEXT.PLACEHOLDER_INPUT_PASSWORD,
+      onChangeText: setPassword,
+      value: password,
+      secureText: true
+    }
+  ];
 
   useEffect(() => {
   }, []);
@@ -31,10 +50,16 @@ const Login = (props: Props) => {
   const signIn = async () => {
     try {
       await signInWithEmailAndPassword(auth, email, password);
+      console.log(auth.currentUser?.photoURL);
+      console.log(auth.currentUser?.displayName);
+      console.log(auth.currentUser?.email);
+      console.log(auth.currentUser?.photoURL);
+      
     } catch (error: any) {
       if (error.code === 'auth/invalid-email') console.log('メールアドレスまたはユーザー名が間違っています');
       if (error.code === 'auth/wrong-password') console.log('パスワードが間違っています');
       if (error.code === 'auth/user-not-found') console.log('ユーザーが見つかりませんでした');
+      if (error.code === 'auth/internal-error') console.log('パスワードが入力されていません');
       console.log(error.code);
     }
   };
@@ -42,8 +67,12 @@ const Login = (props: Props) => {
   return (
     <View style={styles.container}>
       <IntroMessage />
-      <AuthForm />
-      <KeyboardAvoidingView
+      <AuthForm
+        inputFieldItems={ inputFieldItems }
+        submitText="ログイン"
+        submitEvent={ signIn }
+      />
+      {/* <KeyboardAvoidingView
         behavior="padding"
         style={{
         justifyContent: 'center',
@@ -95,7 +124,7 @@ const Login = (props: Props) => {
           <Text style={{ color: 'white' }}>ログイン</Text>
         </TouchableOpacity>
         <Button title="SignUp" onPress={() => props.navigation.navigate('SignUp')} />
-      </KeyboardAvoidingView>
+      </KeyboardAvoidingView> */}
     </View>
   );
 };
