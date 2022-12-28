@@ -5,7 +5,6 @@ import {
   Text,
   TouchableOpacity,
   KeyboardAvoidingView,
-  Button
 } from 'react-native';
 import { signInWithEmailAndPassword } from 'firebase/auth';
 import { auth } from '../../config/firebase';
@@ -13,6 +12,8 @@ import { auth } from '../../config/firebase';
 // Components
 import IntroMessage from 'src/components/molecules/IntroMessage';
 import AuthForm from 'src/components/templates/AuthForm';
+import SocialSignIn from 'src/components/organisms/SocialSignIn';
+import Button from 'src/components/atoms/Button';
 
 // Constants
 import * as TEXT from 'constants/text';
@@ -34,13 +35,15 @@ const Login = (props: Props) => {
       placeholder: TEXT.PLACEHOLDER_INPUT_USERNAME_EMAIL,
       onChangeText: setEmail,
       value: email,
+      required: true
     },
     {
       label: TEXT.LABEL_INPUT_PASSWORD,
       placeholder: TEXT.PLACEHOLDER_INPUT_PASSWORD,
       onChangeText: setPassword,
       value: password,
-      secureText: true
+      secureText: true,
+      required: true
     }
   ];
 
@@ -72,6 +75,27 @@ const Login = (props: Props) => {
         submitText="ログイン"
         submitEvent={ signIn }
       />
+      <Text style={styles.forgotMessagge}>
+        パスワードをお忘れの場合は
+        <Text
+          style={ styles.linkText }
+          onPress={() => props.navigation.navigate('PasswordReset')}>
+          こちら
+        </Text>
+        から
+      </Text>
+      <SocialSignIn />
+      <View style={ styles.signUpWrap }>
+        <Text style={ styles.signUpMessage }>
+          まだアカウントを作成していない場合は下のボタンから
+        </Text>
+        <View style={ styles.signUpButtonWrap }>
+          <Button
+            text="新規アカウント作成"
+            onPressEvent={() => props.navigation.navigate('SignUp')}
+          />
+        </View>
+      </View>
       {/* <KeyboardAvoidingView
         behavior="padding"
         style={{

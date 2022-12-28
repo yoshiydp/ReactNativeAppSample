@@ -12,8 +12,8 @@ interface Props {
   placeholder: string;
   onChangeText?: (value: string) => void;
   value: string;
-  required?: boolean;
   secureText?: boolean;
+  required?: boolean;
 }
 
 const TextField = (props: Props) => {
@@ -34,9 +34,14 @@ const TextField = (props: Props) => {
 
   return (
     <View style={ styles.container }>
-      <Text style={ styles.label }>
-        { props.label }
-      </Text>
+      <View style={ styles.labelWrap }>
+        <Text style={ styles.label }>
+          { props.label }
+        </Text>
+        { props.required &&
+          <Text style={ styles.required }>*</Text>
+        }
+      </View>
       <TextInput
         style={ styles.input }
         placeholder={ props.placeholder }

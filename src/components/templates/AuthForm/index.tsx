@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { View, KeyboardAvoidingView } from 'react-native';
+import { View, KeyboardAvoidingView, Text } from 'react-native';
 
 // Components
 import TextField from 'src/components/molecules/TextField';
@@ -14,6 +14,7 @@ interface InputField {
   onChangeText: (value: string) => void;
   value: string;
   secureText?: boolean;
+  required?: boolean;
 }
 
 interface Props {
@@ -37,10 +38,11 @@ const AuthForm = (props: Props) => {
             onChangeText={ item.onChangeText }
             value={ item.value }
             secureText={ item.secureText }
+            required={ item.required }
           />
         </View>
       ))}
-      <View style={ styles.buttonWrap }>
+      <View style={ styles.submitButtonWrap }>
         <Button
           text={ props.submitText }
           onPressEvent={ props.submitEvent }
