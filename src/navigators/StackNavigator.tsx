@@ -23,8 +23,8 @@ import MainTabBar from 'components/organisms/MainTabBar';
 const Stack = createStackNavigator();
 
 const StackNavigator = () => {
-  const [user, setUser] = useState('');
-  const [loading, setLoading] = useState(true);
+  const [user, setUser] = useState<any>('');
+  const [loading, setLoading] = useState<boolean>(true);
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {

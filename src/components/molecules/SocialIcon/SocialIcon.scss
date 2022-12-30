@@ -1,0 +1,11 @@
+@use '../../../globalStyles/' as g;
+
+.container {
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 50px;
+  background: g.colors(white, base);
+}

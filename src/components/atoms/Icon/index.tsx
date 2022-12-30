@@ -24,56 +24,10 @@ import Svg, {
   Mask,
 } from 'react-native-svg';
 
-interface svgCommonProps {
-  svgType: number;
-  containerStyle?: any;
-  width: string;
-  height: string;
-  viewBox: string;
-  pathFill: string;
-}
-interface svgType1 extends svgCommonProps {
-  gTransform?: string;
-  pathD1?: string;
-  pathTransform1?: string;
-  pathD2?: string;
-  pathTransform2?: string;
-  pathD3?: string;
-  pathTransform3?: string;
-}
+// Interfaces
+import { svgType1, svgType2, svgType3, svgType4, svgType5 } from 'interfaces/svgInterface';
 
-interface svgType2 extends svgCommonProps {
-  parentGTransform?: string;
-  childGTransform?: string;
-  pathD?: string;
-  pathTransform?: string;
-}
-
-interface svgType3 extends svgCommonProps {
-  parentGTransform1?: string;
-  parentGTransform2?: string;
-  childGTransform1?: string;
-  childGTransform2?: string;
-  pathD1?: string;
-  pathD2?: string;
-  pathTransform1?: string;
-  pathTransform2?: string;
-}
-
-interface svgType4 extends svgCommonProps {
-  pathD1?: string;
-  pathD2?: string;
-  pathD3?: string;
-  pathD4?: string;
-  pathD5?: string;
-  pathTransform1?: string;
-  pathTransform2?: string;
-  pathTransform3?: string;
-  pathTransform4?: string;
-  pathTransform5?: string;
-}
-
-const Icon = (props: (svgType1 & svgType2 & svgType3 & svgType4)) => {
+const Icon = (props: (svgType1 & svgType2 & svgType3 & svgType4 & svgType5)) => {
 
   return (
     <View style={props.containerStyle}>
@@ -176,6 +130,39 @@ const Icon = (props: (svgType1 & svgType2 & svgType3 & svgType4)) => {
               d={props.pathD5}
               transform={props.pathTransform5}
               fill={props.pathFill}
+            />
+          </Svg>
+        )
+        : props.svgType === 5 ?
+        (
+          <Svg
+            width={props.width}
+            height={props.height}
+            viewBox={props.viewBox}>
+            <Path
+              d={props.pathD1}
+              fill={props.pathFill1}
+              fill-rule={props.fillRule}
+            />
+            <Path
+              d={props.pathD2}
+              fill={props.pathFill2}
+              fill-rule={props.fillRule}
+            />
+            <Path
+              d={props.pathD3}
+              fill={props.pathFill3}
+              fill-rule={props.fillRule}
+            />
+            <Path
+              d={props.pathD4}
+              fill={props.pathFill4}
+              fill-rule={props.fillRule}
+            />
+            <Path
+              d={props.pathD5}
+              fill={props.pathFill5}
+              fill-rule={props.fillRule}
             />
           </Svg>
         )
