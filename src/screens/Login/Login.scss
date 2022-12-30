@@ -5,3 +5,30 @@
   padding: 88px 35px 90px;
   background: g.colors(blue, bg);
 }
+
+%text {
+  text-align: center;
+  color: g.colors(gray, type1);
+  font-size: 12px;
+}
+
+.forgotMessagge {
+  margin-top: 32px;
+  @extend %text;
+}
+
+.linkText {
+  color: g.colors(green, base);
+}
+
+.signUp {
+  &Wrap {
+    margin-top: 60px;
+  }
+  &Message {
+    @extend %text;
+  }
+  &ButtonWrap {
+    margin-top: 20px;
+  }
+}
