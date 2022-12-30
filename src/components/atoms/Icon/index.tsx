@@ -24,54 +24,8 @@ import Svg, {
   Mask,
 } from 'react-native-svg';
 
-interface svgCommonProps {
-  svgType: number;
-  containerStyle?: any;
-  width: string;
-  height: string;
-  viewBox: string;
-  pathFill: string;
-}
-interface svgType1 extends svgCommonProps {
-  gTransform?: string;
-  pathD1?: string;
-  pathTransform1?: string;
-  pathD2?: string;
-  pathTransform2?: string;
-  pathD3?: string;
-  pathTransform3?: string;
-}
-
-interface svgType2 extends svgCommonProps {
-  parentGTransform?: string;
-  childGTransform?: string;
-  pathD?: string;
-  pathTransform?: string;
-}
-
-interface svgType3 extends svgCommonProps {
-  parentGTransform1?: string;
-  parentGTransform2?: string;
-  childGTransform1?: string;
-  childGTransform2?: string;
-  pathD1?: string;
-  pathD2?: string;
-  pathTransform1?: string;
-  pathTransform2?: string;
-}
-
-interface svgType4 extends svgCommonProps {
-  pathD1?: string;
-  pathD2?: string;
-  pathD3?: string;
-  pathD4?: string;
-  pathD5?: string;
-  pathTransform1?: string;
-  pathTransform2?: string;
-  pathTransform3?: string;
-  pathTransform4?: string;
-  pathTransform5?: string;
-}
+// Interfaces
+import { svgType1, svgType2, svgType3, svgType4 } from 'interfaces/svgInterface';
 
 const Icon = (props: (svgType1 & svgType2 & svgType3 & svgType4)) => {
 
