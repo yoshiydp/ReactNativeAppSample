@@ -4,7 +4,7 @@ export interface svgCommonProps {
   width: string;
   height: string;
   viewBox: string;
-  pathFill: string;
+  pathFill?: string;
 }
 
 export interface svgType1 extends svgCommonProps {
@@ -46,4 +46,18 @@ export interface svgType4 extends svgCommonProps {
   pathTransform3?: string;
   pathTransform4?: string;
   pathTransform5?: string;
+}
+
+export interface svgType5 extends svgCommonProps {
+  pathD1?: string;
+  pathD2?: string;
+  pathD3?: string;
+  pathD4?: string;
+  pathD5?: string;
+  pathFill1?: string;
+  pathFill2?: string;
+  pathFill3?: string;
+  pathFill4?: string;
+  pathFill5?: string;
+  fillRule?: string;
 }

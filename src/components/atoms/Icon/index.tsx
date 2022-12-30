@@ -25,9 +25,9 @@ import Svg, {
 } from 'react-native-svg';
 
 // Interfaces
-import { svgType1, svgType2, svgType3, svgType4 } from 'interfaces/svgInterface';
+import { svgType1, svgType2, svgType3, svgType4, svgType5 } from 'interfaces/svgInterface';
 
-const Icon = (props: (svgType1 & svgType2 & svgType3 & svgType4)) => {
+const Icon = (props: (svgType1 & svgType2 & svgType3 & svgType4 & svgType5)) => {
 
   return (
     <View style={props.containerStyle}>
@@ -130,6 +130,39 @@ const Icon = (props: (svgType1 & svgType2 & svgType3 & svgType4)) => {
               d={props.pathD5}
               transform={props.pathTransform5}
               fill={props.pathFill}
+            />
+          </Svg>
+        )
+        : props.svgType === 5 ?
+        (
+          <Svg
+            width={props.width}
+            height={props.height}
+            viewBox={props.viewBox}>
+            <Path
+              d={props.pathD1}
+              fill={props.pathFill1}
+              fill-rule={props.fillRule}
+            />
+            <Path
+              d={props.pathD2}
+              fill={props.pathFill2}
+              fill-rule={props.fillRule}
+            />
+            <Path
+              d={props.pathD3}
+              fill={props.pathFill3}
+              fill-rule={props.fillRule}
+            />
+            <Path
+              d={props.pathD4}
+              fill={props.pathFill4}
+              fill-rule={props.fillRule}
+            />
+            <Path
+              d={props.pathD5}
+              fill={props.pathFill5}
+              fill-rule={props.fillRule}
             />
           </Svg>
         )
