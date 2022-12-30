@@ -16,6 +16,8 @@ import SocialSignIn from 'src/components/organisms/SocialSignIn';
 import Button from 'src/components/atoms/Button';
 
 // Constants
+import * as COLOR from 'constants/color';
+import * as SVGPATH from 'constants/svgPath';
 import * as TEXT from 'constants/text';
 
 // Styles
@@ -47,6 +49,35 @@ const Login = (props: Props) => {
     }
   ];
 
+  const socialItems = [
+    {
+      svgType: 1,
+      width: "15",
+      height: "19",
+      viewBox: "0 0 15 19",
+      pathD1: SVGPATH.ICON_APPLE,
+      pathTransform1: "translate(-20.5 -16)",
+      pathFill: COLOR.COLOR_BLACK_BASE,
+    },
+    {
+      svgType: 5,
+      width: "18",
+      height: "18",
+      viewBox: "0 0 18 18",
+      pathD1: SVGPATH.ICON_GOOGLE_PATH1,
+      pathD2: SVGPATH.ICON_GOOGLE_PATH2,
+      pathD3: SVGPATH.ICON_GOOGLE_PATH3,
+      pathD4: SVGPATH.ICON_GOOGLE_PATH4,
+      pathD5: SVGPATH.ICON_GOOGLE_PATH5,
+      pathFill1: "#4285f4",
+      pathFill2: "#34a853",
+      pathFill3: "#fbbc05",
+      pathFill4: "#ea4335",
+      pathFill5: "none",
+      fillRule: "evenodd",
+    }
+  ];
+
   useEffect(() => {
   }, []);
 
@@ -63,6 +94,7 @@ const Login = (props: Props) => {
       if (error.code === 'auth/wrong-password') console.log('パスワードが間違っています');
       if (error.code === 'auth/user-not-found') console.log('ユーザーが見つかりませんでした');
       if (error.code === 'auth/internal-error') console.log('パスワードが入力されていません');
+      if (error.code === 'auth/network-request-failed') console.log('ネットワークへの接続が切れています');
       console.log(error.code);
     }
   };
@@ -84,7 +116,9 @@ const Login = (props: Props) => {
         </Text>
         から
       </Text>
-      <SocialSignIn />
+      <SocialSignIn
+        socialItems={ socialItems }
+      />
       <View style={ styles.signUpWrap }>
         <Text style={ styles.signUpMessage }>
           まだアカウントを作成していない場合は下のボタンから
