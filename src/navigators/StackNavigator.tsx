@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 import { onAuthStateChanged } from 'firebase/auth';
-import { auth } from "../config/firebase";
+import { firebaseAuth } from "../config/firebase";
 
 // Main Screens
 import LoadingScreen from 'screens/Loading';
@@ -27,7 +27,7 @@ const StackNavigator = () => {
   const [loading, setLoading] = useState<boolean>(true);
 
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (user) => {
+    const unsubscribe = onAuthStateChanged(firebaseAuth, (user) => {
       setLoading(false);
       if (user) {
         console.log(user);

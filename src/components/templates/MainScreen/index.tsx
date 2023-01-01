@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { View, Button, ScrollView, Text, TouchableOpacity } from 'react-native';
 import { signOut } from 'firebase/auth';
-import { auth } from '../../../config/firebase';
+import { firebaseAuth } from '../../../config/firebase';
 
 // Components
 import MainTitleHeader from 'components/organisms/MainTitleHeader';
@@ -20,7 +20,7 @@ const MainScreen = (props: Props) => {
   }, []);
 
   const handleLogout = () => {
-    signOut(auth)
+    signOut(firebaseAuth)
       .then(() => {
         console.log('logout');
       })
