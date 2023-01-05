@@ -1,13 +1,21 @@
 import React, { useEffect, useState } from 'react';
 import {
   View,
-  TextInput,
   Text,
-  TouchableOpacity,
   KeyboardAvoidingView,
 } from 'react-native';
-import { signInWithEmailAndPassword } from 'firebase/auth';
-import { auth } from '../../config/firebase';
+import { useDispatch } from 'react-redux';
+import { signInWithEmailAndPassword, onAuthStateChanged } from 'firebase/auth';
+import { GoogleSignin } from '@react-native-google-signin/google-signin';
+import { firebaseAuth } from '../../config/firebase';
+import auth from '@react-native-firebase/auth';
+
+// Store
+import { useSelector } from 'store/index';
+import { subscribe } from 'src/store/SubscribeSlice';
+
+// env
+import { WEB_CLIENT_ID } from '@env';
 
 // Components
 import IntroMessage from 'src/components/molecules/IntroMessage';
@@ -28,9 +36,56 @@ interface Props {
 }
 
 const Login = (props: Props) => {
+  const dispatch = useDispatch();
+  const subscribed = useSelector((state) => state.subscribe.subscribe);
   const [email, setEmail] = useState<string>('');
   const [password, setPassword] = useState<string>('');
+  const [user, setUser] = useState<any>('');
 
+  GoogleSignin.configure({
+    webClientId: WEB_CLIENT_ID,
+    offlineAccess: true,
+    forceCodeForRefreshToken: true,
+  });
+
+  useEffect(() => {
+  }, []);
+
+  const signIn = async () => {
+    try {
+      await signInWithEmailAndPassword(firebaseAuth, email, password);
+      console.log(firebaseAuth.currentUser?.photoURL);
+      console.log(firebaseAuth.currentUser?.displayName);
+      console.log(firebaseAuth.currentUser?.email);
+      console.log(firebaseAuth.currentUser?.photoURL);
+      
+    } catch (error: any) {
+      if (error.code === 'auth/invalid-email') console.log('メールアドレスまたはユーザー名が間違っています');
+      if (error.code === 'auth/wrong-password') console.log('パスワードが間違っています');
+      if (error.code === 'auth/user-not-found') console.log('ユーザーが見つかりませんでした');
+      if (error.code === 'auth/internal-error') console.log('パスワードが入力されていません');
+      if (error.code === 'auth/network-request-failed') console.log('ネットワークへの接続が切れています');
+      console.log(error.code);
+    }
+  };
+
+  const signInWithGoogle = async () => {
+    try {
+      await GoogleSignin.hasPlayServices({ showPlayServicesUpdateDialog: true });
+      const { idToken } = await GoogleSignin.signIn();
+      const googleCredential = auth.GoogleAuthProvider.credential(idToken);
+      dispatch(subscribe());
+      return auth().signInWithCredential(googleCredential);
+    } catch (error: any) {
+      console.log(error, error.code);
+    }
+  }
+
+  const onPressEvent1 = () => {
+    console.log('onpress: onPressEvent1');
+  }
+
+  // テキストフォームリスト
   const inputFieldItems = [
     {
       label: TEXT.LABEL_INPUT_USERNAME_EMAIL,
@@ -49,7 +104,8 @@ const Login = (props: Props) => {
     }
   ];
 
-  const socialItems = [
+  // ソーシャルアイコンリスト
+  const socialIconItems = [
     {
       svgType: 1,
       width: "15",
@@ -58,6 +114,7 @@ const Login = (props: Props) => {
       pathD1: SVGPATH.ICON_APPLE,
       pathTransform1: "translate(-20.5 -16)",
       pathFill: COLOR.COLOR_BLACK_BASE,
+      onPressEvent: onPressEvent1
     },
     {
       svgType: 5,
@@ -75,29 +132,9 @@ const Login = (props: Props) => {
       pathFill4: "#ea4335",
       pathFill5: "none",
       fillRule: "evenodd",
+      onPressEvent: signInWithGoogle
     }
   ];
-
-  useEffect(() => {
-  }, []);
-
-  const signIn = async () => {
-    try {
-      await signInWithEmailAndPassword(auth, email, password);
-      console.log(auth.currentUser?.photoURL);
-      console.log(auth.currentUser?.displayName);
-      console.log(auth.currentUser?.email);
-      console.log(auth.currentUser?.photoURL);
-      
-    } catch (error: any) {
-      if (error.code === 'auth/invalid-email') console.log('メールアドレスまたはユーザー名が間違っています');
-      if (error.code === 'auth/wrong-password') console.log('パスワードが間違っています');
-      if (error.code === 'auth/user-not-found') console.log('ユーザーが見つかりませんでした');
-      if (error.code === 'auth/internal-error') console.log('パスワードが入力されていません');
-      if (error.code === 'auth/network-request-failed') console.log('ネットワークへの接続が切れています');
-      console.log(error.code);
-    }
-  };
 
   return (
     <View style={styles.container}>
@@ -117,7 +154,7 @@ const Login = (props: Props) => {
         から
       </Text>
       <SocialSignIn
-        socialItems={ socialItems }
+        socialIconItems={ socialIconItems }
       />
       <View style={ styles.signUpWrap }>
         <Text style={ styles.signUpMessage }>

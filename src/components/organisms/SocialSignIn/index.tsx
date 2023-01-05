@@ -10,8 +10,12 @@ import { svgType1, svgType2, svgType3, svgType4, svgType5 } from 'interfaces/svg
 // Styles
 import styles from './SocialSignIn.scss';
 
+interface OnPressEvent {
+  onPressEvent?: () => void;
+}
+
 interface Props {
-  socialItems: Array<svgType1 & svgType2 & svgType3 & svgType4 & svgType5>;
+  socialIconItems: Array<svgType1 & svgType2 & svgType3 & svgType4 & svgType5 & OnPressEvent>;
 }
 
 const SocialSignIn = (props: Props) => {
@@ -29,8 +33,8 @@ const SocialSignIn = (props: Props) => {
         <View style={ styles.titleBorder }></View>
       </View>
       <View style={ styles.socialList }>
-        { props.socialItems.map((item, index) => (
-          <View style={ styles.socialItems } key={ index }>
+        { props.socialIconItems.map((item, index) => (
+          <View style={ styles.socialIconItems } key={ index }>
             { item.svgType === 1 ?
               (
                 <SocialIcon
@@ -41,6 +45,7 @@ const SocialSignIn = (props: Props) => {
                   pathD1={ item.pathD1 }
                   pathTransform1={ item.pathTransform1 }
                   pathFill={ item.pathFill }
+                  onPressEvent={ item.onPressEvent }
                 />
               )
               : item.svgType === 5 ?
@@ -61,6 +66,7 @@ const SocialSignIn = (props: Props) => {
                   pathFill4={ item.pathFill4 }
                   pathFill5={ item.pathFill5 }
                   fillRule={ item.fillRule }
+                  onPressEvent={ item.onPressEvent }
                 />
               )
               : ''

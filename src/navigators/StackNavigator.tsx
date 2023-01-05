@@ -1,7 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 import { onAuthStateChanged } from 'firebase/auth';
-import { auth } from "../config/firebase";
+import { firebaseAuth } from "../config/firebase";
+import auth from '@react-native-firebase/auth';
+
+// Store
+import { useSelector } from 'store/index';
 
 // Main Screens
 import LoadingScreen from 'screens/Loading';
@@ -23,24 +27,42 @@ import MainTabBar from 'components/organisms/MainTabBar';
 const Stack = createStackNavigator();
 
 const StackNavigator = () => {
+  const subscribed = useSelector((state) => state.subscribe.subscribe);
   const [user, setUser] = useState<any>('');
-  const [loading, setLoading] = useState<boolean>(true);
 
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (user) => {
-      setLoading(false);
-      if (user) {
-        console.log(user);
-        setUser(user);
-      } else {
-        setUser('');
-      }
-    });
-    return () => unsubscribe();
-  }, []);
+    console.log('social subscribed: ' + subscribed);
+    if (subscribed) {
+      const socialSubscribe = auth().onAuthStateChanged(onSocialStateChanged);
+      return () => socialSubscribe();
+    } else {
+      const subscribe = onAuthStateChanged(firebaseAuth, (user) => {
+        if (user) {
+          setUser(user);
+          console.log('stacked user:' + JSON.stringify(user));
+        } else {
+          setUser('');
+          console.log('stack user:' + JSON.stringify(user));
+        }
+      });
+      return () => subscribe();
+    }
+  }, [subscribed]);
+
+  const onSocialStateChanged = (user: any) => {
+    if (user) {
+      setUser(user);
+      console.log(user);
+    } else {
+      setUser('');
+      console.log(user);
+    }
+  }
 
   return (
-    <Stack.Navigator screenOptions={{ headerShown: false }}>
+    <Stack.Navigator
+      screenOptions={{ headerShown: false }}
+      initialRouteName="LoginScreen">
       {user ?
         <Stack.Screen
           name="MainTabBar"
