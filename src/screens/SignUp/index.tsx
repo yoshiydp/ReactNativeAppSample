@@ -8,7 +8,7 @@ import {
   Button
 } from 'react-native';
 import { createUserWithEmailAndPassword, updateProfile } from 'firebase/auth';
-import { auth } from '../../config/firebase';
+import { firebaseAuth } from '../../config/firebase';
 
 // Components
 import MainTitleHeader from 'components/organisms/MainTitleHeader';
@@ -29,7 +29,7 @@ const SignUp = () => {
 
   const signUp = async () => {
     try {
-      const { user } = await createUserWithEmailAndPassword(auth, email, password);
+      const { user } = await createUserWithEmailAndPassword(firebaseAuth, email, password);
       await updateProfile(user, {
         displayName: userName
       });

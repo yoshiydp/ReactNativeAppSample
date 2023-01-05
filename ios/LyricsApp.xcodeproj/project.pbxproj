@@ -11,10 +11,11 @@
 		13B07FBC1A68108700A75B9A /* AppDelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.mm */; };
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
+		1A23D2CB29617C6900C6DCDB /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 1A23D2CA29617C6900C6DCDB /* GoogleService-Info.plist */; };
 		1A4BCA0828F59FFF003FE804 /* Fonts in Resources */ = {isa = PBXBuildFile; fileRef = 1A4BCA0728F59FFF003FE804 /* Fonts */; };
+		344A8E7C91A253DB984B2542 /* libPods-LyricsApp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 28F5EF21E2A197F6FFBA1931 /* libPods-LyricsApp.a */; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
-		8FB854F614F91144BD144A61 /* libPods-LyricsApp-LyricsAppTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 03A162484695E934FD4B1580 /* libPods-LyricsApp-LyricsAppTests.a */; };
-		F67E5A074BA6831A8622EB92 /* libPods-LyricsApp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2551CB7F4115A4EDB7C3141A /* libPods-LyricsApp.a */; };
+		DE74BB7B06946BC095FE24E5 /* libPods-LyricsApp-LyricsAppTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 257D39407C2B0B7D094F084C /* libPods-LyricsApp-LyricsAppTests.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -31,15 +32,16 @@
 		00E356EE1AD99517003FC87E /* LyricsAppTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = LyricsAppTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		00E356F11AD99517003FC87E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		00E356F21AD99517003FC87E /* LyricsAppTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LyricsAppTests.m; sourceTree = "<group>"; };
-		03A162484695E934FD4B1580 /* libPods-LyricsApp-LyricsAppTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-LyricsApp-LyricsAppTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		13B07F961A680F5B00A75B9A /* LyricsApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LyricsApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		13B07FAF1A68108700A75B9A /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = LyricsApp/AppDelegate.h; sourceTree = "<group>"; };
 		13B07FB01A68108700A75B9A /* AppDelegate.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = AppDelegate.mm; path = LyricsApp/AppDelegate.mm; sourceTree = "<group>"; };
 		13B07FB51A68108700A75B9A /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = LyricsApp/Images.xcassets; sourceTree = "<group>"; };
 		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = LyricsApp/Info.plist; sourceTree = "<group>"; };
 		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = LyricsApp/main.m; sourceTree = "<group>"; };
+		1A23D2CA29617C6900C6DCDB /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		1A4BCA0728F59FFF003FE804 /* Fonts */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Fonts; sourceTree = "<group>"; };
-		2551CB7F4115A4EDB7C3141A /* libPods-LyricsApp.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-LyricsApp.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		257D39407C2B0B7D094F084C /* libPods-LyricsApp-LyricsAppTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-LyricsApp-LyricsAppTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		28F5EF21E2A197F6FFBA1931 /* libPods-LyricsApp.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-LyricsApp.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		3B4392A12AC88292D35C810B /* Pods-LyricsApp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LyricsApp.debug.xcconfig"; path = "Target Support Files/Pods-LyricsApp/Pods-LyricsApp.debug.xcconfig"; sourceTree = "<group>"; };
 		5709B34CF0A7D63546082F79 /* Pods-LyricsApp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LyricsApp.release.xcconfig"; path = "Target Support Files/Pods-LyricsApp/Pods-LyricsApp.release.xcconfig"; sourceTree = "<group>"; };
 		5B7EB9410499542E8C5724F5 /* Pods-LyricsApp-LyricsAppTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LyricsApp-LyricsAppTests.debug.xcconfig"; path = "Target Support Files/Pods-LyricsApp-LyricsAppTests/Pods-LyricsApp-LyricsAppTests.debug.xcconfig"; sourceTree = "<group>"; };
@@ -53,7 +55,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				8FB854F614F91144BD144A61 /* libPods-LyricsApp-LyricsAppTests.a in Frameworks */,
+				DE74BB7B06946BC095FE24E5 /* libPods-LyricsApp-LyricsAppTests.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -61,7 +63,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F67E5A074BA6831A8622EB92 /* libPods-LyricsApp.a in Frameworks */,
+				344A8E7C91A253DB984B2542 /* libPods-LyricsApp.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -88,6 +90,7 @@
 		13B07FAE1A68108700A75B9A /* LyricsApp */ = {
 			isa = PBXGroup;
 			children = (
+				1A23D2CA29617C6900C6DCDB /* GoogleService-Info.plist */,
 				13B07FAF1A68108700A75B9A /* AppDelegate.h */,
 				13B07FB01A68108700A75B9A /* AppDelegate.mm */,
 				13B07FB51A68108700A75B9A /* Images.xcassets */,
@@ -102,8 +105,8 @@
 			isa = PBXGroup;
 			children = (
 				ED297162215061F000B7C4FE /* JavaScriptCore.framework */,
-				2551CB7F4115A4EDB7C3141A /* libPods-LyricsApp.a */,
-				03A162484695E934FD4B1580 /* libPods-LyricsApp-LyricsAppTests.a */,
+				28F5EF21E2A197F6FFBA1931 /* libPods-LyricsApp.a */,
+				257D39407C2B0B7D094F084C /* libPods-LyricsApp-LyricsAppTests.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -163,7 +166,7 @@
 				00E356EB1AD99517003FC87E /* Frameworks */,
 				00E356EC1AD99517003FC87E /* Resources */,
 				C59DA0FBD6956966B86A3779 /* [CP] Embed Pods Frameworks */,
-				42338673CAD5E47DAB09AD27 /* [CP] Copy Pods Resources */,
+				AEF84145F863DB96D3F45056 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -187,7 +190,7 @@
 				00DD1BFF1BD5951E006B06BC /* Bundle React Native code and images */,
 				00EEFC60759A1932668264C0 /* [CP] Embed Pods Frameworks */,
 				8D13571B84B70CE574C7208B /* [CP-User] [RNFB] Core Configuration */,
-				165075CA82EC5EEA444E6B5B /* [CP] Copy Pods Resources */,
+				606E1C99D4912A5F3923A62A /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -247,6 +250,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				1A4BCA0828F59FFF003FE804 /* Fonts in Resources */,
+				1A23D2CB29617C6900C6DCDB /* GoogleService-Info.plist in Resources */,
 				81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
 			);
@@ -288,7 +292,7 @@
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-LyricsApp/Pods-LyricsApp-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		165075CA82EC5EEA444E6B5B /* [CP] Copy Pods Resources */ = {
+		606E1C99D4912A5F3923A62A /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -303,23 +307,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-LyricsApp/Pods-LyricsApp-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		42338673CAD5E47DAB09AD27 /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-LyricsApp-LyricsAppTests/Pods-LyricsApp-LyricsAppTests-resources-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Copy Pods Resources";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-LyricsApp-LyricsAppTests/Pods-LyricsApp-LyricsAppTests-resources-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-LyricsApp-LyricsAppTests/Pods-LyricsApp-LyricsAppTests-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		8D13571B84B70CE574C7208B /* [CP-User] [RNFB] Core Configuration */ = {
@@ -355,6 +342,23 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		AEF84145F863DB96D3F45056 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-LyricsApp-LyricsAppTests/Pods-LyricsApp-LyricsAppTests-resources-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Copy Pods Resources";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-LyricsApp-LyricsAppTests/Pods-LyricsApp-LyricsAppTests-resources-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-LyricsApp-LyricsAppTests/Pods-LyricsApp-LyricsAppTests-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		C38B50BA6285516D6DCD4F65 /* [CP] Check Pods Manifest.lock */ = {
