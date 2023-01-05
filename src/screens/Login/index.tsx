@@ -4,10 +4,18 @@ import {
   Text,
   KeyboardAvoidingView,
 } from 'react-native';
+import { useDispatch } from 'react-redux';
 import { signInWithEmailAndPassword, onAuthStateChanged } from 'firebase/auth';
 import { GoogleSignin } from '@react-native-google-signin/google-signin';
 import { firebaseAuth } from '../../config/firebase';
 import auth from '@react-native-firebase/auth';
+
+// Store
+import { useSelector } from 'store/index';
+import { subscribe } from 'src/store/SubscribeSlice';
+
+// env
+import { WEB_CLIENT_ID } from '@env';
 
 // Components
 import IntroMessage from 'src/components/molecules/IntroMessage';
@@ -28,27 +36,19 @@ interface Props {
 }
 
 const Login = (props: Props) => {
+  const dispatch = useDispatch();
+  const subscribed = useSelector((state) => state.subscribe.subscribe);
   const [email, setEmail] = useState<string>('');
   const [password, setPassword] = useState<string>('');
+  const [user, setUser] = useState<any>('');
+
+  GoogleSignin.configure({
+    webClientId: WEB_CLIENT_ID,
+    offlineAccess: true,
+    forceCodeForRefreshToken: true,
+  });
 
   useEffect(() => {
-    GoogleSignin.configure({
-      // scopes: ['profile', 'email',], // what API you want to access on behalf of the user, default is email and profile
-      webClientId:
-        '284037821861-utcdb2ehla1f70j2ojecvjjvle5ijl0t.apps.googleusercontent.com',
-      offlineAccess: true,
-      forceCodeForRefreshToken: true,
-    });
-    auth().onAuthStateChanged((firebaseAuth) => {
-      if (firebaseAuth) {
-        const tempUser = {
-          id: firebaseAuth.uid,
-          name: firebaseAuth?.displayName,
-          email: firebaseAuth?.email,
-        };
-        console.log(firebaseAuth, tempUser);
-      }
-    });
   }, []);
 
   const signIn = async () => {
@@ -71,17 +71,14 @@ const Login = (props: Props) => {
 
   const signInWithGoogle = async () => {
     try {
+      await GoogleSignin.hasPlayServices({ showPlayServicesUpdateDialog: true });
       const { idToken } = await GoogleSignin.signIn();
       const googleCredential = auth.GoogleAuthProvider.credential(idToken);
-      await auth().signInWithCredential(googleCredential);
+      dispatch(subscribe());
+      return auth().signInWithCredential(googleCredential);
     } catch (error: any) {
       console.log(error, error.code);
     }
-  }
-
-  const socialSignOut = async () => {
-    await auth().signOut();
-    console.log('SignOut');
   }
 
   const onPressEvent1 = () => {
@@ -169,10 +166,6 @@ const Login = (props: Props) => {
             onPressEvent={() => props.navigation.navigate('SignUp')}
           />
         </View>
-        <Button
-          text="Google SignOut"
-          onPressEvent={ socialSignOut }
-        />
       </View>
       {/* <KeyboardAvoidingView
         behavior="padding"

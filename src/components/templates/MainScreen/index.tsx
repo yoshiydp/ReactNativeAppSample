@@ -1,7 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import { View, Button, ScrollView, Text, TouchableOpacity } from 'react-native';
+import { useDispatch } from 'react-redux';
 import { signOut } from 'firebase/auth';
 import { firebaseAuth } from '../../../config/firebase';
+import auth from '@react-native-firebase/auth';
+
+// Store
+import { useSelector } from 'store/index';
+import { unsubscribe } from 'src/store/SubscribeSlice';
 
 // Components
 import MainTitleHeader from 'components/organisms/MainTitleHeader';
@@ -15,6 +21,8 @@ interface Props {
 }
 
 const MainScreen = (props: Props) => {
+  const dispatch = useDispatch();
+  const subscribed = useSelector((state) => state.subscribe.subscribe);
 
   useEffect(() => {
   }, []);
@@ -28,6 +36,12 @@ const MainScreen = (props: Props) => {
         console.log(error.message);
       });
   };
+
+  const socialSignOut = async () => {
+    await auth().signOut();
+    dispatch(unsubscribe());
+    console.log('SignOut');
+  }
 
   return (
     <View style={ styles.container }>
@@ -53,6 +67,18 @@ const MainScreen = (props: Props) => {
           }}
         >
           <Text style={{ color: 'white' }}>ログアウト</Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          onPress={socialSignOut}
+          style={{
+            marginTop: 10,
+            padding: 10,
+            backgroundColor: '#88cb7f',
+            borderRadius: 10,
+            width: 100,
+          }}
+        >
+          <Text style={{ color: 'white' }}>Google SignOut</Text>
         </TouchableOpacity>
       </ScrollView>
     </View>
