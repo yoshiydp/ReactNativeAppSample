@@ -11,7 +11,6 @@ import { firebaseAuth } from '../../config/firebase';
 import auth from '@react-native-firebase/auth';
 
 // Store
-import { useSelector } from 'store/index';
 import { subscribe } from 'src/store/SubscribeSlice';
 
 // env
@@ -37,10 +36,8 @@ interface Props {
 
 const Login = (props: Props) => {
   const dispatch = useDispatch();
-  const subscribed = useSelector((state) => state.subscribe.subscribe);
   const [email, setEmail] = useState<string>('');
   const [password, setPassword] = useState<string>('');
-  const [user, setUser] = useState<any>('');
 
   GoogleSignin.configure({
     webClientId: WEB_CLIENT_ID,
@@ -58,13 +55,12 @@ const Login = (props: Props) => {
       console.log(firebaseAuth.currentUser?.displayName);
       console.log(firebaseAuth.currentUser?.email);
       console.log(firebaseAuth.currentUser?.photoURL);
-      
     } catch (error: any) {
-      if (error.code === 'auth/invalid-email') console.log('メールアドレスまたはユーザー名が間違っています');
-      if (error.code === 'auth/wrong-password') console.log('パスワードが間違っています');
-      if (error.code === 'auth/user-not-found') console.log('ユーザーが見つかりませんでした');
-      if (error.code === 'auth/internal-error') console.log('パスワードが入力されていません');
-      if (error.code === 'auth/network-request-failed') console.log('ネットワークへの接続が切れています');
+      if (error.code === 'auth/invalid-email') console.log(TEXT.ERROR_INVALID_EMAIL);
+      if (error.code === 'auth/wrong-password') console.log(TEXT.ERROR_MISMATCH_PASSWORD);
+      if (error.code === 'auth/user-not-found') console.log(TEXT.ERROR_NOTFOUND_USER);
+      if (error.code === 'auth/internal-error') console.log(TEXT.ERROR_INTERNAL_PASSWORD);
+      if (error.code === 'auth/network-request-failed') console.log(TEXT.ERROR_NETWORK_FAILED);
       console.log(error.code);
     }
   };
