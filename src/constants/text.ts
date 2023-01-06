@@ -29,4 +29,5 @@ export const PLACEHOLDER_INPUT_PASSWORD = 'Password';
 export const ERROR_INTERNAL_PASSWORD = 'パスワードが入力されていません';
 export const ERROR_INVALID_EMAIL = 'メールアドレスが間違っています';
 export const ERROR_MISMATCH_PASSWORD = 'パスワードが間違っています';
+export const ERROR_NETWORK_FAILED = 'ネットワークへの接続が切れています';
 export const ERROR_NOTFOUND_USER = '登録されているユーザーが見つかりませんでした';
