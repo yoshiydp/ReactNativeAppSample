@@ -15,6 +15,7 @@ interface OnPressEvent {
 }
 
 interface Props {
+  title: string;
   socialIconItems: Array<svgType1 & svgType2 & svgType3 & svgType4 & svgType5 & OnPressEvent>;
 }
 
@@ -28,7 +29,7 @@ const SocialSignIn = (props: Props) => {
       <View style={ styles.titleWrap }>
         <View style={ styles.titleBorder }></View>
         <Text style={ styles.title }>
-          or Sign in with
+          { props.title }
         </Text>
         <View style={ styles.titleBorder }></View>
       </View>
