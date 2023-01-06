@@ -17,7 +17,7 @@ export const TITLE_EDIT_MY_ACCOUNT = 'Edit My Account';
 export const TITLE_PASSWORD_RESET = 'Password Reset';
 
 // LABEL
-export const LABEL_INPUT_USERNAME_EMAIL = 'ユーザー名 / メールアドレス';
+export const LABEL_INPUT_USERNAME_EMAIL = 'メールアドレス';
 export const LABEL_INPUT_PASSWORD = 'パスワード';
 
 // PLACEHOLDER
@@ -27,6 +27,6 @@ export const PLACEHOLDER_INPUT_PASSWORD = 'Password';
 
 // ERROR
 export const ERROR_INTERNAL_PASSWORD = 'パスワードが入力されていません';
-export const ERROR_INVALID_EMAIL = 'メールアドレスまたはユーザー名が間違っています';
+export const ERROR_INVALID_EMAIL = 'メールアドレスが間違っています';
 export const ERROR_MISMATCH_PASSWORD = 'パスワードが間違っています';
 export const ERROR_NOTFOUND_USER = '登録されているユーザーが見つかりませんでした';
