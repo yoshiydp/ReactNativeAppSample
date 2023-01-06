@@ -22,7 +22,7 @@ export const LABEL_INPUT_PASSWORD = 'パスワード';
 
 // PLACEHOLDER
 export const PLACEHOLDER_INPUT_SEARCH = '検索';
-export const PLACEHOLDER_INPUT_USERNAME_EMAIL = 'Use name / example@example.com';
+export const PLACEHOLDER_INPUT_USERNAME_EMAIL = 'example@example.com';
 export const PLACEHOLDER_INPUT_PASSWORD = 'Password';
 
 // ERROR
