@@ -84,8 +84,8 @@ const Login = (props: Props) => {
   // テキストフォームリスト
   const inputFieldItems = [
     {
-      label: TEXT.LABEL_INPUT_USERNAME_EMAIL,
-      placeholder: TEXT.PLACEHOLDER_INPUT_USERNAME_EMAIL,
+      label: TEXT.LABEL_INPUT_EMAIL,
+      placeholder: TEXT.PLACEHOLDER_INPUT_EMAIL,
       onChangeText: setEmail,
       value: email,
       required: true
@@ -137,7 +137,7 @@ const Login = (props: Props) => {
       <IntroMessage />
       <AuthForm
         inputFieldItems={ inputFieldItems }
-        submitText="ログイン"
+        submitText={ TEXT.BUTTON_SIGN_IN }
         submitEvent={ signIn }
       />
       <Text style={styles.forgotMessagge}>
@@ -150,6 +150,7 @@ const Login = (props: Props) => {
         から
       </Text>
       <SocialSignIn
+        title={ TEXT.TEXT_SIGN_IN_WITH }
         socialIconItems={ socialIconItems }
       />
       <View style={ styles.signUpWrap }>
@@ -158,7 +159,7 @@ const Login = (props: Props) => {
         </Text>
         <View style={ styles.signUpButtonWrap }>
           <Button
-            text="新規アカウント作成"
+            text={ TEXT.BUTTON_NEW_ACCOUNT_CREATE }
             onPressEvent={() => props.navigation.navigate('SignUp')}
           />
         </View>
