@@ -6,6 +6,7 @@ import {
 } from 'react-native';
 import { useDispatch } from 'react-redux';
 import { signInWithEmailAndPassword, onAuthStateChanged } from 'firebase/auth';
+import { appleAuth } from '@invertase/react-native-apple-authentication';
 import { GoogleSignin } from '@react-native-google-signin/google-signin';
 import { firebaseAuth } from '../../config/firebase';
 import auth from '@react-native-firebase/auth';
@@ -65,6 +66,23 @@ const Login = (props: Props) => {
     }
   };
 
+  const signInWithApple = async () => {
+    try {
+      const appleAuthRequestResponse = await appleAuth.performRequest({
+        requestedOperation: appleAuth.Operation.LOGIN,
+        requestedScopes: [appleAuth.Scope.EMAIL, appleAuth.Scope.FULL_NAME],
+      });
+      if (!appleAuthRequestResponse.identityToken) {
+        throw new Error('Apple Sign-In failed - no identify token returned');
+      }
+      const { identityToken, nonce } = appleAuthRequestResponse;
+      const appleCredential = auth.AppleAuthProvider.credential(identityToken, nonce);
+      return auth().signInWithCredential(appleCredential);
+    } catch (error: any) {
+      console.log(error, error.code);
+    }
+  }
+
   const signInWithGoogle = async () => {
     try {
       await GoogleSignin.hasPlayServices({ showPlayServicesUpdateDialog: true });
@@ -75,10 +93,6 @@ const Login = (props: Props) => {
     } catch (error: any) {
       console.log(error, error.code);
     }
-  }
-
-  const onPressEvent1 = () => {
-    console.log('onpress: onPressEvent1');
   }
 
   // テキストフォームリスト
@@ -110,7 +124,7 @@ const Login = (props: Props) => {
       pathD1: SVGPATH.ICON_APPLE,
       pathTransform1: "translate(-20.5 -16)",
       pathFill: COLOR.COLOR_BLACK_BASE,
-      onPressEvent: onPressEvent1
+      onPressEvent: signInWithApple
     },
     {
       svgType: 5,
