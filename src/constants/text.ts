@@ -7,6 +7,8 @@ export const BUTTON_SIGN_IN = 'ログイン';
 export const BUTTON_SIGN_UP = 'サインアップ';
 
 // ERROR
+export const ERROR_EMPTY_EMAIL = 'メールアドレスが入力されていません';
+export const ERROR_EMPTY_PASSWORD = 'パスワードが入力されていません';
 export const ERROR_INTERNAL_PASSWORD = 'パスワードが入力されていません';
 export const ERROR_INVALID_EMAIL = 'メールアドレスが間違っています';
 export const ERROR_MISMATCH_PASSWORD = 'パスワードが間違っています';

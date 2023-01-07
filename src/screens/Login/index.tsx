@@ -38,6 +38,8 @@ const Login = (props: Props) => {
   const dispatch = useDispatch();
   const [email, setEmail] = useState<string>('');
   const [password, setPassword] = useState<string>('');
+  const [errorEmail, setErrorEmail] = useState<string>('');
+  const [errorPassword, setErrorPassword] = useState<string>('');
 
   GoogleSignin.configure({
     webClientId: WEB_CLIENT_ID,
@@ -46,9 +48,11 @@ const Login = (props: Props) => {
   });
 
   useEffect(() => {
-  }, []);
+  }, [errorEmail, errorPassword]);
 
   const signIn = async () => {
+    setErrorEmail('');
+    setErrorPassword('');
     try {
       await signInWithEmailAndPassword(firebaseAuth, email, password);
       console.log(firebaseAuth.currentUser?.photoURL);
@@ -56,10 +60,26 @@ const Login = (props: Props) => {
       console.log(firebaseAuth.currentUser?.email);
       console.log(firebaseAuth.currentUser?.photoURL);
     } catch (error: any) {
-      if (error.code === 'auth/invalid-email') console.log(TEXT.ERROR_INVALID_EMAIL);
+      if (error.code === 'auth/invalid-email') {
+        if (errorEmail === '') {
+          setErrorEmail(TEXT.ERROR_EMPTY_EMAIL);
+        }
+        if (errorPassword === '') {
+          setErrorPassword(TEXT.ERROR_EMPTY_PASSWORD);
+        }
+      }
       if (error.code === 'auth/wrong-password') console.log(TEXT.ERROR_MISMATCH_PASSWORD);
       if (error.code === 'auth/user-not-found') console.log(TEXT.ERROR_NOTFOUND_USER);
-      if (error.code === 'auth/internal-error') console.log(TEXT.ERROR_INTERNAL_PASSWORD);
+      if (error.code === 'auth/internal-error') {
+        if (errorEmail === '') {
+          setErrorEmail(TEXT.ERROR_EMPTY_EMAIL);
+        }
+        if (errorPassword === '') {
+          setErrorPassword(TEXT.ERROR_EMPTY_PASSWORD);
+        }
+        // console.log(error.code);
+        // console.log(TEXT.ERROR_INTERNAL_PASSWORD);
+      }
       if (error.code === 'auth/network-request-failed') console.log(TEXT.ERROR_NETWORK_FAILED);
       console.log(error.code);
     }
@@ -88,7 +108,8 @@ const Login = (props: Props) => {
       placeholder: TEXT.PLACEHOLDER_INPUT_EMAIL,
       onChangeText: setEmail,
       value: email,
-      required: true
+      required: true,
+      errorText: errorEmail
     },
     {
       label: TEXT.LABEL_INPUT_PASSWORD,
@@ -96,7 +117,8 @@ const Login = (props: Props) => {
       onChangeText: setPassword,
       value: password,
       secureText: true,
-      required: true
+      required: true,
+      errorText: errorPassword
     }
   ];
 
