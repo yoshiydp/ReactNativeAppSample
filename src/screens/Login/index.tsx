@@ -26,6 +26,7 @@ import Button from 'src/components/atoms/Button';
 import * as COLOR from 'constants/color';
 import * as SVGPATH from 'constants/svgPath';
 import * as TEXT from 'constants/text';
+import * as VALUE from 'constants/value';
 
 // Styles
 import styles from './Login.scss';
@@ -48,7 +49,7 @@ const Login = (props: Props) => {
   });
 
   useEffect(() => {
-  }, [errorEmail, errorPassword]);
+  }, []);
 
   const signIn = async () => {
     setErrorEmail('');
@@ -61,26 +62,25 @@ const Login = (props: Props) => {
       console.log(firebaseAuth.currentUser?.photoURL);
     } catch (error: any) {
       if (error.code === 'auth/invalid-email') {
-        if (errorEmail === '') {
-          setErrorEmail(TEXT.ERROR_EMPTY_EMAIL);
-        }
-        if (errorPassword === '') {
-          setErrorPassword(TEXT.ERROR_EMPTY_PASSWORD);
-        }
+        validateEmail();
+        validatePassword();
       }
-      if (error.code === 'auth/wrong-password') console.log(TEXT.ERROR_MISMATCH_PASSWORD);
-      if (error.code === 'auth/user-not-found') console.log(TEXT.ERROR_NOTFOUND_USER);
+      if (error.code === 'auth/wrong-password') {
+        validatePassword();
+      }
       if (error.code === 'auth/internal-error') {
-        if (errorEmail === '') {
-          setErrorEmail(TEXT.ERROR_EMPTY_EMAIL);
-        }
-        if (errorPassword === '') {
-          setErrorPassword(TEXT.ERROR_EMPTY_PASSWORD);
-        }
-        // console.log(error.code);
-        // console.log(TEXT.ERROR_INTERNAL_PASSWORD);
+        validateEmail();
+        validatePassword();
       }
-      if (error.code === 'auth/network-request-failed') console.log(TEXT.ERROR_NETWORK_FAILED);
+      if (error.code === 'auth/user-not-found') {
+        validateUserNotFound();
+      }
+      if (error.code === 'auth/network-request-failed') {
+        validateNetworkRequestFailed();
+      }
+      if (error.code === 'auth/too-many-requests') {
+        validateTooManyRequests();
+      }
       console.log(error.code);
     }
   };
@@ -99,6 +99,48 @@ const Login = (props: Props) => {
 
   const onPressEvent1 = () => {
     console.log('onpress: onPressEvent1');
+  }
+
+  const regexEmail = VALUE.REGEX_EMAIL;
+
+  const validateEmail = () => {
+    if (!email) {
+      setErrorEmail(TEXT.ERROR_EMPTY_EMAIL);
+    } else if (!regexEmail.test(email)) {
+      setErrorEmail(TEXT.ERROR_NOT_FORMAT_EMAIL);
+    } else {
+      setErrorEmail(TEXT.ERROR_INVALID_EMAIL);
+    }
+    console.log(regexEmail.test(email));
+  }
+
+  const validatePassword = () => {
+    if (!password) {
+      setErrorPassword(TEXT.ERROR_EMPTY_PASSWORD);
+    } else if (password.length < 8) {
+      setErrorPassword(TEXT.ERROR_NOT_ENOUGH_PASSWORD);
+    } else {
+      setErrorPassword(TEXT.ERROR_INVALID_PASSWORD);
+    }
+  }
+
+  const validateUserNotFound = () => {
+    setErrorEmail(TEXT.ERROR_NOT_FOUND_USER);
+    if (password.length < 8) {
+      setErrorPassword(TEXT.ERROR_NOT_ENOUGH_PASSWORD);
+    } else {
+      setErrorPassword(TEXT.ERROR_INVALID_PASSWORD);
+    }
+  }
+
+  const validateNetworkRequestFailed = () => {
+    setErrorEmail(TEXT.ERROR_NETWORK_FAILED);
+    setErrorPassword(TEXT.ERROR_NETWORK_FAILED);
+  }
+
+  const validateTooManyRequests = () => {
+    setErrorEmail(TEXT.ERROR_TOO_MANY_REQUESTS);
+    setErrorPassword(TEXT.ERROR_TOO_MANY_REQUESTS);
   }
 
   // テキストフォームリスト
