@@ -40,6 +40,7 @@
 		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = LyricsApp/main.m; sourceTree = "<group>"; };
 		1A23D2CA29617C6900C6DCDB /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		1A4BCA0728F59FFF003FE804 /* Fonts */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Fonts; sourceTree = "<group>"; };
+		1A82712D2968612E004871DE /* LyricsApp.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = LyricsApp.entitlements; path = LyricsApp/LyricsApp.entitlements; sourceTree = "<group>"; };
 		257D39407C2B0B7D094F084C /* libPods-LyricsApp-LyricsAppTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-LyricsApp-LyricsAppTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		28F5EF21E2A197F6FFBA1931 /* libPods-LyricsApp.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-LyricsApp.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		3B4392A12AC88292D35C810B /* Pods-LyricsApp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LyricsApp.debug.xcconfig"; path = "Target Support Files/Pods-LyricsApp/Pods-LyricsApp.debug.xcconfig"; sourceTree = "<group>"; };
@@ -90,6 +91,7 @@
 		13B07FAE1A68108700A75B9A /* LyricsApp */ = {
 			isa = PBXGroup;
 			children = (
+				1A82712D2968612E004871DE /* LyricsApp.entitlements */,
 				1A23D2CA29617C6900C6DCDB /* GoogleService-Info.plist */,
 				13B07FAF1A68108700A75B9A /* AppDelegate.h */,
 				13B07FB01A68108700A75B9A /* AppDelegate.mm */,
@@ -509,6 +511,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = LyricsApp/LyricsApp.entitlements;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = GSAWY4TUK9;
 				ENABLE_BITCODE = NO;
@@ -536,6 +539,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = LyricsApp/LyricsApp.entitlements;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = GSAWY4TUK9;
 				INFOPLIST_FILE = LyricsApp/Info.plist;
