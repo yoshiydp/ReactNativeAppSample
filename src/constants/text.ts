@@ -7,11 +7,16 @@ export const BUTTON_SIGN_IN = 'ログイン';
 export const BUTTON_SIGN_UP = 'サインアップ';
 
 // ERROR
+export const ERROR_EMPTY_EMAIL = 'メールアドレスが入力されていません';
+export const ERROR_EMPTY_PASSWORD = 'パスワードが入力されていません';
 export const ERROR_INTERNAL_PASSWORD = 'パスワードが入力されていません';
 export const ERROR_INVALID_EMAIL = 'メールアドレスが間違っています';
-export const ERROR_MISMATCH_PASSWORD = 'パスワードが間違っています';
-export const ERROR_NETWORK_FAILED = 'ネットワークへの接続が切れています';
-export const ERROR_NOTFOUND_USER = '登録されているユーザーが見つかりませんでした';
+export const ERROR_INVALID_PASSWORD = 'パスワードが間違っています。再度入力してください。';
+export const ERROR_NETWORK_FAILED = 'ネットワークへの接続が切れています。接続環境を確認してください。';
+export const ERROR_NOT_ENOUGH_PASSWORD = 'パスワードは半角英数字のみ8字以上入力してください';
+export const ERROR_NOT_FORMAT_EMAIL = 'メールアドレスの形式ではありません';
+export const ERROR_NOT_FOUND_USER = '登録されているユーザーが見つかりませんでした';
+export const ERROR_TOO_MANY_REQUESTS = 'リクエストが多すぎるためエラーが起きました。しばらく経ってから再度ボタンを押してください。';
 
 // LABEL
 export const LABEL_INPUT_EMAIL = 'メールアドレス';
