@@ -28,6 +28,15 @@ import * as COLOR from 'constants/color';
 import * as SVGPATH from 'constants/svgPath';
 import * as TEXT from 'constants/text';
 
+// Validators
+import {
+  validateEmail,
+  validatePassword,
+  validateUserNotFound,
+  validateNetworkRequestFailed,
+  validateTooManyRequests
+} from 'src/validators/LoginValidator';
+
 // Styles
 import styles from './Login.scss';
 
@@ -39,6 +48,8 @@ const Login = (props: Props) => {
   const dispatch = useDispatch();
   const [email, setEmail] = useState<string>('');
   const [password, setPassword] = useState<string>('');
+  const [errorEmail, setErrorEmail] = useState<string>('');
+  const [errorPassword, setErrorPassword] = useState<string>('');
 
   GoogleSignin.configure({
     webClientId: WEB_CLIENT_ID,
@@ -50,6 +61,8 @@ const Login = (props: Props) => {
   }, []);
 
   const signIn = async () => {
+    setErrorEmail('');
+    setErrorPassword('');
     try {
       await signInWithEmailAndPassword(firebaseAuth, email, password);
       console.log(firebaseAuth.currentUser?.photoURL);
@@ -57,11 +70,26 @@ const Login = (props: Props) => {
       console.log(firebaseAuth.currentUser?.email);
       console.log(firebaseAuth.currentUser?.photoURL);
     } catch (error: any) {
-      if (error.code === 'auth/invalid-email') console.log(TEXT.ERROR_INVALID_EMAIL);
-      if (error.code === 'auth/wrong-password') console.log(TEXT.ERROR_MISMATCH_PASSWORD);
-      if (error.code === 'auth/user-not-found') console.log(TEXT.ERROR_NOTFOUND_USER);
-      if (error.code === 'auth/internal-error') console.log(TEXT.ERROR_INTERNAL_PASSWORD);
-      if (error.code === 'auth/network-request-failed') console.log(TEXT.ERROR_NETWORK_FAILED);
+      if (error.code === 'auth/invalid-email') {
+        validateEmail(email, setErrorEmail);
+        validatePassword(password, setErrorPassword);
+      }
+      if (error.code === 'auth/wrong-password') {
+        validatePassword(password, setErrorPassword);
+      }
+      if (error.code === 'auth/internal-error') {
+        validateEmail(email, setErrorEmail);
+        validatePassword(password, setErrorPassword);
+      }
+      if (error.code === 'auth/user-not-found') {
+        validateUserNotFound(setErrorEmail, password, setErrorPassword);
+      }
+      if (error.code === 'auth/network-request-failed') {
+        validateNetworkRequestFailed(setErrorEmail, setErrorPassword);
+      }
+      if (error.code === 'auth/too-many-requests') {
+        validateTooManyRequests(setErrorEmail, setErrorPassword);
+      }
       console.log(error.code);
     }
   };
@@ -102,7 +130,8 @@ const Login = (props: Props) => {
       placeholder: TEXT.PLACEHOLDER_INPUT_EMAIL,
       onChangeText: setEmail,
       value: email,
-      required: true
+      required: true,
+      errorText: errorEmail
     },
     {
       label: TEXT.LABEL_INPUT_PASSWORD,
@@ -110,7 +139,8 @@ const Login = (props: Props) => {
       onChangeText: setPassword,
       value: password,
       secureText: true,
-      required: true
+      required: true,
+      errorText: errorPassword
     }
   ];
 
