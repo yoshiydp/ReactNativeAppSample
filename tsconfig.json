@@ -11,6 +11,7 @@
       "config/*": ["src/config/*"],
       "interfaces/*": ["src/interfaces/*"],
       "store/*": ["src/store/*"],
+      "validators/*": ["src/validators/*"],
     },
     "target": "es6",
     "module": "es2015",

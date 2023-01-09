@@ -3,6 +3,7 @@ import { View, KeyboardAvoidingView, Text } from 'react-native';
 
 // Components
 import TextField from 'src/components/molecules/TextField';
+import ErrorText from 'src/components/atoms/ErrorText';
 import Button from 'src/components/atoms/Button';
 
 // Styles
@@ -15,6 +16,7 @@ interface InputField {
   value: string;
   secureText?: boolean;
   required?: boolean;
+  errorText?: string;
 }
 
 interface Props {
@@ -40,6 +42,11 @@ const AuthForm = (props: Props) => {
             secureText={ item.secureText }
             required={ item.required }
           />
+          { item.errorText &&
+            <ErrorText
+              text={ item.errorText }
+            />
+          }
         </View>
       ))}
       <View style={ styles.submitButtonWrap }>
