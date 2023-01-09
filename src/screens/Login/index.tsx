@@ -44,12 +44,15 @@ interface Props {
   navigation: any;
 }
 
+let user: any = null;
+
 const Login = (props: Props) => {
   const dispatch = useDispatch();
   const [email, setEmail] = useState<string>('');
   const [password, setPassword] = useState<string>('');
   const [errorEmail, setErrorEmail] = useState<string>('');
   const [errorPassword, setErrorPassword] = useState<string>('');
+  const [credentialStateForUser, updateCredentialStateForUser] = useState<number>(-1);
 
   GoogleSignin.configure({
     webClientId: WEB_CLIENT_ID,
@@ -58,6 +61,13 @@ const Login = (props: Props) => {
   });
 
   useEffect(() => {
+    if (!appleAuth.isSupported) return;
+    return appleAuth.onCredentialRevoked(async () => {
+      console.warn('Credential Revoked');
+      fetchAndUpdateCredentialState(updateCredentialStateForUser).catch(error =>
+        updateCredentialStateForUser(error.code),
+      );
+    });
   }, []);
 
   const signIn = async () => {
@@ -105,9 +115,23 @@ const Login = (props: Props) => {
       }
       const { identityToken, nonce } = appleAuthRequestResponse;
       const appleCredential = auth.AppleAuthProvider.credential(identityToken, nonce);
+      dispatch(subscribe());
       return auth().signInWithCredential(appleCredential);
     } catch (error: any) {
       console.log(error, error.code);
+    }
+  }
+
+  const fetchAndUpdateCredentialState = async (updateCredentialStateForUser: any) => {
+    if (user === null) {
+      updateCredentialStateForUser('N/A');
+    } else {
+      const credentialState = await appleAuth.getCredentialStateForUser(user);
+      if (credentialState === appleAuth.State.AUTHORIZED) {
+        updateCredentialStateForUser('AUTHORIZED');
+      } else {
+        updateCredentialStateForUser(credentialState);
+      }
     }
   }
 
