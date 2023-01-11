@@ -8,6 +8,7 @@ import {
 } from 'react-native';
 import { useDispatch } from 'react-redux';
 import { createUserWithEmailAndPassword, updateProfile } from 'firebase/auth';
+import { appleAuth } from '@invertase/react-native-apple-authentication';
 import { GoogleSignin } from '@react-native-google-signin/google-signin';
 import { firebaseAuth } from '../../config/firebase';
 import auth from '@react-native-firebase/auth';
@@ -35,11 +36,14 @@ interface Props {
   navigation: any;
 }
 
+let user: any = null;
+
 const SignUp = (props: Props) => {
   const dispatch = useDispatch();
   const [userName, setUserName] = useState<string>('');
   const [email, setEmail] = useState<string>('');
   const [password, setPassword] = useState<string>('');
+  const [credentialStateForUser, updateCredentialStateForUser] = useState<number>(-1);
 
   GoogleSignin.configure({
     webClientId: WEB_CLIENT_ID,
@@ -48,6 +52,13 @@ const SignUp = (props: Props) => {
   });
 
   useEffect(() => {
+    if (!appleAuth.isSupported) return;
+    return appleAuth.onCredentialRevoked(async () => {
+      console.warn('Credential Revoked');
+      fetchAndUpdateCredentialState(updateCredentialStateForUser).catch(error =>
+        updateCredentialStateForUser(error.code),
+      );
+    });
   }, []);
 
   const signUp = async () => {
@@ -62,6 +73,37 @@ const SignUp = (props: Props) => {
     }
   };
 
+  const signInWithApple = async () => {
+    try {
+      const appleAuthRequestResponse = await appleAuth.performRequest({
+        requestedOperation: appleAuth.Operation.LOGIN,
+        requestedScopes: [appleAuth.Scope.EMAIL, appleAuth.Scope.FULL_NAME],
+      });
+      if (!appleAuthRequestResponse.identityToken) {
+        throw new Error('Apple Sign-In failed - no identify token returned');
+      }
+      const { identityToken, nonce } = appleAuthRequestResponse;
+      const appleCredential = auth.AppleAuthProvider.credential(identityToken, nonce);
+      dispatch(subscribe());
+      return auth().signInWithCredential(appleCredential);
+    } catch (error: any) {
+      console.log(error, error.code);
+    }
+  }
+
+  const fetchAndUpdateCredentialState = async (updateCredentialStateForUser: any) => {
+    if (user === null) {
+      updateCredentialStateForUser('N/A');
+    } else {
+      const credentialState = await appleAuth.getCredentialStateForUser(user);
+      if (credentialState === appleAuth.State.AUTHORIZED) {
+        updateCredentialStateForUser('AUTHORIZED');
+      } else {
+        updateCredentialStateForUser(credentialState);
+      }
+    }
+  }
+
   const signInWithGoogle = async () => {
     try {
       await GoogleSignin.hasPlayServices({ showPlayServicesUpdateDialog: true });
@@ -72,10 +114,6 @@ const SignUp = (props: Props) => {
     } catch (error: any) {
       console.log(error, error.code);
     }
-  }
-
-  const onPressEvent1 = () => {
-    console.log('onpress: onPressEvent1');
   }
 
   // テキストフォームリスト
@@ -114,7 +152,7 @@ const SignUp = (props: Props) => {
       pathD1: SVGPATH.ICON_APPLE,
       pathTransform1: "translate(-20.5 -16)",
       pathFill: COLOR.COLOR_BLACK_BASE,
-      onPressEvent: onPressEvent1
+      onPressEvent: signInWithApple
     },
     {
       svgType: 5,
