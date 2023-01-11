@@ -1,5 +1,5 @@
-import React, { useEffect } from 'react';
-import { View, KeyboardAvoidingView, Text } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { View, KeyboardAvoidingView } from 'react-native';
 
 // Components
 import TextField from 'src/components/molecules/TextField';
@@ -26,16 +26,20 @@ interface Props {
 }
 
 const AuthForm = (props: Props) => {
+  const [disabled, setDisabled] = useState<boolean>(false);
 
   useEffect(() => {
-  }, []);
+    props.inputFieldItems.map((item, index) => {
+      (!item.value) ? setDisabled(true) : setDisabled(false);
+    });
+  }, [props.inputFieldItems, disabled]);
 
   return (
     <KeyboardAvoidingView style={ styles.container }>
       { props.inputFieldItems.map((item, index) => (
         <View style={ styles.inputFieldItem } key={ index }>
           <TextField
-            label={item.label}
+            label={ item.label }
             placeholder={ item.placeholder }
             onChangeText={ item.onChangeText }
             value={ item.value }
@@ -53,6 +57,7 @@ const AuthForm = (props: Props) => {
         <Button
           text={ props.submitText }
           onPressEvent={ props.submitEvent }
+          disabled={ disabled }
         />
       </View>
     </KeyboardAvoidingView>

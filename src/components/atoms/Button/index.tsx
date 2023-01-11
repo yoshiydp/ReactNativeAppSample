@@ -7,18 +7,20 @@ import styles from './Button.scss';
 interface Props {
   text: string;
   onPressEvent?: () => void;
+  disabled?: boolean;
 }
 
 const Button = (props: Props) => {
-
-  useEffect(() => {
-  }, []);
-
   return (
     <TouchableOpacity
       activeOpacity={ 1 }
-      style={ styles.container }
-      onPress={ props.onPressEvent }>
+      style={
+        props.disabled
+        ? styles.containerDisabled
+        : styles.container
+      }
+      onPress={ props.onPressEvent }
+      disabled={ props.disabled }>
       <Text style={ styles.text }>
         { props.text }
       </Text>
