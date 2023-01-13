@@ -29,6 +29,16 @@ import * as COLOR from 'constants/color';
 import * as SVGPATH from 'constants/svgPath';
 import * as TEXT from 'constants/text';
 
+// Validators
+import {
+  validateUserName,
+  validateEmail,
+  validatePassword,
+  validateUserNotFound,
+  validateNetworkRequestFailed,
+  validateTooManyRequests
+} from 'src/validators/SignUpValidator';
+
 // Styles
 import styles from './SignUp.scss';
 
@@ -43,6 +53,9 @@ const SignUp = (props: Props) => {
   const [userName, setUserName] = useState<string>('');
   const [email, setEmail] = useState<string>('');
   const [password, setPassword] = useState<string>('');
+  const [errorUserName, setErrorUserName] = useState<string>('');
+  const [errorEmail, setErrorEmail] = useState<string>('');
+  const [errorPassword, setErrorPassword] = useState<string>('');
   const [credentialStateForUser, updateCredentialStateForUser] = useState<number>(-1);
 
   GoogleSignin.configure({
@@ -62,6 +75,9 @@ const SignUp = (props: Props) => {
   }, []);
 
   const signUp = async () => {
+    setErrorUserName('');
+    setErrorEmail('');
+    setErrorPassword('');
     try {
       const { user } = await createUserWithEmailAndPassword(firebaseAuth, email, password);
       await updateProfile(user, {
@@ -69,7 +85,35 @@ const SignUp = (props: Props) => {
       });
       console.log(user.displayName);
     } catch (error: any) {
-      console.log(error.message);
+      if (error.code === 'auth/missing-email') {
+        validateUserName(userName, setErrorUserName);
+        validateEmail(email, setErrorEmail);
+        validatePassword(password, setErrorPassword);
+      }
+      if (error.code === 'auth/weak-password') {
+        validateUserName(userName, setErrorUserName);
+        validateEmail(email, setErrorEmail);
+        validatePassword(password, setErrorPassword);
+      }
+      if (error.code === 'auth/invalid-email') {
+        validateUserName(userName, setErrorUserName);
+        validateEmail(email, setErrorEmail);
+        validatePassword(password, setErrorPassword);
+      }
+      if (error.code === 'auth/wrong-password') {
+        validatePassword(password, setErrorPassword);
+      }
+      if (error.code === 'auth/internal-error') {
+        validateEmail(email, setErrorEmail);
+        validatePassword(password, setErrorPassword);
+      }
+      if (error.code === 'auth/network-request-failed') {
+        validateNetworkRequestFailed(setErrorEmail, setErrorPassword);
+      }
+      if (error.code === 'auth/too-many-requests') {
+        validateTooManyRequests(setErrorEmail, setErrorPassword);
+      }
+      console.log(error.code);
     }
   };
 
@@ -123,14 +167,16 @@ const SignUp = (props: Props) => {
       placeholder: TEXT.PLACEHOLDER_INPUT_USERNAME,
       onChangeText: setUserName,
       value: userName,
-      required: true
+      required: true,
+      errorText: errorUserName
     },
     {
       label: TEXT.LABEL_INPUT_EMAIL,
       placeholder: TEXT.PLACEHOLDER_INPUT_EMAIL,
       onChangeText: setEmail,
       value: email,
-      required: true
+      required: true,
+      errorText: errorEmail
     },
     {
       label: TEXT.LABEL_INPUT_PASSWORD,
@@ -138,7 +184,8 @@ const SignUp = (props: Props) => {
       onChangeText: setPassword,
       value: password,
       secureText: true,
-      required: true
+      required: true,
+      errorText: errorPassword
     }
   ];
 
