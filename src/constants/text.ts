@@ -9,12 +9,16 @@ export const BUTTON_SIGN_UP = 'サインアップ';
 // ERROR
 export const ERROR_EMPTY_EMAIL = 'メールアドレスが入力されていません';
 export const ERROR_EMPTY_PASSWORD = 'パスワードが入力されていません';
+export const ERROR_EMPTY_USERNAME = 'ユーザーネームが入力されていません';
 export const ERROR_INTERNAL_PASSWORD = 'パスワードが入力されていません';
 export const ERROR_INVALID_EMAIL = 'メールアドレスが間違っています';
 export const ERROR_INVALID_PASSWORD = 'パスワードが間違っています。再度入力してください。';
+export const ERROR_INVALID_USERNAME = 'ユーザーネームは英数大文字・小文字のみで入力してください（半角スペースOK）';
 export const ERROR_NETWORK_FAILED = 'ネットワークへの接続が切れています。接続環境を確認してください。';
-export const ERROR_NOT_ENOUGH_PASSWORD = 'パスワードは半角英数字のみ8字以上入力してください';
+export const ERROR_NOT_ENOUGH_PASSWORD = 'パスワードは最低8文字以上を入力してください';
 export const ERROR_NOT_FORMAT_EMAIL = 'メールアドレスの形式ではありません';
+export const ERROR_NOT_FORMAT_PASSWORD = 'パスワードは半角の英数大文字・小文字、記号を含めた\n最低8文字以上を入力してください';
+export const ERROR_NOT_FORMAT_USERNAME = 'ユーザーネームは英数大文字・小文字のみで入力してください（半角スペースOK）';
 export const ERROR_NOT_FOUND_USER = '登録されているユーザーが見つかりませんでした';
 export const ERROR_TOO_MANY_REQUESTS = 'リクエストが多すぎるためエラーが起きました。しばらく経ってから再度ボタンを押してください。';
 
