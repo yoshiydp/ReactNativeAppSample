@@ -10,7 +10,8 @@ import { useDispatch } from 'react-redux';
 import { createUserWithEmailAndPassword, updateProfile } from 'firebase/auth';
 import { appleAuth } from '@invertase/react-native-apple-authentication';
 import { GoogleSignin } from '@react-native-google-signin/google-signin';
-import { firebaseAuth } from '../../config/firebase';
+import { firebaseAuth, db } from 'src/config/firebase';
+import { doc, setDoc, getDoc, serverTimestamp } from 'firebase/firestore';
 import auth from '@react-native-firebase/auth';
 
 // Store
@@ -34,7 +35,6 @@ import {
   validateUserName,
   validateEmail,
   validatePassword,
-  validateUserNotFound,
   validateNetworkRequestFailed,
   validateTooManyRequests
 } from 'src/validators/SignUpValidator';
@@ -80,10 +80,20 @@ const SignUp = (props: Props) => {
     setErrorPassword('');
     try {
       const { user } = await createUserWithEmailAndPassword(firebaseAuth, email, password);
+      const docRef = doc(db, 'users', user.uid);
+      const userDoc = await getDoc(docRef);
       await updateProfile(user, {
         displayName: userName
       });
-      console.log(user.displayName);
+      if (!userDoc.exists()) {
+        await setDoc(doc(db, 'users', user.uid), {
+          display_name: userName,
+          project_data: [],
+          created_at: serverTimestamp(),
+          deleted_at: null
+        });
+      }
+      console.log('userDoc.exists: ' + userDoc.exists());
     } catch (error: any) {
       if (error.code === 'auth/missing-email') {
         validateUserName(userName, setErrorUserName);
