@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 import { onAuthStateChanged } from 'firebase/auth';
-import { firebaseAuth } from "../config/firebase";
+import { firebaseAuth, db } from 'src/config/firebase';
+import { doc, setDoc, getDoc, serverTimestamp } from 'firebase/firestore';
 import auth from '@react-native-firebase/auth';
 
 // Store
@@ -49,9 +50,20 @@ const StackNavigator = () => {
     }
   }, [subscribed]);
 
-  const onSocialStateChanged = (user: any) => {
+  const onSocialStateChanged = async (user: any) => {
     if (user) {
       setUser(user);
+      const docRef = doc(db, 'users', user.uid);
+      const userDoc = await getDoc(docRef);
+      if (!userDoc.exists()) {
+        await setDoc(doc(db, 'users', user.uid), {
+          display_name: user.displayName,
+          project_data: [],
+          created_at: serverTimestamp(),
+          deleted_at: null
+        });
+      }
+      console.log('userDoc.exists: ' + userDoc.exists());
       console.log(user);
     } else {
       setUser('');
