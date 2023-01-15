@@ -85,7 +85,7 @@ const MainTabMenu = (props: Props) => {
     bottom: positionValue,
   }
 
-  const onPressHide = () => {
+  const hideActivated = () => {
     dispatch(hideOverlay());
     dispatch(hideMainTabMenu());
   };
@@ -109,10 +109,10 @@ const MainTabMenu = (props: Props) => {
       }
 
       if (nativeEvent.velocityY > 0) {
-        onPressHide();
+        hideActivated();
       }
     },
-    [onPressHide]
+    [hideActivated]
   );
 
   return (
@@ -178,7 +178,7 @@ const MainTabMenu = (props: Props) => {
           { transform: [{ translateX: - (targetWidth / 2) }] }
         ]}
         onLayout={ getTargetWidth }
-        onPress={ onPressHide }>
+        onPress={ hideActivated }>
         <Icon
           svgType={1}
           width="39.598"
