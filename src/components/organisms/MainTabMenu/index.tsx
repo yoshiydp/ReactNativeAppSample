@@ -1,5 +1,10 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState, useCallback } from 'react';
 import { Animated, View, TouchableOpacity, Text } from 'react-native';
+import {
+  GestureHandlerRootView,
+  PanGestureHandler,
+  HandlerStateChangeEvent,
+} from 'react-native-gesture-handler';
 import { useDispatch } from 'react-redux';
 
 // Store
@@ -85,6 +90,31 @@ const MainTabMenu = (props: Props) => {
     dispatch(hideMainTabMenu());
   };
 
+  const velocityThreshold = 0.3;
+  const directionalOffsetThreshold = 80;
+
+  const isValidSwipe = (velocity: number, directionalOffset: number) => {
+    return (
+      Math.abs(velocity) > velocityThreshold &&
+      Math.abs(directionalOffset) < directionalOffsetThreshold
+    );
+  };
+
+  const onPanGestureEvent = useCallback(
+    (event: HandlerStateChangeEvent<any>) => {
+      const { nativeEvent } = event;
+
+      if (!isValidSwipe(nativeEvent.velocityY, nativeEvent.translationY)) {
+        return;
+      }
+
+      if (nativeEvent.velocityY > 0) {
+        onPressHide();
+      }
+    },
+    [onPressHide]
+  );
+
   return (
     <Animated.View
       style={[
@@ -93,50 +123,54 @@ const MainTabMenu = (props: Props) => {
         animatedTranlateStyle
       ]}
       onLayout={ getContainerHeight }>
-      <View style={styles.nav}>
-        <TouchableOpacity
-          activeOpacity={1}
-          style={styles.navItem}
-          onPress={() => props.navigation.navigate('NewProject')}>
-          <View style={styles.navIcon}>
-            <Icon
-              svgType={1}
-              width="12"
-              height="15"
-              viewBox="0 0 12 15"
-              gTransform="translate(-4 -1)"
-              pathD1={SVGPATH.ICON_NEW_DOCUMENT_PATH1}
-              pathTransform1="translate(0 0)"
-              pathD2={SVGPATH.ICON_NEW_DOCUMENT_PATH2}
-              pathTransform2="translate(-3.5 -5.5)"
-              pathFill={COLOR.COLOR_BLUE_OVERLAY}
-            />
+      <GestureHandlerRootView>
+        <PanGestureHandler onActivated={ onPanGestureEvent }>
+          <View style={styles.nav}>
+            <TouchableOpacity
+              activeOpacity={1}
+              style={styles.navItem}
+              onPress={() => props.navigation.navigate('NewProject')}>
+              <View style={styles.navIcon}>
+                <Icon
+                  svgType={1}
+                  width="12"
+                  height="15"
+                  viewBox="0 0 12 15"
+                  gTransform="translate(-4 -1)"
+                  pathD1={SVGPATH.ICON_NEW_DOCUMENT_PATH1}
+                  pathTransform1="translate(0 0)"
+                  pathD2={SVGPATH.ICON_NEW_DOCUMENT_PATH2}
+                  pathTransform2="translate(-3.5 -5.5)"
+                  pathFill={COLOR.COLOR_BLUE_OVERLAY}
+                />
+              </View>
+              <Text style={styles.navText}>新しいプロジェクトを作成</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              activeOpacity={1}
+              style={styles.navItem}
+              onPress={() => props.navigation.navigate('NewTrack')}>
+              <View style={styles.navIcon}>
+                <Icon
+                  svgType={1}
+                  width="14"
+                  height="14"
+                  viewBox="0 0 14 14"
+                  gTransform="translate(-1.25 -1.25)"
+                  pathD1={SVGPATH.ICON_NEW_MUSIC_PATH1}
+                  pathTransform1="translate(-1.047 -1.048)"
+                  pathD2={SVGPATH.ICON_NEW_MUSIC_PATH2}
+                  pathTransform2="translate(0)"
+                  pathD3={SVGPATH.ICON_NEW_MUSIC_PATH3}
+                  pathTransform3="translate(-4.884 -4.884)"
+                  pathFill={COLOR.COLOR_BLUE_OVERLAY}
+                />
+              </View>
+              <Text style={styles.navText}>新しいトラックを追加</Text>
+            </TouchableOpacity>
           </View>
-          <Text style={styles.navText}>新しいプロジェクトを作成</Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          activeOpacity={1}
-          style={styles.navItem}
-          onPress={() => props.navigation.navigate('NewTrack')}>
-          <View style={styles.navIcon}>
-            <Icon
-              svgType={1}
-              width="14"
-              height="14"
-              viewBox="0 0 14 14"
-              gTransform="translate(-1.25 -1.25)"
-              pathD1={SVGPATH.ICON_NEW_MUSIC_PATH1}
-              pathTransform1="translate(-1.047 -1.048)"
-              pathD2={SVGPATH.ICON_NEW_MUSIC_PATH2}
-              pathTransform2="translate(0)"
-              pathD3={SVGPATH.ICON_NEW_MUSIC_PATH3}
-              pathTransform3="translate(-4.884 -4.884)"
-              pathFill={COLOR.COLOR_BLUE_OVERLAY}
-            />
-          </View>
-          <Text style={styles.navText}>新しいトラックを追加</Text>
-        </TouchableOpacity>
-      </View>
+        </PanGestureHandler>
+      </GestureHandlerRootView>
       <TouchableOpacity
         activeOpacity={1}
         style={[
