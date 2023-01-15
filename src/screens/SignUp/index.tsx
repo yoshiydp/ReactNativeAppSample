@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import {
   View,
+  ScrollView,
   TextInput,
   Text,
   TouchableOpacity,
@@ -232,7 +233,7 @@ const SignUp = (props: Props) => {
   ];
 
   return (
-    <View style={styles.container}>
+    <ScrollView style={styles.container}>
       <IntroMessage
         message={ TEXT.TEXT_INTRO_MESSAGE }
       />
@@ -314,7 +315,7 @@ const SignUp = (props: Props) => {
           <Text style={{ color: 'white' }}>登録する</Text>
         </TouchableOpacity>
       </KeyboardAvoidingView> */}
-    </View>
+    </ScrollView>
   );
 };
 

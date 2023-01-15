@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import {
   View,
+  ScrollView,
   Text,
   KeyboardAvoidingView,
 } from 'react-native';
@@ -201,7 +202,7 @@ const Login = (props: Props) => {
   ];
 
   return (
-    <View style={styles.container}>
+    <ScrollView style={styles.container}>
       <IntroMessage />
       <AuthForm
         inputFieldItems={ inputFieldItems }
@@ -285,7 +286,7 @@ const Login = (props: Props) => {
         </TouchableOpacity>
         <Button title="SignUp" onPress={() => props.navigation.navigate('SignUp')} />
       </KeyboardAvoidingView> */}
-    </View>
+    </ScrollView>
   );
 };
 
