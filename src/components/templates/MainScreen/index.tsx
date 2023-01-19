@@ -25,7 +25,8 @@ const MainScreen = (props: Props) => {
   const subscribed = useSelector((state) => state.subscribe.subscribe);
 
   useEffect(() => {
-  }, []);
+    console.log('route: '+props.navigation);
+  }, [props.navigation]);
 
   const handleLogout = () => {
     signOut(firebaseAuth)
