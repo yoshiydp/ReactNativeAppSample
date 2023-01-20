@@ -1,0 +1,30 @@
+@use '../../../../globalStyles/' as g;
+
+.container {
+  flex-direction: row;
+  width: 100%;
+}
+
+.artwork {
+  width: 60px;
+  height: 60px;
+  border-radius: 2px;
+  overflow: hidden;
+  background: g.colors(white, base);
+}
+
+.title {
+  font-family: g.$font-dm-serif-display;
+  font-size: 16px;
+  color: g.colors(white, base);
+}
+
+.text {
+  margin-top: 7px;
+  color: g.colors(gray, type3);
+  font-size: 10px;
+  &Wrap {
+    width: 100%;
+    margin-left: 12px;
+  }
+}
