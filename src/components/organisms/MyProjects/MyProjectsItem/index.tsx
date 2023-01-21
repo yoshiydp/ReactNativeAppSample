@@ -10,7 +10,15 @@ import { svgType1, svgType2, svgType3, svgType4, svgType5 } from 'interfaces/svg
 // Styles
 import styles from './MyProjectsItem.scss';
 
-const MyProjectsItem = () => {
+interface Props {
+  projectTitle: string;
+  lyric: string;
+  trackTitle: string;
+  artistName: string;
+  artWork: string;
+}
+
+const MyProjectsItem = (props: Props) => {
 
   useEffect(() => {
   }, []);
@@ -19,9 +27,15 @@ const MyProjectsItem = () => {
     <View style={ styles.container }>
       <View style={ styles.artwork }></View>
       <View style={ styles.textWrap }>
-        <Text style={ styles.title }>Project Title</Text>
-        <Text style={ styles.text }>リリックが表示されます。リリックが表示されます…</Text>
-        <Text style={ styles.text }>Track Title / Artist Name</Text>
+        <Text style={ styles.title }>
+          { props.projectTitle }
+        </Text>
+        <Text style={ styles.text }>
+          { props.lyric }
+        </Text>
+        <Text style={ styles.text }>
+          { props.trackTitle } / { props.artistName }
+        </Text>
       </View>
     </View>
   );

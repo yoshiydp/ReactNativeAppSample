@@ -88,10 +88,10 @@ const SignUp = (props: Props) => {
       });
       if (!userDoc.exists()) {
         await setDoc(doc(db, 'users', user.uid), {
-          display_name: userName,
-          project_data: [],
-          created_at: serverTimestamp(),
-          deleted_at: null
+          displayName: userName,
+          projectData: [],
+          createdAt: serverTimestamp(),
+          deletedAt: null
         });
       }
       console.log('userDoc.exists: ' + userDoc.exists());

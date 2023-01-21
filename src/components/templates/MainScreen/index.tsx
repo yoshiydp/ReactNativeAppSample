@@ -2,7 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { View, Button, ScrollView, Text, TouchableOpacity } from 'react-native';
 import { useDispatch } from 'react-redux';
 import { signOut } from 'firebase/auth';
-import { firebaseAuth } from 'src/config/firebase';
+import { firebaseAuth, db } from 'src/config/firebase';
+import { doc, updateDoc } from 'firebase/firestore';
 import auth from '@react-native-firebase/auth';
 
 // Store
@@ -19,9 +20,18 @@ import * as TEXT from 'constants/text';
 // Styles
 import styles from './MainScreen.scss';
 
+interface MyProjectData {
+  projectTitle: string;
+  lyric: string;
+  trackTitle: string;
+  artistName: string;
+  artWork: string;
+}
+
 interface Props {
   navigation: any;
   title: string;
+  myProjectDataItems: Array<MyProjectData>;
 }
 
 const MainScreen = (props: Props) => {
@@ -29,7 +39,8 @@ const MainScreen = (props: Props) => {
   const subscribed = useSelector((state) => state.subscribe.subscribe);
 
   useEffect(() => {
-  }, [props.navigation]);
+    console.log(props.myProjectDataItems);
+  }, [props.navigation, props.myProjectDataItems]);
 
   const handleLogout = () => {
     signOut(firebaseAuth)
@@ -47,6 +58,60 @@ const MainScreen = (props: Props) => {
     console.log('SignOut');
   }
 
+  const addSampleData = async () => {
+    const { uid }: any = firebaseAuth.currentUser;
+    if (!uid) return;
+    const docRef = doc(db, 'users', uid);
+    await updateDoc(docRef, {
+      projectData: sampleProjectData,
+    });
+  }
+
+  const sampleProjectData = [
+    {
+      projectTitle: 'Project Title1',
+      lyric: 'リリックが表示されます。リリックが表示されます…',
+      trackTitle: 'Track Title',
+      artistName: 'Artist Name',
+      artWork: ''
+    },
+    {
+      projectTitle: 'Project Title2',
+      lyric: 'リリックが表示されます。リリックが表示されます…',
+      trackTitle: 'Track Title',
+      artistName: 'Artist Name',
+      artWork: ''
+    },
+    {
+      projectTitle: 'Project Title3',
+      lyric: 'リリックが表示されます。リリックが表示されます…',
+      trackTitle: 'Track Title',
+      artistName: 'Artist Name',
+      artWork: ''
+    },
+    {
+      projectTitle: 'Project Title4',
+      lyric: 'リリックが表示されます。リリックが表示されます…',
+      trackTitle: 'Track Title',
+      artistName: 'Artist Name',
+      artWork: ''
+    },
+    {
+      projectTitle: 'Project Title5',
+      lyric: 'リリックが表示されます。リリックが表示されます…',
+      trackTitle: 'Track Title',
+      artistName: 'Artist Name',
+      artWork: ''
+    },
+    {
+      projectTitle: 'Project Title6',
+      lyric: 'リリックが表示されます。リリックが表示されます…',
+      trackTitle: 'Track Title',
+      artistName: 'Artist Name',
+      artWork: ''
+    },
+  ];
+
   return (
     <View style={ styles.container }>
       <ScrollView>
@@ -55,7 +120,9 @@ const MainScreen = (props: Props) => {
         />
         {
           props.title === TEXT.TITLE_MY_PROJECTS ?
-            <MyProjectsList />
+            <MyProjectsList
+              myProjectDataItems={ props.myProjectDataItems }
+            />
           : props.title === TEXT.TITLE_TRACK_LIST ?
             <Text>{ TEXT.TITLE_TRACK_LIST } screen</Text>
           : props.title === TEXT.TITLE_RECORD_AUDIO ?
@@ -64,6 +131,18 @@ const MainScreen = (props: Props) => {
             <Text>{ TEXT.TITLE_MY_ACCOUNT } screen</Text>
           : ''
         }
+        <TouchableOpacity
+          onPress={addSampleData}
+          style={{
+            marginTop: 10,
+            padding: 10,
+            backgroundColor: '#88cb7f',
+            borderRadius: 10,
+            width: 100,
+          }}
+        >
+          <Text style={{ color: 'white' }}>サンプルデータ追加</Text>
+        </TouchableOpacity>
         <TouchableOpacity
           onPress={handleLogout}
           style={{

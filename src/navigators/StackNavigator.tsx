@@ -40,10 +40,10 @@ const StackNavigator = () => {
       const subscribe = onAuthStateChanged(firebaseAuth, (user) => {
         if (user) {
           setUser(user);
-          console.log('stacked user:' + JSON.stringify(user));
+          // console.log('stacked user:' + JSON.stringify(user));
         } else {
           setUser('');
-          console.log('stack user:' + JSON.stringify(user));
+          // console.log('stack user:' + JSON.stringify(user));
         }
       });
       return () => subscribe();
@@ -57,17 +57,14 @@ const StackNavigator = () => {
       const userDoc = await getDoc(docRef);
       if (!userDoc.exists()) {
         await setDoc(doc(db, 'users', user.uid), {
-          display_name: user.displayName,
-          project_data: [],
-          created_at: serverTimestamp(),
-          deleted_at: null
+          displayName: user.displayName,
+          projectData: [],
+          createdAt: serverTimestamp(),
+          deletedAt: null
         });
       }
-      console.log('userDoc.exists: ' + userDoc.exists());
-      console.log(user);
     } else {
       setUser('');
-      console.log(user);
     }
   }
 
