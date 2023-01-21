@@ -4,7 +4,7 @@ import * as VALUE from 'constants/value';
 
 const regexEmail = VALUE.REGEX_EMAIL;
 
-export const validateEmail = (email: string = '', setState: (value: string) => void) => {
+export const validateEmail = (email: string, setState: (value: string) => void) => {
   if (!email) {
     setState(TEXT.ERROR_EMPTY_EMAIL);
   } else if (!regexEmail.test(email)) {
@@ -14,7 +14,7 @@ export const validateEmail = (email: string = '', setState: (value: string) => v
   }
 }
 
-export const validatePassword = (password: string = '', setState: (value: string) => void) => {
+export const validatePassword = (password: string, setState: (value: string) => void) => {
   if (!password) {
     setState(TEXT.ERROR_EMPTY_PASSWORD);
   } else if (password.length < 8) {
