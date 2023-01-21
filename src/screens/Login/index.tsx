@@ -9,7 +9,7 @@ import { useDispatch } from 'react-redux';
 import { signInWithEmailAndPassword, onAuthStateChanged } from 'firebase/auth';
 import { appleAuth } from '@invertase/react-native-apple-authentication';
 import { GoogleSignin } from '@react-native-google-signin/google-signin';
-import { firebaseAuth } from '../../config/firebase';
+import { firebaseAuth } from 'src/config/firebase';
 import auth from '@react-native-firebase/auth';
 
 // Store
@@ -233,59 +233,6 @@ const Login = (props: Props) => {
           />
         </View>
       </View>
-      {/* <KeyboardAvoidingView
-        behavior="padding"
-        style={{
-        justifyContent: 'center',
-        alignItems: 'center',
-        flex: 1,
-        }}
-      >
-        <View style={{ marginBottom: 20 }}>
-          <TextInput
-            style={{
-              width: 250,
-              borderWidth: 1,
-              padding: 5,
-              borderColor: 'gray',
-              backgroundColor: 'white'
-            }}
-            onChangeText={setEmail}
-            value={email}
-            placeholder="メールアドレスを入力してください"
-            autoCapitalize="none"
-            autoCorrect={false}
-          />
-        </View>
-        <View style={{ marginBottom: 20 }}>
-          <TextInput
-            style={{
-              width: 250,
-              borderWidth: 1,
-              padding: 5,
-              borderColor: 'gray',
-              backgroundColor: 'white'
-            }}
-            onChangeText={setPassword}
-            value={password}
-            placeholder="パスワードを入力してください"
-            secureTextEntry={true}
-            autoCapitalize="none"
-          />
-        </View>
-        <TouchableOpacity
-          style={{
-            padding: 10,
-            backgroundColor: '#88cb7f',
-            borderRadius: 10,
-          }}
-          onPress={signIn}
-          // disabled={!email || !password}
-        >
-          <Text style={{ color: 'white' }}>ログイン</Text>
-        </TouchableOpacity>
-        <Button title="SignUp" onPress={() => props.navigation.navigate('SignUp')} />
-      </KeyboardAvoidingView> */}
     </ScrollView>
   );
 };

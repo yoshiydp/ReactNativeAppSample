@@ -2,7 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { View, Button, ScrollView, Text, TouchableOpacity } from 'react-native';
 import { useDispatch } from 'react-redux';
 import { signOut } from 'firebase/auth';
-import { firebaseAuth } from '../../../config/firebase';
+import { firebaseAuth, db } from 'src/config/firebase';
+import { doc, updateDoc } from 'firebase/firestore';
 import auth from '@react-native-firebase/auth';
 
 // Store
@@ -11,13 +12,26 @@ import { unsubscribe } from 'src/store/SubscribeSlice';
 
 // Components
 import MainTitleHeader from 'components/organisms/MainTitleHeader';
+import MyProjectsList from 'src/components/organisms/MyProjects/MyProjectsList';
+
+// Constants
+import * as TEXT from 'constants/text';
 
 // Styles
 import styles from './MainScreen.scss';
 
+interface MyProjectData {
+  projectTitle: string;
+  lyric: string;
+  trackTitle: string;
+  artistName: string;
+  artWork: string;
+}
+
 interface Props {
   navigation: any;
   title: string;
+  myProjectDataItems: Array<MyProjectData>;
 }
 
 const MainScreen = (props: Props) => {
@@ -25,7 +39,8 @@ const MainScreen = (props: Props) => {
   const subscribed = useSelector((state) => state.subscribe.subscribe);
 
   useEffect(() => {
-  }, []);
+    console.log(props.myProjectDataItems);
+  }, [props.navigation, props.myProjectDataItems]);
 
   const handleLogout = () => {
     signOut(firebaseAuth)
@@ -43,19 +58,91 @@ const MainScreen = (props: Props) => {
     console.log('SignOut');
   }
 
+  const addSampleData = async () => {
+    const { uid }: any = firebaseAuth.currentUser;
+    if (!uid) return;
+    const docRef = doc(db, 'users', uid);
+    await updateDoc(docRef, {
+      projectData: sampleProjectData,
+    });
+  }
+
+  const sampleProjectData = [
+    {
+      projectTitle: 'Project Title1',
+      lyric: 'リリックが表示されます。リリックが表示されます…',
+      trackTitle: 'Track Title',
+      artistName: 'Artist Name',
+      artWork: ''
+    },
+    {
+      projectTitle: 'Project Title2',
+      lyric: 'リリックが表示されます。リリックが表示されます…',
+      trackTitle: 'Track Title',
+      artistName: 'Artist Name',
+      artWork: ''
+    },
+    {
+      projectTitle: 'Project Title3',
+      lyric: 'リリックが表示されます。リリックが表示されます…',
+      trackTitle: 'Track Title',
+      artistName: 'Artist Name',
+      artWork: ''
+    },
+    {
+      projectTitle: 'Project Title4',
+      lyric: 'リリックが表示されます。リリックが表示されます…',
+      trackTitle: 'Track Title',
+      artistName: 'Artist Name',
+      artWork: ''
+    },
+    {
+      projectTitle: 'Project Title5',
+      lyric: 'リリックが表示されます。リリックが表示されます…',
+      trackTitle: 'Track Title',
+      artistName: 'Artist Name',
+      artWork: ''
+    },
+    {
+      projectTitle: 'Project Title6',
+      lyric: 'リリックが表示されます。リリックが表示されます…',
+      trackTitle: 'Track Title',
+      artistName: 'Artist Name',
+      artWork: ''
+    },
+  ];
+
   return (
     <View style={ styles.container }>
-      <MainTitleHeader
-        title={ props.title }
-      />
       <ScrollView>
-        {/* <Button title="NewProject" onPress={() => props.navigation.navigate('NewProject')} />
-        <Button title="EditProject" onPress={() => props.navigation.navigate('EditProject')} />
-        <Button title="Recording" onPress={() => props.navigation.navigate('Recording')} />
-        <Button title="NewTrack" onPress={() => props.navigation.navigate('NewTrack')} />
-        <Button title="EditTrack" onPress={() => props.navigation.navigate('EditTrack')} />
-        <Button title="EditMyAccount" onPress={() => props.navigation.navigate('EditMyAccount')} />
-        <Button title="PasswordReset" onPress={() => props.navigation.navigate('PasswordReset')} /> */}
+        <MainTitleHeader
+          title={ props.title }
+        />
+        {
+          props.title === TEXT.TITLE_MY_PROJECTS ?
+            <MyProjectsList
+              myProjectDataItems={ props.myProjectDataItems }
+            />
+          : props.title === TEXT.TITLE_TRACK_LIST ?
+            <Text>{ TEXT.TITLE_TRACK_LIST } screen</Text>
+          : props.title === TEXT.TITLE_RECORD_AUDIO ?
+            <Text>{ TEXT.TITLE_RECORD_AUDIO } screen</Text>
+          : props.title === TEXT.TITLE_MY_ACCOUNT ?
+            <Text>{ TEXT.TITLE_MY_ACCOUNT } screen</Text>
+          : ''
+        }
+        <TouchableOpacity
+          onPress={addSampleData}
+          style={{
+            marginTop: 10,
+            padding: 10,
+            backgroundColor: '#88cb7f',
+            borderRadius: 10,
+            width: 100,
+          }}
+        >
+          <Text style={{ color: 'white' }}>サンプルデータ追加</Text>
+        </TouchableOpacity>
         <TouchableOpacity
           onPress={handleLogout}
           style={{
