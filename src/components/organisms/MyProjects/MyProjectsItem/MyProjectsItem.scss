@@ -1,16 +1,27 @@
 @use '../../../../globalStyles/' as g;
 
 .container {
+  position: relative;
   flex-direction: row;
   width: 100%;
+  padding-right: 20px;
+  padding-left: 20px;
+  background: g.colors(blue, bg);
+}
+
+%image {
+  width: 60px;
+  height: 60px;
 }
 
 .artwork {
-  width: 60px;
-  height: 60px;
   border-radius: 2px;
   overflow: hidden;
-  background: g.colors(white, base);
+  @extend %image;
+}
+
+.image {
+  @extend %image;
 }
 
 .title {
@@ -27,4 +38,15 @@
     width: 100%;
     margin-left: 12px;
   }
+}
+
+.ellipsisButton {
+  position: absolute;
+  right: 20px;
+  flex: 1;
+  justify-content: center;
+  align-items: center;
+  width: 25px;
+  height: 100%;
+  background: g.colors(white, base);
 }
