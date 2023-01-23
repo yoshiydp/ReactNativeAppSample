@@ -13,10 +13,6 @@ import Icon from 'components/atoms/Icon';
 
 // Constants
 import * as COLOR from 'constants/color';
-import * as SVGPATH from 'constants/svgPath';
-
-// Interfaces
-import { svgType1, svgType2, svgType3, svgType4, svgType5 } from 'interfaces/svgInterface';
 
 // Styles
 import styles from './MyProjectsItem.scss';

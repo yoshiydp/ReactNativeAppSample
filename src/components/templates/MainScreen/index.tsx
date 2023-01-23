@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { View, Button, ScrollView, Text, TouchableOpacity } from 'react-native';
+import { View, ScrollView, Text, TouchableOpacity } from 'react-native';
 import { useDispatch } from 'react-redux';
 import { signOut } from 'firebase/auth';
 import { firebaseAuth, db } from 'src/config/firebase';
@@ -161,7 +161,7 @@ const MainScreen = (props: Props) => {
           : ''
         }
         <TouchableOpacity
-          onPress={addSampleData}
+          onPress={ addSampleData }
           style={{
             marginTop: 10,
             padding: 10,
@@ -173,7 +173,7 @@ const MainScreen = (props: Props) => {
           <Text style={{ color: 'white' }}>サンプルデータ追加</Text>
         </TouchableOpacity>
         <TouchableOpacity
-          onPress={handleLogout}
+          onPress={ handleLogout }
           style={{
             marginTop: 10,
             padding: 10,
@@ -185,15 +185,14 @@ const MainScreen = (props: Props) => {
           <Text style={{ color: 'white' }}>ログアウト</Text>
         </TouchableOpacity>
         <TouchableOpacity
-          onPress={socialSignOut}
+          onPress={ socialSignOut }
           style={{
             marginTop: 10,
             padding: 10,
             backgroundColor: '#88cb7f',
             borderRadius: 10,
             width: 100,
-          }}
-        >
+          }}>
           <Text style={{ color: 'white' }}>Google SignOut</Text>
         </TouchableOpacity>
       </ScrollView>
