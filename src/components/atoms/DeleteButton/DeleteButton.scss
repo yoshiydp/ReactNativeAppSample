@@ -1,11 +1,15 @@
 @use 'src/globalStyles/' as g;
 
 .container {
-  flex-direction: row;
   justify-content: center;
   align-items: center;
   width: 44px;
-  height: 44px;
+  background: g.colors(red, base);
+}
+
+.minus {
+  width: 16px;
+  height: 2px;
   border-radius: 50px;
   background: g.colors(white, base);
 }
