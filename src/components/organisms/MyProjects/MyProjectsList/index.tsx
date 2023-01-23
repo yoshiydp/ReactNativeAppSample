@@ -17,6 +17,7 @@ interface MyProjectData {
 
 interface Props {
   myProjectDataItems: Array<MyProjectData>;
+  navigation: any;
 }
 
 const MyProjectsList = (props: Props) => {
@@ -35,6 +36,7 @@ const MyProjectsList = (props: Props) => {
             trackTitle={ item.trackTitle }
             artistName={ item.artistName }
             artWork={ item.artWork }
+            navigation={ props.navigation }
           />
         </View>
       ))}

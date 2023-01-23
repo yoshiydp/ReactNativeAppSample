@@ -110,6 +110,34 @@ const MainScreen = (props: Props) => {
       artistName: 'Artist Name',
       artWork: ''
     },
+    {
+      projectTitle: 'Project Title7',
+      lyric: 'リリックが表示されます。リリックが表示されます…',
+      trackTitle: 'Track Title',
+      artistName: 'Artist Name',
+      artWork: ''
+    },
+    {
+      projectTitle: 'Project Title8',
+      lyric: 'リリックが表示されます。リリックが表示されます…',
+      trackTitle: 'Track Title',
+      artistName: 'Artist Name',
+      artWork: ''
+    },
+    {
+      projectTitle: 'Project Title9',
+      lyric: 'リリックが表示されます。リリックが表示されます…',
+      trackTitle: 'Track Title',
+      artistName: 'Artist Name',
+      artWork: ''
+    },
+    {
+      projectTitle: 'Project Title10',
+      lyric: 'リリックが表示されます。リリックが表示されます…',
+      trackTitle: 'Track Title',
+      artistName: 'Artist Name',
+      artWork: ''
+    },
   ];
 
   return (
@@ -122,6 +150,7 @@ const MainScreen = (props: Props) => {
           props.title === TEXT.TITLE_MY_PROJECTS ?
             <MyProjectsList
               myProjectDataItems={ props.myProjectDataItems }
+              navigation={ props.navigation }
             />
           : props.title === TEXT.TITLE_TRACK_LIST ?
             <Text>{ TEXT.TITLE_TRACK_LIST } screen</Text>

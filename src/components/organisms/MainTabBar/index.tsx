@@ -30,6 +30,7 @@ import styles from './MainTabBar.scss';
 
 interface Props {
   navigation: any;
+  inactiveHidden: boolean;
 }
 
 const MainNavBar = (props: Props) => {
@@ -190,11 +191,11 @@ const MainNavBar = (props: Props) => {
         />
       </TouchableOpacity>
       <MainTabMenu
-        isShow={mainTabMenu}
+        isShow={ mainTabMenu }
         navigation={ props.navigation }
       />
       <Overlay
-        isShow={overlay}
+        isShow={ overlay }
       />
     </View>
   );

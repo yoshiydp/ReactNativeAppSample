@@ -63,6 +63,7 @@ const StackNavigator = () => {
           deletedAt: null
         });
       }
+      // console.log(user);
     } else {
       setUser('');
     }

@@ -3,6 +3,7 @@ import { Animated, TouchableOpacity, useWindowDimensions } from 'react-native';
 import { useDispatch } from 'react-redux';
 
 // Store
+import { useSelector } from 'store/index';
 import { hideOverlay } from 'store/OverlaySlice';
 import { hideMainTabMenu } from 'store/MainTabMenuSlice';
 
@@ -23,6 +24,7 @@ const Overlay = (props: Props) => {
   const windowHeight = useWindowDimensions().height;
   const widthValue = useRef(new Animated.Value(0)).current;
   const heightValue = useRef(new Animated.Value(0)).current;
+  const activeHiddenState = useSelector((state) => state.overlay.inactiveHidden);
 
   useEffect(() => {
     props.isShow ?
@@ -37,7 +39,7 @@ const Overlay = (props: Props) => {
       sizesAnimatedFunc(widthValue, 0, VALUE.DURATION_200),
       sizesAnimatedFunc(heightValue, 0, VALUE.DURATION_200)
     )
-  }, [props.isShow]);
+  }, [props.isShow, activeHiddenState]);
 
   const minOpacityAnimated = () => {
     opacityAnimatedFunc(opacityValue, 0);
@@ -82,7 +84,7 @@ const Overlay = (props: Props) => {
   }
 
   const onPressHide = () => {
-    dispatch(hideOverlay());
+    if(!activeHiddenState) dispatch(hideOverlay());
     dispatch(hideMainTabMenu());
   };
 
@@ -92,9 +94,10 @@ const Overlay = (props: Props) => {
         styles.container,
         animatedOpacityStyle,
         animatedWidthStyle,
-        animatedHeightStyle]}>
+        animatedHeightStyle
+      ]}>
       <TouchableOpacity
-        style={styles.touchable}
+        style={ styles.touchable }
         onPress={ onPressHide }>
       </TouchableOpacity>
     </Animated.View>
