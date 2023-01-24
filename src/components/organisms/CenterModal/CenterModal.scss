@@ -1,0 +1,11 @@
+@use 'src/globalStyles/' as g;
+
+.container {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  min-width: 280px;
+  min-height: 100px;
+  border-radius: 10px;
+  background: g.colors(white, base);
+}
