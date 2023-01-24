@@ -1,15 +1,17 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 interface CenterModalStateType {
   centerModal: boolean;
+  title: string;
 };
 
 const initialState: CenterModalStateType = {
   centerModal: false,
+  title: "",
 };
 
 export const CenterModalSlice = createSlice({
-  name: 'CenterModal',
+  name: 'centerModal',
   initialState,
   reducers: {
     showCenterModal: (state: { centerModal: boolean }) => {
@@ -17,9 +19,12 @@ export const CenterModalSlice = createSlice({
     },
     hideCenterModal: (state: { centerModal: boolean }) => {
       state.centerModal = false;
+    },
+    setCenterModalTitle: (state: { title: string }, action: PayloadAction<string>) => {
+      state.title = action.payload;
     }
   }
 });
 
-export const { showCenterModal, hideCenterModal } = CenterModalSlice.actions;
+export const { showCenterModal, hideCenterModal, setCenterModalTitle } = CenterModalSlice.actions;
 export default CenterModalSlice.reducer;
