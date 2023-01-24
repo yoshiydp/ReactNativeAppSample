@@ -5,7 +5,7 @@ import Swipeable from 'react-native-gesture-handler/Swipeable';
 
 // Store
 import { useSelector } from 'store/index';
-import { showCenterModal } from 'store/CenterModalSlice';
+import { showCenterModal, setCenterModalTitle } from 'store/CenterModalSlice';
 import { showOverlay, inactiveHidden } from 'store/OverlaySlice';
 
 // Components
@@ -14,6 +14,7 @@ import Icon from 'components/atoms/Icon';
 
 // Constants
 import * as COLOR from 'constants/color';
+import * as TEXT from 'constants/text';
 
 // Styles
 import styles from './MyProjectsItem.scss';
@@ -58,6 +59,7 @@ const MyProjectsItem = (props: Props) => {
     dispatch(showOverlay());
     dispatch(inactiveHidden());
     dispatch(showCenterModal());
+    dispatch(setCenterModalTitle(TEXT.MODAL_TITLE_DELETE_PROJECT));
   };
 
   return (

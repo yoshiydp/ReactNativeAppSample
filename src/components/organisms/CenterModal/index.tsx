@@ -1,10 +1,14 @@
 import React, { useEffect, useState, useRef } from 'react';
-import { Animated, Easing, View, TouchableOpacity, Button } from 'react-native';
+import { Animated, Easing, Text } from 'react-native';
 import { useDispatch } from 'react-redux';
 
 // Store
+import { useSelector } from 'store/index';
 import { hideCenterModal } from 'store/CenterModalSlice';
 import { hideOverlay, activeHidden } from 'store/OverlaySlice';
+
+// Components
+import HorizontalButtonList from 'components/molecules/Modal/HorizontalButtonList';
 
 // Constants
 import * as VALUE from 'constants/value';
@@ -18,9 +22,8 @@ interface Props {
 
 const CenterModal = (props: Props) => {
   const dispatch = useDispatch();
+  const centerModalTitleState = useSelector((state) => state.centerModal.title);
   const scaleValue = useRef(new Animated.Value(0)).current;
-  const widthValue = useRef(new Animated.Value(0)).current;
-  const heightValue = useRef(new Animated.Value(0)).current;
   const [targetWidth, setTargetWidth] = useState<number>(0);
   const [targetHeight, setTargetHeight] = useState<number>(0);
 
@@ -30,19 +33,8 @@ const CenterModal = (props: Props) => {
   }
 
   useEffect(() => {
-    props.isShow ?
-    (
-      maxScaleAnimated(),
-      sizesAnimatedFunc(widthValue, 280, 0),
-      sizesAnimatedFunc(heightValue, 100, 0)
-    )
-    :
-    (
-      minScaleAnimated(),
-      sizesAnimatedFunc(widthValue, 0, VALUE.DURATION_200),
-      sizesAnimatedFunc(heightValue, 0, VALUE.DURATION_200)
-    )
-  }, [props.isShow, targetWidth, targetHeight]);
+    props.isShow ? maxScaleAnimated() : minScaleAnimated()
+  }, [props.isShow, centerModalTitleState, targetWidth, targetHeight]);
 
   const minScaleAnimated = () => {
     scaleAnimatedFunc(scaleValue, 0);
@@ -66,23 +58,6 @@ const CenterModal = (props: Props) => {
     outputRange: [0, 1]
   });
 
-  const sizesAnimatedFunc = (object: any, value: number, delay: number) => {
-    Animated.timing(object, {
-      toValue : value,
-      duration : 0,
-      delay: delay,
-      useNativeDriver: false
-    }).start();
-  }
-
-  const animatedWidthStyle = {
-    width: widthValue,
-  }
-
-  const animatedHeightStyle = {
-    height: heightValue,
-  }
-
   const onPressHide = () => {
     dispatch(hideOverlay());
     dispatch(activeHidden());
@@ -98,14 +73,14 @@ const CenterModal = (props: Props) => {
           {translateY: - (targetHeight / 2)},
           {scale: animatedScale}
         ]},
-        animatedWidthStyle,
-        animatedHeightStyle
       ]}
       onLayout={ getTargetPosition }>
-        <Button
-          title="Close"
-          onPress={ onPressHide }
-        />
+      { centerModalTitleState &&
+        <Text style={ styles.title }>
+          { centerModalTitleState }
+        </Text>
+      }
+      <HorizontalButtonList />
     </Animated.View>
   );
 };
