@@ -3,6 +3,7 @@ import { Animated, Easing, View, TouchableOpacity, Button } from 'react-native';
 import { useDispatch } from 'react-redux';
 
 // Store
+import { hideCenterModal } from 'store/CenterModalSlice';
 import { hideOverlay, activeHidden } from 'store/OverlaySlice';
 
 // Constants
@@ -85,6 +86,7 @@ const CenterModal = (props: Props) => {
   const onPressHide = () => {
     dispatch(hideOverlay());
     dispatch(activeHidden());
+    dispatch(hideCenterModal());
   };
 
   return (

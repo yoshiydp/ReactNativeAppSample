@@ -5,6 +5,7 @@ import Swipeable from 'react-native-gesture-handler/Swipeable';
 
 // Store
 import { useSelector } from 'store/index';
+import { showCenterModal } from 'store/CenterModalSlice';
 import { showOverlay, inactiveHidden } from 'store/OverlaySlice';
 
 // Components
@@ -35,7 +36,6 @@ const MyProjectsItem = (props: Props) => {
   const activeHiddenState = useSelector((state) => state.overlay.inactiveHidden);
 
   useEffect(() => {
-    console.log('activeHiddenState: ' + activeHiddenState);
   }, [activeHiddenState]);
 
   const renderRightActions = () => {
@@ -57,6 +57,7 @@ const MyProjectsItem = (props: Props) => {
   const onPressDeleteProject = () => {
     dispatch(showOverlay());
     dispatch(inactiveHidden());
+    dispatch(showCenterModal());
   };
 
   return (
