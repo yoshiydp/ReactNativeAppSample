@@ -1,11 +1,13 @@
 import { configureStore } from '@reduxjs/toolkit';
 import { useSelector as rawUseSelector, TypedUseSelectorHook } from 'react-redux';
+import centerModalReducer from './CenterModalSlice';
 import mainTabMenuReducer from './MainTabMenuSlice';
 import overlayReducer from './OverlaySlice';
 import SubscribeReducer from './SubscribeSlice';
 
 export const store = configureStore({
   reducer: {
+    centerModal: centerModalReducer,
     mainTabMenu: mainTabMenuReducer,
     overlay: overlayReducer,
     subscribe: SubscribeReducer,
