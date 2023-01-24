@@ -52,3 +52,7 @@ export const TITLE_RECORD_AUDIO = 'Record Audio';
 export const TITLE_MY_ACCOUNT = 'My Account';
 export const TITLE_LOGIN = 'Login';
 export const TITLE_SIGNUP = 'Sign Up';
+
+// MODAL TITLE
+export const MODAL_TITLE_DELETE_PROJECT = 'このプロジェクトを削除しますか？';
+export const MODAL_TITLE_DELETE_TRACK = 'このトラックを削除しますか？';
