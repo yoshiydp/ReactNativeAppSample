@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { firebaseAuth, db } from 'src/config/firebase';
-import { doc, getDoc } from 'firebase/firestore';
+import { doc, getDoc, onSnapshot } from 'firebase/firestore';
 
 // Components
 import MainScreen from 'components/templates/MainScreen';
@@ -14,15 +14,14 @@ interface Props {
 
 const MyProjects = (props: Props) => {
   const [projectData, setProjectData] = useState<any>([]);
+  const { uid }: any = firebaseAuth.currentUser;
+  if (!uid) return;
+  const docRef = doc(db, 'users', uid);
 
   const getProjectData = async () => {
-    const { uid }: any = firebaseAuth.currentUser;
-    if (!uid) return;
-    const docRef = doc(db, 'users', uid);
     const docSnap = await getDoc(docRef);
     if (docSnap.exists()) {
       setProjectData(docSnap.data().projectData);
-      console.log(projectData.length);
     } else {
       console.log("No such document!");
     }
@@ -30,6 +29,11 @@ const MyProjects = (props: Props) => {
 
   useEffect(() => {
     getProjectData();
+    onSnapshot(docRef, (doc) => {
+      setProjectData(doc.data()?.projectData);
+      console.log("Current data: ", doc.data());
+    });
+    // return () => unsub();
   }, []);
 
   return (

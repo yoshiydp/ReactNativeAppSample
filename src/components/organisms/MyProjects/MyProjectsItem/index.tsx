@@ -5,7 +5,13 @@ import Swipeable from 'react-native-gesture-handler/Swipeable';
 
 // Store
 import { useSelector } from 'store/index';
-import { showCenterModal, setCenterModalTitle } from 'store/CenterModalSlice';
+import {
+  showCenterModal,
+  setCenterModalTitle,
+  setCenterModalDataTitle,
+  setCenterModalDescription,
+  setCenterModalSubmitButtonText
+} from 'store/CenterModalSlice';
 import { showOverlay, inactiveHidden } from 'store/OverlaySlice';
 
 // Components
@@ -60,13 +66,16 @@ const MyProjectsItem = (props: Props) => {
     dispatch(inactiveHidden());
     dispatch(showCenterModal());
     dispatch(setCenterModalTitle(TEXT.MODAL_TITLE_DELETE_PROJECT));
+    dispatch(setCenterModalDataTitle(props.projectTitle));
+    dispatch(setCenterModalDescription(TEXT.MODAL_DESC_DELETE_NOTE));
+    dispatch(setCenterModalSubmitButtonText);
   };
 
   return (
     <Swipeable
       ref={ swipeable }
       renderRightActions={ renderRightActions }
-      rightThreshold={ 40 }
+      rightThreshold={ 44 }
     >
       <TouchableOpacity
         style={ styles.container }

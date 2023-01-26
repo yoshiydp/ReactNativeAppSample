@@ -36,11 +36,9 @@ interface Props {
 
 const MainScreen = (props: Props) => {
   const dispatch = useDispatch();
-  const subscribed = useSelector((state) => state.subscribe.subscribe);
 
   useEffect(() => {
-    console.log(props.myProjectDataItems);
-  }, [props.navigation, props.myProjectDataItems]);
+  }, []);
 
   const handleLogout = () => {
     signOut(firebaseAuth)
@@ -142,10 +140,10 @@ const MainScreen = (props: Props) => {
 
   return (
     <View style={ styles.container }>
+      <MainTitleHeader
+        title={ props.title }
+      />
       <ScrollView>
-        <MainTitleHeader
-          title={ props.title }
-        />
         {
           props.title === TEXT.TITLE_MY_PROJECTS ?
             <MyProjectsList

@@ -11,9 +11,30 @@
   background: g.colors(white, base);
 }
 
-.title {
-  padding-top: 40px;
+%title {
   text-align: center;
   font-size: 18px;
   font-weight: bold;
+}
+
+.title {
+  padding-top: 24px;
+  font-size: 18px;
+  @extend %title;
+}
+
+.dataTitle {
+  margin-top: 12px;
+  padding: 2px 4px;
+  border-radius: 5px;
+  overflow: hidden;
+  font-family: g.$font-dm-serif-display;
+  background: g.colors(gray, type4);
+  @extend %title;
+}
+
+.description {
+  margin-top: 12px;
+  text-align: center;
+  font-size: 10px;
 }

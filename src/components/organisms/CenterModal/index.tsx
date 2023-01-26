@@ -1,11 +1,8 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { Animated, Easing, Text } from 'react-native';
-import { useDispatch } from 'react-redux';
 
 // Store
 import { useSelector } from 'store/index';
-import { hideCenterModal } from 'store/CenterModalSlice';
-import { hideOverlay, activeHidden } from 'store/OverlaySlice';
 
 // Components
 import HorizontalButtonList from 'components/molecules/Modal/HorizontalButtonList';
@@ -21,8 +18,9 @@ interface Props {
 }
 
 const CenterModal = (props: Props) => {
-  const dispatch = useDispatch();
   const centerModalTitleState = useSelector((state) => state.centerModal.title);
+  const centerModalDataTitleState = useSelector((state) => state.centerModal.dataTitle);
+  const centerModalDescriptionState = useSelector((state) => state.centerModal.description);
   const scaleValue = useRef(new Animated.Value(0)).current;
   const [targetWidth, setTargetWidth] = useState<number>(0);
   const [targetHeight, setTargetHeight] = useState<number>(0);
@@ -34,7 +32,15 @@ const CenterModal = (props: Props) => {
 
   useEffect(() => {
     props.isShow ? maxScaleAnimated() : minScaleAnimated()
-  }, [props.isShow, centerModalTitleState, targetWidth, targetHeight]);
+  },
+  [
+    props.isShow,
+    centerModalTitleState,
+    centerModalDataTitleState,
+    centerModalDescriptionState,
+    targetWidth,
+    targetHeight
+  ]);
 
   const minScaleAnimated = () => {
     scaleAnimatedFunc(scaleValue, 0);
@@ -58,12 +64,6 @@ const CenterModal = (props: Props) => {
     outputRange: [0, 1]
   });
 
-  const onPressHide = () => {
-    dispatch(hideOverlay());
-    dispatch(activeHidden());
-    dispatch(hideCenterModal());
-  };
-
   return (
     <Animated.View
       style={[
@@ -80,7 +80,18 @@ const CenterModal = (props: Props) => {
           { centerModalTitleState }
         </Text>
       }
-      <HorizontalButtonList />
+      { centerModalDataTitleState &&
+        <Text style={ styles.dataTitle }>
+          { centerModalDataTitleState }
+        </Text>
+      }
+      { centerModalDescriptionState &&
+        <Text style={ styles.description }>
+          { centerModalDescriptionState }
+        </Text>
+      }
+      <HorizontalButtonList
+      />
     </Animated.View>
   );
 };

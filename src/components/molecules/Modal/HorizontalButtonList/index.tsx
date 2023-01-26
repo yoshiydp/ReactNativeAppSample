@@ -1,19 +1,57 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { View, TouchableOpacity, Text } from 'react-native';
+import { useDispatch } from 'react-redux';
+import { firebaseAuth, db } from 'src/config/firebase';
+import { doc, updateDoc, arrayRemove, onSnapshot } from 'firebase/firestore';
 
-// Constants
-import * as TEXT from 'constants/text';
+// Store
+import { useSelector } from 'store/index';
+import { hideCenterModal } from 'store/CenterModalSlice';
+import { hideOverlay, activeHidden } from 'store/OverlaySlice';
 
 // Styles
 import styles from './HorizontalButtonList.scss';
 
 interface Props {
-  message?: string;
+  onPressSubmitEvent?: () => void;
 }
 
 const HorizontalButtonList = (props: Props) => {
+  const dispatch = useDispatch();
+  const centerModalSubmitTextState = useSelector((state) => state.centerModal.submitButtonText);
 
-  const onPressYes = () => {
+  useEffect(() => {
+  }, [centerModalSubmitTextState]);
+
+  const onPressSubmit = async () => {
+    try {
+      const { uid }: any = firebaseAuth.currentUser;
+      if (!uid) return;
+      const docRef = doc(db, 'users', uid);
+      await updateDoc(docRef, {
+        projectData: arrayRemove({
+          projectTitle: 'Project Title2',
+          lyric: 'リリックが表示されます。リリックが表示されます…',
+          trackTitle: 'Track Title',
+          artistName: 'Artist Name',
+          artWork: ''
+         })
+      })
+      .then(() => {
+        dispatch(hideOverlay());
+        dispatch(activeHidden());
+        dispatch(hideCenterModal());
+        console.log('delete data');
+      });
+    } catch (error: any) {
+      console.log(error);
+    }
+  }
+
+  const onPressCancel = () => {
+    dispatch(hideOverlay());
+    dispatch(activeHidden());
+    dispatch(hideCenterModal());
   };
 
   return (
@@ -21,13 +59,15 @@ const HorizontalButtonList = (props: Props) => {
       <View style={ styles.border }></View>
       <View style={ styles.item }>
         <TouchableOpacity
-          onPress={ onPressYes }>
-          <Text style={ styles.buttonYes }>Yes</Text>
+          onPress={ onPressSubmit }>
+          <Text style={ styles.buttonYes }>
+            { centerModalSubmitTextState }
+          </Text>
         </TouchableOpacity>
       </View>
       <View style={ styles.item }>
         <TouchableOpacity
-          onPress={ onPressYes }>
+          onPress={ onPressCancel }>
           <Text style={ styles.buttonCancel }>Cancel</Text>
         </TouchableOpacity>
       </View>
