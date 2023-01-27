@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { View, Button, ScrollView, Text, TouchableOpacity } from 'react-native';
+import { View, ScrollView, Text, TouchableOpacity } from 'react-native';
 import { useDispatch } from 'react-redux';
 import { signOut } from 'firebase/auth';
 import { firebaseAuth, db } from 'src/config/firebase';
@@ -23,9 +23,10 @@ import styles from './MainScreen.scss';
 interface MyProjectData {
   projectTitle: string;
   lyric: string;
+  trackDataPath: string;
   trackTitle: string;
   artistName: string;
-  artWork: string;
+  artWorkPath: string;
 }
 
 interface Props {
@@ -36,11 +37,9 @@ interface Props {
 
 const MainScreen = (props: Props) => {
   const dispatch = useDispatch();
-  const subscribed = useSelector((state) => state.subscribe.subscribe);
 
   useEffect(() => {
-    console.log(props.myProjectDataItems);
-  }, [props.navigation, props.myProjectDataItems]);
+  }, []);
 
   const handleLogout = () => {
     signOut(firebaseAuth)
@@ -71,81 +70,91 @@ const MainScreen = (props: Props) => {
     {
       projectTitle: 'Project Title1',
       lyric: 'リリックが表示されます。リリックが表示されます…',
+      trackDataPath: '',
       trackTitle: 'Track Title',
       artistName: 'Artist Name',
-      artWork: ''
+      artWorkPath: ''
     },
     {
       projectTitle: 'Project Title2',
       lyric: 'リリックが表示されます。リリックが表示されます…',
+      trackDataPath: '',
       trackTitle: 'Track Title',
       artistName: 'Artist Name',
-      artWork: ''
+      artWorkPath: ''
     },
     {
       projectTitle: 'Project Title3',
       lyric: 'リリックが表示されます。リリックが表示されます…',
+      trackDataPath: '',
       trackTitle: 'Track Title',
       artistName: 'Artist Name',
-      artWork: ''
+      artWorkPath: ''
     },
     {
       projectTitle: 'Project Title4',
       lyric: 'リリックが表示されます。リリックが表示されます…',
+      trackDataPath: '',
       trackTitle: 'Track Title',
       artistName: 'Artist Name',
-      artWork: ''
+      artWorkPath: ''
     },
     {
       projectTitle: 'Project Title5',
       lyric: 'リリックが表示されます。リリックが表示されます…',
+      trackDataPath: '',
       trackTitle: 'Track Title',
       artistName: 'Artist Name',
-      artWork: ''
+      artWorkPath: ''
     },
     {
       projectTitle: 'Project Title6',
       lyric: 'リリックが表示されます。リリックが表示されます…',
+      trackDataPath: '',
       trackTitle: 'Track Title',
       artistName: 'Artist Name',
-      artWork: ''
+      artWorkPath: ''
     },
     {
       projectTitle: 'Project Title7',
       lyric: 'リリックが表示されます。リリックが表示されます…',
+      trackDataPath: '',
       trackTitle: 'Track Title',
       artistName: 'Artist Name',
-      artWork: ''
+      artWorkPath: ''
     },
     {
       projectTitle: 'Project Title8',
       lyric: 'リリックが表示されます。リリックが表示されます…',
+      trackDataPath: '',
       trackTitle: 'Track Title',
       artistName: 'Artist Name',
-      artWork: ''
+      artWorkPath: ''
     },
     {
       projectTitle: 'Project Title9',
       lyric: 'リリックが表示されます。リリックが表示されます…',
+      trackDataPath: '',
       trackTitle: 'Track Title',
       artistName: 'Artist Name',
-      artWork: ''
+      artWorkPath: ''
     },
     {
       projectTitle: 'Project Title10',
       lyric: 'リリックが表示されます。リリックが表示されます…',
+      trackDataPath: '',
       trackTitle: 'Track Title',
       artistName: 'Artist Name',
-      artWork: ''
+      artWorkPath: ''
     },
   ];
 
   return (
     <View style={ styles.container }>
+      <MainTitleHeader
+        title={ props.title }
+      />
       <ScrollView>
-        <MainTitleHeader
-          title={ props.title }
-        />
         {
           props.title === TEXT.TITLE_MY_PROJECTS ?
             <MyProjectsList
@@ -161,7 +170,7 @@ const MainScreen = (props: Props) => {
           : ''
         }
         <TouchableOpacity
-          onPress={addSampleData}
+          onPress={ addSampleData }
           style={{
             marginTop: 10,
             padding: 10,
@@ -173,7 +182,7 @@ const MainScreen = (props: Props) => {
           <Text style={{ color: 'white' }}>サンプルデータ追加</Text>
         </TouchableOpacity>
         <TouchableOpacity
-          onPress={handleLogout}
+          onPress={ handleLogout }
           style={{
             marginTop: 10,
             padding: 10,
@@ -185,15 +194,14 @@ const MainScreen = (props: Props) => {
           <Text style={{ color: 'white' }}>ログアウト</Text>
         </TouchableOpacity>
         <TouchableOpacity
-          onPress={socialSignOut}
+          onPress={ socialSignOut }
           style={{
             marginTop: 10,
             padding: 10,
             backgroundColor: '#88cb7f',
             borderRadius: 10,
             width: 100,
-          }}
-        >
+          }}>
           <Text style={{ color: 'white' }}>Google SignOut</Text>
         </TouchableOpacity>
       </ScrollView>

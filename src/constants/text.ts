@@ -52,3 +52,15 @@ export const TITLE_RECORD_AUDIO = 'Record Audio';
 export const TITLE_MY_ACCOUNT = 'My Account';
 export const TITLE_LOGIN = 'Login';
 export const TITLE_SIGNUP = 'Sign Up';
+
+// MODAL TITLE
+export const MODAL_TITLE_DELETE_PROJECT = 'このプロジェクトを削除しますか？';
+export const MODAL_TITLE_DELETE_TRACK = 'このトラックを削除しますか？';
+
+// MODAL DESCRIPTION
+export const MODAL_DESC_DELETE_NOTE = '一度削除すると復元はできませんので、ご注意ください。';
+
+// MODAL BUTTON TEXT
+export const MODAL_BUTTON_TEXT_YES = 'Yes';
+export const MODAL_BUTTON_TEXT_CANCEL = 'Cancel';
+export const MODAL_BUTTON_TEXT_OK = 'OK';

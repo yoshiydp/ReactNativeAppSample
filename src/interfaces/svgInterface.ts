@@ -61,3 +61,13 @@ export interface svgType5 extends svgCommonProps {
   pathFill5?: string;
   fillRule?: string;
 }
+
+export interface svgType6 extends svgCommonProps {
+  parentGTransform?: string;
+  childGTransform?: string;
+  coordinate?: string;
+  radius?: string;
+  pathTransform1?: string;
+  pathTransform2?: string;
+  pathTransform3?: string;
+}
