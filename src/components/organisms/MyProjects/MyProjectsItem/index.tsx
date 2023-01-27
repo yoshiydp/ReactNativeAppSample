@@ -1,6 +1,8 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { TouchableOpacity, View, Image, Text} from 'react-native';
 import { useDispatch } from 'react-redux';
+import { firebaseAuth, db } from 'src/config/firebase';
+import { doc, onSnapshot } from 'firebase/firestore';
 import Swipeable from 'react-native-gesture-handler/Swipeable';
 
 // Store
@@ -12,6 +14,7 @@ import {
   setCenterModalDescription,
   setCenterModalSubmitButtonText
 } from 'store/CenterModalSlice';
+import { setMyProjectsDetail } from 'store/MyProjectsSlice';
 import { showOverlay, inactiveHidden } from 'store/OverlaySlice';
 
 // Components
@@ -28,9 +31,10 @@ import styles from './MyProjectsItem.scss';
 interface DataProps {
   projectTitle: string;
   lyric: string;
+  trackDataPath: string;
   trackTitle: string;
   artistName: string;
-  artWork: string;
+  artWorkPath: string;
 }
 
 interface Props extends DataProps {
@@ -41,8 +45,14 @@ const MyProjectsItem = (props: Props) => {
   const swipeable = useRef<Swipeable>(null);
   const dispatch = useDispatch();
   const activeHiddenState = useSelector((state) => state.overlay.inactiveHidden);
+  const { uid }: any = firebaseAuth.currentUser;
+  if (!uid) return;
+  const docRef = doc(db, 'users', uid);
 
   useEffect(() => {
+    onSnapshot(docRef, () => {
+      swipeable.current?.close();
+    });
   }, [activeHiddenState]);
 
   const renderRightActions = () => {
@@ -66,9 +76,19 @@ const MyProjectsItem = (props: Props) => {
     dispatch(inactiveHidden());
     dispatch(showCenterModal());
     dispatch(setCenterModalTitle(TEXT.MODAL_TITLE_DELETE_PROJECT));
-    dispatch(setCenterModalDataTitle(props.projectTitle));
+    dispatch(setCenterModalDataTitle(setProjectData.projectTitle));
     dispatch(setCenterModalDescription(TEXT.MODAL_DESC_DELETE_NOTE));
     dispatch(setCenterModalSubmitButtonText);
+    dispatch(setMyProjectsDetail(setProjectData));
+  };
+
+  const setProjectData = {
+    projectTitle: props.projectTitle,
+    lyric: props.lyric,
+    trackDataPath: props.trackDataPath,
+    trackTitle: props.trackTitle,
+    artistName: props.artistName,
+    artWorkPath: props.artWorkPath
   };
 
   return (
@@ -85,8 +105,8 @@ const MyProjectsItem = (props: Props) => {
           <Image
             style={ styles.image }
             source={
-              props.artWork
-              ? props.artWork
+              props.artWorkPath
+              ? props.artWorkPath
               : require('src/assets/images/common/no-artwork.jpg')
             }
           />

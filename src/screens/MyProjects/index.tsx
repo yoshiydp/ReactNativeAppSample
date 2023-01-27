@@ -31,9 +31,8 @@ const MyProjects = (props: Props) => {
     getProjectData();
     onSnapshot(docRef, (doc) => {
       setProjectData(doc.data()?.projectData);
-      console.log("Current data: ", doc.data());
+      console.log("Current data: ", doc.data()?.projectData);
     });
-    // return () => unsub();
   }, []);
 
   return (

@@ -10,9 +10,10 @@ import styles from './MyProjectsList.scss';
 interface MyProjectData {
   projectTitle: string;
   lyric: string;
+  trackDataPath: string;
   trackTitle: string;
   artistName: string;
-  artWork: string;
+  artWorkPath: string;
 }
 
 interface Props {
@@ -34,9 +35,10 @@ const MyProjectsList = (props: Props) => {
               <MyProjectsItem
                 projectTitle={ item.projectTitle }
                 lyric={ item.lyric }
+                trackDataPath={ item.trackDataPath }
                 trackTitle={ item.trackTitle }
                 artistName={ item.artistName }
-                artWork={ item.artWork }
+                artWorkPath={ item.artWorkPath }
                 navigation={ props.navigation }
               />
             </View>

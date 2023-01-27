@@ -23,9 +23,10 @@ import styles from './MainScreen.scss';
 interface MyProjectData {
   projectTitle: string;
   lyric: string;
+  trackDataPath: string;
   trackTitle: string;
   artistName: string;
-  artWork: string;
+  artWorkPath: string;
 }
 
 interface Props {
@@ -69,72 +70,82 @@ const MainScreen = (props: Props) => {
     {
       projectTitle: 'Project Title1',
       lyric: 'リリックが表示されます。リリックが表示されます…',
+      trackDataPath: '',
       trackTitle: 'Track Title',
       artistName: 'Artist Name',
-      artWork: ''
+      artWorkPath: ''
     },
     {
       projectTitle: 'Project Title2',
       lyric: 'リリックが表示されます。リリックが表示されます…',
+      trackDataPath: '',
       trackTitle: 'Track Title',
       artistName: 'Artist Name',
-      artWork: ''
+      artWorkPath: ''
     },
     {
       projectTitle: 'Project Title3',
       lyric: 'リリックが表示されます。リリックが表示されます…',
+      trackDataPath: '',
       trackTitle: 'Track Title',
       artistName: 'Artist Name',
-      artWork: ''
+      artWorkPath: ''
     },
     {
       projectTitle: 'Project Title4',
       lyric: 'リリックが表示されます。リリックが表示されます…',
+      trackDataPath: '',
       trackTitle: 'Track Title',
       artistName: 'Artist Name',
-      artWork: ''
+      artWorkPath: ''
     },
     {
       projectTitle: 'Project Title5',
       lyric: 'リリックが表示されます。リリックが表示されます…',
+      trackDataPath: '',
       trackTitle: 'Track Title',
       artistName: 'Artist Name',
-      artWork: ''
+      artWorkPath: ''
     },
     {
       projectTitle: 'Project Title6',
       lyric: 'リリックが表示されます。リリックが表示されます…',
+      trackDataPath: '',
       trackTitle: 'Track Title',
       artistName: 'Artist Name',
-      artWork: ''
+      artWorkPath: ''
     },
     {
       projectTitle: 'Project Title7',
       lyric: 'リリックが表示されます。リリックが表示されます…',
+      trackDataPath: '',
       trackTitle: 'Track Title',
       artistName: 'Artist Name',
-      artWork: ''
+      artWorkPath: ''
     },
     {
       projectTitle: 'Project Title8',
       lyric: 'リリックが表示されます。リリックが表示されます…',
+      trackDataPath: '',
       trackTitle: 'Track Title',
       artistName: 'Artist Name',
-      artWork: ''
+      artWorkPath: ''
     },
     {
       projectTitle: 'Project Title9',
       lyric: 'リリックが表示されます。リリックが表示されます…',
+      trackDataPath: '',
       trackTitle: 'Track Title',
       artistName: 'Artist Name',
-      artWork: ''
+      artWorkPath: ''
     },
     {
       projectTitle: 'Project Title10',
       lyric: 'リリックが表示されます。リリックが表示されます…',
+      trackDataPath: '',
       trackTitle: 'Track Title',
       artistName: 'Artist Name',
-      artWork: ''
+      artWorkPath: ''
     },
   ];
 

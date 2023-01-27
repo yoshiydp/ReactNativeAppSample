@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { View, TouchableOpacity, Text } from 'react-native';
 import { useDispatch } from 'react-redux';
 import { firebaseAuth, db } from 'src/config/firebase';
-import { doc, updateDoc, arrayRemove, onSnapshot } from 'firebase/firestore';
+import { doc, updateDoc, arrayRemove, deleteField } from 'firebase/firestore';
 
 // Store
 import { useSelector } from 'store/index';
@@ -19,9 +19,11 @@ interface Props {
 const HorizontalButtonList = (props: Props) => {
   const dispatch = useDispatch();
   const centerModalSubmitTextState = useSelector((state) => state.centerModal.submitButtonText);
+  const myProjectsState = useSelector((state) => state.myProjects);
 
   useEffect(() => {
-  }, [centerModalSubmitTextState]);
+    console.log(myProjectsState);
+  }, [centerModalSubmitTextState, myProjectsState]);
 
   const onPressSubmit = async () => {
     try {
@@ -29,13 +31,8 @@ const HorizontalButtonList = (props: Props) => {
       if (!uid) return;
       const docRef = doc(db, 'users', uid);
       await updateDoc(docRef, {
-        projectData: arrayRemove({
-          projectTitle: 'Project Title2',
-          lyric: 'リリックが表示されます。リリックが表示されます…',
-          trackTitle: 'Track Title',
-          artistName: 'Artist Name',
-          artWork: ''
-         })
+        projectData: arrayRemove({...myProjectsState})
+        // projectData: deleteField()
       })
       .then(() => {
         dispatch(hideOverlay());
