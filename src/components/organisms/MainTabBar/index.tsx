@@ -7,8 +7,8 @@ const Tab = createBottomTabNavigator();
 
 // Store
 import { useSelector } from 'store/index';
-import { showOverlay } from 'store/OverlaySlice';
 import { showMainTabMenu } from 'store/MainTabMenuSlice';
+import { showOverlay } from 'store/OverlaySlice';
 
 // Screens
 import MyProjectsScreen from 'screens/MyProjects';
@@ -18,6 +18,7 @@ import MyAccountScreen from 'screens/MyAccount';
 
 // Components
 import MainTabMenu from 'components/organisms/MainTabMenu';
+import CenterModal from 'components/organisms/CenterModal';
 import Overlay from 'components/atoms/Overlay';
 import Icon from 'components/atoms/Icon';
 
@@ -36,6 +37,7 @@ interface Props {
 const MainNavBar = (props: Props) => {
   const dispatch = useDispatch();
   const overlay = useSelector((state) => state.overlay.overlay);
+  const centerModal = useSelector((state) => state.centerModal.centerModal);
   const mainTabMenu = useSelector((state) => state.mainTabMenu.mainTabMenu);
   const [targetWidth, setTargetWidth] = useState(0);
 
@@ -44,7 +46,7 @@ const MainNavBar = (props: Props) => {
   }
 
   useEffect(() => {
-  }, [targetWidth]);
+  }, [targetWidth, overlay, centerModal]);
 
   const onPressShow = () => {
     dispatch(showOverlay());
@@ -174,7 +176,7 @@ const MainNavBar = (props: Props) => {
         />
       </Tab.Navigator>
       <TouchableOpacity
-        activeOpacity={1}
+        activeOpacity={ 1 }
         style={[
           styles.containerMainTabMenu,
           { transform: [{ translateX: - (targetWidth / 2) }] }
@@ -196,6 +198,9 @@ const MainNavBar = (props: Props) => {
       />
       <Overlay
         isShow={ overlay }
+      />
+      <CenterModal
+        isShow={ centerModal }
       />
     </View>
   );

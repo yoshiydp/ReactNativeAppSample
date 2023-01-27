@@ -10,9 +10,10 @@ import styles from './MyProjectsList.scss';
 interface MyProjectData {
   projectTitle: string;
   lyric: string;
+  trackDataPath: string;
   trackTitle: string;
   artistName: string;
-  artWork: string;
+  artWorkPath: string;
 }
 
 interface Props {
@@ -23,23 +24,27 @@ interface Props {
 const MyProjectsList = (props: Props) => {
 
   useEffect(() => {
-    console.log(props.myProjectDataItems);
   }, [props.myProjectDataItems]);
 
   return (
     <View style={ styles.container }>
-      { props.myProjectDataItems.map((item, index) => (
-        <View style={ index != 0 ? styles.itemMargin : '' } key={ index }>
-          <MyProjectsItem
-            projectTitle={ item.projectTitle }
-            lyric={ item.lyric }
-            trackTitle={ item.trackTitle }
-            artistName={ item.artistName }
-            artWork={ item.artWork }
-            navigation={ props.navigation }
-          />
-        </View>
-      ))}
+      {
+        props.myProjectDataItems
+        ? props.myProjectDataItems.map((item, index) => (
+            <View style={ index != 0 ? styles.itemMargin : '' } key={ index }>
+              <MyProjectsItem
+                projectTitle={ item.projectTitle }
+                lyric={ item.lyric }
+                trackDataPath={ item.trackDataPath }
+                trackTitle={ item.trackTitle }
+                artistName={ item.artistName }
+                artWorkPath={ item.artWorkPath }
+                navigation={ props.navigation }
+              />
+            </View>
+          ))
+        : ''
+      }
     </View>
   );
 };
