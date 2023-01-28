@@ -24,14 +24,6 @@ const LowerScreen = (props: Props) => {
         navigation={ props.navigation }
       />
       <ScrollView>
-        <Button title="NewProject" onPress={() => props.navigation.navigate('NewProject')} />
-        <Button title="EditProject" onPress={() => props.navigation.navigate('EditProject')} />
-        <Button title="Recording" onPress={() => props.navigation.navigate('Recording')} />
-        <Button title="NewTrack" onPress={() => props.navigation.navigate('NewTrack')} />
-        <Button title="EditTrack" onPress={() => props.navigation.navigate('EditTrack')} />
-        <Button title="EditMyAccount" onPress={() => props.navigation.navigate('EditMyAccount')} />
-        <Button title="PasswordReset" onPress={() => props.navigation.navigate('PasswordReset')} />
-        {/* <View style={styles.block }></View> */}
       </ScrollView>
     </View>
   );
