@@ -443,10 +443,10 @@ PODS:
     - React-Core
   - RNCMaskedView (0.1.11):
     - React
-  - RNFBApp (16.5.1):
+  - RNFBApp (16.6.0):
     - Firebase/CoreOnly (= 10.3.0)
     - React-Core
-  - RNFBAuth (16.5.1):
+  - RNFBAuth (16.6.0):
     - Firebase/Auth (= 10.3.0)
     - React-Core
     - RNFBApp
@@ -723,8 +723,8 @@ SPEC CHECKSUMS:
   RNAppleAuthentication: 0571c08da8c327ae2afc0261b48b4a515b0286a6
   RNCAsyncStorage: 8616bd5a58af409453ea4e1b246521bb76578d60
   RNCMaskedView: 0e1bc4bfa8365eba5fbbb71e07fbdc0555249489
-  RNFBApp: 6815ebf7845545e138e7dcd32e2b0a93012f392f
-  RNFBAuth: 593961fff4b810fa0e9a4dd48c6f29fe77fdfde5
+  RNFBApp: 9c565feb1cc2d822dedb5953f7b8ccf113dd9180
+  RNFBAuth: 5dafc8217d604f0251686ef1847e25ac72f99315
   RNGestureHandler: 071d7a9ad81e8b83fe7663b303d132406a7d8f39
   RNGoogleSignin: 22e468a9474dbcb8618d8847205ad4f0b2575d13
   RNScreens: ea4cd3a853063cda19a4e3c28d2e52180c80f4eb
