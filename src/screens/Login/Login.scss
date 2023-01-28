@@ -2,7 +2,7 @@
 
 .container {
   flex: 1;
-  padding: 88px 35px 90px;
+  padding: 88px 0 90px;
   background: g.colors(blue, bg);
 }
 
@@ -24,6 +24,7 @@
 .signUp {
   &Wrap {
     margin-top: 60px;
+    padding: 0 35px;
   }
   &Message {
     @extend %text;
