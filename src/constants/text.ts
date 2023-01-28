@@ -5,6 +5,7 @@ export const APP_NAME = 'Lyrics';
 export const BUTTON_NEW_ACCOUNT_CREATE = '新規アカウント作成';
 export const BUTTON_SIGN_IN = 'ログイン';
 export const BUTTON_SIGN_UP = 'サインアップ';
+export const BUTTON_START = 'スタート';
 
 // ERROR
 export const ERROR_EMPTY_EMAIL = 'メールアドレスが入力されていません';
