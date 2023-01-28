@@ -20,7 +20,7 @@ import { WEB_CLIENT_ID } from '@env';
 
 // Components
 import IntroMessage from 'src/components/molecules/IntroMessage';
-import FormControls from 'src/components/templates/FormControls';
+import AuthForm from 'src/components/templates/AuthForm';
 import SocialSignIn from 'src/components/organisms/SocialSignIn';
 import Button from 'src/components/atoms/Button';
 
@@ -204,7 +204,7 @@ const Login = (props: Props) => {
   return (
     <ScrollView style={styles.container}>
       <IntroMessage />
-      <FormControls
+      <AuthForm
         inputFieldItems={ inputFieldItems }
         submitText={ TEXT.BUTTON_SIGN_IN }
         submitEvent={ signIn }

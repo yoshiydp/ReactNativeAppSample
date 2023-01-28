@@ -7,7 +7,7 @@ import ErrorText from 'src/components/atoms/ErrorText';
 import Button from 'src/components/atoms/Button';
 
 // Styles
-import styles from './FormControls.scss';
+import styles from './CreateForm.scss';
 
 interface InputField {
   label: string;
@@ -25,7 +25,7 @@ interface Props {
   submitEvent?: () => void;
 }
 
-const FormControls = (props: Props) => {
+const CreateForm = (props: Props) => {
   const [disabled, setDisabled] = useState<boolean>(false);
 
   useEffect(() => {
@@ -64,4 +64,4 @@ const FormControls = (props: Props) => {
   );
 };
 
-export default FormControls;
+export default CreateForm;
