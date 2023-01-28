@@ -25,6 +25,8 @@ export const ERROR_TOO_MANY_REQUESTS = 'リクエストが多すぎるためエ�
 // LABEL
 export const LABEL_INPUT_EMAIL = 'メールアドレス';
 export const LABEL_INPUT_PASSWORD = 'パスワード';
+export const LABEL_INPUT_PROJECT_TITLE = 'プロジェクトタイトル';
+export const LABEL_INPUT_TRACK_DATA = 'トラックデータ';
 export const LABEL_INPUT_USERNAME = 'ユーザー名';
 
 // PLACEHOLDER
@@ -32,6 +34,8 @@ export const PLACEHOLDER_INPUT_EMAIL = 'example@example.com';
 export const PLACEHOLDER_INPUT_PASSWORD = 'Password';
 export const PLACEHOLDER_INPUT_SEARCH = '検索';
 export const PLACEHOLDER_INPUT_USERNAME = 'User name';
+export const PLACEHOLDER_NO_TRACK = 'No Track';
+export const PLACEHOLDER_PROJECT_TITLE = 'Project Title';
 
 // OTHER TEXTS
 export const TEXT_INTRO_MESSAGE = 'あなたのアカウントを作成します';
