@@ -23,7 +23,7 @@ import { WEB_CLIENT_ID } from '@env';
 
 // Components
 import IntroMessage from 'src/components/molecules/IntroMessage';
-import AuthForm from 'src/components/templates/AuthForm';
+import FormControls from 'src/components/templates/FormControls';
 import SocialSignIn from 'src/components/organisms/SocialSignIn';
 
 // Constants
@@ -237,7 +237,7 @@ const SignUp = (props: Props) => {
       <IntroMessage
         message={ TEXT.TEXT_INTRO_MESSAGE }
       />
-      <AuthForm
+      <FormControls
         inputFieldItems={ inputFieldItems }
         submitText={ TEXT.BUTTON_SIGN_UP }
         submitEvent={ signUp }

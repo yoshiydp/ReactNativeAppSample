@@ -7,7 +7,7 @@ import ErrorText from 'src/components/atoms/ErrorText';
 import Button from 'src/components/atoms/Button';
 
 // Styles
-import styles from './AuthForm.scss';
+import styles from './FormControls.scss';
 
 interface InputField {
   label: string;
@@ -25,7 +25,7 @@ interface Props {
   submitEvent?: () => void;
 }
 
-const AuthForm = (props: Props) => {
+const FormControls = (props: Props) => {
   const [disabled, setDisabled] = useState<boolean>(false);
 
   useEffect(() => {
@@ -64,4 +64,4 @@ const AuthForm = (props: Props) => {
   );
 };
 
-export default AuthForm;
+export default FormControls;
