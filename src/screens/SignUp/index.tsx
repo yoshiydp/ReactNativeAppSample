@@ -22,9 +22,9 @@ import { subscribe } from 'src/store/SubscribeSlice';
 import { WEB_CLIENT_ID } from '@env';
 
 // Components
-import IntroMessage from 'src/components/molecules/IntroMessage';
-import AuthForm from 'src/components/templates/AuthForm';
-import SocialSignIn from 'src/components/organisms/SocialSignIn';
+import IntroMessage from 'components/molecules/IntroMessage';
+import AuthForm from 'components/templates/AuthForm';
+import SocialSignIn from 'components/organisms/SocialSignIn';
 
 // Constants
 import * as COLOR from 'constants/color';

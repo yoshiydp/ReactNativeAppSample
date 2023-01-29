@@ -18,7 +18,7 @@ import { setMyProjectsDetail } from 'store/MyProjectsSlice';
 import { showOverlay, inactiveHidden } from 'store/OverlaySlice';
 
 // Components
-import DeleteButton from 'components/atoms/DeleteButton';
+import ButtonDelete from 'components/atoms/ButtonDelete';
 import Icon from 'components/atoms/Icon';
 
 // Constants
@@ -57,7 +57,7 @@ const MyProjectsItem = (props: Props) => {
 
   const renderRightActions = () => {
     return (
-      <DeleteButton
+      <ButtonDelete
         onPressEvent={ onPressDeleteProject }
       />
     );

@@ -1,14 +1,13 @@
 import React, { useEffect } from 'react';
 import { TouchableOpacity, View } from 'react-native';
 
+// Interfaces
+import { ButtonType } from 'interfaces/buttonInterface';
+
 // Styles
-import styles from './DeleteButton.scss';
+import styles from './ButtonDelete.scss';
 
-interface Props {
-  onPressEvent?: () => void;
-}
-
-const DeleteButton = (props: Props) => {
+const ButtonDelete = (props: ButtonType) => {
   return (
     <TouchableOpacity
       activeOpacity={ 1 }
@@ -19,4 +18,4 @@ const DeleteButton = (props: Props) => {
   );
 };
 
-export default DeleteButton;
+export default ButtonDelete;

@@ -2,8 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { View } from 'react-native';
 
 // Components
-import TextField from 'src/components/molecules/TextField';
-import ErrorText from 'src/components/atoms/ErrorText';
+import TextField from 'components/molecules/TextField';
+import ErrorText from 'components/atoms/ErrorText';
 
 
 // Interfaces

@@ -2,8 +2,9 @@ import React, { useState, useEffect } from 'react';
 import { View, KeyboardAvoidingView } from 'react-native';
 
 // Components
-import FormControls from 'src/components/organisms/FormControls';
-import Button from 'src/components/atoms/Button';
+import FormControls from 'components/organisms/FormControls';
+import ButtonRound from 'components/atoms/ButtonRound';
+import ButtonSquare from 'components/atoms/ButtonSquare';
 
 // Interfaces
 import { FormControlsType } from 'interfaces/formControlsInterface';
@@ -32,7 +33,14 @@ const CreateForm = (props: Props) => {
         formControlItems={ props.formControlItems }
       />
       <View style={ styles.submitButtonWrap }>
-        <Button
+        <ButtonRound
+          text={ props.submitText }
+          onPressEvent={ props.submitEvent }
+          disabled={ disabled }
+        />
+      </View>
+      <View style={ styles.submitButtonWrap }>
+        <ButtonSquare
           text={ props.submitText }
           onPressEvent={ props.submitEvent }
           disabled={ disabled }

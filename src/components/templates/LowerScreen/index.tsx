@@ -3,7 +3,7 @@ import { View, ScrollView } from 'react-native';
 
 // Components
 import LowerTitleHeader from 'components/molecules/LowerTitleHeader';
-import CreateForm from 'src/components/templates/CreateForm';
+import CreateForm from 'components/templates/CreateForm';
 
 // Interfaces
 import { FormControlsType } from 'interfaces/formControlsInterface';

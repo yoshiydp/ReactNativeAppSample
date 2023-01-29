@@ -2,8 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { View, KeyboardAvoidingView } from 'react-native';
 
 // Components
-import FormControls from 'src/components/organisms/FormControls';
-import Button from 'src/components/atoms/Button';
+import FormControls from 'components/organisms/FormControls';
+import ButtonSquare from 'components/atoms/ButtonSquare';
 
 // Interfaces
 import { FormControlsType } from 'interfaces/formControlsInterface';
@@ -32,7 +32,7 @@ const AuthForm = (props: Props) => {
         formControlItems={ props.formControlItems }
       />
       <View style={ styles.submitButtonWrap }>
-        <Button
+        <ButtonSquare
           text={ props.submitText }
           onPressEvent={ props.submitEvent }
           disabled={ disabled }

@@ -12,7 +12,7 @@ import { unsubscribe } from 'src/store/SubscribeSlice';
 
 // Components
 import MainTitleHeader from 'components/organisms/MainTitleHeader';
-import MyProjectsList from 'src/components/organisms/MyProjects/MyProjectsList';
+import MyProjectsList from 'components/organisms/MyProjects/MyProjectsList';
 
 // Constants
 import * as TEXT from 'constants/text';

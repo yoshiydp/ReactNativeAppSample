@@ -1,0 +1,24 @@
+@use 'src/globalStyles/' as g;
+
+%container {
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 48px;
+  border-radius: 5px;
+  background: g.colors(green, base);
+}
+
+.container {
+  @extend %container;
+  &Disabled {
+    opacity: 0.4;
+    @extend %container;
+  }
+}
+
+.text {
+  color: g.colors(white, base);
+  font-size: 16px;
+  font-weight: bold;
+}
