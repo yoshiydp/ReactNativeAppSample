@@ -3,29 +3,18 @@ import { View, ScrollView } from 'react-native';
 
 // Components
 import LowerTitleHeader from 'components/molecules/LowerTitleHeader';
-import AuthForm from 'src/components/templates/AuthForm';
 import CreateForm from 'src/components/templates/CreateForm';
 
-// Constants
-import * as TEXT from 'constants/text';
+// Interfaces
+import { FormControlsType } from 'interfaces/formControlsInterface';
 
 // Styles
 import styles from './LowerScreen.scss';
 
-interface InputField {
-  label: string;
-  placeholder: string;
-  onChangeText: (value: string) => void;
-  value: string;
-  secureText?: boolean;
-  required?: boolean;
-  errorText?: string;
-}
-
 interface Props {
   navigation: any;
   title: string;
-  inputFieldItems: Array<InputField>;
+  formControlItems: Array<FormControlsType>;
   submitText: string;
   onPressSubmitEvent: () => void;
 }
@@ -42,9 +31,9 @@ const LowerScreen = (props: Props) => {
         navigation={ props.navigation }
       />
       <ScrollView>
-        <AuthForm
-          inputFieldItems={ props.inputFieldItems }
-          submitText={ TEXT.BUTTON_SIGN_UP }
+        <CreateForm
+          formControlItems={ props.formControlItems }
+          submitText={ props.submitText }
           submitEvent={ props.onPressSubmitEvent }
         />
       </ScrollView>

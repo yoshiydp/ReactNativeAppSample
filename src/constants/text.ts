@@ -30,6 +30,12 @@ export const LABEL_INPUT_PROJECT_TITLE = 'プロジェクトタイトル';
 export const LABEL_INPUT_TRACK_DATA = 'トラックデータ';
 export const LABEL_INPUT_USERNAME = 'ユーザー名';
 
+// LABEL NOTES
+export const LABEL_NOTES_EMAIL = '（受信可能なアドレスを入力してください）';
+export const LABEL_NOTES_PASSWORD = '（半角の英数大・小文字、記号を含めた8文字以上）';
+export const LABEL_NOTES_TRACK_DATA = '（下のボタンからデータをアップロードします）';
+export const LABEL_NOTES_USERNAME = '（半角英数字のみ入力可能）';
+
 // PLACEHOLDER
 export const PLACEHOLDER_INPUT_EMAIL = 'example@example.com';
 export const PLACEHOLDER_INPUT_PASSWORD = 'Password';

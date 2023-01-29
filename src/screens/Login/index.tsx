@@ -149,7 +149,7 @@ const Login = (props: Props) => {
   }
 
   // テキストフォームリスト
-  const inputFieldItems = [
+  const formControlItems = [
     {
       label: TEXT.LABEL_INPUT_EMAIL,
       placeholder: TEXT.PLACEHOLDER_INPUT_EMAIL,
@@ -205,7 +205,7 @@ const Login = (props: Props) => {
     <ScrollView style={styles.container}>
       <IntroMessage />
       <AuthForm
-        inputFieldItems={ inputFieldItems }
+        formControlItems={ formControlItems }
         submitText={ TEXT.BUTTON_SIGN_IN }
         submitEvent={ signIn }
       />

@@ -4,19 +4,13 @@ import { View, Text, TextInput } from 'react-native';
 // Styles
 import styles from './TextField.scss';
 
+// Interfaces
+import { TextFieldType } from 'interfaces/formControlsInterface';
+
 // Constants
 import * as COLOR from 'constants/color';
 
-interface Props {
-  label?: string;
-  placeholder: string;
-  onChangeText?: (value: string) => void;
-  value: string;
-  secureText?: boolean;
-  required?: boolean;
-}
-
-const TextField = (props: Props) => {
+const TextField = (props: TextFieldType) => {
   const [value, valueHandler] = useState(props.value ? props.value : '');
 
   useEffect(() => {
@@ -40,6 +34,11 @@ const TextField = (props: Props) => {
         </Text>
         { props.required &&
           <Text style={ styles.required }>*</Text>
+        }
+        { props.notes &&
+          <Text style={ styles.notes }>
+            { props.notes }
+          </Text>
         }
       </View>
       <TextInput

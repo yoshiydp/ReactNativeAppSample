@@ -5,21 +5,14 @@ import { View, KeyboardAvoidingView } from 'react-native';
 import FormControls from 'src/components/organisms/FormControls';
 import Button from 'src/components/atoms/Button';
 
+// Interfaces
+import { FormControlsType } from 'interfaces/formControlsInterface';
+
 // Styles
 import styles from './AuthForm.scss';
 
-interface InputField {
-  label: string;
-  placeholder: string;
-  onChangeText: (value: string) => void;
-  value: string;
-  secureText?: boolean;
-  required?: boolean;
-  errorText?: string;
-}
-
 interface Props {
-  inputFieldItems: Array<InputField>;
+  formControlItems: Array<FormControlsType>;
   submitText: string;
   submitEvent?: () => void;
 }
@@ -28,15 +21,15 @@ const AuthForm = (props: Props) => {
   const [disabled, setDisabled] = useState<boolean>(false);
 
   useEffect(() => {
-    props.inputFieldItems.map((item, index) => {
+    props.formControlItems.map((item, index) => {
       (!item.value) ? setDisabled(true) : setDisabled(false);
     });
-  }, [props.inputFieldItems, disabled]);
+  }, [props.formControlItems, disabled]);
 
   return (
     <KeyboardAvoidingView style={ styles.container }>
       <FormControls
-        inputFieldItems={ props.inputFieldItems }
+        formControlItems={ props.formControlItems }
       />
       <View style={ styles.submitButtonWrap }>
         <Button

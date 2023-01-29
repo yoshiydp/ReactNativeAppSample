@@ -172,13 +172,14 @@ const SignUp = (props: Props) => {
   }
 
   // テキストフォームリスト
-  const inputFieldItems = [
+  const formControlItems = [
     {
       label: TEXT.LABEL_INPUT_USERNAME,
       placeholder: TEXT.PLACEHOLDER_INPUT_USERNAME,
       onChangeText: setUserName,
       value: userName,
       required: true,
+      notes: TEXT.LABEL_NOTES_USERNAME,
       errorText: errorUserName
     },
     {
@@ -187,6 +188,7 @@ const SignUp = (props: Props) => {
       onChangeText: setEmail,
       value: email,
       required: true,
+      notes: TEXT.LABEL_NOTES_EMAIL,
       errorText: errorEmail
     },
     {
@@ -196,6 +198,7 @@ const SignUp = (props: Props) => {
       value: password,
       secureText: true,
       required: true,
+      notes: TEXT.LABEL_NOTES_PASSWORD,
       errorText: errorPassword
     }
   ];
@@ -238,7 +241,7 @@ const SignUp = (props: Props) => {
         message={ TEXT.TEXT_INTRO_MESSAGE }
       />
       <AuthForm
-        inputFieldItems={ inputFieldItems }
+        formControlItems={ formControlItems }
         submitText={ TEXT.BUTTON_SIGN_UP }
         submitEvent={ signUp }
       />
