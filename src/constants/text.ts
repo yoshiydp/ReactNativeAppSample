@@ -6,6 +6,10 @@ export const BUTTON_NEW_ACCOUNT_CREATE = '新規アカウント作成';
 export const BUTTON_SIGN_IN = 'ログイン';
 export const BUTTON_SIGN_UP = 'サインアップ';
 export const BUTTON_START = 'スタート';
+export const BUTTON_TRACK_CHANGE = 'トラックを変更する';
+export const BUTTON_TRACK_DELETE = 'トラックを削除する';
+export const BUTTON_TRACK_SELECT = 'トラックリストから選択';
+export const BUTTON_TRACK_UPLOAD = '新しくトラックをアップロード';
 
 // ERROR
 export const ERROR_EMPTY_EMAIL = 'メールアドレスが入力されていません';
