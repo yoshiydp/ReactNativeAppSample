@@ -242,7 +242,7 @@ const SignUp = (props: Props) => {
       />
       <AuthForm
         formControlItems={ formControlItems }
-        submitText={ TEXT.BUTTON_SIGN_UP }
+        buttonText={ TEXT.BUTTON_SIGN_UP }
         submitEvent={ signUp }
       />
       <SocialSignIn

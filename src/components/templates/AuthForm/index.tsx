@@ -13,7 +13,7 @@ import styles from './AuthForm.scss';
 
 interface Props {
   formControlItems: Array<FormControlsType>;
-  submitText: string;
+  buttonText: string;
   submitEvent?: () => void;
 }
 
@@ -33,7 +33,7 @@ const AuthForm = (props: Props) => {
       />
       <View style={ styles.submitButtonWrap }>
         <ButtonSquare
-          text={ props.submitText }
+          text={ props.buttonText }
           onPressEvent={ props.submitEvent }
           disabled={ disabled }
         />

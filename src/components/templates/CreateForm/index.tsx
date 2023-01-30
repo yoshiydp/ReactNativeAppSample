@@ -14,7 +14,7 @@ import styles from './CreateForm.scss';
 
 interface Props {
   formControlItems: Array<FormControlsType>;
-  submitText: string;
+  buttonText: string;
   submitEvent?: () => void;
 }
 
@@ -34,14 +34,14 @@ const CreateForm = (props: Props) => {
       />
       <View style={ styles.submitButtonWrap }>
         <ButtonRound
-          text={ props.submitText }
+          text={ props.buttonText }
           onPressEvent={ props.submitEvent }
           disabled={ disabled }
         />
       </View>
       <View style={ styles.submitButtonWrap }>
         <ButtonSquare
-          text={ props.submitText }
+          text={ props.buttonText }
           onPressEvent={ props.submitEvent }
           disabled={ disabled }
         />

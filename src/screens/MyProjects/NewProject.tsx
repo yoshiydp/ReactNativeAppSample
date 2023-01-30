@@ -62,7 +62,7 @@ const NewProject = (props: Props) => {
         title={ TEXT.TITLE_NEW_PROJECT }
         navigation={ props.navigation }
         formControlItems={ formControlItems }
-        submitText={ TEXT.BUTTON_START }
+        buttonText={ TEXT.BUTTON_START }
         onPressSubmitEvent={ createProject }
       />
     </>

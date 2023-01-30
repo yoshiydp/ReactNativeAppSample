@@ -15,7 +15,7 @@ interface Props {
   navigation: any;
   title: string;
   formControlItems: Array<FormControlsType>;
-  submitText: string;
+  buttonText: string;
   onPressSubmitEvent: () => void;
 }
 
@@ -33,7 +33,7 @@ const LowerScreen = (props: Props) => {
       <ScrollView>
         <CreateForm
           formControlItems={ props.formControlItems }
-          submitText={ props.submitText }
+          buttonText={ props.buttonText }
           submitEvent={ props.onPressSubmitEvent }
         />
       </ScrollView>

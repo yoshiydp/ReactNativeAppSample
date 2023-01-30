@@ -206,7 +206,7 @@ const Login = (props: Props) => {
       <IntroMessage />
       <AuthForm
         formControlItems={ formControlItems }
-        submitText={ TEXT.BUTTON_SIGN_IN }
+        buttonText={ TEXT.BUTTON_SIGN_IN }
         submitEvent={ signIn }
       />
       <Text style={styles.forgotMessagge}>
