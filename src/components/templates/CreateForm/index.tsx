@@ -3,17 +3,19 @@ import { View, KeyboardAvoidingView } from 'react-native';
 
 // Components
 import FormControls from 'components/organisms/FormControls';
-import ButtonRound from 'components/atoms/ButtonRound';
+import ControlButtonList from 'components/molecules/ControlButtonList';
 import ButtonSquare from 'components/atoms/ButtonSquare';
 
 // Interfaces
 import { FormControlsType } from 'interfaces/formControlsInterface';
+import { ControlButtonsType } from 'interfaces/controlButtonInterface';
 
 // Styles
 import styles from './CreateForm.scss';
 
 interface Props {
   formControlItems: Array<FormControlsType>;
+  controlButtonItems: Array<ControlButtonsType>;
   buttonText: string;
   submitEvent?: () => void;
 }
@@ -32,11 +34,9 @@ const CreateForm = (props: Props) => {
       <FormControls
         formControlItems={ props.formControlItems }
       />
-      <View style={ styles.submitButtonWrap }>
-        <ButtonRound
-          text={ props.buttonText }
-          onPressEvent={ props.submitEvent }
-          disabled={ disabled }
+      <View style={ styles.controlButtonWrap }>
+        <ControlButtonList
+          controlButtonItems={ props.controlButtonItems }
         />
       </View>
       <View style={ styles.submitButtonWrap }>

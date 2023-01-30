@@ -56,12 +56,25 @@ const NewProject = (props: Props) => {
     },
   ];
 
+  // コントロールボタンリスト
+  const controlButtonItems = [
+    {
+      buttonText: TEXT.BUTTON_TRACK_UPLOAD,
+      onPressEvent: createProject
+    },
+    {
+      buttonText: TEXT.BUTTON_TRACK_SELECT,
+      onPressEvent: createProject
+    },
+  ];
+
   return (
     <>
       <LowerScreen
         title={ TEXT.TITLE_NEW_PROJECT }
         navigation={ props.navigation }
         formControlItems={ formControlItems }
+        controlButtonItems={ controlButtonItems }
         buttonText={ TEXT.BUTTON_START }
         onPressSubmitEvent={ createProject }
       />

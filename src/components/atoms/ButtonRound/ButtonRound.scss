@@ -4,13 +4,20 @@
   align-items: center;
   justify-content: center;
   width: 100%;
-  height: 48px;
-  border-radius: 5px;
-  background: g.colors(green, base);
+  height: 36px;
+  border-radius: 50px;
 }
 
 .container {
-  @extend %container;
+  &Green {
+    @extend %container;
+    border: solid 1px g.colors(green, base);
+    background: g.colors(blue, overlay);
+  }
+  &Gray {
+    @extend %container;
+    background: g.colors(gray, type3);
+  }
   &Disabled {
     opacity: 0.4;
     @extend %container;
@@ -18,7 +25,12 @@
 }
 
 .text {
-  color: g.colors(white, base);
-  font-size: 16px;
-  font-weight: bold;
+  &Green {
+    color: g.colors(green, base);
+    font-size: 14px;
+  }
+  &Gray {
+    color: g.colors(gray, type1);
+    font-size: 14px;
+  }
 }

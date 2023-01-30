@@ -14,11 +14,11 @@ const ButtonRound = (props: ButtonType) => {
       style={
         props.disabled
         ? styles.containerDisabled
-        : styles.container
+        : styles.containerGreen
       }
       onPress={ props.onPressEvent }
       disabled={ props.disabled }>
-      <Text style={ styles.text }>
+      <Text style={ styles.textGreen }>
         { props.text }
       </Text>
     </TouchableOpacity>
