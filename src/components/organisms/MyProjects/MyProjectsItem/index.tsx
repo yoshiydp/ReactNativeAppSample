@@ -107,7 +107,7 @@ const MyProjectsItem = (props: Props) => {
             source={
               props.artWorkPath
               ? props.artWorkPath
-              : require('src/assets/images/common/no-artwork.jpg')
+              : require('src/assets/images/common/no-artwork-small.jpg')
             }
           />
         </View>
