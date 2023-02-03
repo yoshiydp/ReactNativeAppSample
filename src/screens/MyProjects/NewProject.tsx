@@ -121,10 +121,9 @@ const NewProject = (props: Props) => {
       <Modal
         animationType="slide"
         presentationStyle="pageSheet"
-        transparent={true}
+        style={modalStyles.modal}
         visible={modalVisible}
         onRequestClose={() => {
-          Alert.alert('Modal has been closed.');
           setModalVisible(!modalVisible);
         }}>
         <View style={modalStyles.centeredView}>
@@ -143,6 +142,9 @@ const NewProject = (props: Props) => {
 };
 
 const modalStyles = StyleSheet.create({
+  modal: {
+    backgroundColor: '#333'
+  },
   centeredView: {
     flex: 1,
     justifyContent: 'center',

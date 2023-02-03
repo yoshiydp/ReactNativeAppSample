@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { TouchableOpacity, View, Image } from 'react-native';
+import * as ImagePicker from 'react-native-image-picker';
 import DocumentPicker from 'react-native-document-picker';
 import { ref, uploadBytesResumable, getDownloadURL } from 'firebase/storage';
 
@@ -17,29 +18,20 @@ const ControlSetArtwork = () => {
   const [imageFile, setImageFile] = useState<string[]>([]);
 
   useEffect(() => {
-  }, []);
+  }, [imageFile]);
 
   const selectImageFile = async () => {
     try {
-      const results: any = await DocumentPicker.pickMultiple({
-        type: [DocumentPicker.types.images],
-      });
-      for (const response of results) {
-        console.log('response : ' + JSON.stringify(response));
-        console.log('URI : ' + response.uri);
-        console.log('Type : ' + response.type);
-        console.log('File Name : ' + response.name);
-        console.log('File Size : ' + response.size);
-      }
-      setImageFile(results);
-      console.log(results);
+      const options = {
+        mediaType: 'photo',
+        quality: 0.8,
+        maxWidth: 300,
+        maxHeight: 300
+      };
+      const results: any = await ImagePicker.launchImageLibrary(options);
+      setImageFile(results.assets);
     } catch (error) {
-      if (DocumentPicker.isCancel(error)) {
-        console.log('Canceled from multiple doc picker');
-      } else {
-        console.log('Unknown Error: ' + JSON.stringify(error));
-        throw error;
-      }
+      console.log(error);
     }
   };
 
