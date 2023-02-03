@@ -10,7 +10,11 @@ import { TextFieldType } from 'interfaces/formControlsInterface';
 // Constants
 import * as COLOR from 'constants/color';
 
-const TextField = (props: TextFieldType) => {
+interface Props extends TextFieldType {
+  errorText?: string;
+}
+
+const TextField = (props: Props) => {
   const [value, valueHandler] = useState(props.value ? props.value : '');
 
   useEffect(() => {
@@ -27,7 +31,7 @@ const TextField = (props: TextFieldType) => {
   }
 
   return (
-    <View style={ styles.container }>
+    <View style={ props.errorText ? styles.containerError : styles.container }>
       <View style={ styles.labelWrap }>
         <Text style={ styles.label }>
           { props.label }
@@ -49,6 +53,8 @@ const TextField = (props: TextFieldType) => {
         value={ props.value }
         secureTextEntry={ props.secureText }
         autoCapitalize="none"
+        editable={ props.editable }
+        selectTextOnFocus={ props.selectTextOnFocus }
       />
     </View>
   );

@@ -1,12 +1,21 @@
 @use 'src/globalStyles/' as g;
 
-.container {
+%container {
   position: relative;
   width: 100%;
   min-height: 53px;
   padding: 8px 12px;
   border-radius: 5px;
   background: g.colors(blue, overlay);
+}
+
+.container {
+  @extend %container;
+  border: 1px solid g.colors(blue, overlay);
+  &Error {
+    @extend %container;
+    border: 1px solid g.colors(red, base);
+  }
 }
 
 .label {

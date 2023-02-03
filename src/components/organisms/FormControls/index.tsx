@@ -37,6 +37,9 @@ const FormControls = (props: Props) => {
             secureText={ item.secureText }
             required={ item.required }
             notes={ item.notes }
+            editable={ item.editable }
+            selectTextOnFocus={ item.selectTextOnFocus }
+            errorText={ item.errorText }
           />
           { item.errorText &&
             <ErrorText

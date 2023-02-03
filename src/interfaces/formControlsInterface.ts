@@ -6,6 +6,8 @@ export interface FormControlsType {
   secureText?: boolean;
   required?: boolean;
   notes?: string;
+  editable?: boolean;
+  selectTextOnFocus?: boolean;
   errorText?: string;
 }
 
@@ -17,4 +19,6 @@ export interface TextFieldType {
   secureText?: boolean;
   required?: boolean;
   notes?: string;
+  editable?: boolean;
+  selectTextOnFocus?: boolean;
 }
