@@ -1,6 +1,12 @@
 import React, { useEffect, useState } from 'react';
+import {Alert, Modal, StyleSheet, Text, Pressable, View} from 'react-native';
+import { useDispatch } from 'react-redux';
 import DocumentPicker from 'react-native-document-picker';
 import { ref, uploadBytesResumable, getDownloadURL } from 'firebase/storage';
+
+// Store
+import { hideOverlay } from 'store/OverlaySlice';
+import { hideMainTabMenu } from 'store/MainTabMenuSlice';
 
 // Components
 import LowerScreen from 'components/templates/LowerScreen';
@@ -24,8 +30,12 @@ const NewProject = (props: Props) => {
   const [trackDataFile, setTrackDataFile] = useState<string>('');
   const [errorProjectTitle, setErrorProjectTitle] = useState<string>('');
   const [errorTrackDataFile, setErrorTrackDataFile] = useState<string>('');
+  const [modalVisible, setModalVisible] = useState(false);
+  const dispatch = useDispatch();
 
   useEffect(() => {
+    dispatch(hideOverlay());
+    dispatch(hideMainTabMenu());
   }, [trackDataFile]);
 
   const selectTrackDataFile = async () => {
@@ -52,6 +62,10 @@ const NewProject = (props: Props) => {
       }
     }
   };
+
+  const selectTrackList = async () => {
+    setModalVisible(true);
+  }
 
   const createProject = async () => {
     setErrorProjectTitle('');
@@ -90,7 +104,7 @@ const NewProject = (props: Props) => {
     },
     {
       buttonText: TEXT.BUTTON_TRACK_SELECT,
-      onPressEvent: selectTrackDataFile
+      onPressEvent: selectTrackList
     },
   ];
 
@@ -104,8 +118,73 @@ const NewProject = (props: Props) => {
         buttonText={ TEXT.BUTTON_START }
         onPressSubmitEvent={ createProject }
       />
+      <Modal
+        animationType="slide"
+        presentationStyle="pageSheet"
+        transparent={true}
+        visible={modalVisible}
+        onRequestClose={() => {
+          Alert.alert('Modal has been closed.');
+          setModalVisible(!modalVisible);
+        }}>
+        <View style={modalStyles.centeredView}>
+          <View style={modalStyles.modalView}>
+            <Text style={modalStyles.modalText}>Hello World!</Text>
+            <Pressable
+              style={[modalStyles.button, modalStyles.buttonClose]}
+              onPress={() => setModalVisible(!modalVisible)}>
+              <Text style={modalStyles.textStyle}>Hide Modal</Text>
+            </Pressable>
+          </View>
+        </View>
+      </Modal>
     </>
   );
 };
+
+const modalStyles = StyleSheet.create({
+  centeredView: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginTop: 22,
+  },
+  modalView: {
+    margin: 20,
+    backgroundColor: 'white',
+    borderRadius: 20,
+    width: 300,
+    padding: 35,
+    alignItems: 'center',
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 4,
+    elevation: 5,
+  },
+  button: {
+    borderRadius: 20,
+    padding: 10,
+    elevation: 2,
+  },
+  buttonOpen: {
+    backgroundColor: '#F194FF',
+  },
+  buttonClose: {
+    backgroundColor: '#2196F3',
+  },
+  textStyle: {
+    color: 'white',
+    fontWeight: 'bold',
+    textAlign: 'center',
+  },
+  modalText: {
+    marginBottom: 15,
+    textAlign: 'center',
+  },
+});
 
 export default NewProject;
