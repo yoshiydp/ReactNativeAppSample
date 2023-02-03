@@ -75,10 +75,10 @@ const StackNavigator = () => {
       initialRouteName="LoginScreen">
       {user ?
         <>
-          <Stack.Screen
+          {/* <Stack.Screen
             name="NewProject"
             component={ NewProjectScreen }
-          />
+          /> */}
           <Stack.Screen
             name="MainTabBar"
             component={ MainTabBar }
@@ -100,10 +100,10 @@ const StackNavigator = () => {
         name="Loading"
         component={ LoadingScreen }
       />
-      {/* <Stack.Screen
+      <Stack.Screen
         name="NewProject"
         component={ NewProjectScreen }
-      /> */}
+      />
       <Stack.Screen
         name="EditProject"
         component={ EditProjectScreen }

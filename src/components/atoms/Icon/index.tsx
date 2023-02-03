@@ -27,7 +27,11 @@ import Svg, {
 // Interfaces
 import { svgType1, svgType2, svgType3, svgType4, svgType5, svgType6 } from 'interfaces/svgInterface';
 
-const Icon = (props: (svgType1 & svgType2 & svgType3 & svgType4 & svgType5 & svgType6)) => {
+interface Props extends svgType1, svgType2, svgType3, svgType4, svgType5, svgType6 {
+  containerStyle?: any;
+}
+
+const Icon = (props: Props) => {
 
   return (
     <View style={ props.containerStyle }>

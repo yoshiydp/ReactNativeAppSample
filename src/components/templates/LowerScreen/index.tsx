@@ -1,5 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { View, ScrollView } from 'react-native';
+import { useDispatch } from 'react-redux';
+
+// Store
+import { hideOverlay } from 'store/OverlaySlice';
+import { hideMainTabMenu } from 'store/MainTabMenuSlice';
 
 // Components
 import LowerTitleHeader from 'components/molecules/LowerTitleHeader';
@@ -22,8 +27,11 @@ interface Props {
 }
 
 const LowerScreen = (props: Props) => {
+  const dispatch = useDispatch();
 
   useEffect(() => {
+    dispatch(hideOverlay());
+    dispatch(hideMainTabMenu());
   }, []);
 
   return (
