@@ -21,6 +21,9 @@ import { showOverlay, inactiveHidden } from 'store/OverlaySlice';
 import ButtonDelete from 'components/atoms/ButtonDelete';
 import Icon from 'components/atoms/Icon';
 
+// Interfaces
+import { MyProjectType } from 'interfaces/myProjectInterface';
+
 // Constants
 import * as COLOR from 'constants/color';
 import * as TEXT from 'constants/text';
@@ -28,16 +31,7 @@ import * as TEXT from 'constants/text';
 // Styles
 import styles from './MyProjectsItem.scss';
 
-interface DataProps {
-  projectTitle: string;
-  lyric: string;
-  trackDataPath: string;
-  trackTitle: string;
-  artistName: string;
-  artWorkPath: string;
-}
-
-interface Props extends DataProps {
+interface Props extends MyProjectType {
   navigation: any;
 }
 
