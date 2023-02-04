@@ -1,15 +1,9 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-interface MyProjectsStateType {
-  projectTitle: string;
-  lyric: string;
-  trackDataPath: string;
-  trackTitle: string;
-  artistName: string;
-  artWorkPath: string;
-};
+// Interfaces
+import { MyProjectType } from 'interfaces/myProjectInterface';
 
-const initialState: MyProjectsStateType = {
+const initialState: MyProjectType = {
   projectTitle: '',
   lyric: '',
   trackDataPath: '',
