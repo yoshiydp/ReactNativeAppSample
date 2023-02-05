@@ -18,14 +18,7 @@ export const MyProjectsSlice = createSlice({
   reducers: {
     setMyProjectsDetail: (
       state,
-      action: PayloadAction<{
-        projectTitle: string;
-        lyric: string;
-        trackDataPath: string;
-        trackTitle: string;
-        artistName: string;
-        artWorkPath: string;
-      }>
+      action: PayloadAction<MyProjectType>
     ) => {
       const {
         projectTitle,
@@ -44,16 +37,6 @@ export const MyProjectsSlice = createSlice({
         artistName,
         artWorkPath
       });
-
-      // return {
-      //   ...state,
-      //   projectTitle,
-      //   lyric,
-      //   trackDataPath,
-      //   trackTitle,
-      //   artistName,
-      //   artWorkPath
-      // }
     }
   }
 });
