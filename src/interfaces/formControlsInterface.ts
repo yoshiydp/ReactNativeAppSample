@@ -1,7 +1,7 @@
 export interface FormControlsType {
   label: string;
   placeholder: string;
-  onChangeText: (value: string) => void;
+  onChangeText?: (value: string) => void;
   value: string;
   secureText?: boolean;
   required?: boolean;
@@ -14,7 +14,7 @@ export interface FormControlsType {
 export interface TextFieldType {
   label: string;
   placeholder: string;
-  onChangeText: (value: string) => void;
+  onChangeText?: (value: string) => void;
   value: string;
   secureText?: boolean;
   required?: boolean;

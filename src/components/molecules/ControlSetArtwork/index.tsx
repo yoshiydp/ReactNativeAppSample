@@ -1,8 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { TouchableOpacity, View, Image } from 'react-native';
+import { useDispatch } from 'react-redux';
 import * as ImagePicker from 'react-native-image-picker';
-import DocumentPicker from 'react-native-document-picker';
 import { ref, uploadBytesResumable, getDownloadURL } from 'firebase/storage';
+
+// Store
+import { useSelector } from 'store/index';
+import { setArtWork } from 'store/NewProjectSlice';
 
 // Components
 import Icon from 'components/atoms/Icon';
@@ -15,10 +19,11 @@ import * as SVGPATH from 'constants/svgPath';
 import styles from './ControlSetArtwork.scss';
 
 const ControlSetArtwork = () => {
-  const [imageFile, setImageFile] = useState<string[]>([]);
+  const dispatch = useDispatch();
+  const artWork = useSelector((state) => state.newProject.artWork);
 
   useEffect(() => {
-  }, [imageFile]);
+  }, []);
 
   const selectImageFile = async () => {
     try {
@@ -29,7 +34,7 @@ const ControlSetArtwork = () => {
         maxHeight: 300
       };
       const results: any = await ImagePicker.launchImageLibrary(options);
-      setImageFile(results.assets);
+      dispatch(setArtWork(results.assets));
     } catch (error) {
       console.log(error);
     }
@@ -41,8 +46,8 @@ const ControlSetArtwork = () => {
         <Image
           style={ styles.image }
           source={
-            imageFile.length
-            ? imageFile
+            artWork.length
+            ? artWork
             : require('src/assets/images/common/no-artwork-large.jpg')
           }
         />

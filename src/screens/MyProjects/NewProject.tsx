@@ -1,12 +1,14 @@
 import React, { useEffect, useState } from 'react';
-import {Alert, Modal, StyleSheet, Text, Pressable, View} from 'react-native';
+import { Modal, StyleSheet, Text, Pressable, View } from 'react-native';
 import { useDispatch } from 'react-redux';
 import DocumentPicker from 'react-native-document-picker';
 import { ref, uploadBytesResumable, getDownloadURL } from 'firebase/storage';
 
 // Store
+import { useSelector } from 'store/index';
 import { hideOverlay } from 'store/OverlaySlice';
 import { hideMainTabMenu } from 'store/MainTabMenuSlice';
+import { setProjectTitle, setTrackDataFile } from 'store/NewProjectSlice';
 
 // Components
 import LowerScreen from 'components/templates/LowerScreen';
@@ -25,41 +27,27 @@ interface Props {
 }
 
 const NewProject = (props: Props) => {
-  const [trackFile, setTrackFile] = useState<string[]>([]);
   const [projectTitle, setProjectTitle] = useState<string>('');
-  const [trackDataFile, setTrackDataFile] = useState<string>('');
   const [errorProjectTitle, setErrorProjectTitle] = useState<string>('');
-  const [errorTrackDataFile, setErrorTrackDataFile] = useState<string>('');
-  const [modalVisible, setModalVisible] = useState(false);
+  const [modalVisible, setModalVisible] = useState<boolean>(false);
   const dispatch = useDispatch();
+  const artWork = useSelector((state) => state.newProject.artWork);
+  const trackDataFile = useSelector((state) => state.newProject.trackDataFile);
 
   useEffect(() => {
     dispatch(hideOverlay());
     dispatch(hideMainTabMenu());
-  }, [trackDataFile]);
+    console.log(projectTitle, artWork, trackDataFile);
+  }, [projectTitle, artWork, trackDataFile]);
 
   const selectTrackDataFile = async () => {
     try {
       const results: any = await DocumentPicker.pickMultiple({
         type: [DocumentPicker.types.audio],
       });
-      for (const response of results) {
-        // console.log('response : ' + JSON.stringify(response));
-        // console.log('URI : ' + response.uri);
-        // console.log('Type : ' + response.type);
-        // console.log('File Name : ' + response.name);
-        // console.log('File Size : ' + response.size);
-        setTrackDataFile(response.name);
-      }
-      setTrackFile(results);
-      console.log(results);
+      dispatch(setTrackDataFile(results));
     } catch (error) {
-      if (DocumentPicker.isCancel(error)) {
-        console.log('Canceled from multiple doc picker');
-      } else {
-        console.log('Unknown Error: ' + JSON.stringify(error));
-        throw error;
-      }
+      console.log(error);
     }
   };
 
@@ -86,11 +74,9 @@ const NewProject = (props: Props) => {
     {
       label: TEXT.LABEL_INPUT_TRACK_DATA,
       placeholder: TEXT.PLACEHOLDER_NO_TRACK,
-      onChangeText: setTrackDataFile,
-      value: trackDataFile,
+      value: trackDataFile[0]?.name,
       required: true,
       notes: TEXT.LABEL_NOTES_TRACK_DATA,
-      errorText: errorTrackDataFile,
       editable: false,
       selectTextOnFocus: false
     },
