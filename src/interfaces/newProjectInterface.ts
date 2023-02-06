@@ -1,5 +1,5 @@
 export interface NewProjectType {
-  artWork: object[];
+  artWork: any[];
   projectTitle: string;
-  trackDataFile: object[];
+  trackDataFile: any[];
 }

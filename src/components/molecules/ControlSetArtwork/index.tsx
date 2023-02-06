@@ -27,7 +27,7 @@ const ControlSetArtwork = () => {
 
   const selectImageFile = async () => {
     try {
-      const options = {
+      const options: any = {
         mediaType: 'photo',
         quality: 0.8,
         maxWidth: 300,
