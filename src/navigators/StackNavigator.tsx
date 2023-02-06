@@ -74,10 +74,16 @@ const StackNavigator = () => {
       screenOptions={{ headerShown: false }}
       initialRouteName="LoginScreen">
       {user ?
-        <Stack.Screen
-          name="MainTabBar"
-          component={ MainTabBar }
-        />
+        <>
+          {/* <Stack.Screen
+            name="NewProject"
+            component={ NewProjectScreen }
+          /> */}
+          <Stack.Screen
+            name="MainTabBar"
+            component={ MainTabBar }
+          />
+        </>
         :
         <>
           <Stack.Screen

@@ -19,10 +19,10 @@ import { subscribe } from 'src/store/SubscribeSlice';
 import { WEB_CLIENT_ID } from '@env';
 
 // Components
-import IntroMessage from 'src/components/molecules/IntroMessage';
-import AuthForm from 'src/components/templates/AuthForm';
-import SocialSignIn from 'src/components/organisms/SocialSignIn';
-import Button from 'src/components/atoms/Button';
+import IntroMessage from 'components/molecules/IntroMessage';
+import AuthForm from 'components/templates/AuthForm';
+import SocialSignIn from 'components/organisms/SocialSignIn';
+import ButtonSquare from 'components/atoms/ButtonSquare';
 
 // Constants
 import * as COLOR from 'constants/color';
@@ -149,7 +149,7 @@ const Login = (props: Props) => {
   }
 
   // テキストフォームリスト
-  const inputFieldItems = [
+  const formControlItems = [
     {
       label: TEXT.LABEL_INPUT_EMAIL,
       placeholder: TEXT.PLACEHOLDER_INPUT_EMAIL,
@@ -205,8 +205,8 @@ const Login = (props: Props) => {
     <ScrollView style={styles.container}>
       <IntroMessage />
       <AuthForm
-        inputFieldItems={ inputFieldItems }
-        submitText={ TEXT.BUTTON_SIGN_IN }
+        formControlItems={ formControlItems }
+        buttonText={ TEXT.BUTTON_SIGN_IN }
         submitEvent={ signIn }
       />
       <Text style={styles.forgotMessagge}>
@@ -227,7 +227,7 @@ const Login = (props: Props) => {
           まだアカウントを作成していない場合は下のボタンから
         </Text>
         <View style={ styles.signUpButtonWrap }>
-          <Button
+          <ButtonSquare
             text={ TEXT.BUTTON_NEW_ACCOUNT_CREATE }
             onPressEvent={() => props.navigation.navigate('SignUp')}
           />

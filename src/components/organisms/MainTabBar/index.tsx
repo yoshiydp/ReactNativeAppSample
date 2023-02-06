@@ -31,15 +31,14 @@ import styles from './MainTabBar.scss';
 
 interface Props {
   navigation: any;
-  inactiveHidden: boolean;
 }
 
-const MainNavBar = (props: Props) => {
+const MainTabBar = (props: Props) => {
   const dispatch = useDispatch();
   const overlay = useSelector((state) => state.overlay.overlay);
   const centerModal = useSelector((state) => state.centerModal.centerModal);
   const mainTabMenu = useSelector((state) => state.mainTabMenu.mainTabMenu);
-  const [targetWidth, setTargetWidth] = useState(0);
+  const [targetWidth, setTargetWidth] = useState<number>(0);
 
   const getTargetWidth = (object: any) => {
     setTargetWidth(object.nativeEvent.layout.width);
@@ -206,4 +205,4 @@ const MainNavBar = (props: Props) => {
   );
 };
 
-export default MainNavBar;
+export default MainTabBar;

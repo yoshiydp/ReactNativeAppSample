@@ -5,10 +5,16 @@ export const APP_NAME = 'Lyrics';
 export const BUTTON_NEW_ACCOUNT_CREATE = '新規アカウント作成';
 export const BUTTON_SIGN_IN = 'ログイン';
 export const BUTTON_SIGN_UP = 'サインアップ';
+export const BUTTON_START = 'スタート';
+export const BUTTON_TRACK_CHANGE = 'トラックを変更してアップロード';
+export const BUTTON_TRACK_DELETE = 'トラックを削除する';
+export const BUTTON_TRACK_SELECT = 'トラックリストから選択';
+export const BUTTON_TRACK_UPLOAD = '新しくトラックをアップロード';
 
 // ERROR
 export const ERROR_EMPTY_EMAIL = 'メールアドレスが入力されていません';
 export const ERROR_EMPTY_PASSWORD = 'パスワードが入力されていません';
+export const ERROR_EMPTY_PROJECT_TITLE = 'プロジェクトタイトルが入力されていません';
 export const ERROR_EMPTY_USERNAME = 'ユーザーネームが入力されていません';
 export const ERROR_INTERNAL_PASSWORD = 'パスワードが入力されていません';
 export const ERROR_INVALID_EMAIL = 'メールアドレスが間違っています';
@@ -25,13 +31,23 @@ export const ERROR_TOO_MANY_REQUESTS = 'リクエストが多すぎるためエ�
 // LABEL
 export const LABEL_INPUT_EMAIL = 'メールアドレス';
 export const LABEL_INPUT_PASSWORD = 'パスワード';
+export const LABEL_INPUT_PROJECT_TITLE = 'プロジェクトタイトル';
+export const LABEL_INPUT_TRACK_DATA = 'トラックデータ';
 export const LABEL_INPUT_USERNAME = 'ユーザー名';
+
+// LABEL NOTES
+export const LABEL_NOTES_EMAIL = '（受信可能なアドレスを入力してください）';
+export const LABEL_NOTES_PASSWORD = '（半角の英数大・小文字、記号を含めた8文字以上）';
+export const LABEL_NOTES_TRACK_DATA = '（下のボタンからデータをアップロードします）';
+export const LABEL_NOTES_USERNAME = '（半角英数字のみ入力可能）';
 
 // PLACEHOLDER
 export const PLACEHOLDER_INPUT_EMAIL = 'example@example.com';
 export const PLACEHOLDER_INPUT_PASSWORD = 'Password';
 export const PLACEHOLDER_INPUT_SEARCH = '検索';
 export const PLACEHOLDER_INPUT_USERNAME = 'User name';
+export const PLACEHOLDER_NO_TRACK = 'No Track';
+export const PLACEHOLDER_PROJECT_TITLE = 'Project Title';
 
 // OTHER TEXTS
 export const TEXT_INTRO_MESSAGE = 'あなたのアカウントを作成します';

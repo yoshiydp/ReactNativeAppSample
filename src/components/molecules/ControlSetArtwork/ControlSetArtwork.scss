@@ -1,0 +1,38 @@
+@use 'src/globalStyles/' as g;
+
+.container {
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  min-height: 152px;
+}
+
+%image {
+  width: 100px;
+  height: 100px;
+}
+
+.artwork {
+  border-radius: 3px;
+  overflow: hidden;
+  @extend %image;
+}
+
+.image {
+  @extend %image;
+}
+
+.button {
+  flex: 1;
+  justify-content: center;
+  align-items: center;
+  width: 40px;
+  height: 40px;
+  margin-top: 12px;
+}
+
+.icon {
+  position: relative;
+  top: -1px;
+  left: 1px;
+}

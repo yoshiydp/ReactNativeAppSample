@@ -1,8 +1,13 @@
 import React, { useEffect, useState } from 'react';
-import { View, ScrollView, Button } from 'react-native';
+import { View, ScrollView } from 'react-native';
 
 // Components
 import LowerTitleHeader from 'components/molecules/LowerTitleHeader';
+import CreateForm from 'components/templates/CreateForm';
+
+// Interfaces
+import { FormControlsType } from 'interfaces/formControlsInterface';
+import { ControlButtonsType } from 'interfaces/controlButtonInterface';
 
 // Styles
 import styles from './LowerScreen.scss';
@@ -10,6 +15,10 @@ import styles from './LowerScreen.scss';
 interface Props {
   navigation: any;
   title: string;
+  formControlItems: Array<FormControlsType>;
+  controlButtonItems: Array<ControlButtonsType>;
+  buttonText: string;
+  onPressSubmitEvent: () => void;
 }
 
 const LowerScreen = (props: Props) => {
@@ -24,14 +33,12 @@ const LowerScreen = (props: Props) => {
         navigation={ props.navigation }
       />
       <ScrollView>
-        <Button title="NewProject" onPress={() => props.navigation.navigate('NewProject')} />
-        <Button title="EditProject" onPress={() => props.navigation.navigate('EditProject')} />
-        <Button title="Recording" onPress={() => props.navigation.navigate('Recording')} />
-        <Button title="NewTrack" onPress={() => props.navigation.navigate('NewTrack')} />
-        <Button title="EditTrack" onPress={() => props.navigation.navigate('EditTrack')} />
-        <Button title="EditMyAccount" onPress={() => props.navigation.navigate('EditMyAccount')} />
-        <Button title="PasswordReset" onPress={() => props.navigation.navigate('PasswordReset')} />
-        {/* <View style={styles.block }></View> */}
+        <CreateForm
+          formControlItems={ props.formControlItems }
+          controlButtonItems={ props.controlButtonItems }
+          buttonText={ props.buttonText }
+          submitEvent={ props.onPressSubmitEvent }
+        />
       </ScrollView>
     </View>
   );

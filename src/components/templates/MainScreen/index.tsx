@@ -14,25 +14,19 @@ import { unsubscribe } from 'src/store/SubscribeSlice';
 import MainTitleHeader from 'components/organisms/MainTitleHeader';
 import MyProjectsList from 'src/components/organisms/MyProjects/MyProjectsList';
 
+// Interfaces
+import { MyProjectType } from 'interfaces/myProjectInterface';
+
 // Constants
 import * as TEXT from 'constants/text';
 
 // Styles
 import styles from './MainScreen.scss';
 
-interface MyProjectData {
-  projectTitle: string;
-  lyric: string;
-  trackDataPath: string;
-  trackTitle: string;
-  artistName: string;
-  artWorkPath: string;
-}
-
 interface Props {
   navigation: any;
   title: string;
-  myProjectDataItems: Array<MyProjectData>;
+  myProjectDataItems: Array<MyProjectType>;
 }
 
 const MainScreen = (props: Props) => {

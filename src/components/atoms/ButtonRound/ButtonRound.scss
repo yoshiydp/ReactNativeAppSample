@@ -1,0 +1,36 @@
+@use 'src/globalStyles/' as g;
+
+%container {
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 36px;
+  border-radius: 50px;
+}
+
+.container {
+  &Green {
+    @extend %container;
+    border: solid 1px g.colors(green, base);
+    background: g.colors(blue, overlay);
+  }
+  &Gray {
+    @extend %container;
+    background: g.colors(gray, type3);
+  }
+  &Disabled {
+    opacity: 0.4;
+    @extend %container;
+  }
+}
+
+.text {
+  &Green {
+    color: g.colors(green, base);
+    font-size: 14px;
+  }
+  &Gray {
+    color: g.colors(gray, type1);
+    font-size: 14px;
+  }
+}
