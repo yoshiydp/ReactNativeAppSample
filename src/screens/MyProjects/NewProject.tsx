@@ -2,13 +2,15 @@ import React, { useEffect, useState } from 'react';
 import { Modal, StyleSheet, Text, Pressable, View } from 'react-native';
 import { useDispatch } from 'react-redux';
 import DocumentPicker from 'react-native-document-picker';
-import { ref, uploadBytesResumable, getDownloadURL } from 'firebase/storage';
+import { firebaseAuth, db } from 'src/config/firebase';
+import { getStorage, ref, uploadBytesResumable, getDownloadURL } from 'firebase/storage';
+import { doc, updateDoc, getDoc, serverTimestamp, arrayUnion } from 'firebase/firestore';
 
 // Store
 import { useSelector } from 'store/index';
 import { hideOverlay } from 'store/OverlaySlice';
 import { hideMainTabMenu } from 'store/MainTabMenuSlice';
-import { setProjectTitle, setTrackDataFile } from 'store/NewProjectSlice';
+import { setTrackDataFile } from 'store/NewProjectSlice';
 
 // Components
 import LowerScreen from 'components/templates/LowerScreen';
@@ -55,10 +57,80 @@ const NewProject = (props: Props) => {
     setModalVisible(true);
   }
 
+  const { uid }: any = firebaseAuth.currentUser;
+  const storage = getStorage();
+
+  const fileUpload = async (fileUri: string, fileName: string, fileType: string, directory: string) => {
+    if (!uid) return;
+    const blob: any = await new Promise((resolve, reject) => {
+      const xhr = new XMLHttpRequest();
+      xhr.onload = () => {
+        resolve(xhr.response);
+      };
+      xhr.onerror = () => {
+        reject(new TypeError('Network request failed'));
+      };
+      xhr.responseType = 'blob';
+      xhr.open('GET', fileUri, true);
+      xhr.send(null);
+    });
+
+    const storageRef = ref(storage, uid + directory + fileName);
+    const metadata = {
+      contentType: fileType,
+    };
+
+    try {
+      await uploadBytesResumable(storageRef, blob, metadata)
+        .then((snapshot) => {
+          console.log('Uploaded', snapshot.totalBytes, 'bytes.');
+          console.log('File metadata:', snapshot.metadata);
+          getDownloadURL(snapshot.ref).then((url) => {
+            console.log('File available at', url);
+          });
+      });
+    } catch (error) {
+      console.error('Upload failed', error);
+    }
+  }
+
   const createProject = async () => {
     setErrorProjectTitle('');
     validateProjectTitle(projectTitle, setErrorProjectTitle);
-    console.log('createProject');
+
+    // プロジェクトタイトルが未入力の場合は以下を実行不可とする
+    if (!projectTitle) return;
+
+    // artWorkのアップロード
+    if (artWork.length) {
+      fileUpload(
+        artWork[0]?.uri,
+        artWork[0]?.fileName,
+        artWork[0]?.type,
+        '/artworks/'
+      );
+    }
+    
+    // trackDataFileのアップロード
+    if (trackDataFile.length) {
+      fileUpload(
+        trackDataFile[0]?.uri,
+        trackDataFile[0]?.name,
+        trackDataFile[0]?.type,
+        '/track_data_files/'
+      );
+    
+      await updateDoc(doc(db, 'users', uid), {
+        projectData: arrayUnion({
+          projectTitle: projectTitle,
+          lyric: '',
+          trackDataPath: trackDataFile[0]?.uri,
+          trackTitle: trackDataFile[0]?.name,
+          artistName: '',
+          artWorkPath: 'gs://lyrics-a7ae4.appspot.com/H3Ra9j8S4fZcBCnRH3u0ugKESt22/artworks/03107ECA-3234-4FBF-A2CC-F9DC25A7283E.jpg'
+        }),
+      });
+    }
   }
 
   // テキストフォームリスト
