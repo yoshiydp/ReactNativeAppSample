@@ -22,9 +22,9 @@ import { subscribe } from 'src/store/SubscribeSlice';
 import { WEB_CLIENT_ID } from '@env';
 
 // Components
-import IntroMessage from 'src/components/molecules/IntroMessage';
-import AuthForm from 'src/components/templates/AuthForm';
-import SocialSignIn from 'src/components/organisms/SocialSignIn';
+import IntroMessage from 'components/molecules/IntroMessage';
+import AuthForm from 'components/templates/AuthForm';
+import SocialSignIn from 'components/organisms/SocialSignIn';
 
 // Constants
 import * as COLOR from 'constants/color';
@@ -172,13 +172,14 @@ const SignUp = (props: Props) => {
   }
 
   // テキストフォームリスト
-  const inputFieldItems = [
+  const formControlItems = [
     {
       label: TEXT.LABEL_INPUT_USERNAME,
       placeholder: TEXT.PLACEHOLDER_INPUT_USERNAME,
       onChangeText: setUserName,
       value: userName,
       required: true,
+      notes: TEXT.LABEL_NOTES_USERNAME,
       errorText: errorUserName
     },
     {
@@ -187,6 +188,7 @@ const SignUp = (props: Props) => {
       onChangeText: setEmail,
       value: email,
       required: true,
+      notes: TEXT.LABEL_NOTES_EMAIL,
       errorText: errorEmail
     },
     {
@@ -196,6 +198,7 @@ const SignUp = (props: Props) => {
       value: password,
       secureText: true,
       required: true,
+      notes: TEXT.LABEL_NOTES_PASSWORD,
       errorText: errorPassword
     }
   ];
@@ -238,83 +241,14 @@ const SignUp = (props: Props) => {
         message={ TEXT.TEXT_INTRO_MESSAGE }
       />
       <AuthForm
-        inputFieldItems={ inputFieldItems }
-        submitText={ TEXT.BUTTON_SIGN_UP }
+        formControlItems={ formControlItems }
+        buttonText={ TEXT.BUTTON_SIGN_UP }
         submitEvent={ signUp }
       />
       <SocialSignIn
         title={ TEXT.TEXT_SIGN_UP_WITH }
         socialIconItems={ socialIconItems }
       />
-      {/* <KeyboardAvoidingView
-        behavior="padding"
-        style={{
-          justifyContent: 'center',
-          alignItems: 'center',
-          flex: 1,
-        }}
-      >
-        <Text style={{ fontSize: 20, marginBottom: 20 }}>ユーザ登録画面</Text>
-        <View style={{ marginBottom: 20 }}>
-          <TextInput
-            style={{
-              width: 250,
-              borderWidth: 1,
-              padding: 5,
-              borderColor: 'gray',
-              backgroundColor: 'white'
-            }}
-            onChangeText={setUserName}
-            value={userName}
-            placeholder="ユーザー名を入力してください"
-            autoCapitalize="none"
-            autoCorrect={false}
-          />
-        </View>
-        <View style={{ marginBottom: 20 }}>
-          <TextInput
-            style={{
-              width: 250,
-              borderWidth: 1,
-              padding: 5,
-              borderColor: 'gray',
-              backgroundColor: 'white'
-            }}
-            onChangeText={setEmail}
-            value={email}
-            placeholder="メールアドレスを入力してください"
-            autoCapitalize="none"
-            autoCorrect={false}
-          />
-        </View>
-        <View style={{ marginBottom: 20 }}>
-          <TextInput
-            style={{
-              width: 250,
-              borderWidth: 1,
-              padding: 5,
-              borderColor: 'gray',
-              backgroundColor: 'white'
-            }}
-            onChangeText={setPassword}
-            value={password}
-            placeholder="パスワードを入力してください"
-            secureTextEntry={true}
-            autoCapitalize="none"
-          />
-        </View>
-        <TouchableOpacity
-          style={{
-            padding: 10,
-            backgroundColor: '#88cb7f',
-            borderRadius: 10,
-          }}
-          onPress={signUp}
-          // disabled={!email || !password}
-        >
-          <Text style={{ color: 'white' }}>登録する</Text>
-        </TouchableOpacity>
-      </KeyboardAvoidingView> */}
     </ScrollView>
   );
 };

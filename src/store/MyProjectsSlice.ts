@@ -1,15 +1,9 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-interface MyProjectsStateType {
-  projectTitle: string;
-  lyric: string;
-  trackDataPath: string;
-  trackTitle: string;
-  artistName: string;
-  artWorkPath: string;
-};
+// Interfaces
+import { MyProjectType } from 'interfaces/myProjectInterface';
 
-const initialState: MyProjectsStateType = {
+const initialState: MyProjectType = {
   projectTitle: '',
   lyric: '',
   trackDataPath: '',
@@ -24,14 +18,7 @@ export const MyProjectsSlice = createSlice({
   reducers: {
     setMyProjectsDetail: (
       state,
-      action: PayloadAction<{
-        projectTitle: string;
-        lyric: string;
-        trackDataPath: string;
-        trackTitle: string;
-        artistName: string;
-        artWorkPath: string;
-      }>
+      action: PayloadAction<MyProjectType>
     ) => {
       const {
         projectTitle,
@@ -50,16 +37,6 @@ export const MyProjectsSlice = createSlice({
         artistName,
         artWorkPath
       });
-
-      // return {
-      //   ...state,
-      //   projectTitle,
-      //   lyric,
-      //   trackDataPath,
-      //   trackTitle,
-      //   artistName,
-      //   artWorkPath
-      // }
     }
   }
 });

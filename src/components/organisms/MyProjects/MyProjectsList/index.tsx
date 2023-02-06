@@ -4,20 +4,14 @@ import { View } from 'react-native';
 // Components
 import MyProjectsItem from 'components/organisms/MyProjects/MyProjectsItem';
 
+// Interfaces
+import { MyProjectType } from 'interfaces/myProjectInterface';
+
 // Styles
 import styles from './MyProjectsList.scss';
 
-interface MyProjectData {
-  projectTitle: string;
-  lyric: string;
-  trackDataPath: string;
-  trackTitle: string;
-  artistName: string;
-  artWorkPath: string;
-}
-
 interface Props {
-  myProjectDataItems: Array<MyProjectData>;
+  myProjectDataItems: Array<MyProjectType>;
   navigation: any;
 }
 

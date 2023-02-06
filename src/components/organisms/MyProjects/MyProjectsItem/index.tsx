@@ -18,8 +18,11 @@ import { setMyProjectsDetail } from 'store/MyProjectsSlice';
 import { showOverlay, inactiveHidden } from 'store/OverlaySlice';
 
 // Components
-import DeleteButton from 'components/atoms/DeleteButton';
+import ButtonDelete from 'components/atoms/ButtonDelete';
 import Icon from 'components/atoms/Icon';
+
+// Interfaces
+import { MyProjectType } from 'interfaces/myProjectInterface';
 
 // Constants
 import * as COLOR from 'constants/color';
@@ -28,16 +31,7 @@ import * as TEXT from 'constants/text';
 // Styles
 import styles from './MyProjectsItem.scss';
 
-interface DataProps {
-  projectTitle: string;
-  lyric: string;
-  trackDataPath: string;
-  trackTitle: string;
-  artistName: string;
-  artWorkPath: string;
-}
-
-interface Props extends DataProps {
+interface Props extends MyProjectType {
   navigation: any;
 }
 
@@ -57,7 +51,7 @@ const MyProjectsItem = (props: Props) => {
 
   const renderRightActions = () => {
     return (
-      <DeleteButton
+      <ButtonDelete
         onPressEvent={ onPressDeleteProject }
       />
     );
@@ -107,7 +101,7 @@ const MyProjectsItem = (props: Props) => {
             source={
               props.artWorkPath
               ? props.artWorkPath
-              : require('src/assets/images/common/no-artwork.jpg')
+              : require('src/assets/images/common/no-artwork-small.jpg')
             }
           />
         </View>

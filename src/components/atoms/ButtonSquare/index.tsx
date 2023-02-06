@@ -1,16 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import { TouchableOpacity, Text } from 'react-native';
 
+// Interfaces
+import { ButtonType } from 'interfaces/buttonInterface';
+
 // Styles
-import styles from './Button.scss';
+import styles from './ButtonSquare.scss';
 
-interface Props {
-  text: string;
-  onPressEvent?: () => void;
-  disabled?: boolean;
-}
-
-const Button = (props: Props) => {
+const ButtonSquare = (props: ButtonType) => {
   return (
     <TouchableOpacity
       activeOpacity={ 1 }
@@ -28,4 +25,4 @@ const Button = (props: Props) => {
   );
 };
 
-export default Button;
+export default ButtonSquare;
