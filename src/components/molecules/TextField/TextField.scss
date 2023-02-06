@@ -11,7 +11,7 @@
 
 .container {
   @extend %container;
-  border: 1px solid g.colors(blue, overlay);
+  border: 1px solid g.colors(blue, navy);
   &Error {
     @extend %container;
     border: 1px solid g.colors(red, base);
