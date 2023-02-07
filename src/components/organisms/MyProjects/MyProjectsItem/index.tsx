@@ -44,6 +44,7 @@ const MyProjectsItem = (props: Props) => {
   const docRef = doc(db, 'users', uid);
 
   useEffect(() => {
+    console.log(props.artWorkPath);
     onSnapshot(docRef, () => {
       swipeable.current?.close();
     });
@@ -110,7 +111,7 @@ const MyProjectsItem = (props: Props) => {
             { props.projectTitle }
           </Text>
           <Text style={ styles.text }>
-            { props.lyric }
+            { props.lyric ? props.lyric : 'No lyric' }
           </Text>
           <Text style={ styles.text }>
             { props.trackTitle } / { props.artistName }

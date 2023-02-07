@@ -2,10 +2,14 @@ import React, { useEffect, useState } from 'react';
 import { View } from 'react-native';
 
 // Components
+import NoData from 'components/molecules/NoData';
 import MyProjectsItem from 'components/organisms/MyProjects/MyProjectsItem';
 
 // Interfaces
 import { MyProjectType } from 'interfaces/myProjectInterface';
+
+// Constants
+import * as TEXT from 'constants/text';
 
 // Styles
 import styles from './MyProjectsList.scss';
@@ -19,6 +23,10 @@ const MyProjectsList = (props: Props) => {
 
   useEffect(() => {
   }, [props.myProjectDataItems]);
+
+  const navigateNewProject = async () => {
+    await props.navigation.navigate('NewProject');
+  }
 
   return (
     <View style={ styles.container }>
@@ -37,7 +45,12 @@ const MyProjectsList = (props: Props) => {
               />
             </View>
           ))
-        : ''
+        : 
+          <NoData
+            text={ TEXT.NO_DATA_TEXT_MY_PROJECTS }
+            buttonText={ TEXT.BUTTON_MY_PROJECTS_CREATE }
+            onPressEvent={ navigateNewProject }
+          />
       }
     </View>
   );
