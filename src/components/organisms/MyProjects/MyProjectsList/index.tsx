@@ -31,7 +31,7 @@ const MyProjectsList = (props: Props) => {
   return (
     <View style={ styles.container }>
       {
-        props.myProjectDataItems
+        props.myProjectDataItems.length
         ? props.myProjectDataItems.map((item, index) => (
             <View style={ index != 0 ? styles.itemMargin : '' } key={ index }>
               <MyProjectsItem

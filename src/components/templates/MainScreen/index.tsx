@@ -3,7 +3,7 @@ import { View, ScrollView, Text, TouchableOpacity } from 'react-native';
 import { useDispatch } from 'react-redux';
 import { signOut } from 'firebase/auth';
 import { firebaseAuth, db } from 'src/config/firebase';
-import { doc, updateDoc } from 'firebase/firestore';
+import { doc, updateDoc, arrayUnion } from 'firebase/firestore';
 import auth from '@react-native-firebase/auth';
 
 // Store

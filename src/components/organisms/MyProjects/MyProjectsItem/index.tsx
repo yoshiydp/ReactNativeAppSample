@@ -77,6 +77,10 @@ const MyProjectsItem = (props: Props) => {
     dispatch(setMyProjectsDetail(setProjectData));
   };
 
+  const textSubstring = (value: string, count: number) => {
+    return value.substring(0, count) + '...';
+  }
+
   const setProjectData = {
     projectTitle: props.projectTitle,
     lyric: props.lyric,
@@ -111,10 +115,10 @@ const MyProjectsItem = (props: Props) => {
             { props.projectTitle }
           </Text>
           <Text style={ styles.text }>
-            { props.lyric ? props.lyric : 'No lyric' }
+            { props.lyric ? textSubstring(props.lyric, 25) : 'No lyric' }
           </Text>
           <Text style={ styles.text }>
-            { props.trackTitle } / { props.artistName }
+            { textSubstring(props.trackTitle, 15) } / { props.artistName }
           </Text>
         </View>
         <TouchableOpacity
