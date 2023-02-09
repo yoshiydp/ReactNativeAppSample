@@ -39,7 +39,6 @@ const NewProject = (props: Props) => {
   useEffect(() => {
     dispatch(hideOverlay());
     dispatch(hideMainTabMenu());
-    console.log(projectTitle, artWork, trackDataFile);
   }, [projectTitle, artWork, trackDataFile]);
 
   const selectTrackDataFile = async () => {
@@ -60,7 +59,12 @@ const NewProject = (props: Props) => {
   const { uid }: any = firebaseAuth.currentUser;
   const storage = getStorage();
 
-  const fileUpload = async (fileUri: string, fileName: string, fileType: string, directory: string) => {
+  const fileUpload = async (
+    fileUri: string,
+    fileName: string,
+    fileType: string,
+    directory: string,
+  ) => {
     if (!uid) return;
     const blob: any = await new Promise((resolve, reject) => {
       const xhr = new XMLHttpRequest();
@@ -81,14 +85,7 @@ const NewProject = (props: Props) => {
     };
 
     try {
-      await uploadBytesResumable(storageRef, blob, metadata)
-        .then((snapshot) => {
-          console.log('Uploaded', snapshot.totalBytes, 'bytes.');
-          console.log('File metadata:', snapshot.metadata);
-          getDownloadURL(snapshot.ref).then((url) => {
-            console.log('File available at', url);
-          });
-      });
+      await uploadBytesResumable(storageRef, blob, metadata);
     } catch (error) {
       console.error('Upload failed', error);
     }
@@ -101,33 +98,53 @@ const NewProject = (props: Props) => {
     // プロジェクトタイトルが未入力の場合は以下を実行不可とする
     if (!projectTitle) return;
 
+    let artWorkDownloadUrl;
+    let trackDataDownloadUrl;
+
     // artWorkのアップロード
     if (artWork.length) {
-      fileUpload(
+      await fileUpload(
         artWork[0]?.uri,
         artWork[0]?.fileName,
         artWork[0]?.type,
-        '/artworks/'
+        '/artworks/',
       );
+      await getDownloadURL(ref(storage, uid + '/artworks/' + artWork[0]?.fileName))
+        .then((url) => {
+          artWorkDownloadUrl = url;
+          console.log('artWorkDownloadUrl: ' + artWorkDownloadUrl);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
     }
     
     // trackDataFileのアップロード
     if (trackDataFile.length) {
-      fileUpload(
+      await fileUpload(
         trackDataFile[0]?.uri,
         trackDataFile[0]?.name,
         trackDataFile[0]?.type,
-        '/track_data_files/'
+        '/track_data_files/',
       );
+
+      await getDownloadURL(ref(storage, uid + '/track_data_files/' + trackDataFile[0]?.name))
+        .then((url) => {
+          trackDataDownloadUrl = url;
+          console.log('trackDataDownloadUrl: ' + trackDataDownloadUrl);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
     
       await updateDoc(doc(db, 'users', uid), {
         projectData: arrayUnion({
           projectTitle: projectTitle,
           lyric: '',
-          trackDataPath: trackDataFile[0]?.uri,
+          trackDataPath: trackDataDownloadUrl ? trackDataDownloadUrl : '',
           trackTitle: trackDataFile[0]?.name,
           artistName: '',
-          artWorkPath: 'gs://lyrics-a7ae4.appspot.com/H3Ra9j8S4fZcBCnRH3u0ugKESt22/artworks/03107ECA-3234-4FBF-A2CC-F9DC25A7283E.jpg'
+          artWorkPath: artWorkDownloadUrl ? artWorkDownloadUrl : ''
         }),
       });
     }
