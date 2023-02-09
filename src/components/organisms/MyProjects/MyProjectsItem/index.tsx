@@ -44,7 +44,6 @@ const MyProjectsItem = (props: Props) => {
   const docRef = doc(db, 'users', uid);
 
   useEffect(() => {
-    console.log(props.artWorkPath);
     onSnapshot(docRef, () => {
       swipeable.current?.close();
     });
@@ -105,14 +104,14 @@ const MyProjectsItem = (props: Props) => {
             style={ styles.image }
             source={
               props.artWorkPath
-              ? props.artWorkPath
+              ? { uri: props.artWorkPath }
               : require('src/assets/images/common/no-artwork-small.jpg')
             }
           />
         </View>
         <View style={ styles.textWrap }>
           <Text style={ styles.title }>
-            { props.projectTitle }
+            { props.projectTitle.length > 30 ? textSubstring(props.projectTitle, 30) : props.projectTitle }
           </Text>
           <Text style={ styles.text }>
             { props.lyric ? textSubstring(props.lyric, 25) : 'No lyric' }
