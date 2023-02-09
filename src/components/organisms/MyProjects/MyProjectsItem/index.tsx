@@ -76,6 +76,10 @@ const MyProjectsItem = (props: Props) => {
     dispatch(setMyProjectsDetail(setProjectData));
   };
 
+  const textSubstring = (value: string, count: number) => {
+    return value.substring(0, count) + '...';
+  }
+
   const setProjectData = {
     projectTitle: props.projectTitle,
     lyric: props.lyric,
@@ -100,20 +104,20 @@ const MyProjectsItem = (props: Props) => {
             style={ styles.image }
             source={
               props.artWorkPath
-              ? props.artWorkPath
+              ? { uri: props.artWorkPath }
               : require('src/assets/images/common/no-artwork-small.jpg')
             }
           />
         </View>
         <View style={ styles.textWrap }>
           <Text style={ styles.title }>
-            { props.projectTitle }
+            { props.projectTitle.length > 30 ? textSubstring(props.projectTitle, 30) : props.projectTitle }
           </Text>
           <Text style={ styles.text }>
-            { props.lyric }
+            { props.lyric ? textSubstring(props.lyric, 25) : 'No lyric' }
           </Text>
           <Text style={ styles.text }>
-            { props.trackTitle } / { props.artistName }
+            { textSubstring(props.trackTitle, 15) } / { props.artistName }
           </Text>
         </View>
         <TouchableOpacity

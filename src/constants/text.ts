@@ -2,6 +2,7 @@
 export const APP_NAME = 'Lyrics';
 
 // BUTTON
+export const BUTTON_MY_PROJECTS_CREATE = '新しいプロジェクトを作成';
 export const BUTTON_NEW_ACCOUNT_CREATE = '新規アカウント作成';
 export const BUTTON_SIGN_IN = 'ログイン';
 export const BUTTON_SIGN_UP = 'サインアップ';
@@ -80,3 +81,8 @@ export const MODAL_DESC_DELETE_NOTE = '一度削除すると復元はできま�
 export const MODAL_BUTTON_TEXT_YES = 'Yes';
 export const MODAL_BUTTON_TEXT_CANCEL = 'Cancel';
 export const MODAL_BUTTON_TEXT_OK = 'OK';
+
+// NO DATA TEXT
+export const NO_DATA_TEXT_MY_PROJECTS = 'プロジェクトがまだ作成されていません。\n下のボタンから新しくプロジェクトを作成してください。';
+export const NO_DATA_TEXT_RECORD_AUDIO = '音声ファイルがまだありません。\n下のボタンから新しくプロジェクトを作成してください。';
+export const NO_DATA_TEXT_TRACK_LIST = 'トラックがまだありません。\n下のボタンから新しくトラックを追加してください。';

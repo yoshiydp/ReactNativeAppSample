@@ -1,0 +1,16 @@
+@use 'src/globalStyles/' as g;
+
+.container {
+  padding: 0 20px;
+}
+
+.text {
+  text-align: center;
+  font-size: 12px;
+  line-height: 18px;
+  color: g.colors(gray, type1);
+}
+
+.buttonWrap {
+  margin-top: 24px; 
+}
