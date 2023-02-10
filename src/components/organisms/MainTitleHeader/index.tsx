@@ -1,14 +1,14 @@
-import React, { useEffect, useRef, useState } from 'react';
-import { View, Animated } from 'react-native';
+import React, { useEffect, useRef, useState } from "react";
+import { View, Animated } from "react-native";
 
 // Components
-import SearchBar from 'components/molecules/SearchBar';
+import SearchBar from "components/molecules/SearchBar";
 
 // Constants
-import * as VALUE from 'constants/value';
+import * as VALUE from "constants/value";
 
 // Styles
-import styles from './MainTitleHeader.scss';
+import styles from "./MainTitleHeader.scss";
 
 interface Props {
   title: string;
@@ -37,7 +37,7 @@ const MainTitleHeader = (props: Props) => {
       duration : VALUE.DURATION_200,
       useNativeDriver: false
     }).start();
-  }
+  };
 
   const animatedOpacity = opacityValue.interpolate({
     inputRange: [0, 1],
@@ -46,7 +46,7 @@ const MainTitleHeader = (props: Props) => {
 
   const animatedOpacityStyle = {
     opacity: animatedOpacity
-  }
+  };
 
   return (
     <View style={styles.container}>

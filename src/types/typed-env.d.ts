@@ -1,4 +1,4 @@
-declare module '@env' {
+declare module "@env" {
   export const FB_API_KEY: string;
   export const FB_AUTH_DOMAIN: string;
   export const FB_DB_URL: string;

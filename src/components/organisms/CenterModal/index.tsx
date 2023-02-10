@@ -1,17 +1,17 @@
-import React, { useEffect, useState, useRef } from 'react';
-import { Animated, Easing, Text } from 'react-native';
+import React, { useEffect, useState, useRef } from "react";
+import { Animated, Easing, Text } from "react-native";
 
 // Store
-import { useSelector } from 'store/index';
+import { useSelector } from "store/index";
 
 // Components
-import HorizontalButtonList from 'components/molecules/Modal/HorizontalButtonList';
+import HorizontalButtonList from "components/molecules/Modal/HorizontalButtonList";
 
 // Constants
-import * as VALUE from 'constants/value';
+import * as VALUE from "constants/value";
 
 // Styles
-import styles from './CenterModal.scss';
+import styles from "./CenterModal.scss";
 
 interface Props {
   isShow: boolean;
@@ -28,10 +28,10 @@ const CenterModal = (props: Props) => {
   const getTargetPosition = (object: any) => {
     setTargetWidth(object.nativeEvent.layout.width);
     setTargetHeight(object.nativeEvent.layout.height);
-  }
+  };
 
   useEffect(() => {
-    props.isShow ? maxScaleAnimated() : minScaleAnimated()
+    props.isShow ? maxScaleAnimated() : minScaleAnimated();
   },
   [
     props.isShow,
@@ -57,7 +57,7 @@ const CenterModal = (props: Props) => {
       easing: Easing.ease,
       useNativeDriver: false
     }).start();
-  }
+  };
 
   const animatedScale = scaleValue.interpolate({
     inputRange: [0, 1],

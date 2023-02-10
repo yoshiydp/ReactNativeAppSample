@@ -1,16 +1,16 @@
-import React, { useEffect } from 'react';
-import { View, TouchableOpacity, Text } from 'react-native';
-import { useDispatch } from 'react-redux';
-import { firebaseAuth, db } from 'src/config/firebase';
-import { doc, updateDoc, arrayRemove, deleteField } from 'firebase/firestore';
+import React, { useEffect } from "react";
+import { View, TouchableOpacity, Text } from "react-native";
+import { useDispatch } from "react-redux";
+import { firebaseAuth, db } from "src/config/firebase";
+import { doc, updateDoc, arrayRemove } from "firebase/firestore";
 
 // Store
-import { useSelector } from 'store/index';
-import { hideCenterModal } from 'store/CenterModalSlice';
-import { hideOverlay, activeHidden } from 'store/OverlaySlice';
+import { useSelector } from "store/index";
+import { hideCenterModal } from "store/CenterModalSlice";
+import { hideOverlay, activeHidden } from "store/OverlaySlice";
 
 // Styles
-import styles from './HorizontalButtonList.scss';
+import styles from "./HorizontalButtonList.scss";
 
 interface Props {
   onPressSubmitEvent?: () => void;
@@ -29,21 +29,20 @@ const HorizontalButtonList = (props: Props) => {
     try {
       const { uid }: any = firebaseAuth.currentUser;
       if (!uid) return;
-      const docRef = doc(db, 'users', uid);
+      const docRef = doc(db, "users", uid);
       await updateDoc(docRef, {
         projectData: arrayRemove({...myProjectsState})
-        // projectData: deleteField()
       })
-      .then(() => {
-        dispatch(hideOverlay());
-        dispatch(activeHidden());
-        dispatch(hideCenterModal());
-        console.log('delete data');
-      });
+        .then(() => {
+          dispatch(hideOverlay());
+          dispatch(activeHidden());
+          dispatch(hideCenterModal());
+          console.log("delete data");
+        });
     } catch (error: any) {
       console.log(error);
     }
-  }
+  };
 
   const onPressCancel = () => {
     dispatch(hideOverlay());

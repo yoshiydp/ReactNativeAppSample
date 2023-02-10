@@ -1,10 +1,7 @@
-import React, { useEffect, useState } from 'react';
+import React from "react";
 
 // Components
-import LowerScreen from 'components/templates/LowerScreen';
-
-// Constants
-import * as TEXT from 'constants/text';
+import LowerScreen from "components/templates/LowerScreen";
 
 interface Props {
   navigation: any;
@@ -12,13 +9,10 @@ interface Props {
 
 const EditProject = (props: Props) => {
 
-  useEffect(() => {
-  }, []);
-
   return (
     <>
       <LowerScreen
-        title={ 'Edit Project' }
+        title={ "Edit Project" }
         navigation={ props.navigation }
       />
     </>

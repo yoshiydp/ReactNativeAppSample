@@ -1,33 +1,32 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState } from "react";
 import {
   View,
   ScrollView,
   Text,
-  KeyboardAvoidingView,
-} from 'react-native';
-import { useDispatch } from 'react-redux';
-import { signInWithEmailAndPassword, onAuthStateChanged } from 'firebase/auth';
-import { appleAuth } from '@invertase/react-native-apple-authentication';
-import { GoogleSignin } from '@react-native-google-signin/google-signin';
-import { firebaseAuth } from 'src/config/firebase';
-import auth from '@react-native-firebase/auth';
+} from "react-native";
+import { useDispatch } from "react-redux";
+import { signInWithEmailAndPassword, onAuthStateChanged } from "firebase/auth";
+import { appleAuth } from "@invertase/react-native-apple-authentication";
+import { GoogleSignin } from "@react-native-google-signin/google-signin";
+import { firebaseAuth } from "src/config/firebase";
+import auth from "@react-native-firebase/auth";
 
 // Store
-import { subscribe } from 'src/store/SubscribeSlice';
+import { subscribe } from "src/store/SubscribeSlice";
 
 // env
-import { WEB_CLIENT_ID } from '@env';
+import { WEB_CLIENT_ID } from "@env";
 
 // Components
-import IntroMessage from 'components/molecules/IntroMessage';
-import AuthForm from 'components/templates/AuthForm';
-import SocialSignIn from 'components/organisms/SocialSignIn';
-import ButtonSquare from 'components/atoms/ButtonSquare';
+import IntroMessage from "components/molecules/IntroMessage";
+import AuthForm from "components/templates/AuthForm";
+import SocialSignIn from "components/organisms/SocialSignIn";
+import ButtonSquare from "components/atoms/ButtonSquare";
 
 // Constants
-import * as COLOR from 'constants/color';
-import * as SVGPATH from 'constants/svgPath';
-import * as TEXT from 'constants/text';
+import * as COLOR from "constants/color";
+import * as SVGPATH from "constants/svgPath";
+import * as TEXT from "constants/text";
 
 // Validators
 import {
@@ -36,23 +35,23 @@ import {
   validateUserNotFound,
   validateNetworkRequestFailed,
   validateTooManyRequests
-} from 'src/validators/LoginValidator';
+} from "src/validators/LoginValidator";
 
 // Styles
-import styles from './Login.scss';
+import styles from "./Login.scss";
 
 interface Props {
   navigation: any;
 }
 
-let user: any = null;
+const user: any = null;
 
 const Login = (props: Props) => {
   const dispatch = useDispatch();
-  const [email, setEmail] = useState<string>('');
-  const [password, setPassword] = useState<string>('');
-  const [errorEmail, setErrorEmail] = useState<string>('');
-  const [errorPassword, setErrorPassword] = useState<string>('');
+  const [email, setEmail] = useState<string>("");
+  const [password, setPassword] = useState<string>("");
+  const [errorEmail, setErrorEmail] = useState<string>("");
+  const [errorPassword, setErrorPassword] = useState<string>("");
   const [credentialStateForUser, updateCredentialStateForUser] = useState<number>(-1);
 
   GoogleSignin.configure({
@@ -64,7 +63,7 @@ const Login = (props: Props) => {
   useEffect(() => {
     if (!appleAuth.isSupported) return;
     return appleAuth.onCredentialRevoked(async () => {
-      console.warn('Credential Revoked');
+      console.warn("Credential Revoked");
       fetchAndUpdateCredentialState(updateCredentialStateForUser).catch(error =>
         updateCredentialStateForUser(error.code),
       );
@@ -72,8 +71,8 @@ const Login = (props: Props) => {
   }, []);
 
   const signIn = async () => {
-    setErrorEmail('');
-    setErrorPassword('');
+    setErrorEmail("");
+    setErrorPassword("");
     try {
       await signInWithEmailAndPassword(firebaseAuth, email, password);
       console.log(firebaseAuth.currentUser?.photoURL);
@@ -81,24 +80,24 @@ const Login = (props: Props) => {
       console.log(firebaseAuth.currentUser?.email);
       console.log(firebaseAuth.currentUser?.photoURL);
     } catch (error: any) {
-      if (error.code === 'auth/invalid-email') {
+      if (error.code === "auth/invalid-email") {
         validateEmail(email, setErrorEmail);
         validatePassword(password, setErrorPassword);
       }
-      if (error.code === 'auth/wrong-password') {
+      if (error.code === "auth/wrong-password") {
         validatePassword(password, setErrorPassword);
       }
-      if (error.code === 'auth/internal-error') {
+      if (error.code === "auth/internal-error") {
         validateEmail(email, setErrorEmail);
         validatePassword(password, setErrorPassword);
       }
-      if (error.code === 'auth/user-not-found') {
+      if (error.code === "auth/user-not-found") {
         validateUserNotFound(setErrorEmail, password, setErrorPassword);
       }
-      if (error.code === 'auth/network-request-failed') {
+      if (error.code === "auth/network-request-failed") {
         validateNetworkRequestFailed(setErrorEmail, setErrorPassword);
       }
-      if (error.code === 'auth/too-many-requests') {
+      if (error.code === "auth/too-many-requests") {
         validateTooManyRequests(setErrorEmail, setErrorPassword);
       }
       console.log(error.code);
@@ -112,7 +111,7 @@ const Login = (props: Props) => {
         requestedScopes: [appleAuth.Scope.EMAIL, appleAuth.Scope.FULL_NAME],
       });
       if (!appleAuthRequestResponse.identityToken) {
-        throw new Error('Apple Sign-In failed - no identify token returned');
+        throw new Error("Apple Sign-In failed - no identify token returned");
       }
       const { identityToken, nonce } = appleAuthRequestResponse;
       const appleCredential = auth.AppleAuthProvider.credential(identityToken, nonce);
@@ -121,20 +120,20 @@ const Login = (props: Props) => {
     } catch (error: any) {
       console.log(error, error.code);
     }
-  }
+  };
 
   const fetchAndUpdateCredentialState = async (updateCredentialStateForUser: any) => {
     if (user === null) {
-      updateCredentialStateForUser('N/A');
+      updateCredentialStateForUser("N/A");
     } else {
       const credentialState = await appleAuth.getCredentialStateForUser(user);
       if (credentialState === appleAuth.State.AUTHORIZED) {
-        updateCredentialStateForUser('AUTHORIZED');
+        updateCredentialStateForUser("AUTHORIZED");
       } else {
         updateCredentialStateForUser(credentialState);
       }
     }
-  }
+  };
 
   const signInWithGoogle = async () => {
     try {
@@ -146,7 +145,7 @@ const Login = (props: Props) => {
     } catch (error: any) {
       console.log(error, error.code);
     }
-  }
+  };
 
   // テキストフォームリスト
   const formControlItems = [
@@ -213,7 +212,7 @@ const Login = (props: Props) => {
         パスワードをお忘れの場合は
         <Text
           style={ styles.linkText }
-          onPress={() => props.navigation.navigate('PasswordReset')}>
+          onPress={() => props.navigation.navigate("PasswordReset")}>
           こちら
         </Text>
         から
@@ -229,7 +228,7 @@ const Login = (props: Props) => {
         <View style={ styles.signUpButtonWrap }>
           <ButtonSquare
             text={ TEXT.BUTTON_NEW_ACCOUNT_CREATE }
-            onPressEvent={() => props.navigation.navigate('SignUp')}
+            onPressEvent={() => props.navigation.navigate("SignUp")}
           />
         </View>
       </View>

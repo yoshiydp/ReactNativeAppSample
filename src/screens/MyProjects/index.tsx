@@ -1,12 +1,12 @@
-import React, { useEffect, useState } from 'react';
-import { firebaseAuth, db } from 'src/config/firebase';
-import { doc, getDoc, onSnapshot } from 'firebase/firestore';
+import React, { useEffect, useState } from "react";
+import { firebaseAuth, db } from "src/config/firebase";
+import { doc, getDoc, onSnapshot } from "firebase/firestore";
 
 // Components
-import MainScreen from 'components/templates/MainScreen';
+import MainScreen from "components/templates/MainScreen";
 
 // Constants
-import * as TEXT from 'constants/text';
+import * as TEXT from "constants/text";
 
 interface Props {
   navigation: any;
@@ -16,7 +16,7 @@ const MyProjects = (props: Props) => {
   const [projectData, setProjectData] = useState<any>([]);
   const { uid }: any = firebaseAuth.currentUser;
   if (!uid) return;
-  const docRef = doc(db, 'users', uid);
+  const docRef = doc(db, "users", uid);
 
   const getProjectData = async () => {
     const docSnap = await getDoc(docRef);

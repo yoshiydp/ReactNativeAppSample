@@ -1,18 +1,18 @@
-import React, { useEffect, useRef, useState } from 'react';
-import { View, TextInput, TouchableOpacity, Animated, useWindowDimensions } from 'react-native';
+import React, { useEffect, useRef, useState } from "react";
+import { View, TextInput, TouchableOpacity, Animated, useWindowDimensions } from "react-native";
 
 // Components
-import SearchCloseBtn from 'components/molecules/SearchCloseBtn';
-import Icon from 'components/atoms/Icon';
+import SearchCloseBtn from "components/molecules/SearchCloseBtn";
+import Icon from "components/atoms/Icon";
 
 // Constants
-import * as TEXT from 'constants/text';
-import * as COLOR from 'constants/color';
-import * as SVGPATH from 'constants/svgPath';
-import * as VALUE from 'constants/value';
+import * as TEXT from "constants/text";
+import * as COLOR from "constants/color";
+import * as SVGPATH from "constants/svgPath";
+import * as VALUE from "constants/value";
 
 // Styles
-import styles from './SearchBar.scss';
+import styles from "./SearchBar.scss";
 
 interface Props {
   activeMinOpacityAnimated: any;
@@ -21,7 +21,7 @@ interface Props {
 
 const SearchBar = (props: Props) => {
   const [isEnabled, setIsEnabled] = useState(false);
-  const [text, setText] = useState('');
+  const [text, setText] = useState("");
   const widthValue = useRef(new Animated.Value(0)).current;
   const opacityValue = useRef(new Animated.Value(0)).current;
   const windowWidth = useWindowDimensions().width;
@@ -38,7 +38,7 @@ const SearchBar = (props: Props) => {
 
   const inactivePress = () => {
     setIsEnabled(false);
-    setText('');
+    setText("");
     widthAnimatedFunc(widthValue, 0);
     opacityAnimatedFunc(opacityValue, 0, VALUE.DURATION_200);
     props.activeMaxOpacityAnimated();
@@ -50,7 +50,7 @@ const SearchBar = (props: Props) => {
       duration: VALUE.DURATION_250,
       useNativeDriver: false
     }).start();
-  }
+  };
 
   const animatedWidth = widthValue.interpolate({
     inputRange: [0, 1],
@@ -59,7 +59,7 @@ const SearchBar = (props: Props) => {
 
   const animatedWidthStyle = {
     width: animatedWidth
-  }
+  };
 
   const opacityAnimatedFunc = (object: any, value: number, duration: number) => {
     Animated.timing(object, {
@@ -67,7 +67,7 @@ const SearchBar = (props: Props) => {
       duration: duration,
       useNativeDriver: false
     }).start();
-  }
+  };
 
   const animatedOpacity = widthValue.interpolate({
     inputRange: [0, 1],
@@ -76,13 +76,13 @@ const SearchBar = (props: Props) => {
 
   const animatedOpacityStyle = {
     opacity: animatedOpacity
-  }
+  };
 
   return (
     <View style={styles.container}>
       <TouchableOpacity
         onPress={activePress}
-        style={[styles.containerOpenButton, isEnabled ? styles.containerOpenButtonActive : '']}>
+        style={[styles.containerOpenButton, isEnabled ? styles.containerOpenButtonActive : ""]}>
       </TouchableOpacity>
       <Animated.View
         style={[
@@ -100,7 +100,7 @@ const SearchBar = (props: Props) => {
           pathFill={COLOR.COLOR_GRAY_TYPE2}
         />
         <TextInput
-          style={[styles.input, isEnabled ? styles.inputActive : '']}
+          style={[styles.input, isEnabled ? styles.inputActive : ""]}
           placeholder={TEXT.PLACEHOLDER_INPUT_SEARCH}
           placeholderTextColor={COLOR.COLOR_WHITE_BASE}
           editable={isEnabled}
@@ -112,7 +112,7 @@ const SearchBar = (props: Props) => {
       <Animated.View
         style={[
           styles.containerCloseButton,
-          isEnabled ? styles.containerCloseButtonActive : '',
+          isEnabled ? styles.containerCloseButtonActive : "",
           animatedOpacityStyle
         ]}>
         <TouchableOpacity

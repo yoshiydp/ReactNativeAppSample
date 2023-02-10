@@ -6,7 +6,7 @@ import {
   FB_STORAGE_BUCKET,
   FB_MESSAGING_SENDER_ID,
   FB_APP_ID
-} from '@env';
+} from "@env";
 
 export const firebaseConfig = {
   apiKey: FB_API_KEY,

@@ -1,16 +1,16 @@
-import React, { useEffect, useState } from 'react';
-import { View } from 'react-native';
+import React, { useEffect, useState } from "react";
+import { View } from "react-native";
 
 // Components
-import TextField from 'components/molecules/TextField';
-import ErrorText from 'components/atoms/ErrorText';
+import TextField from "components/molecules/TextField";
+import ErrorText from "components/atoms/ErrorText";
 
 
 // Interfaces
-import { FormControlsType } from 'interfaces/formControlsInterface';
+import { FormControlsType } from "interfaces/formControlsInterface";
 
 // Styles
-import styles from './FormControls.scss';
+import styles from "./FormControls.scss";
 
 interface Props {
   formControlItems: Array<FormControlsType>;

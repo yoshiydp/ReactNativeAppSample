@@ -1,17 +1,17 @@
-import React, { useEffect, useRef } from 'react';
-import { Animated, TouchableOpacity, useWindowDimensions } from 'react-native';
-import { useDispatch } from 'react-redux';
+import React, { useEffect, useRef } from "react";
+import { Animated, TouchableOpacity, useWindowDimensions } from "react-native";
+import { useDispatch } from "react-redux";
 
 // Store
-import { useSelector } from 'store/index';
-import { hideOverlay } from 'store/OverlaySlice';
-import { hideMainTabMenu } from 'store/MainTabMenuSlice';
+import { useSelector } from "store/index";
+import { hideOverlay } from "store/OverlaySlice";
+import { hideMainTabMenu } from "store/MainTabMenuSlice";
 
 // Constants
-import * as VALUE from 'constants/value';
+import * as VALUE from "constants/value";
 
 // Styles
-import styles from './Overlay.scss';
+import styles from "./Overlay.scss";
 
 interface Props {
   isShow: boolean;
@@ -28,17 +28,17 @@ const Overlay = (props: Props) => {
 
   useEffect(() => {
     props.isShow ?
-    (
-      maxOpacityAnimated(),
-      sizesAnimatedFunc(widthValue, windowWidth, 0),
-      sizesAnimatedFunc(heightValue, windowHeight, 0)
-    )
-    :
-    (
-      minOpacityAnimated(),
-      sizesAnimatedFunc(widthValue, 0, VALUE.DURATION_200),
-      sizesAnimatedFunc(heightValue, 0, VALUE.DURATION_200)
-    )
+      (
+        maxOpacityAnimated(),
+        sizesAnimatedFunc(widthValue, windowWidth, 0),
+        sizesAnimatedFunc(heightValue, windowHeight, 0)
+      )
+      :
+      (
+        minOpacityAnimated(),
+        sizesAnimatedFunc(widthValue, 0, VALUE.DURATION_200),
+        sizesAnimatedFunc(heightValue, 0, VALUE.DURATION_200)
+      );
   }, [props.isShow, activeHiddenState]);
 
   const minOpacityAnimated = () => {
@@ -55,7 +55,7 @@ const Overlay = (props: Props) => {
       duration : VALUE.DURATION_200,
       useNativeDriver: false
     }).start();
-  }
+  };
 
   const animatedOpacity = opacityValue.interpolate({
     inputRange: [0, 1],
@@ -64,7 +64,7 @@ const Overlay = (props: Props) => {
 
   const animatedOpacityStyle = {
     opacity: animatedOpacity
-  }
+  };
 
   const sizesAnimatedFunc = (object: any, value: number, delay: number) => {
     Animated.timing(object, {
@@ -73,15 +73,15 @@ const Overlay = (props: Props) => {
       delay: delay,
       useNativeDriver: false
     }).start();
-  }
+  };
 
   const animatedWidthStyle = {
     width: widthValue,
-  }
+  };
 
   const animatedHeightStyle = {
     height: heightValue,
-  }
+  };
 
   const onPressHide = () => {
     if(!activeHiddenState) dispatch(hideOverlay());

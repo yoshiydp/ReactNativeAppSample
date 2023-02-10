@@ -1,15 +1,15 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice } from "@reduxjs/toolkit";
 
 interface SubscribeStateType {
   subscribe: boolean;
-};
+}
 
 const initialState: SubscribeStateType = {
   subscribe: false,
 };
 
 const subscribeSlice = createSlice({
-  name: 'subscribe',
+  name: "subscribe",
   initialState,
   reducers: {
     subscribe: (state: { subscribe: boolean }) => {
