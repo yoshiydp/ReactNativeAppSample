@@ -1,33 +1,33 @@
-import React, { useEffect, useState } from 'react';
-import { View, TouchableOpacity } from 'react-native';
-import { useDispatch } from 'react-redux';
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import React, { useState } from "react";
+import { View, TouchableOpacity } from "react-native";
+import { useDispatch } from "react-redux";
+import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 
 const Tab = createBottomTabNavigator();
 
 // Store
-import { useSelector } from 'store/index';
-import { showMainTabMenu } from 'store/MainTabMenuSlice';
-import { showOverlay } from 'store/OverlaySlice';
+import { useSelector } from "store/index";
+import { showMainTabMenu } from "store/MainTabMenuSlice";
+import { showOverlay } from "store/OverlaySlice";
 
 // Screens
-import MyProjectsScreen from 'screens/MyProjects';
-import TrackListScreen from 'screens/TrackList';
-import RecordAudioScreen from 'screens/RecordAudio';
-import MyAccountScreen from 'screens/MyAccount';
+import MyProjectsScreen from "screens/MyProjects";
+import TrackListScreen from "screens/TrackList";
+import RecordAudioScreen from "screens/RecordAudio";
+import MyAccountScreen from "screens/MyAccount";
 
 // Components
-import MainTabMenu from 'components/organisms/MainTabMenu';
-import CenterModal from 'components/organisms/CenterModal';
-import Overlay from 'components/atoms/Overlay';
-import Icon from 'components/atoms/Icon';
+import MainTabMenu from "components/organisms/MainTabMenu";
+import CenterModal from "components/organisms/CenterModal";
+import Overlay from "components/atoms/Overlay";
+import Icon from "components/atoms/Icon";
 
 // Constants
-import * as COLOR from 'constants/color';
-import * as SVGPATH from 'constants/svgPath';
+import * as COLOR from "constants/color";
+import * as SVGPATH from "constants/svgPath";
 
 // Styles
-import styles from './MainTabBar.scss';
+import styles from "./MainTabBar.scss";
 
 interface Props {
   navigation: any;
@@ -42,10 +42,7 @@ const MainTabBar = (props: Props) => {
 
   const getTargetWidth = (object: any) => {
     setTargetWidth(object.nativeEvent.layout.width);
-  }
-
-  useEffect(() => {
-  }, [targetWidth, overlay, centerModal]);
+  };
 
   const onPressShow = () => {
     dispatch(showOverlay());
@@ -62,12 +59,12 @@ const MainTabBar = (props: Props) => {
           tabBarInactiveTintColor: COLOR.COLOR_GRAY_TYPE3
         }}
         initialRouteName={ "MyProjects" }
-        >
+      >
         <Tab.Screen
           name="MyProjects"
           component={ MyProjectsScreen }
           options={{
-            tabBarLabel: '',
+            tabBarLabel: "",
             tabBarItemStyle: styles.tabBarLabel,
             tabBarIcon: ({ color }) => (
               <Icon
@@ -85,8 +82,8 @@ const MainTabBar = (props: Props) => {
                 pathTransform2="translate(-6.746 -162.01)"
                 pathFill={
                   color
-                  ? color
-                  : COLOR.COLOR_GRAY_TYPE3
+                    ? color
+                    : COLOR.COLOR_GRAY_TYPE3
                 }
               />
             ),
@@ -96,7 +93,7 @@ const MainTabBar = (props: Props) => {
           name="TrackList"
           component={ TrackListScreen }
           options={{
-            tabBarLabel: '',
+            tabBarLabel: "",
             tabBarItemStyle: [styles.tabBarLabel, { marginRight: targetWidth / 2 }],
             tabBarIcon: ({ color }) => (
               <Icon
@@ -110,8 +107,8 @@ const MainTabBar = (props: Props) => {
                 pathTransform="translate(0 -0.004)"
                 pathFill={
                   color
-                  ? color
-                  : COLOR.COLOR_GRAY_TYPE3
+                    ? color
+                    : COLOR.COLOR_GRAY_TYPE3
                 }
               />
             ),
@@ -121,7 +118,7 @@ const MainTabBar = (props: Props) => {
           name="RecordAudio"
           component={ RecordAudioScreen }
           options={{
-            tabBarLabel: '',
+            tabBarLabel: "",
             tabBarItemStyle: [styles.tabBarLabel, { marginLeft: targetWidth / 2 }],
             tabBarIcon: ({ color }) => (
               <Icon
@@ -141,8 +138,8 @@ const MainTabBar = (props: Props) => {
                 pathTransform5="translate(-418.541 -156.948)"
                 pathFill={
                   color
-                  ? color
-                  : COLOR.COLOR_GRAY_TYPE3
+                    ? color
+                    : COLOR.COLOR_GRAY_TYPE3
                 }
               />
             ),
@@ -152,7 +149,7 @@ const MainTabBar = (props: Props) => {
           name="MyAccount"
           component={ MyAccountScreen }
           options={{
-            tabBarLabel: '',
+            tabBarLabel: "",
             tabBarItemStyle: styles.tabBarLabel,
             tabBarIcon: ({ color }) => (
               <Icon
@@ -166,8 +163,8 @@ const MainTabBar = (props: Props) => {
                 pathTransform2="translate(0 -237.474)"
                 pathFill={
                   color
-                  ? color
-                  : COLOR.COLOR_GRAY_TYPE3
+                    ? color
+                    : COLOR.COLOR_GRAY_TYPE3
                 }
               />
             ),

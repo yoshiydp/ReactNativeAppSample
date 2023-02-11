@@ -1,16 +1,13 @@
-import React, { useEffect, useState } from 'react';
-import { View } from 'react-native';
+import React from "react";
+import { View } from "react-native";
 
 // Components
-import AppLogo from 'components/atoms/AppLogo';
+import AppLogo from "components/atoms/AppLogo";
 
 // Styles
-import styles from './Loading.scss';
+import styles from "./Loading.scss";
 
 const Loading = () => {
-
-  useEffect(() => {
-  }, []);
 
   return (
     <View style={styles.container}>

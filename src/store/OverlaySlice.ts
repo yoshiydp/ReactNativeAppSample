@@ -1,9 +1,9 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice } from "@reduxjs/toolkit";
 
 interface OverStateType {
   overlay: boolean;
   inactiveHidden: boolean;
-};
+}
 
 const initialState: OverStateType = {
   overlay: false,
@@ -11,7 +11,7 @@ const initialState: OverStateType = {
 };
 
 export const overlaySlice = createSlice({
-  name: 'overlay',
+  name: "overlay",
   initialState,
   reducers: {
     showOverlay: (state: { overlay: boolean }) => {

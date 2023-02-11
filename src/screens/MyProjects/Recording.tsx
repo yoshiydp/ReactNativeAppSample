@@ -1,10 +1,7 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from "react";
 
 // Components
-import LowerScreen from 'components/templates/LowerScreen';
-
-// Constants
-import * as TEXT from 'constants/text';
+import LowerScreen from "components/templates/LowerScreen";
 
 interface Props {
   navigation: any;
@@ -12,13 +9,10 @@ interface Props {
 
 const Recording = (props: Props) => {
 
-  useEffect(() => {
-  }, []);
-
   return (
     <>
       <LowerScreen
-        title={ 'Recording' }
+        title={ "Recording" }
         navigation={ props.navigation }
       />
     </>

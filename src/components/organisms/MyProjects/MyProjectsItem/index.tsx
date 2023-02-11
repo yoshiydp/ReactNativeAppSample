@@ -1,35 +1,35 @@
-import React, { useEffect, useRef } from 'react';
-import { TouchableOpacity, View, Image, Text} from 'react-native';
-import { useDispatch } from 'react-redux';
-import { firebaseAuth, db } from 'src/config/firebase';
-import { doc, onSnapshot } from 'firebase/firestore';
-import Swipeable from 'react-native-gesture-handler/Swipeable';
+import React, { useEffect, useRef } from "react";
+import { TouchableOpacity, View, Image, Text} from "react-native";
+import { useDispatch } from "react-redux";
+import { firebaseAuth, db } from "src/config/firebase";
+import { doc, onSnapshot } from "firebase/firestore";
+import Swipeable from "react-native-gesture-handler/Swipeable";
 
 // Store
-import { useSelector } from 'store/index';
+import { useSelector } from "store/index";
 import {
   showCenterModal,
   setCenterModalTitle,
   setCenterModalDataTitle,
   setCenterModalDescription,
   setCenterModalSubmitButtonText
-} from 'store/CenterModalSlice';
-import { setMyProjectsDetail } from 'store/MyProjectsSlice';
-import { showOverlay, inactiveHidden } from 'store/OverlaySlice';
+} from "store/CenterModalSlice";
+import { setMyProjectsDetail } from "store/MyProjectsSlice";
+import { showOverlay, inactiveHidden } from "store/OverlaySlice";
 
 // Components
-import ButtonDelete from 'components/atoms/ButtonDelete';
-import Icon from 'components/atoms/Icon';
+import ButtonDelete from "components/atoms/ButtonDelete";
+import Icon from "components/atoms/Icon";
 
 // Interfaces
-import { MyProjectType } from 'interfaces/myProjectInterface';
+import { MyProjectType } from "interfaces/myProjectInterface";
 
 // Constants
-import * as COLOR from 'constants/color';
-import * as TEXT from 'constants/text';
+import * as COLOR from "constants/color";
+import * as TEXT from "constants/text";
 
 // Styles
-import styles from './MyProjectsItem.scss';
+import styles from "./MyProjectsItem.scss";
 
 interface Props extends MyProjectType {
   navigation: any;
@@ -41,7 +41,7 @@ const MyProjectsItem = (props: Props) => {
   const activeHiddenState = useSelector((state) => state.overlay.inactiveHidden);
   const { uid }: any = firebaseAuth.currentUser;
   if (!uid) return;
-  const docRef = doc(db, 'users', uid);
+  const docRef = doc(db, "users", uid);
 
   useEffect(() => {
     onSnapshot(docRef, () => {
@@ -58,7 +58,7 @@ const MyProjectsItem = (props: Props) => {
   };
 
   const navigateEditProject = async () => {
-    await props.navigation.navigate('EditProject');
+    await props.navigation.navigate("EditProject");
   };
 
   const onPressRightSwipeActions = () => {
@@ -77,8 +77,8 @@ const MyProjectsItem = (props: Props) => {
   };
 
   const textSubstring = (value: string, count: number) => {
-    return value.substring(0, count) + '...';
-  }
+    return value.substring(0, count) + "...";
+  };
 
   const setProjectData = {
     projectTitle: props.projectTitle,
@@ -104,8 +104,8 @@ const MyProjectsItem = (props: Props) => {
             style={ styles.image }
             source={
               props.artWorkPath
-              ? { uri: props.artWorkPath }
-              : require('src/assets/images/common/no-artwork-small.jpg')
+                ? { uri: props.artWorkPath }
+                : require("src/assets/images/common/no-artwork-small.jpg")
             }
           />
         </View>
@@ -114,7 +114,7 @@ const MyProjectsItem = (props: Props) => {
             { props.projectTitle.length > 30 ? textSubstring(props.projectTitle, 30) : props.projectTitle }
           </Text>
           <Text style={ styles.text }>
-            { props.lyric ? textSubstring(props.lyric, 25) : 'No lyric' }
+            { props.lyric ? textSubstring(props.lyric, 25) : "No lyric" }
           </Text>
           <Text style={ styles.text }>
             { textSubstring(props.trackTitle, 15) } / { props.artistName }

@@ -1,19 +1,19 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 // Interfaces
-import { MyProjectType } from 'interfaces/myProjectInterface';
+import { MyProjectType } from "interfaces/myProjectInterface";
 
 const initialState: MyProjectType = {
-  projectTitle: '',
-  lyric: '',
-  trackDataPath: '',
-  trackTitle: '',
-  artistName: '',
-  artWorkPath: ''
+  projectTitle: "",
+  lyric: "",
+  trackDataPath: "",
+  trackTitle: "",
+  artistName: "",
+  artWorkPath: ""
 };
 
 export const MyProjectsSlice = createSlice({
-  name: 'myProjects',
+  name: "myProjects",
   initialState,
   reducers: {
     setMyProjectsDetail: (

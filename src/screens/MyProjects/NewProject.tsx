@@ -1,36 +1,36 @@
-import React, { useEffect, useState } from 'react';
-import { Modal, StyleSheet, Text, Pressable, View } from 'react-native';
-import { useDispatch } from 'react-redux';
-import DocumentPicker from 'react-native-document-picker';
-import { firebaseAuth, db } from 'src/config/firebase';
-import { getStorage, ref, uploadBytesResumable, getDownloadURL } from 'firebase/storage';
-import { doc, updateDoc, getDoc, serverTimestamp, arrayUnion } from 'firebase/firestore';
+import React, { useEffect, useState } from "react";
+import { Modal, StyleSheet, Text, Pressable, View } from "react-native";
+import { useDispatch } from "react-redux";
+import DocumentPicker from "react-native-document-picker";
+import { firebaseAuth, db } from "src/config/firebase";
+import { getStorage, ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
+import { doc, updateDoc, arrayUnion } from "firebase/firestore";
 
 // Store
-import { useSelector } from 'store/index';
-import { hideOverlay } from 'store/OverlaySlice';
-import { hideMainTabMenu } from 'store/MainTabMenuSlice';
-import { setTrackDataFile } from 'store/NewProjectSlice';
+import { useSelector } from "store/index";
+import { hideOverlay } from "store/OverlaySlice";
+import { hideMainTabMenu } from "store/MainTabMenuSlice";
+import { setTrackDataFile } from "store/NewProjectSlice";
 
 // Components
-import LowerScreen from 'components/templates/LowerScreen';
+import LowerScreen from "components/templates/LowerScreen";
 
 // Constants
-import * as TEXT from 'constants/text';
+import * as TEXT from "constants/text";
 
 // Validators
-import { validateProjectTitle } from 'src/validators/NewProjectValidator';
+import { validateProjectTitle } from "src/validators/NewProjectValidator";
 
 // Styles
-import styles from './MyProjects.scss';
+import styles from "./MyProjects.scss";
 
 interface Props {
   navigation: any;
 }
 
 const NewProject = (props: Props) => {
-  const [projectTitle, setProjectTitle] = useState<string>('');
-  const [errorProjectTitle, setErrorProjectTitle] = useState<string>('');
+  const [projectTitle, setProjectTitle] = useState<string>("");
+  const [errorProjectTitle, setErrorProjectTitle] = useState<string>("");
   const [modalVisible, setModalVisible] = useState<boolean>(false);
   const dispatch = useDispatch();
   const artWork = useSelector((state) => state.newProject.artWork);
@@ -54,7 +54,7 @@ const NewProject = (props: Props) => {
 
   const selectTrackList = async () => {
     setModalVisible(true);
-  }
+  };
 
   const { uid }: any = firebaseAuth.currentUser;
   const storage = getStorage();
@@ -72,10 +72,10 @@ const NewProject = (props: Props) => {
         resolve(xhr.response);
       };
       xhr.onerror = () => {
-        reject(new TypeError('Network request failed'));
+        reject(new TypeError("Network request failed"));
       };
-      xhr.responseType = 'blob';
-      xhr.open('GET', fileUri, true);
+      xhr.responseType = "blob";
+      xhr.open("GET", fileUri, true);
       xhr.send(null);
     });
 
@@ -87,12 +87,12 @@ const NewProject = (props: Props) => {
     try {
       await uploadBytesResumable(storageRef, blob, metadata);
     } catch (error) {
-      console.error('Upload failed', error);
+      console.error("Upload failed", error);
     }
-  }
+  };
 
   const createProject = async () => {
-    setErrorProjectTitle('');
+    setErrorProjectTitle("");
     validateProjectTitle(projectTitle, setErrorProjectTitle);
 
     // プロジェクトタイトルが未入力の場合は以下を実行不可とする
@@ -107,12 +107,12 @@ const NewProject = (props: Props) => {
         artWork[0]?.uri,
         artWork[0]?.fileName,
         artWork[0]?.type,
-        '/artworks/',
+        "/artworks/",
       );
-      await getDownloadURL(ref(storage, uid + '/artworks/' + artWork[0]?.fileName))
+      await getDownloadURL(ref(storage, uid + "/artworks/" + artWork[0]?.fileName))
         .then((url) => {
           artWorkDownloadUrl = url;
-          console.log('artWorkDownloadUrl: ' + artWorkDownloadUrl);
+          console.log("artWorkDownloadUrl: " + artWorkDownloadUrl);
         })
         .catch((error) => {
           console.log(error);
@@ -125,30 +125,30 @@ const NewProject = (props: Props) => {
         trackDataFile[0]?.uri,
         trackDataFile[0]?.name,
         trackDataFile[0]?.type,
-        '/track_data_files/',
+        "/track_data_files/",
       );
 
-      await getDownloadURL(ref(storage, uid + '/track_data_files/' + trackDataFile[0]?.name))
+      await getDownloadURL(ref(storage, uid + "/track_data_files/" + trackDataFile[0]?.name))
         .then((url) => {
           trackDataDownloadUrl = url;
-          console.log('trackDataDownloadUrl: ' + trackDataDownloadUrl);
+          console.log("trackDataDownloadUrl: " + trackDataDownloadUrl);
         })
         .catch((error) => {
           console.log(error);
         });
     
-      await updateDoc(doc(db, 'users', uid), {
+      await updateDoc(doc(db, "users", uid), {
         projectData: arrayUnion({
           projectTitle: projectTitle,
-          lyric: '',
-          trackDataPath: trackDataDownloadUrl ? trackDataDownloadUrl : '',
+          lyric: "",
+          trackDataPath: trackDataDownloadUrl ? trackDataDownloadUrl : "",
           trackTitle: trackDataFile[0]?.name,
-          artistName: '',
-          artWorkPath: artWorkDownloadUrl ? artWorkDownloadUrl : ''
+          artistName: "",
+          artWorkPath: artWorkDownloadUrl ? artWorkDownloadUrl : ""
         }),
       });
     }
-  }
+  };
 
   // テキストフォームリスト
   const formControlItems = [
@@ -218,22 +218,22 @@ const NewProject = (props: Props) => {
 
 const modalStyles = StyleSheet.create({
   modal: {
-    backgroundColor: '#333'
+    backgroundColor: "#333"
   },
   centeredView: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
+    justifyContent: "center",
+    alignItems: "center",
     marginTop: 22,
   },
   modalView: {
     margin: 20,
-    backgroundColor: 'white',
+    backgroundColor: "white",
     borderRadius: 20,
     width: 300,
     padding: 35,
-    alignItems: 'center',
-    shadowColor: '#000',
+    alignItems: "center",
+    shadowColor: "#000",
     shadowOffset: {
       width: 0,
       height: 2,
@@ -248,19 +248,19 @@ const modalStyles = StyleSheet.create({
     elevation: 2,
   },
   buttonOpen: {
-    backgroundColor: '#F194FF',
+    backgroundColor: "#F194FF",
   },
   buttonClose: {
-    backgroundColor: '#2196F3',
+    backgroundColor: "#2196F3",
   },
   textStyle: {
-    color: 'white',
-    fontWeight: 'bold',
-    textAlign: 'center',
+    color: "white",
+    fontWeight: "bold",
+    textAlign: "center",
   },
   modalText: {
     marginBottom: 15,
-    textAlign: 'center',
+    textAlign: "center",
   },
 });
 

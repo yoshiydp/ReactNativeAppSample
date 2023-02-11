@@ -1,15 +1,15 @@
-import React from 'react';
-import { View } from 'react-native';
+import React from "react";
+import { View } from "react-native";
 
 // Components
-import Icon from 'components/atoms/Icon';
+import Icon from "components/atoms/Icon";
 
 // Constants
-import * as COLOR from 'constants/color';
-import * as SVGPATH from 'constants/svgPath';
+import * as COLOR from "constants/color";
+import * as SVGPATH from "constants/svgPath";
 
 // Styles
-import styles from './SearchCloseBtn.scss';
+import styles from "./SearchCloseBtn.scss";
 
 const SearchCloseBtn = () => {
   return (

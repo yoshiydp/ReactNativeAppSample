@@ -1,35 +1,28 @@
-import React, { useEffect, useState } from 'react';
-import {
-  View,
-  ScrollView,
-  TextInput,
-  Text,
-  TouchableOpacity,
-  KeyboardAvoidingView,
-} from 'react-native';
-import { useDispatch } from 'react-redux';
-import { createUserWithEmailAndPassword, updateProfile } from 'firebase/auth';
-import { appleAuth } from '@invertase/react-native-apple-authentication';
-import { GoogleSignin } from '@react-native-google-signin/google-signin';
-import { firebaseAuth, db } from 'src/config/firebase';
-import { doc, setDoc, getDoc, serverTimestamp } from 'firebase/firestore';
-import auth from '@react-native-firebase/auth';
+import React, { useEffect, useState } from "react";
+import { ScrollView } from "react-native";
+import { useDispatch } from "react-redux";
+import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
+import { appleAuth } from "@invertase/react-native-apple-authentication";
+import { GoogleSignin } from "@react-native-google-signin/google-signin";
+import { firebaseAuth, db } from "src/config/firebase";
+import { doc, setDoc, getDoc, serverTimestamp } from "firebase/firestore";
+import auth from "@react-native-firebase/auth";
 
 // Store
-import { subscribe } from 'src/store/SubscribeSlice';
+import { subscribe } from "src/store/SubscribeSlice";
 
 // env
-import { WEB_CLIENT_ID } from '@env';
+import { WEB_CLIENT_ID } from "@env";
 
 // Components
-import IntroMessage from 'components/molecules/IntroMessage';
-import AuthForm from 'components/templates/AuthForm';
-import SocialSignIn from 'components/organisms/SocialSignIn';
+import IntroMessage from "components/molecules/IntroMessage";
+import AuthForm from "components/templates/AuthForm";
+import SocialSignIn from "components/organisms/SocialSignIn";
 
 // Constants
-import * as COLOR from 'constants/color';
-import * as SVGPATH from 'constants/svgPath';
-import * as TEXT from 'constants/text';
+import * as COLOR from "constants/color";
+import * as SVGPATH from "constants/svgPath";
+import * as TEXT from "constants/text";
 
 // Validators
 import {
@@ -38,25 +31,25 @@ import {
   validatePassword,
   validateNetworkRequestFailed,
   validateTooManyRequests
-} from 'src/validators/SignUpValidator';
+} from "src/validators/SignUpValidator";
 
 // Styles
-import styles from './SignUp.scss';
+import styles from "./SignUp.scss";
 
 interface Props {
   navigation: any;
 }
 
-let user: any = null;
+const user: any = null;
 
 const SignUp = (props: Props) => {
   const dispatch = useDispatch();
-  const [userName, setUserName] = useState<string>('');
-  const [email, setEmail] = useState<string>('');
-  const [password, setPassword] = useState<string>('');
-  const [errorUserName, setErrorUserName] = useState<string>('');
-  const [errorEmail, setErrorEmail] = useState<string>('');
-  const [errorPassword, setErrorPassword] = useState<string>('');
+  const [userName, setUserName] = useState<string>("");
+  const [email, setEmail] = useState<string>("");
+  const [password, setPassword] = useState<string>("");
+  const [errorUserName, setErrorUserName] = useState<string>("");
+  const [errorEmail, setErrorEmail] = useState<string>("");
+  const [errorPassword, setErrorPassword] = useState<string>("");
   const [credentialStateForUser, updateCredentialStateForUser] = useState<number>(-1);
 
   GoogleSignin.configure({
@@ -68,7 +61,7 @@ const SignUp = (props: Props) => {
   useEffect(() => {
     if (!appleAuth.isSupported) return;
     return appleAuth.onCredentialRevoked(async () => {
-      console.warn('Credential Revoked');
+      console.warn("Credential Revoked");
       fetchAndUpdateCredentialState(updateCredentialStateForUser).catch(error =>
         updateCredentialStateForUser(error.code),
       );
@@ -76,52 +69,52 @@ const SignUp = (props: Props) => {
   }, []);
 
   const signUp = async () => {
-    setErrorUserName('');
-    setErrorEmail('');
-    setErrorPassword('');
+    setErrorUserName("");
+    setErrorEmail("");
+    setErrorPassword("");
     try {
       const { user } = await createUserWithEmailAndPassword(firebaseAuth, email, password);
-      const docRef = doc(db, 'users', user.uid);
+      const docRef = doc(db, "users", user.uid);
       const userDoc = await getDoc(docRef);
       await updateProfile(user, {
         displayName: userName
       });
       if (!userDoc.exists()) {
-        await setDoc(doc(db, 'users', user.uid), {
+        await setDoc(doc(db, "users", user.uid), {
           displayName: userName,
           projectData: [],
           createdAt: serverTimestamp(),
           deletedAt: null
         });
       }
-      console.log('userDoc.exists: ' + userDoc.exists());
+      console.log("userDoc.exists: " + userDoc.exists());
     } catch (error: any) {
-      if (error.code === 'auth/missing-email') {
+      if (error.code === "auth/missing-email") {
         validateUserName(userName, setErrorUserName);
         validateEmail(email, setErrorEmail);
         validatePassword(password, setErrorPassword);
       }
-      if (error.code === 'auth/weak-password') {
+      if (error.code === "auth/weak-password") {
         validateUserName(userName, setErrorUserName);
         validateEmail(email, setErrorEmail);
         validatePassword(password, setErrorPassword);
       }
-      if (error.code === 'auth/invalid-email') {
+      if (error.code === "auth/invalid-email") {
         validateUserName(userName, setErrorUserName);
         validateEmail(email, setErrorEmail);
         validatePassword(password, setErrorPassword);
       }
-      if (error.code === 'auth/wrong-password') {
+      if (error.code === "auth/wrong-password") {
         validatePassword(password, setErrorPassword);
       }
-      if (error.code === 'auth/internal-error') {
+      if (error.code === "auth/internal-error") {
         validateEmail(email, setErrorEmail);
         validatePassword(password, setErrorPassword);
       }
-      if (error.code === 'auth/network-request-failed') {
+      if (error.code === "auth/network-request-failed") {
         validateNetworkRequestFailed(setErrorEmail, setErrorPassword);
       }
-      if (error.code === 'auth/too-many-requests') {
+      if (error.code === "auth/too-many-requests") {
         validateTooManyRequests(setErrorEmail, setErrorPassword);
       }
       console.log(error.code);
@@ -135,7 +128,7 @@ const SignUp = (props: Props) => {
         requestedScopes: [appleAuth.Scope.EMAIL, appleAuth.Scope.FULL_NAME],
       });
       if (!appleAuthRequestResponse.identityToken) {
-        throw new Error('Apple Sign-In failed - no identify token returned');
+        throw new Error("Apple Sign-In failed - no identify token returned");
       }
       const { identityToken, nonce } = appleAuthRequestResponse;
       const appleCredential = auth.AppleAuthProvider.credential(identityToken, nonce);
@@ -144,20 +137,20 @@ const SignUp = (props: Props) => {
     } catch (error: any) {
       console.log(error, error.code);
     }
-  }
+  };
 
   const fetchAndUpdateCredentialState = async (updateCredentialStateForUser: any) => {
     if (user === null) {
-      updateCredentialStateForUser('N/A');
+      updateCredentialStateForUser("N/A");
     } else {
       const credentialState = await appleAuth.getCredentialStateForUser(user);
       if (credentialState === appleAuth.State.AUTHORIZED) {
-        updateCredentialStateForUser('AUTHORIZED');
+        updateCredentialStateForUser("AUTHORIZED");
       } else {
         updateCredentialStateForUser(credentialState);
       }
     }
-  }
+  };
 
   const signInWithGoogle = async () => {
     try {
@@ -169,7 +162,7 @@ const SignUp = (props: Props) => {
     } catch (error: any) {
       console.log(error, error.code);
     }
-  }
+  };
 
   // テキストフォームリスト
   const formControlItems = [

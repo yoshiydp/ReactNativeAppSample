@@ -1,26 +1,26 @@
-import React, { useEffect, useRef, useState, useCallback } from 'react';
-import { Animated, View, TouchableOpacity, Text } from 'react-native';
+import React, { useEffect, useRef, useState, useCallback } from "react";
+import { Animated, View, TouchableOpacity, Text } from "react-native";
 import {
   GestureHandlerRootView,
   PanGestureHandler,
   HandlerStateChangeEvent,
-} from 'react-native-gesture-handler';
-import { useDispatch } from 'react-redux';
+} from "react-native-gesture-handler";
+import { useDispatch } from "react-redux";
 
 // Store
-import { hideOverlay } from 'store/OverlaySlice';
-import { hideMainTabMenu } from 'store/MainTabMenuSlice';
+import { hideOverlay } from "store/OverlaySlice";
+import { hideMainTabMenu } from "store/MainTabMenuSlice";
 
 // Components
-import Icon from 'components/atoms/Icon';
+import Icon from "components/atoms/Icon";
 
 // Constants
-import * as COLOR from 'constants/color';
-import * as SVGPATH from 'constants/svgPath';
-import * as VALUE from 'constants/value';
+import * as COLOR from "constants/color";
+import * as SVGPATH from "constants/svgPath";
+import * as VALUE from "constants/value";
 
 // Styles
-import styles from './MainTabMenu.scss';
+import styles from "./MainTabMenu.scss";
 
 interface Props {
   isShow: boolean;
@@ -36,23 +36,23 @@ const MainTabMenu = (props: Props) => {
 
   const getContainerHeight = (object: any) => {
     setContainerHeight(object.nativeEvent.layout.height);
-  }
+  };
 
   const getTargetWidth = (object: any) => {
     setTargetWidth(object.nativeEvent.layout.width);
-  }
+  };
 
   useEffect(() => {
     props.isShow ?
-    (
-      translateYAnimated(translateValue, 0),
-      positionAnimatedFunc(positionValue, 0, 0)
-    )
-    :
-    (
-      translateYAnimated(translateValue, containerHeight),
-      positionAnimatedFunc(positionValue, 0, VALUE.DURATION_200)
-    )
+      (
+        translateYAnimated(translateValue, 0),
+        positionAnimatedFunc(positionValue, 0, 0)
+      )
+      :
+      (
+        translateYAnimated(translateValue, containerHeight),
+        positionAnimatedFunc(positionValue, 0, VALUE.DURATION_200)
+      );
   }, [containerHeight, targetWidth, props.isShow]);
 
   const translateYAnimated = (object: any, value: number) => {
@@ -61,7 +61,7 @@ const MainTabMenu = (props: Props) => {
       duration : VALUE.DURATION_200,
       useNativeDriver: false
     }).start();
-  }
+  };
 
   const animatedTranlate = translateValue.interpolate({
     inputRange: [0, 1],
@@ -70,7 +70,7 @@ const MainTabMenu = (props: Props) => {
 
   const animatedTranlateStyle = {
     transform: [{ translateY: animatedTranlate }]
-  }
+  };
 
   const positionAnimatedFunc = (object: any, value: number, delay: number) => {
     Animated.timing(object, {
@@ -79,11 +79,11 @@ const MainTabMenu = (props: Props) => {
       delay: delay,
       useNativeDriver: false
     }).start();
-  }
+  };
 
   const animatedPositionStyle = {
     bottom: positionValue,
-  }
+  };
 
   const hideActivated = () => {
     dispatch(hideOverlay());
@@ -129,7 +129,7 @@ const MainTabMenu = (props: Props) => {
             <TouchableOpacity
               activeOpacity={1}
               style={styles.navItem}
-              onPress={() => props.navigation.navigate('NewProject')}>
+              onPress={() => props.navigation.navigate("NewProject")}>
               <View style={styles.navIcon}>
                 <Icon
                   svgType={1}
@@ -149,7 +149,7 @@ const MainTabMenu = (props: Props) => {
             <TouchableOpacity
               activeOpacity={1}
               style={styles.navItem}
-              onPress={() => props.navigation.navigate('NewTrack')}>
+              onPress={() => props.navigation.navigate("NewTrack")}>
               <View style={styles.navIcon}>
                 <Icon
                   svgType={1}
