@@ -1,16 +1,16 @@
-import React, { useEffect, useState } from 'react';
-import { View, ScrollView } from 'react-native';
+import React from "react";
+import { View, ScrollView } from "react-native";
 
 // Components
-import LowerTitleHeader from 'components/molecules/LowerTitleHeader';
-import CreateForm from 'components/templates/CreateForm';
+import LowerTitleHeader from "components/molecules/LowerTitleHeader";
+import CreateForm from "components/templates/CreateForm";
 
 // Interfaces
-import { FormControlsType } from 'interfaces/formControlsInterface';
-import { ControlButtonsType } from 'interfaces/controlButtonInterface';
+import { FormControlsType } from "interfaces/formControlsInterface";
+import { ControlButtonsType } from "interfaces/controlButtonInterface";
 
 // Styles
-import styles from './LowerScreen.scss';
+import styles from "./LowerScreen.scss";
 
 interface Props {
   navigation: any;
@@ -22,9 +22,6 @@ interface Props {
 }
 
 const LowerScreen = (props: Props) => {
-
-  useEffect(() => {
-  }, []);
 
   return (
     <View style={ styles.container }>

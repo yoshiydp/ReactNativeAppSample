@@ -1,11 +1,11 @@
-import React, { useEffect } from 'react';
-import { View, Text } from 'react-native';
+import React from "react";
+import { View, Text } from "react-native";
 
 // Components
-import ButtonSquare from 'components/atoms/ButtonSquare';
+import ButtonSquare from "components/atoms/ButtonSquare";
 
 // Styles
-import styles from './NoData.scss';
+import styles from "./NoData.scss";
 
 interface Props {
   text: string;
@@ -14,9 +14,6 @@ interface Props {
 }
 
 const NoData = (props: Props) => {
-
-  useEffect(() => {
-  }, []);
 
   return (
     <View style={ styles.container }>

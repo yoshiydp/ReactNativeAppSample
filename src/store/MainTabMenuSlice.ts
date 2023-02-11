@@ -1,15 +1,15 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice } from "@reduxjs/toolkit";
 
 interface MainTabMenuStateType {
   mainTabMenu: boolean;
-};
+}
 
 const initialState: MainTabMenuStateType = {
   mainTabMenu: false,
 };
 
 export const mainTabMenuSlice = createSlice({
-  name: 'mainTabMenu',
+  name: "mainTabMenu",
   initialState,
   reducers: {
     showMainTabMenu: (state: { mainTabMenu: boolean }) => {

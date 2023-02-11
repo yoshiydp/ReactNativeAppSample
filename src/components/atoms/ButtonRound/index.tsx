@@ -1,11 +1,11 @@
-import React, { useEffect, useState } from 'react';
-import { TouchableOpacity, Text } from 'react-native';
+import React from "react";
+import { TouchableOpacity, Text } from "react-native";
 
 // Interfaces
-import { ButtonType } from 'interfaces/buttonInterface';
+import { ButtonType } from "interfaces/buttonInterface";
 
 // Styles
-import styles from './ButtonRound.scss';
+import styles from "./ButtonRound.scss";
 
 const ButtonRound = (props: ButtonType) => {
   return (
@@ -13,8 +13,8 @@ const ButtonRound = (props: ButtonType) => {
       activeOpacity={ 1 }
       style={
         props.disabled
-        ? styles.containerDisabled
-        : styles.containerGreen
+          ? styles.containerDisabled
+          : styles.containerGreen
       }
       onPress={ props.onPressEvent }
       disabled={ props.disabled }>

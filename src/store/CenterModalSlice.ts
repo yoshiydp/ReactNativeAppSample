@@ -1,4 +1,4 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 interface CenterModalStateType {
   centerModal: boolean;
@@ -6,7 +6,7 @@ interface CenterModalStateType {
   dataTitle: string;
   description: string;
   submitButtonText: string;
-};
+}
 
 const initialState: CenterModalStateType = {
   centerModal: false,
@@ -17,7 +17,7 @@ const initialState: CenterModalStateType = {
 };
 
 export const CenterModalSlice = createSlice({
-  name: 'centerModal',
+  name: "centerModal",
   initialState,
   reducers: {
     showCenterModal: (state: { centerModal: boolean }) => {

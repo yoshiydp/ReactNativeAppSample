@@ -1,15 +1,15 @@
-import React, { useEffect, useRef, useState } from 'react';
-import { View, TouchableOpacity, Text } from 'react-native';
+import React from "react";
+import { View, TouchableOpacity, Text } from "react-native";
 
 // Components
-import Icon from 'components/atoms/Icon';
+import Icon from "components/atoms/Icon";
 
 // Constants
-import * as COLOR from 'constants/color';
-import * as SVGPATH from 'constants/svgPath';
+import * as COLOR from "constants/color";
+import * as SVGPATH from "constants/svgPath";
 
 // Styles
-import styles from './LowerTitleHeader.scss';
+import styles from "./LowerTitleHeader.scss";
 
 interface Props {
   title: string;
@@ -17,9 +17,6 @@ interface Props {
 }
 
 const LowerTitleHeader = (props: Props) => {
-
-  useEffect(() => {
-  }, []);
 
   return (
     <View style={styles.container}>

@@ -1,6 +1,6 @@
 // Constants
-import * as TEXT from 'constants/text';
-import * as VALUE from 'constants/value';
+import * as TEXT from "constants/text";
+import * as VALUE from "constants/value";
 
 const regexEmail = VALUE.REGEX_EMAIL;
 
@@ -12,7 +12,7 @@ export const validateEmail = (email: string, setState: (value: string) => void) 
   } else {
     setState(TEXT.ERROR_INVALID_EMAIL);
   }
-}
+};
 
 export const validatePassword = (password: string, setState: (value: string) => void) => {
   if (!password) {
@@ -22,7 +22,7 @@ export const validatePassword = (password: string, setState: (value: string) => 
   } else {
     setState(TEXT.ERROR_INVALID_PASSWORD);
   }
-}
+};
 
 export const validateUserNotFound = (
   setEmailState: (emailValue: string) => void,
@@ -35,7 +35,7 @@ export const validateUserNotFound = (
   } else {
     setPasswordState(TEXT.ERROR_INVALID_PASSWORD);
   }
-}
+};
 
 export const validateNetworkRequestFailed = (
   setEmailState: (emailValue: string) => void,
@@ -43,7 +43,7 @@ export const validateNetworkRequestFailed = (
 ) => {
   setEmailState(TEXT.ERROR_NETWORK_FAILED);
   setPasswordState(TEXT.ERROR_NETWORK_FAILED);
-}
+};
 
 export const validateTooManyRequests = (
   setEmailState: (emailValue: string) => void,
@@ -51,4 +51,4 @@ export const validateTooManyRequests = (
 ) => {
   setEmailState(TEXT.ERROR_TOO_MANY_REQUESTS);
   setPasswordState(TEXT.ERROR_TOO_MANY_REQUESTS);
-}
+};

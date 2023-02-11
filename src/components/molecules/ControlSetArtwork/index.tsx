@@ -1,34 +1,30 @@
-import React, { useState, useEffect } from 'react';
-import { TouchableOpacity, View, Image } from 'react-native';
-import { useDispatch } from 'react-redux';
-import * as ImagePicker from 'react-native-image-picker';
-import { ref, uploadBytesResumable, getDownloadURL } from 'firebase/storage';
+import React from "react";
+import { TouchableOpacity, View, Image } from "react-native";
+import { useDispatch } from "react-redux";
+import * as ImagePicker from "react-native-image-picker";
 
 // Store
-import { useSelector } from 'store/index';
-import { setArtWork } from 'store/NewProjectSlice';
+import { useSelector } from "store/index";
+import { setArtWork } from "store/NewProjectSlice";
 
 // Components
-import Icon from 'components/atoms/Icon';
+import Icon from "components/atoms/Icon";
 
 // Constants
-import * as COLOR from 'constants/color';
-import * as SVGPATH from 'constants/svgPath';
+import * as COLOR from "constants/color";
+import * as SVGPATH from "constants/svgPath";
 
 // Styles
-import styles from './ControlSetArtwork.scss';
+import styles from "./ControlSetArtwork.scss";
 
 const ControlSetArtwork = () => {
   const dispatch = useDispatch();
   const artWork = useSelector((state) => state.newProject.artWork);
 
-  useEffect(() => {
-  }, []);
-
   const selectImageFile = async () => {
     try {
       const options: any = {
-        mediaType: 'photo',
+        mediaType: "photo",
         quality: 0.8,
         maxWidth: 300,
         maxHeight: 300
@@ -47,8 +43,8 @@ const ControlSetArtwork = () => {
           style={ styles.image }
           source={
             artWork.length
-            ? artWork
-            : require('src/assets/images/common/no-artwork-large.jpg')
+              ? artWork
+              : require("src/assets/images/common/no-artwork-large.jpg")
           }
         />
       </View>

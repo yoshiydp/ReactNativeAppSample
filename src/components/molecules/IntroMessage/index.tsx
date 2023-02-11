@@ -1,11 +1,11 @@
-import React from 'react';
-import { View, Text } from 'react-native';
+import React from "react";
+import { View, Text } from "react-native";
 
 // Constants
-import * as TEXT from 'constants/text';
+import * as TEXT from "constants/text";
 
 // Styles
-import styles from './IntroMessage.scss';
+import styles from "./IntroMessage.scss";
 
 interface Props {
   message?: string;
@@ -20,12 +20,10 @@ const IntroMessage = (props: Props) => {
       <Text style={styles.logo}>
         {TEXT.APP_NAME}
       </Text>
-      { props.message ?
+      { props.message &&
         <Text style={styles.message}>
           {props.message}
         </Text>
-      : 
-        ''
       }
     </View>
   );

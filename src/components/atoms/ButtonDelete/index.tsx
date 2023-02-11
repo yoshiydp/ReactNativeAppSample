@@ -1,11 +1,11 @@
-import React, { useEffect } from 'react';
-import { TouchableOpacity, View } from 'react-native';
+import React from "react";
+import { TouchableOpacity, View } from "react-native";
 
 // Interfaces
-import { ButtonType } from 'interfaces/buttonInterface';
+import { ButtonType } from "interfaces/buttonInterface";
 
 // Styles
-import styles from './ButtonDelete.scss';
+import styles from "./ButtonDelete.scss";
 
 const ButtonDelete = (props: ButtonType) => {
   return (

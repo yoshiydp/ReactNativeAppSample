@@ -1,18 +1,18 @@
-import React, { useState, useEffect } from 'react';
-import { View, KeyboardAvoidingView } from 'react-native';
+import React, { useState, useEffect } from "react";
+import { View, KeyboardAvoidingView } from "react-native";
 
 // Components
-import FormControls from 'components/organisms/FormControls';
-import ControlSetArtwork from 'components/molecules/ControlSetArtwork';
-import ControlButtonList from 'components/molecules/ControlButtonList';
-import ButtonSquare from 'components/atoms/ButtonSquare';
+import FormControls from "components/organisms/FormControls";
+import ControlSetArtwork from "components/molecules/ControlSetArtwork";
+import ControlButtonList from "components/molecules/ControlButtonList";
+import ButtonSquare from "components/atoms/ButtonSquare";
 
 // Interfaces
-import { FormControlsType } from 'interfaces/formControlsInterface';
-import { ControlButtonsType } from 'interfaces/controlButtonInterface';
+import { FormControlsType } from "interfaces/formControlsInterface";
+import { ControlButtonsType } from "interfaces/controlButtonInterface";
 
 // Styles
-import styles from './CreateForm.scss';
+import styles from "./CreateForm.scss";
 
 interface Props {
   formControlItems: Array<FormControlsType>;

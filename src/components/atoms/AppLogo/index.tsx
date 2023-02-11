@@ -1,8 +1,8 @@
-import React from 'react';
-import { View, Text } from 'react-native';
+import React from "react";
+import { View, Text } from "react-native";
 
 // Constants
-import * as TEXT from 'constants/text';
+import * as TEXT from "constants/text";
 
 interface Props {
   style: any;

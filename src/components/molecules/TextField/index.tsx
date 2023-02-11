@@ -1,24 +1,24 @@
-import React, { useEffect, useState } from 'react';
-import { View, Text, TextInput } from 'react-native';
+import React, { useEffect, useState } from "react";
+import { View, Text, TextInput } from "react-native";
 
 // Styles
-import styles from './TextField.scss';
+import styles from "./TextField.scss";
 
 // Interfaces
-import { TextFieldType } from 'interfaces/formControlsInterface';
+import { TextFieldType } from "interfaces/formControlsInterface";
 
 // Constants
-import * as COLOR from 'constants/color';
+import * as COLOR from "constants/color";
 
 interface Props extends TextFieldType {
   errorText?: string;
 }
 
 const TextField = (props: Props) => {
-  const [value, valueHandler] = useState(props.value ? props.value : '');
+  const [value, valueHandler] = useState(props.value ? props.value : "");
 
   useEffect(() => {
-    valueHandler(props.value ? props.value : '');
+    valueHandler(props.value ? props.value : "");
   }, [props.value]);
 
   const onChangeText = (event: any) => {
@@ -28,7 +28,7 @@ const TextField = (props: Props) => {
       props.onChangeText(event);
       console.log(event);
     }
-  }
+  };
 
   return (
     <View style={ props.errorText ? styles.containerError : styles.container }>
