@@ -12,11 +12,7 @@ import { hideOverlay, activeHidden } from "store/OverlaySlice";
 // Styles
 import styles from "./HorizontalButtonList.scss";
 
-interface Props {
-  onPressSubmitEvent?: () => void;
-}
-
-const HorizontalButtonList = (props: Props) => {
+const HorizontalButtonList = () => {
   const dispatch = useDispatch();
   const centerModalSubmitTextState = useSelector((state) => state.centerModal.submitButtonText);
   const myProjectsState = useSelector((state) => state.myProjects);

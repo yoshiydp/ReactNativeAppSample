@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useRef, useState } from "react";
 import { View, TextInput, TouchableOpacity, Animated, useWindowDimensions } from "react-native";
 
 // Components
@@ -25,9 +25,6 @@ const SearchBar = (props: Props) => {
   const widthValue = useRef(new Animated.Value(0)).current;
   const opacityValue = useRef(new Animated.Value(0)).current;
   const windowWidth = useWindowDimensions().width;
-
-  useEffect(() => {
-  }, [isEnabled, windowWidth]);
 
   const activePress = () => {
     setIsEnabled(true);

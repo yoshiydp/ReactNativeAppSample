@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { View } from "react-native";
 
 // Components
@@ -21,9 +21,6 @@ interface Props {
 
 const MyProjectsList = (props: Props) => {
 
-  useEffect(() => {
-  }, [props.myProjectDataItems]);
-
   const navigateNewProject = async () => {
     await props.navigation.navigate("NewProject");
   };
@@ -45,7 +42,7 @@ const MyProjectsList = (props: Props) => {
               />
             </View>
           ))
-          : 
+          :
           <NoData
             text={ TEXT.NO_DATA_TEXT_MY_PROJECTS }
             buttonText={ TEXT.BUTTON_MY_PROJECTS_CREATE }

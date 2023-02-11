@@ -35,6 +35,11 @@ module.exports = {
     "semi": [
       "error",
       "always"
-    ]
+    ],
+    "space-infix-ops": 0,
+    "@typescript-eslint/space-infix-ops": 1,
+    "@typescript-eslint/no-explicit-any": 0,
+    "@typescript-eslint/no-unused-vars": 0,
+    "@typescript-eslint/no-non-null-assertion": 1,
   }
 };

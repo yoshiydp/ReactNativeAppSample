@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { View, TouchableOpacity } from "react-native";
 import { useDispatch } from "react-redux";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
@@ -43,9 +43,6 @@ const MainTabBar = (props: Props) => {
   const getTargetWidth = (object: any) => {
     setTargetWidth(object.nativeEvent.layout.width);
   };
-
-  useEffect(() => {
-  }, [targetWidth, overlay, centerModal]);
 
   const onPressShow = () => {
     dispatch(showOverlay());

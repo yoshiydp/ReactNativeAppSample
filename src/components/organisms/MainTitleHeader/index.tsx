@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useRef, useState } from "react";
 import { View, Animated } from "react-native";
 
 // Components
@@ -17,9 +17,6 @@ interface Props {
 const MainTitleHeader = (props: Props) => {
   const [isHidden, setIsHidden] = useState(false);
   const opacityValue = useRef(new Animated.Value(1)).current;
-
-  useEffect(() => {
-  }, [isHidden]);
 
   const minOpacityAnimated = () => {
     setIsHidden(true);
