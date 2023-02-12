@@ -1,4 +1,4 @@
-@use 'src/globalStyles/' as g;
+@use "src/globalStyles/" as g;
 
 .container {
   width: 100%;
@@ -7,32 +7,33 @@
 
 .title {
   font-family: g.$font-dm-serif-display;
-  font-style: italic;
   font-size: 16px;
+  font-style: italic;
   color: g.colors(white, base);
-  &Wrap {
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
-    width: 204px;
-    margin: 0 auto;
-  }
-  &Border {
-    width: 40px;
-    height: 1px;
-    background: g.colors(blue, navy);
-  }
 }
 
-.social {
-  &List {
-    width: 100%;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
-    margin-top: 20px;
-  }
-  &IconItems {
-    margin: 0 14px;
-  }
+.titleWrap {
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  width: 204px;
+  margin: 0 auto;
+}
+
+.titleBorder {
+  width: 40px;
+  height: 1px;
+  background: g.colors(blue, navy);
+}
+
+.socialList {
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  margin-top: 20px;
+}
+
+.socialIconItems {
+  margin: 0 14px;
 }

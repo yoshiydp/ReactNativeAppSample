@@ -1,4 +1,4 @@
-@use 'src/globalStyles/' as g;
+@use "src/globalStyles/" as g;
 
 .container {
   position: relative;
@@ -18,26 +18,24 @@
 
 .item {
   flex: 1;
-  justify-content: center;
   align-items: center;
+  justify-content: center;
 }
 
 %text {
-  padding: 20px 0;
-  text-align: center;
   min-width: 70px;
+  padding: 20px 0;
   font-size: 20px;
   font-weight: bold;
-  // background: g.colors(red, base);
+  text-align: center;
 }
 
-.button {
-  &Yes {
-    color: g.colors(green, base);
-    @extend %text;
-  }
-  &Cancel {
-    color: g.colors(gray, type2);
-    @extend %text;
-  }
+.buttonYes {
+  color: g.colors(green, base);
+  @extend %text;
+}
+
+.buttonCancel {
+  color: g.colors(gray, type2);
+  @extend %text;
 }

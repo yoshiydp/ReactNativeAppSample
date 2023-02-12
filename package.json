@@ -7,7 +7,9 @@
     "ios": "react-native run-ios",
     "start": "react-native start",
     "test": "jest",
-    "lint": "eslint --ext .tsx --ext .ts src/"
+    "lint": "eslint --ext .tsx --ext .ts src/",
+    "lint:style": "stylelint 'src/**/*.scss'",
+    "lint:style:fix": "stylelint --fix 'src/**/*.scss'"
   },
   "dependencies": {
     "@invertase/react-native-apple-authentication": "^2.2.2",
@@ -44,6 +46,9 @@
     "react-router-native": "^6.4.3",
     "redux": "^4.2.0",
     "sass": "^1.56.1",
+    "stylelint": "^15.1.0",
+    "stylelint-config-recess-order": "^3.1.0",
+    "stylelint-config-recommended-scss": "^9.0.0",
     "tsconfig-paths": "^4.1.0",
     "typed-scss-modules": "^7.0.1"
   },

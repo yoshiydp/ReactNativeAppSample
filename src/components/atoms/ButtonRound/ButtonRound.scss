@@ -1,4 +1,4 @@
-@use 'src/globalStyles/' as g;
+@use "src/globalStyles/" as g;
 
 %container {
   align-items: center;
@@ -8,29 +8,28 @@
   border-radius: 50px;
 }
 
-.container {
-  &Green {
-    @extend %container;
-    border: solid 1px g.colors(green, base);
-    background: g.colors(blue, overlay);
-  }
-  &Gray {
-    @extend %container;
-    background: g.colors(gray, type3);
-  }
-  &Disabled {
-    opacity: 0.4;
-    @extend %container;
-  }
+.containerGreen {
+  @extend %container;
+  background: g.colors(blue, overlay);
+  border: solid 1px g.colors(green, base);
 }
 
-.text {
-  &Green {
-    color: g.colors(green, base);
-    font-size: 14px;
-  }
-  &Gray {
-    color: g.colors(gray, type1);
-    font-size: 14px;
-  }
+.containerGray {
+  @extend %container;
+  background: g.colors(gray, type3);
+}
+
+.containerDisabled {
+  opacity: 0.4;
+  @extend %container;
+}
+
+.textGreen {
+  font-size: 14px;
+  color: g.colors(green, base);
+}
+
+.textGray {
+  font-size: 14px;
+  color: g.colors(gray, type1);
 }

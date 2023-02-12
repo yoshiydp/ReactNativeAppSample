@@ -1,5 +1,5 @@
-@use 'variables' as v;
-@use 'functions' as g;
+@use "variables" as v;
+@use "functions" as g;
 
 // spacing : margin, padding
 @mixin spacing($spacing, $maps, $maxNum, $step) {

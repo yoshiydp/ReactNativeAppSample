@@ -1,4 +1,4 @@
-@use 'src/globalStyles/' as g;
+@use "src/globalStyles/" as g;
 
 %container {
   flex: 1;
@@ -7,8 +7,9 @@
 
 .container {
   @extend %container;
-  &NewProject {
-    padding: 88px 35px 90px;
-    @extend %container;
-  }
+}
+
+.containerNewProject {
+  padding: 88px 35px 90px;
+  @extend %container;
 }
