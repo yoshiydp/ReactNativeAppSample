@@ -13,7 +13,7 @@ const initialState: CenterModalStateType = {
   title: "",
   dataTitle: "",
   description: "",
-  submitButtonText: "Yes"
+  submitButtonText: "Yes",
 };
 
 export const CenterModalSlice = createSlice({
@@ -35,10 +35,13 @@ export const CenterModalSlice = createSlice({
     setCenterModalDescription: (state: { description: string }, action: PayloadAction<string>) => {
       state.description = action.payload;
     },
-    setCenterModalSubmitButtonText: (state: { submitButtonText: string }, action: PayloadAction<string>) => {
-      action.payload ? state.submitButtonText = action.payload : state.submitButtonText;
-    }
-  }
+    setCenterModalSubmitButtonText: (
+      state: { submitButtonText: string },
+      action: PayloadAction<string>,
+    ) => {
+      action.payload ? (state.submitButtonText = action.payload) : state.submitButtonText;
+    },
+  },
 });
 
 export const {
@@ -47,6 +50,6 @@ export const {
   setCenterModalTitle,
   setCenterModalDataTitle,
   setCenterModalDescription,
-  setCenterModalSubmitButtonText
+  setCenterModalSubmitButtonText,
 } = CenterModalSlice.actions;
 export default CenterModalSlice.reducer;

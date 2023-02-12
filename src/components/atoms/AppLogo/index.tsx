@@ -9,7 +9,6 @@ interface Props {
 }
 
 const AppLogo = (props: Props) => {
-
   return (
     <View>
       <Text style={props.style}>{TEXT.APP_NAME}</Text>

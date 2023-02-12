@@ -11,13 +11,9 @@ interface Props {
 }
 
 const NewTrack = (props: Props) => {
-
   return (
     <>
-      <LowerScreen
-        title={ TEXT.TITLE_NEW_TRACK }
-        navigation={ props.navigation }
-      />
+      <LowerScreen title={TEXT.TITLE_NEW_TRACK} navigation={props.navigation} />
     </>
   );
 };

@@ -9,12 +9,9 @@ interface Props {
 }
 
 const ErrorText = (props: Props) => {
-
   return (
-    <View style={ styles.container }>
-      <Text style={ styles.text }>
-        { props.text }
-      </Text>
+    <View style={styles.container}>
+      <Text style={styles.text}>{props.text}</Text>
     </View>
   );
 };

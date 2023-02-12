@@ -8,12 +8,9 @@ import AppLogo from "components/atoms/AppLogo";
 import styles from "./Loading.scss";
 
 const Loading = () => {
-
   return (
     <View style={styles.container}>
-      <AppLogo
-        style={styles.text}
-      />
+      <AppLogo style={styles.text} />
     </View>
   );
 };

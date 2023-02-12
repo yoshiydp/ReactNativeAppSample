@@ -30,27 +30,24 @@ const MainTitleHeader = (props: Props) => {
 
   const opacityAnimatedFunc = (object: any, value: number) => {
     Animated.timing(object, {
-      toValue : value,
-      duration : VALUE.DURATION_200,
-      useNativeDriver: false
+      toValue: value,
+      duration: VALUE.DURATION_200,
+      useNativeDriver: false,
     }).start();
   };
 
   const animatedOpacity = opacityValue.interpolate({
     inputRange: [0, 1],
-    outputRange: [0, 1]
+    outputRange: [0, 1],
   });
 
   const animatedOpacityStyle = {
-    opacity: animatedOpacity
+    opacity: animatedOpacity,
   };
 
   return (
     <View style={styles.container}>
-      <Animated.Text
-        style={[styles.title, animatedOpacityStyle]}>
-        {props.title}
-      </Animated.Text>
+      <Animated.Text style={[styles.title, animatedOpacityStyle]}>{props.title}</Animated.Text>
       <SearchBar
         activeMinOpacityAnimated={minOpacityAnimated}
         activeMaxOpacityAnimated={maxOpacityAnimated}

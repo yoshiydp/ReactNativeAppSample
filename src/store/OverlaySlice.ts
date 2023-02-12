@@ -7,7 +7,7 @@ interface OverStateType {
 
 const initialState: OverStateType = {
   overlay: false,
-  inactiveHidden: false
+  inactiveHidden: false,
 };
 
 export const overlaySlice = createSlice({
@@ -25,14 +25,9 @@ export const overlaySlice = createSlice({
     },
     activeHidden: (state: { inactiveHidden: boolean }) => {
       state.inactiveHidden = false;
-    }
-  }
+    },
+  },
 });
 
-export const {
-  showOverlay,
-  hideOverlay,
-  inactiveHidden,
-  activeHidden
-} = overlaySlice.actions;
+export const { showOverlay, hideOverlay, inactiveHidden, activeHidden } = overlaySlice.actions;
 export default overlaySlice.reducer;

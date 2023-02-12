@@ -11,13 +11,9 @@ interface Props {
 }
 
 const EditTrack = (props: Props) => {
-
   return (
     <>
-      <LowerScreen
-        title={ TEXT.TITLE_EDIT_TRACK }
-        navigation={ props.navigation }
-      />
+      <LowerScreen title={TEXT.TITLE_EDIT_TRACK} navigation={props.navigation} />
     </>
   );
 };

@@ -103,12 +103,7 @@ const NewProject = (props: Props) => {
 
     // artWorkのアップロード
     if (artWork.length) {
-      await fileUpload(
-        artWork[0]?.uri,
-        artWork[0]?.fileName,
-        artWork[0]?.type,
-        "/artworks/",
-      );
+      await fileUpload(artWork[0]?.uri, artWork[0]?.fileName, artWork[0]?.type, "/artworks/");
       await getDownloadURL(ref(storage, uid + "/artworks/" + artWork[0]?.fileName))
         .then((url) => {
           artWorkDownloadUrl = url;
@@ -118,7 +113,7 @@ const NewProject = (props: Props) => {
           console.log(error);
         });
     }
-    
+
     // trackDataFileのアップロード
     if (trackDataFile.length) {
       await fileUpload(
@@ -136,7 +131,7 @@ const NewProject = (props: Props) => {
         .catch((error) => {
           console.log(error);
         });
-    
+
       await updateDoc(doc(db, "users", uid), {
         projectData: arrayUnion({
           projectTitle: projectTitle,
@@ -144,7 +139,7 @@ const NewProject = (props: Props) => {
           trackDataPath: trackDataDownloadUrl ? trackDataDownloadUrl : "",
           trackTitle: trackDataFile[0]?.name,
           artistName: "",
-          artWorkPath: artWorkDownloadUrl ? artWorkDownloadUrl : ""
+          artWorkPath: artWorkDownloadUrl ? artWorkDownloadUrl : "",
         }),
       });
     }
@@ -158,7 +153,7 @@ const NewProject = (props: Props) => {
       onChangeText: setProjectTitle,
       value: projectTitle,
       required: true,
-      errorText: errorProjectTitle
+      errorText: errorProjectTitle,
     },
     {
       label: TEXT.LABEL_INPUT_TRACK_DATA,
@@ -167,7 +162,7 @@ const NewProject = (props: Props) => {
       required: true,
       notes: TEXT.LABEL_NOTES_TRACK_DATA,
       editable: false,
-      selectTextOnFocus: false
+      selectTextOnFocus: false,
     },
   ];
 
@@ -175,23 +170,23 @@ const NewProject = (props: Props) => {
   const controlButtonItems = [
     {
       buttonText: trackDataFile ? TEXT.BUTTON_TRACK_CHANGE : TEXT.BUTTON_TRACK_UPLOAD,
-      onPressEvent: selectTrackDataFile
+      onPressEvent: selectTrackDataFile,
     },
     {
       buttonText: TEXT.BUTTON_TRACK_SELECT,
-      onPressEvent: selectTrackList
+      onPressEvent: selectTrackList,
     },
   ];
 
   return (
     <>
       <LowerScreen
-        title={ TEXT.TITLE_NEW_PROJECT }
-        navigation={ props.navigation }
-        formControlItems={ formControlItems }
-        controlButtonItems={ controlButtonItems }
-        buttonText={ TEXT.BUTTON_START }
-        onPressSubmitEvent={ createProject }
+        title={TEXT.TITLE_NEW_PROJECT}
+        navigation={props.navigation}
+        formControlItems={formControlItems}
+        controlButtonItems={controlButtonItems}
+        buttonText={TEXT.BUTTON_START}
+        onPressSubmitEvent={createProject}
       />
       <Modal
         animationType="slide"
@@ -200,13 +195,15 @@ const NewProject = (props: Props) => {
         visible={modalVisible}
         onRequestClose={() => {
           setModalVisible(!modalVisible);
-        }}>
+        }}
+      >
         <View style={modalStyles.centeredView}>
           <View style={modalStyles.modalView}>
             <Text style={modalStyles.modalText}>Hello World!</Text>
             <Pressable
               style={[modalStyles.button, modalStyles.buttonClose]}
-              onPress={() => setModalVisible(!modalVisible)}>
+              onPress={() => setModalVisible(!modalVisible)}
+            >
               <Text style={modalStyles.textStyle}>Hide Modal</Text>
             </Pressable>
           </View>
@@ -218,7 +215,7 @@ const NewProject = (props: Props) => {
 
 const modalStyles = StyleSheet.create({
   modal: {
-    backgroundColor: "#333"
+    backgroundColor: "#333",
   },
   centeredView: {
     flex: 1,

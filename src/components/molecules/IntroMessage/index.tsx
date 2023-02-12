@@ -14,17 +14,9 @@ interface Props {
 const IntroMessage = (props: Props) => {
   return (
     <View style={styles.container}>
-      <Text style={styles.text}>
-        Welcome to
-      </Text>
-      <Text style={styles.logo}>
-        {TEXT.APP_NAME}
-      </Text>
-      { props.message &&
-        <Text style={styles.message}>
-          {props.message}
-        </Text>
-      }
+      <Text style={styles.text}>Welcome to</Text>
+      <Text style={styles.logo}>{TEXT.APP_NAME}</Text>
+      {props.message && <Text style={styles.message}>{props.message}</Text>}
     </View>
   );
 };

@@ -31,30 +31,22 @@ const TextField = (props: Props) => {
   };
 
   return (
-    <View style={ props.errorText ? styles.containerError : styles.container }>
-      <View style={ styles.labelWrap }>
-        <Text style={ styles.label }>
-          { props.label }
-        </Text>
-        { props.required &&
-          <Text style={ styles.required }>*</Text>
-        }
-        { props.notes &&
-          <Text style={ styles.notes }>
-            { props.notes }
-          </Text>
-        }
+    <View style={props.errorText ? styles.containerError : styles.container}>
+      <View style={styles.labelWrap}>
+        <Text style={styles.label}>{props.label}</Text>
+        {props.required && <Text style={styles.required}>*</Text>}
+        {props.notes && <Text style={styles.notes}>{props.notes}</Text>}
       </View>
       <TextInput
-        style={ styles.input }
-        placeholder={ props.placeholder }
-        placeholderTextColor={ COLOR.COLOR_BLUE_NAVY }
-        onChangeText={ onChangeText }
-        value={ props.value }
-        secureTextEntry={ props.secureText }
+        style={styles.input}
+        placeholder={props.placeholder}
+        placeholderTextColor={COLOR.COLOR_BLUE_NAVY}
+        onChangeText={onChangeText}
+        value={props.value}
+        secureTextEntry={props.secureText}
         autoCapitalize="none"
-        editable={ props.editable }
-        selectTextOnFocus={ props.selectTextOnFocus }
+        editable={props.editable}
+        selectTextOnFocus={props.selectTextOnFocus}
       />
     </View>
   );

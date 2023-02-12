@@ -22,20 +22,18 @@ const AuthForm = (props: Props) => {
 
   useEffect(() => {
     props.formControlItems.map((item) => {
-      (!item.value) ? setDisabled(true) : setDisabled(false);
+      !item.value ? setDisabled(true) : setDisabled(false);
     });
   }, [props.formControlItems, disabled]);
 
   return (
-    <KeyboardAvoidingView style={ styles.container }>
-      <FormControls
-        formControlItems={ props.formControlItems }
-      />
-      <View style={ styles.submitButtonWrap }>
+    <KeyboardAvoidingView style={styles.container}>
+      <FormControls formControlItems={props.formControlItems} />
+      <View style={styles.submitButtonWrap}>
         <ButtonSquare
-          text={ props.buttonText }
-          onPressEvent={ props.submitEvent }
-          disabled={ disabled }
+          text={props.buttonText}
+          onPressEvent={props.submitEvent}
+          disabled={disabled}
         />
       </View>
     </KeyboardAvoidingView>
