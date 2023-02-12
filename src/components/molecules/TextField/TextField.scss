@@ -1,39 +1,41 @@
-@use 'src/globalStyles/' as g;
+@use "src/globalStyles/" as g;
 
 %container {
   position: relative;
   width: 100%;
   min-height: 53px;
   padding: 8px 12px;
-  border-radius: 5px;
   background: g.colors(blue, overlay);
+  border-radius: 5px;
 }
 
 .container {
   @extend %container;
   border: 1px solid g.colors(blue, navy);
-  &Error {
-    @extend %container;
-    border: 1px solid g.colors(red, base);
-  }
+}
+
+.containerError {
+  @extend %container;
+  border: 1px solid g.colors(red, base);
 }
 
 .label {
   font-size: 12px;
   color: g.colors(white, base);
-  &Wrap {
-    position: absolute;
-    top: 8px;
-    left: 12px;
-    flex-direction: row;
-  }
+}
+
+.labelWrap {
+  position: absolute;
+  top: 8px;
+  left: 12px;
+  flex-direction: row;
 }
 
 .input {
   width: 100%;
   padding-top: 26px;
-  color: g.colors(gray, type1);
   font-size: 16px;
+  color: g.colors(gray, type1);
 }
 
 .required {

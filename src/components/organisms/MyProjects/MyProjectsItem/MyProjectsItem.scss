@@ -1,4 +1,4 @@
-@use 'src/globalStyles/' as g;
+@use "src/globalStyles/" as g;
 
 .container {
   position: relative;
@@ -15,8 +15,8 @@
 }
 
 .artwork {
-  border-radius: 2px;
   overflow: hidden;
+  border-radius: 2px;
   @extend %image;
 }
 
@@ -32,20 +32,21 @@
 
 .text {
   margin-top: 7px;
-  color: g.colors(gray, type3);
   font-size: 10px;
-  &Wrap {
-    width: 100%;
-    margin-left: 12px;
-  }
+  color: g.colors(gray, type3);
+}
+
+.textWrap {
+  width: 100%;
+  margin-left: 12px;
 }
 
 .ellipsisButton {
   position: absolute;
   right: 20px;
   flex: 1;
-  justify-content: center;
   align-items: center;
+  justify-content: center;
   width: 25px;
   height: 100%;
 }

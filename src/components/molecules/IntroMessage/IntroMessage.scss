@@ -1,18 +1,14 @@
-@use 'src/globalStyles/' as g;
-
-.container {
-  // flex: 1;
-}
+@use "src/globalStyles/" as g;
 
 %text {
-  text-align: center;
   color: g.colors(white, base);
+  text-align: center;
 }
 
 .text {
   font-family: g.$font-dm-serif-display;
-  font-style: italic;
   font-size: 16px;
+  font-style: italic;
   @extend %text;
 }
 

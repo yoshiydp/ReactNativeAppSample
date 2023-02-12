@@ -1,4 +1,4 @@
-@use 'src/globalStyles/' as g;
+@use "src/globalStyles/" as g;
 
 .container {
   flex: 1;
@@ -7,9 +7,9 @@
 }
 
 %text {
-  text-align: center;
-  color: g.colors(gray, type1);
   font-size: 12px;
+  color: g.colors(gray, type1);
+  text-align: center;
 }
 
 .forgotMessagge {
@@ -21,15 +21,15 @@
   color: g.colors(green, base);
 }
 
-.signUp {
-  &Wrap {
-    margin-top: 60px;
-    padding: 0 35px;
-  }
-  &Message {
-    @extend %text;
-  }
-  &ButtonWrap {
-    margin-top: 20px;
-  }
+.signUpWrap {
+  padding: 0 35px;
+  margin-top: 60px;
+}
+
+.signUpMessage {
+  @extend %text;
+}
+
+.signUpButtonWrap {
+  margin-top: 20px;
 }
