@@ -2,8 +2,7 @@ import React from "react";
 import { View, ScrollView, Text, TouchableOpacity } from "react-native";
 import { useDispatch } from "react-redux";
 import { signOut } from "firebase/auth";
-import { firebaseAuth, db } from "src/config/firebase";
-import { doc, updateDoc } from "firebase/firestore";
+import { firebaseAuth } from "src/config/firebase";
 import auth from "@react-native-firebase/auth";
 
 // Store
@@ -47,98 +46,6 @@ const MainScreen = (props: Props) => {
     console.log("SignOut");
   };
 
-  const addSampleData = async () => {
-    const { uid }: any = firebaseAuth.currentUser;
-    if (!uid) return;
-    const docRef = doc(db, "users", uid);
-    await updateDoc(docRef, {
-      projectData: sampleProjectData,
-    });
-  };
-
-  const sampleProjectData = [
-    {
-      projectTitle: "Project Title1",
-      lyric: "リリックが表示されます。リリックが表示されます…",
-      trackDataPath: "",
-      trackTitle: "Track Title",
-      artistName: "Artist Name",
-      artWorkPath: ""
-    },
-    {
-      projectTitle: "Project Title2",
-      lyric: "リリックが表示されます。リリックが表示されます…",
-      trackDataPath: "",
-      trackTitle: "Track Title",
-      artistName: "Artist Name",
-      artWorkPath: ""
-    },
-    {
-      projectTitle: "Project Title3",
-      lyric: "リリックが表示されます。リリックが表示されます…",
-      trackDataPath: "",
-      trackTitle: "Track Title",
-      artistName: "Artist Name",
-      artWorkPath: ""
-    },
-    {
-      projectTitle: "Project Title4",
-      lyric: "リリックが表示されます。リリックが表示されます…",
-      trackDataPath: "",
-      trackTitle: "Track Title",
-      artistName: "Artist Name",
-      artWorkPath: ""
-    },
-    {
-      projectTitle: "Project Title5",
-      lyric: "リリックが表示されます。リリックが表示されます…",
-      trackDataPath: "",
-      trackTitle: "Track Title",
-      artistName: "Artist Name",
-      artWorkPath: ""
-    },
-    {
-      projectTitle: "Project Title6",
-      lyric: "リリックが表示されます。リリックが表示されます…",
-      trackDataPath: "",
-      trackTitle: "Track Title",
-      artistName: "Artist Name",
-      artWorkPath: ""
-    },
-    {
-      projectTitle: "Project Title7",
-      lyric: "リリックが表示されます。リリックが表示されます…",
-      trackDataPath: "",
-      trackTitle: "Track Title",
-      artistName: "Artist Name",
-      artWorkPath: ""
-    },
-    {
-      projectTitle: "Project Title8",
-      lyric: "リリックが表示されます。リリックが表示されます…",
-      trackDataPath: "",
-      trackTitle: "Track Title",
-      artistName: "Artist Name",
-      artWorkPath: ""
-    },
-    {
-      projectTitle: "Project Title9",
-      lyric: "リリックが表示されます。リリックが表示されます…",
-      trackDataPath: "",
-      trackTitle: "Track Title",
-      artistName: "Artist Name",
-      artWorkPath: ""
-    },
-    {
-      projectTitle: "Project Title10",
-      lyric: "リリックが表示されます。リリックが表示されます…",
-      trackDataPath: "",
-      trackTitle: "Track Title",
-      artistName: "Artist Name",
-      artWorkPath: ""
-    },
-  ];
-
   return (
     <View style={ styles.container }>
       <MainTitleHeader
@@ -159,18 +66,6 @@ const MainScreen = (props: Props) => {
                   <Text>{ TEXT.TITLE_MY_ACCOUNT } screen</Text>
                   : ""
         }
-        <TouchableOpacity
-          onPress={ addSampleData }
-          style={{
-            marginTop: 10,
-            padding: 10,
-            backgroundColor: "#88cb7f",
-            borderRadius: 10,
-            width: 100,
-          }}
-        >
-          <Text style={{ color: "white" }}>サンプルデータ追加</Text>
-        </TouchableOpacity>
         <TouchableOpacity
           onPress={ handleLogout }
           style={{
