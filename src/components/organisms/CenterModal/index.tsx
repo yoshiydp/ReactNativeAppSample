@@ -32,14 +32,13 @@ const CenterModal = (props: Props) => {
 
   useEffect(() => {
     props.isShow ? maxScaleAnimated() : minScaleAnimated();
-  },
-  [
+  }, [
     props.isShow,
     centerModalTitleState,
     centerModalDataTitleState,
     centerModalDescriptionState,
     targetWidth,
-    targetHeight
+    targetHeight,
   ]);
 
   const minScaleAnimated = () => {
@@ -52,46 +51,40 @@ const CenterModal = (props: Props) => {
 
   const scaleAnimatedFunc = (object: any, value: number) => {
     Animated.timing(object, {
-      toValue : value,
-      duration : VALUE.DURATION_200,
+      toValue: value,
+      duration: VALUE.DURATION_200,
       easing: Easing.ease,
-      useNativeDriver: false
+      useNativeDriver: false,
     }).start();
   };
 
   const animatedScale = scaleValue.interpolate({
     inputRange: [0, 1],
-    outputRange: [0, 1]
+    outputRange: [0, 1],
   });
 
   return (
     <Animated.View
       style={[
         styles.container,
-        {transform: [
-          {translateX: - (targetWidth / 2)},
-          {translateY: - (targetHeight / 2)},
-          {scale: animatedScale}
-        ]},
+        {
+          transform: [
+            { translateX: -(targetWidth / 2) },
+            { translateY: -(targetHeight / 2) },
+            { scale: animatedScale },
+          ],
+        },
       ]}
-      onLayout={ getTargetPosition }>
-      { centerModalTitleState &&
-        <Text style={ styles.title }>
-          { centerModalTitleState }
-        </Text>
-      }
-      { centerModalDataTitleState &&
-        <Text style={ styles.dataTitle }>
-          { centerModalDataTitleState }
-        </Text>
-      }
-      { centerModalDescriptionState &&
-        <Text style={ styles.description }>
-          { centerModalDescriptionState }
-        </Text>
-      }
-      <HorizontalButtonList
-      />
+      onLayout={getTargetPosition}
+    >
+      {centerModalTitleState && <Text style={styles.title}>{centerModalTitleState}</Text>}
+      {centerModalDataTitleState && (
+        <Text style={styles.dataTitle}>{centerModalDataTitleState}</Text>
+      )}
+      {centerModalDescriptionState && (
+        <Text style={styles.description}>{centerModalDescriptionState}</Text>
+      )}
+      <HorizontalButtonList />
     </Animated.View>
   );
 };

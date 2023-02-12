@@ -45,47 +45,43 @@ const SearchBar = (props: Props) => {
     Animated.timing(object, {
       toValue: value,
       duration: VALUE.DURATION_250,
-      useNativeDriver: false
+      useNativeDriver: false,
     }).start();
   };
 
   const animatedWidth = widthValue.interpolate({
     inputRange: [0, 1],
-    outputRange: [60, windowWidth - 84]
+    outputRange: [60, windowWidth - 84],
   });
 
   const animatedWidthStyle = {
-    width: animatedWidth
+    width: animatedWidth,
   };
 
   const opacityAnimatedFunc = (object: any, value: number, duration: number) => {
     Animated.timing(object, {
       toValue: value,
       duration: duration,
-      useNativeDriver: false
+      useNativeDriver: false,
     }).start();
   };
 
   const animatedOpacity = widthValue.interpolate({
     inputRange: [0, 1],
-    outputRange: [0, 1]
+    outputRange: [0, 1],
   });
 
   const animatedOpacityStyle = {
-    opacity: animatedOpacity
+    opacity: animatedOpacity,
   };
 
   return (
     <View style={styles.container}>
       <TouchableOpacity
         onPress={activePress}
-        style={[styles.containerOpenButton, isEnabled ? styles.containerOpenButtonActive : ""]}>
-      </TouchableOpacity>
-      <Animated.View
-        style={[
-          styles.containerSearchBar,
-          animatedWidthStyle
-        ]}>
+        style={[styles.containerOpenButton, isEnabled ? styles.containerOpenButtonActive : ""]}
+      ></TouchableOpacity>
+      <Animated.View style={[styles.containerSearchBar, animatedWidthStyle]}>
         <Icon
           svgType={1}
           containerStyle={styles.icon}
@@ -110,10 +106,10 @@ const SearchBar = (props: Props) => {
         style={[
           styles.containerCloseButton,
           isEnabled ? styles.containerCloseButtonActive : "",
-          animatedOpacityStyle
-        ]}>
-        <TouchableOpacity
-          onPress={inactivePress}>
+          animatedOpacityStyle,
+        ]}
+      >
+        <TouchableOpacity onPress={inactivePress}>
           <SearchCloseBtn />
         </TouchableOpacity>
       </Animated.View>

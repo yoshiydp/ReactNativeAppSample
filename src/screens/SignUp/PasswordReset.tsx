@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 
 // Components
 import LowerScreen from "components/templates/LowerScreen";
@@ -11,13 +11,9 @@ interface Props {
 }
 
 const PasswordReset = (props: Props) => {
-
   return (
     <>
-      <LowerScreen
-        title={ TEXT.TITLE_PASSWORD_RESET }
-        navigation={ props.navigation }
-      />
+      <LowerScreen title={TEXT.TITLE_PASSWORD_RESET} navigation={props.navigation} />
     </>
   );
 };

@@ -43,41 +43,35 @@ const MainTabMenu = (props: Props) => {
   };
 
   useEffect(() => {
-    props.isShow ?
-      (
-        translateYAnimated(translateValue, 0),
-        positionAnimatedFunc(positionValue, 0, 0)
-      )
-      :
-      (
-        translateYAnimated(translateValue, containerHeight),
-        positionAnimatedFunc(positionValue, 0, VALUE.DURATION_200)
-      );
+    props.isShow
+      ? (translateYAnimated(translateValue, 0), positionAnimatedFunc(positionValue, 0, 0))
+      : (translateYAnimated(translateValue, containerHeight),
+        positionAnimatedFunc(positionValue, 0, VALUE.DURATION_200));
   }, [containerHeight, targetWidth, props.isShow]);
 
   const translateYAnimated = (object: any, value: number) => {
     Animated.timing(object, {
-      toValue : value,
-      duration : VALUE.DURATION_200,
-      useNativeDriver: false
+      toValue: value,
+      duration: VALUE.DURATION_200,
+      useNativeDriver: false,
     }).start();
   };
 
   const animatedTranlate = translateValue.interpolate({
     inputRange: [0, 1],
-    outputRange: [-1, 0]
+    outputRange: [-1, 0],
   });
 
   const animatedTranlateStyle = {
-    transform: [{ translateY: animatedTranlate }]
+    transform: [{ translateY: animatedTranlate }],
   };
 
   const positionAnimatedFunc = (object: any, value: number, delay: number) => {
     Animated.timing(object, {
-      toValue : value,
-      duration : 0,
+      toValue: value,
+      duration: 0,
       delay: delay,
-      useNativeDriver: false
+      useNativeDriver: false,
     }).start();
   };
 
@@ -112,24 +106,22 @@ const MainTabMenu = (props: Props) => {
         hideActivated();
       }
     },
-    [hideActivated]
+    [hideActivated],
   );
 
   return (
     <Animated.View
-      style={[
-        styles.container,
-        animatedPositionStyle,
-        animatedTranlateStyle
-      ]}
-      onLayout={ getContainerHeight }>
+      style={[styles.container, animatedPositionStyle, animatedTranlateStyle]}
+      onLayout={getContainerHeight}
+    >
       <GestureHandlerRootView>
-        <PanGestureHandler onActivated={ onPanGestureEvent }>
+        <PanGestureHandler onActivated={onPanGestureEvent}>
           <View style={styles.nav}>
             <TouchableOpacity
               activeOpacity={1}
               style={styles.navItem}
-              onPress={() => props.navigation.navigate("NewProject")}>
+              onPress={() => props.navigation.navigate("NewProject")}
+            >
               <View style={styles.navIcon}>
                 <Icon
                   svgType={1}
@@ -149,7 +141,8 @@ const MainTabMenu = (props: Props) => {
             <TouchableOpacity
               activeOpacity={1}
               style={styles.navItem}
-              onPress={() => props.navigation.navigate("NewTrack")}>
+              onPress={() => props.navigation.navigate("NewTrack")}
+            >
               <View style={styles.navIcon}>
                 <Icon
                   svgType={1}
@@ -173,12 +166,10 @@ const MainTabMenu = (props: Props) => {
       </GestureHandlerRootView>
       <TouchableOpacity
         activeOpacity={1}
-        style={[
-          styles.close,
-          { transform: [{ translateX: - (targetWidth / 2) }] }
-        ]}
-        onLayout={ getTargetWidth }
-        onPress={ hideActivated }>
+        style={[styles.close, { transform: [{ translateX: -(targetWidth / 2) }] }]}
+        onLayout={getTargetWidth}
+        onPress={hideActivated}
+      >
         <Icon
           svgType={1}
           width="39.598"

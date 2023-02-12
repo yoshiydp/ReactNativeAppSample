@@ -38,9 +38,9 @@ const MyProjects = (props: Props) => {
   return (
     <>
       <MainScreen
-        title={ TEXT.TITLE_MY_PROJECTS }
-        navigation={ props.navigation }
-        myProjectDataItems={ projectData }
+        title={TEXT.TITLE_MY_PROJECTS}
+        navigation={props.navigation}
+        myProjectDataItems={projectData}
       />
     </>
   );

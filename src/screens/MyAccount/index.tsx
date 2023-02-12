@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 
 // Components
 import MainScreen from "components/templates/MainScreen";
@@ -11,13 +11,9 @@ interface Props {
 }
 
 const MyAccount = (props: Props) => {
-
   return (
     <>
-      <MainScreen
-        title={ TEXT.TITLE_MY_ACCOUNT }
-        navigation={ props.navigation }
-      />
+      <MainScreen title={TEXT.TITLE_MY_ACCOUNT} navigation={props.navigation} />
     </>
   );
 };

@@ -27,18 +27,13 @@ const Overlay = (props: Props) => {
   const activeHiddenState = useSelector((state) => state.overlay.inactiveHidden);
 
   useEffect(() => {
-    props.isShow ?
-      (
-        maxOpacityAnimated(),
+    props.isShow
+      ? (maxOpacityAnimated(),
         sizesAnimatedFunc(widthValue, windowWidth, 0),
-        sizesAnimatedFunc(heightValue, windowHeight, 0)
-      )
-      :
-      (
-        minOpacityAnimated(),
+      sizesAnimatedFunc(heightValue, windowHeight, 0))
+      : (minOpacityAnimated(),
         sizesAnimatedFunc(widthValue, 0, VALUE.DURATION_200),
-        sizesAnimatedFunc(heightValue, 0, VALUE.DURATION_200)
-      );
+        sizesAnimatedFunc(heightValue, 0, VALUE.DURATION_200));
   }, [props.isShow, activeHiddenState]);
 
   const minOpacityAnimated = () => {
@@ -51,27 +46,27 @@ const Overlay = (props: Props) => {
 
   const opacityAnimatedFunc = (object: any, value: number) => {
     Animated.timing(object, {
-      toValue : value,
-      duration : VALUE.DURATION_200,
-      useNativeDriver: false
+      toValue: value,
+      duration: VALUE.DURATION_200,
+      useNativeDriver: false,
     }).start();
   };
 
   const animatedOpacity = opacityValue.interpolate({
     inputRange: [0, 1],
-    outputRange: [0, 1]
+    outputRange: [0, 1],
   });
 
   const animatedOpacityStyle = {
-    opacity: animatedOpacity
+    opacity: animatedOpacity,
   };
 
   const sizesAnimatedFunc = (object: any, value: number, delay: number) => {
     Animated.timing(object, {
-      toValue : value,
-      duration : 0,
+      toValue: value,
+      duration: 0,
       delay: delay,
-      useNativeDriver: false
+      useNativeDriver: false,
     }).start();
   };
 
@@ -84,22 +79,15 @@ const Overlay = (props: Props) => {
   };
 
   const onPressHide = () => {
-    if(!activeHiddenState) dispatch(hideOverlay());
+    if (!activeHiddenState) dispatch(hideOverlay());
     dispatch(hideMainTabMenu());
   };
 
   return (
     <Animated.View
-      style={[
-        styles.container,
-        animatedOpacityStyle,
-        animatedWidthStyle,
-        animatedHeightStyle
-      ]}>
-      <TouchableOpacity
-        style={ styles.touchable }
-        onPress={ onPressHide }>
-      </TouchableOpacity>
+      style={[styles.container, animatedOpacityStyle, animatedWidthStyle, animatedHeightStyle]}
+    >
+      <TouchableOpacity style={styles.touchable} onPress={onPressHide}></TouchableOpacity>
     </Animated.View>
   );
 };

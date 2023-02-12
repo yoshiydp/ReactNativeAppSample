@@ -27,7 +27,7 @@ const ControlSetArtwork = () => {
         mediaType: "photo",
         quality: 0.8,
         maxWidth: 300,
-        maxHeight: 300
+        maxHeight: 300,
       };
       const results: any = await ImagePicker.launchImageLibrary(options);
       dispatch(setArtWork(results.assets));
@@ -37,35 +37,30 @@ const ControlSetArtwork = () => {
   };
 
   return (
-    <View style={ styles.container }>
-      <View style={ styles.artwork }>
+    <View style={styles.container}>
+      <View style={styles.artwork}>
         <Image
-          style={ styles.image }
+          style={styles.image}
           source={
-            artWork.length
-              ? artWork
-              : require("src/assets/images/common/no-artwork-large.jpg")
+            artWork.length ? artWork : require("src/assets/images/common/no-artwork-large.jpg")
           }
         />
       </View>
-      <TouchableOpacity
-        activeOpacity={ 1 }
-        style={ styles.button }
-        onPress={ selectImageFile }>
+      <TouchableOpacity activeOpacity={1} style={styles.button} onPress={selectImageFile}>
         <Icon
-          svgType={ 1 }
+          svgType={1}
           width="24"
           height="23.999"
           viewBox="0 0 24 23.999"
           gTransform="translate(0 -0.001)"
-          pathD1={ SVGPATH.ICON_EDIT_PATH1 }
+          pathD1={SVGPATH.ICON_EDIT_PATH1}
           pathTransform1="translate(0 0)"
-          pathD2={ SVGPATH.ICON_EDIT_PATH2 }
+          pathD2={SVGPATH.ICON_EDIT_PATH2}
           pathTransform2="translate(0 0)"
-          pathD3={ SVGPATH.ICON_EDIT_PATH3 }
+          pathD3={SVGPATH.ICON_EDIT_PATH3}
           pathTransform3="translate(0 0)"
-          pathFill={ COLOR.COLOR_GRAY_TYPE2 }
-          containerStyle={ styles.icon }
+          pathFill={COLOR.COLOR_GRAY_TYPE2}
+          containerStyle={styles.icon}
         />
       </TouchableOpacity>
     </View>

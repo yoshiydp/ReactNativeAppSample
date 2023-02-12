@@ -60,7 +60,7 @@ const StackNavigator = () => {
           displayName: user.displayName,
           projectData: [],
           createdAt: serverTimestamp(),
-          deletedAt: null
+          deletedAt: null,
         });
       }
     } else {
@@ -69,64 +69,29 @@ const StackNavigator = () => {
   };
 
   return (
-    <Stack.Navigator
-      screenOptions={{ headerShown: false }}
-      initialRouteName="LoginScreen">
-      {user ?
+    <Stack.Navigator screenOptions={{ headerShown: false }} initialRouteName="LoginScreen">
+      {user ? (
         <>
           {/* <Stack.Screen
             name="NewProject"
             component={ NewProjectScreen }
           /> */}
-          <Stack.Screen
-            name="MainTabBar"
-            component={ MainTabBar }
-          />
+          <Stack.Screen name="MainTabBar" component={MainTabBar} />
         </>
-        :
+      ) : (
         <>
-          <Stack.Screen
-            name="Login"
-            component={ LoginScreen }
-          />
-          <Stack.Screen
-            name="SignUp"
-            component={ SignUpScreen }
-          />
+          <Stack.Screen name="Login" component={LoginScreen} />
+          <Stack.Screen name="SignUp" component={SignUpScreen} />
         </>
-      }
-      <Stack.Screen
-        name="Loading"
-        component={ LoadingScreen }
-      />
-      <Stack.Screen
-        name="NewProject"
-        component={ NewProjectScreen }
-      />
-      <Stack.Screen
-        name="EditProject"
-        component={ EditProjectScreen }
-      />
-      <Stack.Screen
-        name="Recording"
-        component={ RecordingScreen }
-      />
-      <Stack.Screen
-        name="NewTrack"
-        component={ NewTrackScreen }
-      />
-      <Stack.Screen
-        name="EditTrack"
-        component={ EditTrackScreen }
-      />
-      <Stack.Screen
-        name="EditMyAccount"
-        component={ EditMyAccountScreen }
-      />
-      <Stack.Screen
-        name="PasswordReset"
-        component={ PasswordResetScreen }
-      />
+      )}
+      <Stack.Screen name="Loading" component={LoadingScreen} />
+      <Stack.Screen name="NewProject" component={NewProjectScreen} />
+      <Stack.Screen name="EditProject" component={EditProjectScreen} />
+      <Stack.Screen name="Recording" component={RecordingScreen} />
+      <Stack.Screen name="NewTrack" component={NewTrackScreen} />
+      <Stack.Screen name="EditTrack" component={EditTrackScreen} />
+      <Stack.Screen name="EditMyAccount" component={EditMyAccountScreen} />
+      <Stack.Screen name="PasswordReset" component={PasswordResetScreen} />
     </Stack.Navigator>
   );
 };
