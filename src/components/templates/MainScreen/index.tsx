@@ -47,27 +47,25 @@ const MainScreen = (props: Props) => {
   };
 
   return (
-    <View style={ styles.container }>
-      <MainTitleHeader
-        title={ props.title }
-      />
+    <View style={styles.container}>
+      <MainTitleHeader title={props.title} />
       <ScrollView>
-        {
-          props.title === TEXT.TITLE_MY_PROJECTS ?
-            <MyProjectsList
-              myProjectDataItems={ props.myProjectDataItems }
-              navigation={ props.navigation }
-            />
-            : props.title === TEXT.TITLE_TRACK_LIST ?
-              <Text>{ TEXT.TITLE_TRACK_LIST } screen</Text>
-              : props.title === TEXT.TITLE_RECORD_AUDIO ?
-                <Text>{ TEXT.TITLE_RECORD_AUDIO } screen</Text>
-                : props.title === TEXT.TITLE_MY_ACCOUNT ?
-                  <Text>{ TEXT.TITLE_MY_ACCOUNT } screen</Text>
-                  : ""
-        }
+        {props.title === TEXT.TITLE_MY_PROJECTS ? (
+          <MyProjectsList
+            myProjectDataItems={props.myProjectDataItems}
+            navigation={props.navigation}
+          />
+        ) : props.title === TEXT.TITLE_TRACK_LIST ? (
+          <Text>{TEXT.TITLE_TRACK_LIST} screen</Text>
+        ) : props.title === TEXT.TITLE_RECORD_AUDIO ? (
+          <Text>{TEXT.TITLE_RECORD_AUDIO} screen</Text>
+        ) : props.title === TEXT.TITLE_MY_ACCOUNT ? (
+          <Text>{TEXT.TITLE_MY_ACCOUNT} screen</Text>
+        ) : (
+          ""
+        )}
         <TouchableOpacity
-          onPress={ handleLogout }
+          onPress={handleLogout}
           style={{
             marginTop: 10,
             padding: 10,
@@ -79,14 +77,15 @@ const MainScreen = (props: Props) => {
           <Text style={{ color: "white" }}>ログアウト</Text>
         </TouchableOpacity>
         <TouchableOpacity
-          onPress={ socialSignOut }
+          onPress={socialSignOut}
           style={{
             marginTop: 10,
             padding: 10,
             backgroundColor: "#88cb7f",
             borderRadius: 10,
             width: 100,
-          }}>
+          }}
+        >
           <Text style={{ color: "white" }}>Google SignOut</Text>
         </TouchableOpacity>
       </ScrollView>

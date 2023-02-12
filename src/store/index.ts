@@ -15,7 +15,7 @@ export const store = configureStore({
     newProject: newProjectReducer,
     overlay: overlayReducer,
     subscribe: SubscribeReducer,
-  }
+  },
 });
 
 export type AppDispatch = typeof store.dispatch;

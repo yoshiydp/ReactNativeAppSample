@@ -11,13 +11,9 @@ interface Props {
 }
 
 const RecordAudio = (props: Props) => {
-
   return (
     <>
-      <MainScreen
-        title={ TEXT.TITLE_RECORD_AUDIO }
-        navigation={ props.navigation }
-      />
+      <MainScreen title={TEXT.TITLE_RECORD_AUDIO} navigation={props.navigation} />
     </>
   );
 };

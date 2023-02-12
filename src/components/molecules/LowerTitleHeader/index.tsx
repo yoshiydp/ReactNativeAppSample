@@ -17,13 +17,13 @@ interface Props {
 }
 
 const LowerTitleHeader = (props: Props) => {
-
   return (
     <View style={styles.container}>
       <TouchableOpacity
         activeOpacity={1}
         style={styles.backBtn}
-        onPress={() => props.navigation.goBack()} >
+        onPress={() => props.navigation.goBack()}
+      >
         <Icon
           svgType={1}
           width="10"
@@ -35,10 +35,7 @@ const LowerTitleHeader = (props: Props) => {
           pathFill={COLOR.COLOR_GRAY_TYPE1}
         />
       </TouchableOpacity>
-      <Text
-        style={[styles.title]}>
-        {props.title}
-      </Text>
+      <Text style={styles.title}>{props.title}</Text>
     </View>
   );
 };

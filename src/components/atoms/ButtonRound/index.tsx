@@ -10,17 +10,12 @@ import styles from "./ButtonRound.scss";
 const ButtonRound = (props: ButtonType) => {
   return (
     <TouchableOpacity
-      activeOpacity={ 1 }
-      style={
-        props.disabled
-          ? styles.containerDisabled
-          : styles.containerGreen
-      }
-      onPress={ props.onPressEvent }
-      disabled={ props.disabled }>
-      <Text style={ styles.textGreen }>
-        { props.text }
-      </Text>
+      activeOpacity={1}
+      style={props.disabled ? styles.containerDisabled : styles.containerGreen}
+      onPress={props.onPressEvent}
+      disabled={props.disabled}
+    >
+      <Text style={styles.textGreen}>{props.text}</Text>
     </TouchableOpacity>
   );
 };

@@ -1,9 +1,5 @@
 import React, { useEffect, useState } from "react";
-import {
-  View,
-  ScrollView,
-  Text,
-} from "react-native";
+import { View, ScrollView, Text } from "react-native";
 import { useDispatch } from "react-redux";
 import { signInWithEmailAndPassword, onAuthStateChanged } from "firebase/auth";
 import { appleAuth } from "@invertase/react-native-apple-authentication";
@@ -34,7 +30,7 @@ import {
   validatePassword,
   validateUserNotFound,
   validateNetworkRequestFailed,
-  validateTooManyRequests
+  validateTooManyRequests,
 } from "src/validators/LoginValidator";
 
 // Styles
@@ -64,7 +60,7 @@ const Login = (props: Props) => {
     if (!appleAuth.isSupported) return;
     return appleAuth.onCredentialRevoked(async () => {
       console.warn("Credential Revoked");
-      fetchAndUpdateCredentialState(updateCredentialStateForUser).catch(error =>
+      fetchAndUpdateCredentialState(updateCredentialStateForUser).catch((error) =>
         updateCredentialStateForUser(error.code),
       );
     });
@@ -155,7 +151,7 @@ const Login = (props: Props) => {
       onChangeText: setEmail,
       value: email,
       required: true,
-      errorText: errorEmail
+      errorText: errorEmail,
     },
     {
       label: TEXT.LABEL_INPUT_PASSWORD,
@@ -164,8 +160,8 @@ const Login = (props: Props) => {
       value: password,
       secureText: true,
       required: true,
-      errorText: errorPassword
-    }
+      errorText: errorPassword,
+    },
   ];
 
   // ソーシャルアイコンリスト
@@ -178,7 +174,7 @@ const Login = (props: Props) => {
       pathD1: SVGPATH.ICON_APPLE,
       pathTransform1: "translate(-20.5 -16)",
       pathFill: COLOR.COLOR_BLACK_BASE,
-      onPressEvent: signInWithApple
+      onPressEvent: signInWithApple,
     },
     {
       svgType: 5,
@@ -196,38 +192,31 @@ const Login = (props: Props) => {
       pathFill4: "#ea4335",
       pathFill5: "none",
       fillRule: "evenodd",
-      onPressEvent: signInWithGoogle
-    }
+      onPressEvent: signInWithGoogle,
+    },
   ];
 
   return (
     <ScrollView style={styles.container}>
       <IntroMessage />
       <AuthForm
-        formControlItems={ formControlItems }
-        buttonText={ TEXT.BUTTON_SIGN_IN }
-        submitEvent={ signIn }
+        formControlItems={formControlItems}
+        buttonText={TEXT.BUTTON_SIGN_IN}
+        submitEvent={signIn}
       />
       <Text style={styles.forgotMessagge}>
         パスワードをお忘れの場合は
-        <Text
-          style={ styles.linkText }
-          onPress={() => props.navigation.navigate("PasswordReset")}>
+        <Text style={styles.linkText} onPress={() => props.navigation.navigate("PasswordReset")}>
           こちら
         </Text>
         から
       </Text>
-      <SocialSignIn
-        title={ TEXT.TEXT_SIGN_IN_WITH }
-        socialIconItems={ socialIconItems }
-      />
-      <View style={ styles.signUpWrap }>
-        <Text style={ styles.signUpMessage }>
-          まだアカウントを作成していない場合は下のボタンから
-        </Text>
-        <View style={ styles.signUpButtonWrap }>
+      <SocialSignIn title={TEXT.TEXT_SIGN_IN_WITH} socialIconItems={socialIconItems} />
+      <View style={styles.signUpWrap}>
+        <Text style={styles.signUpMessage}>まだアカウントを作成していない場合は下のボタンから</Text>
+        <View style={styles.signUpButtonWrap}>
           <ButtonSquare
-            text={ TEXT.BUTTON_NEW_ACCOUNT_CREATE }
+            text={TEXT.BUTTON_NEW_ACCOUNT_CREATE}
             onPressEvent={() => props.navigation.navigate("SignUp")}
           />
         </View>

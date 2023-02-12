@@ -26,29 +26,24 @@ const CreateForm = (props: Props) => {
 
   useEffect(() => {
     props.formControlItems.map((item, index) => {
-      (!item.value) ? setDisabled(true) : setDisabled(false);
+      !item.value ? setDisabled(true) : setDisabled(false);
     });
   }, [props.formControlItems, disabled]);
 
   return (
-    <KeyboardAvoidingView style={ styles.container }>
-      <ControlSetArtwork
-      />
-      <View style={ styles.formControlsWrap }>
-        <FormControls
-          formControlItems={ props.formControlItems }
-        />
+    <KeyboardAvoidingView style={styles.container}>
+      <ControlSetArtwork />
+      <View style={styles.formControlsWrap}>
+        <FormControls formControlItems={props.formControlItems} />
       </View>
-      <View style={ styles.controlButtonWrap }>
-        <ControlButtonList
-          controlButtonItems={ props.controlButtonItems }
-        />
+      <View style={styles.controlButtonWrap}>
+        <ControlButtonList controlButtonItems={props.controlButtonItems} />
       </View>
-      <View style={ styles.submitButtonWrap }>
+      <View style={styles.submitButtonWrap}>
         <ButtonSquare
-          text={ props.buttonText }
-          onPressEvent={ props.submitEvent }
-          disabled={ disabled }
+          text={props.buttonText}
+          onPressEvent={props.submitEvent}
+          disabled={disabled}
         />
       </View>
     </KeyboardAvoidingView>

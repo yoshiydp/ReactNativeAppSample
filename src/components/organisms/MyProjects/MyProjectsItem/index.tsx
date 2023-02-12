@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from "react";
-import { TouchableOpacity, View, Image, Text} from "react-native";
+import { TouchableOpacity, View, Image, Text } from "react-native";
 import { useDispatch } from "react-redux";
 import { firebaseAuth, db } from "src/config/firebase";
 import { doc, onSnapshot } from "firebase/firestore";
@@ -12,7 +12,7 @@ import {
   setCenterModalTitle,
   setCenterModalDataTitle,
   setCenterModalDescription,
-  setCenterModalSubmitButtonText
+  setCenterModalSubmitButtonText,
 } from "store/CenterModalSlice";
 import { setMyProjectsDetail } from "store/MyProjectsSlice";
 import { showOverlay, inactiveHidden } from "store/OverlaySlice";
@@ -50,11 +50,7 @@ const MyProjectsItem = (props: Props) => {
   }, [activeHiddenState]);
 
   const renderRightActions = () => {
-    return (
-      <ButtonDelete
-        onPressEvent={ onPressDeleteProject }
-      />
-    );
+    return <ButtonDelete onPressEvent={onPressDeleteProject} />;
   };
 
   const navigateEditProject = async () => {
@@ -86,22 +82,15 @@ const MyProjectsItem = (props: Props) => {
     trackDataPath: props.trackDataPath,
     trackTitle: props.trackTitle,
     artistName: props.artistName,
-    artWorkPath: props.artWorkPath
+    artWorkPath: props.artWorkPath,
   };
 
   return (
-    <Swipeable
-      ref={ swipeable }
-      renderRightActions={ renderRightActions }
-      rightThreshold={ 44 }
-    >
-      <TouchableOpacity
-        style={ styles.container }
-        onPress={ navigateEditProject }
-        activeOpacity={ 1 }>
-        <View style={ styles.artwork }>
+    <Swipeable ref={swipeable} renderRightActions={renderRightActions} rightThreshold={44}>
+      <TouchableOpacity style={styles.container} onPress={navigateEditProject} activeOpacity={1}>
+        <View style={styles.artwork}>
           <Image
-            style={ styles.image }
+            style={styles.image}
             source={
               props.artWorkPath
                 ? { uri: props.artWorkPath }
@@ -109,23 +98,26 @@ const MyProjectsItem = (props: Props) => {
             }
           />
         </View>
-        <View style={ styles.textWrap }>
-          <Text style={ styles.title }>
-            { props.projectTitle.length > 30 ? textSubstring(props.projectTitle, 30) : props.projectTitle }
+        <View style={styles.textWrap}>
+          <Text style={styles.title}>
+            {props.projectTitle.length > 30
+              ? textSubstring(props.projectTitle, 30)
+              : props.projectTitle}
           </Text>
-          <Text style={ styles.text }>
-            { props.lyric ? textSubstring(props.lyric, 25) : "No lyric" }
+          <Text style={styles.text}>
+            {props.lyric ? textSubstring(props.lyric, 25) : "No lyric"}
           </Text>
-          <Text style={ styles.text }>
-            { textSubstring(props.trackTitle, 15) } / { props.artistName }
+          <Text style={styles.text}>
+            {textSubstring(props.trackTitle, 15)} / {props.artistName}
           </Text>
         </View>
         <TouchableOpacity
-          style={ styles.ellipsisButton }
-          onPress={ onPressRightSwipeActions }
-          activeOpacity={ 1 }>
+          style={styles.ellipsisButton}
+          onPress={onPressRightSwipeActions}
+          activeOpacity={1}
+        >
           <Icon
-            svgType={ 6 }
+            svgType={6}
             width="5"
             height="21"
             viewBox="0 0 5 21"
@@ -136,7 +128,7 @@ const MyProjectsItem = (props: Props) => {
             pathTransform1="translate(324 336)"
             pathTransform2="translate(332 336)"
             pathTransform3="translate(340 336)"
-            pathFill={ COLOR.COLOR_GRAY_TYPE3 }
+            pathFill={COLOR.COLOR_GRAY_TYPE3}
           />
         </TouchableOpacity>
       </TouchableOpacity>

@@ -17,8 +17,8 @@ export const mainTabMenuSlice = createSlice({
     },
     hideMainTabMenu: (state: { mainTabMenu: boolean }) => {
       state.mainTabMenu = false;
-    }
-  }
+    },
+  },
 });
 
 export const { showMainTabMenu, hideMainTabMenu } = mainTabMenuSlice.actions;

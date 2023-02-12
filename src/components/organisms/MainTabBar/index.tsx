@@ -56,13 +56,13 @@ const MainTabBar = (props: Props) => {
           headerShown: false,
           tabBarStyle: styles.containerTabBar,
           tabBarActiveTintColor: COLOR.COLOR_GREEN_BASE,
-          tabBarInactiveTintColor: COLOR.COLOR_GRAY_TYPE3
+          tabBarInactiveTintColor: COLOR.COLOR_GRAY_TYPE3,
         }}
-        initialRouteName={ "MyProjects" }
+        initialRouteName={"MyProjects"}
       >
         <Tab.Screen
           name="MyProjects"
-          component={ MyProjectsScreen }
+          component={MyProjectsScreen}
           options={{
             tabBarLabel: "",
             tabBarItemStyle: styles.tabBarLabel,
@@ -80,18 +80,14 @@ const MainTabBar = (props: Props) => {
                 pathD2={SVGPATH.ICON_FOLDER_PATH2}
                 pathTransform1="translate(0 -48.403)"
                 pathTransform2="translate(-6.746 -162.01)"
-                pathFill={
-                  color
-                    ? color
-                    : COLOR.COLOR_GRAY_TYPE3
-                }
+                pathFill={color ? color : COLOR.COLOR_GRAY_TYPE3}
               />
             ),
           }}
         />
         <Tab.Screen
           name="TrackList"
-          component={ TrackListScreen }
+          component={TrackListScreen}
           options={{
             tabBarLabel: "",
             tabBarItemStyle: [styles.tabBarLabel, { marginRight: targetWidth / 2 }],
@@ -105,18 +101,14 @@ const MainTabBar = (props: Props) => {
                 childGTransform="translate(0 0.004)"
                 pathD={SVGPATH.ICON_MUSIC}
                 pathTransform="translate(0 -0.004)"
-                pathFill={
-                  color
-                    ? color
-                    : COLOR.COLOR_GRAY_TYPE3
-                }
+                pathFill={color ? color : COLOR.COLOR_GRAY_TYPE3}
               />
             ),
           }}
         />
         <Tab.Screen
           name="RecordAudio"
-          component={ RecordAudioScreen }
+          component={RecordAudioScreen}
           options={{
             tabBarLabel: "",
             tabBarItemStyle: [styles.tabBarLabel, { marginLeft: targetWidth / 2 }],
@@ -136,18 +128,14 @@ const MainTabBar = (props: Props) => {
                 pathTransform3="translate(-209.267 0.007)"
                 pathTransform4="translate(-313.905 -78.471)"
                 pathTransform5="translate(-418.541 -156.948)"
-                pathFill={
-                  color
-                    ? color
-                    : COLOR.COLOR_GRAY_TYPE3
-                }
+                pathFill={color ? color : COLOR.COLOR_GRAY_TYPE3}
               />
             ),
           }}
         />
         <Tab.Screen
           name="MyAccount"
-          component={ MyAccountScreen }
+          component={MyAccountScreen}
           options={{
             tabBarLabel: "",
             tabBarItemStyle: styles.tabBarLabel,
@@ -161,24 +149,18 @@ const MainTabBar = (props: Props) => {
                 pathD2={SVGPATH.ICON_PERSON_PATH2}
                 pathTransform1="translate(-83.568)"
                 pathTransform2="translate(0 -237.474)"
-                pathFill={
-                  color
-                    ? color
-                    : COLOR.COLOR_GRAY_TYPE3
-                }
+                pathFill={color ? color : COLOR.COLOR_GRAY_TYPE3}
               />
             ),
           }}
         />
       </Tab.Navigator>
       <TouchableOpacity
-        activeOpacity={ 1 }
-        style={[
-          styles.containerMainTabMenu,
-          { transform: [{ translateX: - (targetWidth / 2) }] }
-        ]}
-        onLayout={ getTargetWidth }
-        onPress={ onPressShow }>
+        activeOpacity={1}
+        style={[styles.containerMainTabMenu, { transform: [{ translateX: -(targetWidth / 2) }] }]}
+        onLayout={getTargetWidth}
+        onPress={onPressShow}
+      >
         <Icon
           svgType={1}
           width="28"
@@ -188,16 +170,9 @@ const MainTabBar = (props: Props) => {
           pathFill={COLOR.COLOR_GRAY_TYPE3}
         />
       </TouchableOpacity>
-      <MainTabMenu
-        isShow={ mainTabMenu }
-        navigation={ props.navigation }
-      />
-      <Overlay
-        isShow={ overlay }
-      />
-      <CenterModal
-        isShow={ centerModal }
-      />
+      <MainTabMenu isShow={mainTabMenu} navigation={props.navigation} />
+      <Overlay isShow={overlay} />
+      <CenterModal isShow={centerModal} />
     </View>
   );
 };

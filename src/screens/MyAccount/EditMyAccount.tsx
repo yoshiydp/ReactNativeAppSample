@@ -11,13 +11,9 @@ interface Props {
 }
 
 const EditMyAccount = (props: Props) => {
-
   return (
     <>
-      <LowerScreen
-        title={ TEXT.TITLE_EDIT_MY_ACCOUNT }
-        navigation={ props.navigation }
-      />
+      <LowerScreen title={TEXT.TITLE_EDIT_MY_ACCOUNT} navigation={props.navigation} />
     </>
   );
 };

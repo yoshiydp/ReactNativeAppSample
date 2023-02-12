@@ -8,13 +8,9 @@ interface Props {
 }
 
 const Recording = (props: Props) => {
-
   return (
     <>
-      <LowerScreen
-        title={ "Recording" }
-        navigation={ props.navigation }
-      />
+      <LowerScreen title={"Recording"} navigation={props.navigation} />
     </>
   );
 };

@@ -30,7 +30,7 @@ import {
   validateEmail,
   validatePassword,
   validateNetworkRequestFailed,
-  validateTooManyRequests
+  validateTooManyRequests,
 } from "src/validators/SignUpValidator";
 
 // Styles
@@ -62,7 +62,7 @@ const SignUp = (props: Props) => {
     if (!appleAuth.isSupported) return;
     return appleAuth.onCredentialRevoked(async () => {
       console.warn("Credential Revoked");
-      fetchAndUpdateCredentialState(updateCredentialStateForUser).catch(error =>
+      fetchAndUpdateCredentialState(updateCredentialStateForUser).catch((error) =>
         updateCredentialStateForUser(error.code),
       );
     });
@@ -77,14 +77,14 @@ const SignUp = (props: Props) => {
       const docRef = doc(db, "users", user.uid);
       const userDoc = await getDoc(docRef);
       await updateProfile(user, {
-        displayName: userName
+        displayName: userName,
       });
       if (!userDoc.exists()) {
         await setDoc(doc(db, "users", user.uid), {
           displayName: userName,
           projectData: [],
           createdAt: serverTimestamp(),
-          deletedAt: null
+          deletedAt: null,
         });
       }
       console.log("userDoc.exists: " + userDoc.exists());
@@ -173,7 +173,7 @@ const SignUp = (props: Props) => {
       value: userName,
       required: true,
       notes: TEXT.LABEL_NOTES_USERNAME,
-      errorText: errorUserName
+      errorText: errorUserName,
     },
     {
       label: TEXT.LABEL_INPUT_EMAIL,
@@ -182,7 +182,7 @@ const SignUp = (props: Props) => {
       value: email,
       required: true,
       notes: TEXT.LABEL_NOTES_EMAIL,
-      errorText: errorEmail
+      errorText: errorEmail,
     },
     {
       label: TEXT.LABEL_INPUT_PASSWORD,
@@ -192,8 +192,8 @@ const SignUp = (props: Props) => {
       secureText: true,
       required: true,
       notes: TEXT.LABEL_NOTES_PASSWORD,
-      errorText: errorPassword
-    }
+      errorText: errorPassword,
+    },
   ];
 
   // ソーシャルアイコンリスト
@@ -206,7 +206,7 @@ const SignUp = (props: Props) => {
       pathD1: SVGPATH.ICON_APPLE,
       pathTransform1: "translate(-20.5 -16)",
       pathFill: COLOR.COLOR_BLACK_BASE,
-      onPressEvent: signInWithApple
+      onPressEvent: signInWithApple,
     },
     {
       svgType: 5,
@@ -224,24 +224,19 @@ const SignUp = (props: Props) => {
       pathFill4: "#ea4335",
       pathFill5: "none",
       fillRule: "evenodd",
-      onPressEvent: signInWithGoogle
-    }
+      onPressEvent: signInWithGoogle,
+    },
   ];
 
   return (
     <ScrollView style={styles.container}>
-      <IntroMessage
-        message={ TEXT.TEXT_INTRO_MESSAGE }
-      />
+      <IntroMessage message={TEXT.TEXT_INTRO_MESSAGE} />
       <AuthForm
-        formControlItems={ formControlItems }
-        buttonText={ TEXT.BUTTON_SIGN_UP }
-        submitEvent={ signUp }
+        formControlItems={formControlItems}
+        buttonText={TEXT.BUTTON_SIGN_UP}
+        submitEvent={signUp}
       />
-      <SocialSignIn
-        title={ TEXT.TEXT_SIGN_UP_WITH }
-        socialIconItems={ socialIconItems }
-      />
+      <SocialSignIn title={TEXT.TEXT_SIGN_UP_WITH} socialIconItems={socialIconItems} />
     </ScrollView>
   );
 };

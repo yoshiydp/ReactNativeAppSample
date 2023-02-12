@@ -10,17 +10,12 @@ import styles from "./ButtonSquare.scss";
 const ButtonSquare = (props: ButtonType) => {
   return (
     <TouchableOpacity
-      activeOpacity={ 1 }
-      style={
-        props.disabled
-          ? styles.containerDisabled
-          : styles.container
-      }
-      onPress={ props.onPressEvent }
-      disabled={ props.disabled }>
-      <Text style={ styles.text }>
-        { props.text }
-      </Text>
+      activeOpacity={1}
+      style={props.disabled ? styles.containerDisabled : styles.container}
+      onPress={props.onPressEvent}
+      disabled={props.disabled}
+    >
+      <Text style={styles.text}>{props.text}</Text>
     </TouchableOpacity>
   );
 };

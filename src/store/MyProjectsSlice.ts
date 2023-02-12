@@ -9,25 +9,16 @@ const initialState: MyProjectType = {
   trackDataPath: "",
   trackTitle: "",
   artistName: "",
-  artWorkPath: ""
+  artWorkPath: "",
 };
 
 export const MyProjectsSlice = createSlice({
   name: "myProjects",
   initialState,
   reducers: {
-    setMyProjectsDetail: (
-      state,
-      action: PayloadAction<MyProjectType>
-    ) => {
-      const {
-        projectTitle,
-        lyric,
-        trackDataPath,
-        trackTitle,
-        artistName,
-        artWorkPath
-      } = action.payload;
+    setMyProjectsDetail: (state, action: PayloadAction<MyProjectType>) => {
+      const { projectTitle, lyric, trackDataPath, trackTitle, artistName, artWorkPath } =
+        action.payload;
 
       Object.assign(state, {
         projectTitle,
@@ -35,10 +26,10 @@ export const MyProjectsSlice = createSlice({
         trackDataPath,
         trackTitle,
         artistName,
-        artWorkPath
+        artWorkPath,
       });
-    }
-  }
+    },
+  },
 });
 
 export const { setMyProjectsDetail } = MyProjectsSlice.actions;

@@ -8,13 +8,9 @@ interface Props {
 }
 
 const EditProject = (props: Props) => {
-
   return (
     <>
-      <LowerScreen
-        title={ "Edit Project" }
-        navigation={ props.navigation }
-      />
+      <LowerScreen title={"Edit Project"} navigation={props.navigation} />
     </>
   );
 };

@@ -27,14 +27,13 @@ const HorizontalButtonList = () => {
       if (!uid) return;
       const docRef = doc(db, "users", uid);
       await updateDoc(docRef, {
-        projectData: arrayRemove({...myProjectsState})
-      })
-        .then(() => {
-          dispatch(hideOverlay());
-          dispatch(activeHidden());
-          dispatch(hideCenterModal());
-          console.log("delete data");
-        });
+        projectData: arrayRemove({ ...myProjectsState }),
+      }).then(() => {
+        dispatch(hideOverlay());
+        dispatch(activeHidden());
+        dispatch(hideCenterModal());
+        console.log("delete data");
+      });
     } catch (error: any) {
       console.log(error);
     }
@@ -47,20 +46,16 @@ const HorizontalButtonList = () => {
   };
 
   return (
-    <View style={ styles.container }>
-      <View style={ styles.border }></View>
-      <View style={ styles.item }>
-        <TouchableOpacity
-          onPress={ onPressSubmit }>
-          <Text style={ styles.buttonYes }>
-            { centerModalSubmitTextState }
-          </Text>
+    <View style={styles.container}>
+      <View style={styles.border}></View>
+      <View style={styles.item}>
+        <TouchableOpacity onPress={onPressSubmit}>
+          <Text style={styles.buttonYes}>{centerModalSubmitTextState}</Text>
         </TouchableOpacity>
       </View>
-      <View style={ styles.item }>
-        <TouchableOpacity
-          onPress={ onPressCancel }>
-          <Text style={ styles.buttonCancel }>Cancel</Text>
+      <View style={styles.item}>
+        <TouchableOpacity onPress={onPressCancel}>
+          <Text style={styles.buttonCancel}>Cancel</Text>
         </TouchableOpacity>
       </View>
     </View>

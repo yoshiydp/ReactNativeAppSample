@@ -14,17 +14,11 @@ interface Props {
 }
 
 const NoData = (props: Props) => {
-
   return (
-    <View style={ styles.container }>
-      <Text style={ styles.text }>
-        { props.text }
-      </Text>
-      <View style={ styles.buttonWrap }>
-        <ButtonSquare
-          text={ props.buttonText }
-          onPressEvent={ props.onPressEvent }
-        />
+    <View style={styles.container}>
+      <Text style={styles.text}>{props.text}</Text>
+      <View style={styles.buttonWrap}>
+        <ButtonSquare text={props.buttonText} onPressEvent={props.onPressEvent} />
       </View>
     </View>
   );

@@ -9,11 +9,8 @@ import styles from "./ButtonDelete.scss";
 
 const ButtonDelete = (props: ButtonType) => {
   return (
-    <TouchableOpacity
-      activeOpacity={ 1 }
-      style={ styles.container }
-      onPress={ props.onPressEvent }>
-      <View style={ styles.minus }></View>
+    <TouchableOpacity activeOpacity={1} style={styles.container} onPress={props.onPressEvent}>
+      <View style={styles.minus}></View>
     </TouchableOpacity>
   );
 };

@@ -22,19 +22,15 @@ interface Props {
 }
 
 const LowerScreen = (props: Props) => {
-
   return (
-    <View style={ styles.container }>
-      <LowerTitleHeader
-        title={ props.title }
-        navigation={ props.navigation }
-      />
+    <View style={styles.container}>
+      <LowerTitleHeader title={props.title} navigation={props.navigation} />
       <ScrollView>
         <CreateForm
-          formControlItems={ props.formControlItems }
-          controlButtonItems={ props.controlButtonItems }
-          buttonText={ props.buttonText }
-          submitEvent={ props.onPressSubmitEvent }
+          formControlItems={props.formControlItems}
+          controlButtonItems={props.controlButtonItems}
+          buttonText={props.buttonText}
+          submitEvent={props.onPressSubmitEvent}
         />
       </ScrollView>
     </View>

@@ -6,7 +6,7 @@ import { NewProjectType } from "interfaces/newProjectInterface";
 const initialState: NewProjectType = {
   artWork: [],
   projectTitle: "",
-  trackDataFile: []
+  trackDataFile: [],
 };
 
 export const NewProjectSlice = createSlice({
@@ -24,7 +24,7 @@ export const NewProjectSlice = createSlice({
       state.trackDataFile.splice(0);
       if (!state.trackDataFile.length) state.trackDataFile.push(...action.payload);
     },
-  }
+  },
 });
 
 export const { setArtWork, setProjectTitle, setTrackDataFile } = NewProjectSlice.actions;

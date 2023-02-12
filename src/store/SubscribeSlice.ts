@@ -17,7 +17,7 @@ const subscribeSlice = createSlice({
     },
     unsubscribe: (state: { subscribe: boolean }) => {
       state.subscribe = false;
-    }
+    },
   },
 });
 
