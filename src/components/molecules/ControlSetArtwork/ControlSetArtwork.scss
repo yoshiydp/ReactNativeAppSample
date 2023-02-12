@@ -1,4 +1,4 @@
-@use 'src/globalStyles/' as g;
+@use "src/globalStyles/" as g;
 
 .container {
   flex-direction: column;
@@ -13,8 +13,8 @@
 }
 
 .artwork {
-  border-radius: 3px;
   overflow: hidden;
+  border-radius: 3px;
   @extend %image;
 }
 
@@ -24,8 +24,8 @@
 
 .button {
   flex: 1;
-  justify-content: center;
   align-items: center;
+  justify-content: center;
   width: 40px;
   height: 40px;
   margin-top: 12px;

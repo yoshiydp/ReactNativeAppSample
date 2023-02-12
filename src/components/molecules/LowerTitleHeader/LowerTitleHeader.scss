@@ -1,4 +1,4 @@
-@use 'src/globalStyles/' as g;
+@use "src/globalStyles/" as g;
 
 .container {
   position: relative;
@@ -10,17 +10,17 @@
 }
 
 .backBtn {
-  justify-content: center;
   align-items: center;
+  justify-content: center;
   width: 44px;
   height: 44px;
-  margin-right: auto;
   padding-right: 2px;
+  margin-right: auto;
 }
 
 .title {
-  text-align: right;
   font-family: g.$font-dm-serif-display;
-  color: g.colors(white, base);
   font-size: 26px;
+  color: g.colors(white, base);
+  text-align: right;
 }
