@@ -43,10 +43,13 @@ const MainTabMenu = (props: Props) => {
   };
 
   useEffect(() => {
-    props.isShow
-      ? (translateYAnimated(translateValue, 0), positionAnimatedFunc(positionValue, 0, 0))
-      : (translateYAnimated(translateValue, containerHeight),
-        positionAnimatedFunc(positionValue, 0, VALUE.DURATION_200));
+    if (props.isShow) {
+      translateYAnimated(translateValue, 0);
+      positionAnimatedFunc(positionValue, 0, 0);
+    } else {
+      translateYAnimated(translateValue, containerHeight);
+      positionAnimatedFunc(positionValue, 0, VALUE.DURATION_200);
+    }
   }, [containerHeight, targetWidth, props.isShow]);
 
   const translateYAnimated = (object: any, value: number) => {
