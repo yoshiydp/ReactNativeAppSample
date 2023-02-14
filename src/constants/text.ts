@@ -4,6 +4,7 @@ export const APP_NAME = "Lyrics";
 // BUTTON
 export const BUTTON_MY_PROJECTS_CREATE = "新しいプロジェクトを作成";
 export const BUTTON_NEW_ACCOUNT_CREATE = "新規アカウント作成";
+export const BUTTON_NEW_PASSWORD_SAVE = "新しいパスワードを保存する";
 export const BUTTON_SIGN_IN = "ログイン";
 export const BUTTON_SIGN_UP = "サインアップ";
 export const BUTTON_START = "スタート";
@@ -35,7 +36,9 @@ export const ERROR_TOO_MANY_REQUESTS =
   "リクエストが多すぎるためエラーが起きました。しばらく経ってから再度ボタンを押してください。";
 
 // LABEL
+export const LABEL_INPUT_CONFIRM_PASSWORD = "パスワード再入力";
 export const LABEL_INPUT_EMAIL = "メールアドレス";
+export const LABEL_INPUT_NEW_PASSWORD = "新しいパスワード";
 export const LABEL_INPUT_PASSWORD = "パスワード";
 export const LABEL_INPUT_PROJECT_TITLE = "プロジェクトタイトル";
 export const LABEL_INPUT_TRACK_DATA = "トラックデータ";

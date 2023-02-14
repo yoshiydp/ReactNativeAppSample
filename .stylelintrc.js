@@ -3,7 +3,6 @@ module.exports = {
   rules: {
     "selector-pseudo-element-colon-notation": "double",
     "scss/selector-no-union-class-name": true,
-    "string-quotes": "double",
   },
   ignoreFiles: ["**/node_modules/**"],
 };

@@ -17,13 +17,12 @@ interface Props {
 const ControlButtonList = (props: Props) => {
   return (
     <View style={styles.container}>
-      {props.controlButtonItems
-        ? props.controlButtonItems.map((item, index) => (
+      {props.controlButtonItems &&
+        props.controlButtonItems.map((item, index) => (
           <View style={index != 0 ? styles.itemMargin : ""} key={index}>
             <ButtonRound text={item.buttonText} onPressEvent={item.onPressEvent} />
           </View>
-        ))
-        : ""}
+        ))}
     </View>
   );
 };
