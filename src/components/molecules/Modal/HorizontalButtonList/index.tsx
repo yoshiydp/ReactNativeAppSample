@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { View, TouchableOpacity, Text } from "react-native";
 import { useDispatch } from "react-redux";
 import { firebaseAuth, db } from "src/config/firebase";
@@ -15,11 +15,7 @@ import styles from "./HorizontalButtonList.scss";
 const HorizontalButtonList = () => {
   const dispatch = useDispatch();
   const centerModalSubmitTextState = useSelector((state) => state.centerModal.submitButtonText);
-  const myProjectsState = useSelector((state) => state.myProjects);
-
-  useEffect(() => {
-    console.log(myProjectsState);
-  }, [centerModalSubmitTextState, myProjectsState]);
+  const myProjectsState = useSelector((state) => state.myProjectsDetail);
 
   const onPressSubmit = async () => {
     try {
