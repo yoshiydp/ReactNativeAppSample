@@ -27,13 +27,15 @@ const Overlay = (props: Props) => {
   const activeHiddenState = useSelector((state) => state.overlay.inactiveHidden);
 
   useEffect(() => {
-    props.isShow
-      ? (maxOpacityAnimated(),
-        sizesAnimatedFunc(widthValue, windowWidth, 0),
-      sizesAnimatedFunc(heightValue, windowHeight, 0))
-      : (minOpacityAnimated(),
-        sizesAnimatedFunc(widthValue, 0, VALUE.DURATION_200),
-        sizesAnimatedFunc(heightValue, 0, VALUE.DURATION_200));
+    if (props.isShow) {
+      maxOpacityAnimated();
+      sizesAnimatedFunc(widthValue, windowWidth, 0);
+      sizesAnimatedFunc(heightValue, windowHeight, 0);
+    } else {
+      minOpacityAnimated();
+      sizesAnimatedFunc(widthValue, 0, VALUE.DURATION_200);
+      sizesAnimatedFunc(heightValue, 0, VALUE.DURATION_200);
+    }
   }, [props.isShow, activeHiddenState]);
 
   const minOpacityAnimated = () => {
