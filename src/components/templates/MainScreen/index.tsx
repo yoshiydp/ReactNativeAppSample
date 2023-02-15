@@ -25,6 +25,7 @@ interface Props {
   navigation: any;
   title: string;
   myProjectDataItems: Array<MyProjectsDetailType>;
+  setSearchValue?: (value: string) => void;
 }
 
 const MainScreen = (props: Props) => {
@@ -48,7 +49,7 @@ const MainScreen = (props: Props) => {
 
   return (
     <View style={styles.container}>
-      <MainTitleHeader title={props.title} />
+      <MainTitleHeader title={props.title} setSearchValue={props.setSearchValue} />
       <ScrollView>
         {props.title === TEXT.TITLE_MY_PROJECTS ? (
           <MyProjectsList

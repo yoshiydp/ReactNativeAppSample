@@ -12,6 +12,7 @@ import styles from "./MainTitleHeader.scss";
 
 interface Props {
   title: string;
+  setSearchValue?: (value: string) => void;
 }
 
 const MainTitleHeader = (props: Props) => {
@@ -51,6 +52,7 @@ const MainTitleHeader = (props: Props) => {
       <SearchBar
         activeMinOpacityAnimated={minOpacityAnimated}
         activeMaxOpacityAnimated={maxOpacityAnimated}
+        setSearchValue={props.setSearchValue}
       />
     </View>
   );
