@@ -14,7 +14,7 @@ import {
   setCenterModalDescription,
   setCenterModalSubmitButtonText,
 } from "store/CenterModalSlice";
-import { setMyProjectsDetail } from "store/MyProjectsSlice";
+import { setMyProjectsDetail } from "store/MyProjectsDetailSlice";
 import { showOverlay, inactiveHidden } from "store/OverlaySlice";
 
 // Components
@@ -22,7 +22,7 @@ import ButtonDelete from "components/atoms/ButtonDelete";
 import Icon from "components/atoms/Icon";
 
 // Interfaces
-import { MyProjectType } from "interfaces/myProjectInterface";
+import { MyProjectsDetailType } from "interfaces/myProjectsInterface";
 
 // Constants
 import * as COLOR from "constants/color";
@@ -31,7 +31,7 @@ import * as TEXT from "constants/text";
 // Styles
 import styles from "./MyProjectsItem.scss";
 
-interface Props extends MyProjectType {
+interface Props extends MyProjectsDetailType {
   navigation: any;
 }
 

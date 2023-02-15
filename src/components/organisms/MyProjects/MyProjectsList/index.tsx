@@ -6,7 +6,7 @@ import NoData from "components/molecules/NoData";
 import MyProjectsItem from "components/organisms/MyProjects/MyProjectsItem";
 
 // Interfaces
-import { MyProjectType } from "interfaces/myProjectInterface";
+import { MyProjectsDetailType } from "interfaces/myProjectsInterface";
 
 // Constants
 import * as TEXT from "constants/text";
@@ -15,7 +15,7 @@ import * as TEXT from "constants/text";
 import styles from "./MyProjectsList.scss";
 
 interface Props {
-  myProjectDataItems: Array<MyProjectType>;
+  myProjectDataItems: Array<MyProjectsDetailType>;
   navigation: any;
 }
 

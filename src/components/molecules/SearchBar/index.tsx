@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useRef, useEffect, useState } from "react";
 import { View, TextInput, TouchableOpacity, Animated, useWindowDimensions } from "react-native";
 
 // Components
@@ -17,14 +17,19 @@ import styles from "./SearchBar.scss";
 interface Props {
   activeMinOpacityAnimated: any;
   activeMaxOpacityAnimated: any;
+  setSearchValue?: (value: string) => void;
 }
 
 const SearchBar = (props: Props) => {
-  const [isEnabled, setIsEnabled] = useState(false);
-  const [text, setText] = useState("");
+  const [isEnabled, setIsEnabled] = useState<boolean>(false);
+  const [value, setValue] = useState<string>("");
   const widthValue = useRef(new Animated.Value(0)).current;
   const opacityValue = useRef(new Animated.Value(0)).current;
   const windowWidth = useWindowDimensions().width;
+
+  useEffect(() => {
+    if (props.setSearchValue) props.setSearchValue(value);
+  }, [value]);
 
   const activePress = () => {
     setIsEnabled(true);
@@ -35,7 +40,7 @@ const SearchBar = (props: Props) => {
 
   const inactivePress = () => {
     setIsEnabled(false);
-    setText("");
+    setValue("");
     widthAnimatedFunc(widthValue, 0);
     opacityAnimatedFunc(opacityValue, 0, VALUE.DURATION_200);
     props.activeMaxOpacityAnimated();
@@ -98,8 +103,8 @@ const SearchBar = (props: Props) => {
           placeholderTextColor={COLOR.COLOR_WHITE_BASE}
           editable={isEnabled}
           selectTextOnFocus={isEnabled}
-          value={text}
-          onChangeText={(text) => setText(text)}
+          value={value}
+          onChangeText={(event) => setValue(event)}
         />
       </Animated.View>
       <Animated.View
