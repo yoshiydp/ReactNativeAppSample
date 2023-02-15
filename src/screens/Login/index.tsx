@@ -8,7 +8,7 @@ import { firebaseAuth } from "src/config/firebase";
 import auth from "@react-native-firebase/auth";
 
 // Store
-import { subscribe } from "src/store/SubscribeSlice";
+import { subscribe } from "store/SubscribeSlice";
 
 // env
 import { WEB_CLIENT_ID } from "@env";

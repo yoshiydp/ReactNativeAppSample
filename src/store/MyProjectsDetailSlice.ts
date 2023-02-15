@@ -1,9 +1,9 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 // Interfaces
-import { MyProjectType } from "interfaces/myProjectInterface";
+import { MyProjectsDetailType } from "interfaces/myProjectsInterface";
 
-const initialState: MyProjectType = {
+const initialState: MyProjectsDetailType = {
   projectTitle: "",
   lyric: "",
   trackDataPath: "",
@@ -12,11 +12,11 @@ const initialState: MyProjectType = {
   artWorkPath: "",
 };
 
-export const MyProjectsSlice = createSlice({
-  name: "myProjects",
+export const MyProjectsDetailSlice = createSlice({
+  name: "myProjectsDetail",
   initialState,
   reducers: {
-    setMyProjectsDetail: (state, action: PayloadAction<MyProjectType>) => {
+    setMyProjectsDetail: (state, action: PayloadAction<MyProjectsDetailType>) => {
       const { projectTitle, lyric, trackDataPath, trackTitle, artistName, artWorkPath } =
         action.payload;
 
@@ -32,5 +32,5 @@ export const MyProjectsSlice = createSlice({
   },
 });
 
-export const { setMyProjectsDetail } = MyProjectsSlice.actions;
-export default MyProjectsSlice.reducer;
+export const { setMyProjectsDetail } = MyProjectsDetailSlice.actions;
+export default MyProjectsDetailSlice.reducer;

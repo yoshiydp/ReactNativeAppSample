@@ -6,14 +6,14 @@ import { firebaseAuth } from "src/config/firebase";
 import auth from "@react-native-firebase/auth";
 
 // Store
-import { unsubscribe } from "src/store/SubscribeSlice";
+import { unsubscribe } from "store/SubscribeSlice";
 
 // Components
 import MainTitleHeader from "components/organisms/MainTitleHeader";
 import MyProjectsList from "src/components/organisms/MyProjects/MyProjectsList";
 
 // Interfaces
-import { MyProjectType } from "interfaces/myProjectInterface";
+import { MyProjectsDetailType } from "interfaces/myProjectsInterface";
 
 // Constants
 import * as TEXT from "constants/text";
@@ -24,7 +24,8 @@ import styles from "./MainScreen.scss";
 interface Props {
   navigation: any;
   title: string;
-  myProjectDataItems: Array<MyProjectType>;
+  myProjectDataItems: Array<MyProjectsDetailType>;
+  setSearchValue?: (value: string) => void;
 }
 
 const MainScreen = (props: Props) => {
@@ -48,7 +49,7 @@ const MainScreen = (props: Props) => {
 
   return (
     <View style={styles.container}>
-      <MainTitleHeader title={props.title} />
+      <MainTitleHeader title={props.title} setSearchValue={props.setSearchValue} />
       <ScrollView>
         {props.title === TEXT.TITLE_MY_PROJECTS ? (
           <MyProjectsList
