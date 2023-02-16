@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import { Modal, StyleSheet, Text, Pressable, View } from "react-native";
 import { useDispatch } from "react-redux";
 import DocumentPicker from "react-native-document-picker";
 import { firebaseAuth, db } from "src/config/firebase";
@@ -10,10 +9,12 @@ import { doc, updateDoc, arrayUnion } from "firebase/firestore";
 import { useSelector } from "store/index";
 import { hideOverlay } from "store/OverlaySlice";
 import { hideMainTabMenu } from "store/MainTabMenuSlice";
+import { showModalPageSheet } from "store/ModalPageSheetSlice";
 import { setTrackDataFile } from "store/NewProjectSlice";
 
 // Components
 import LowerScreen from "components/templates/LowerScreen";
+import ModalPageSheet from "components/organisms/Modal/ModalPageSheet";
 
 // Constants
 import * as TEXT from "constants/text";
@@ -31,7 +32,6 @@ interface Props {
 const NewProject = (props: Props) => {
   const [projectTitle, setProjectTitle] = useState<string>("");
   const [errorProjectTitle, setErrorProjectTitle] = useState<string>("");
-  const [modalVisible, setModalVisible] = useState<boolean>(false);
   const dispatch = useDispatch();
   const artWork = useSelector((state) => state.newProject.artWork);
   const trackDataFile = useSelector((state) => state.newProject.trackDataFile);
@@ -53,7 +53,7 @@ const NewProject = (props: Props) => {
   };
 
   const selectTrackList = async () => {
-    setModalVisible(true);
+    dispatch(showModalPageSheet());
   };
 
   const { uid }: any = firebaseAuth.currentUser;
@@ -169,7 +169,7 @@ const NewProject = (props: Props) => {
   // コントロールボタンリスト
   const controlButtonItems = [
     {
-      buttonText: trackDataFile ? TEXT.BUTTON_TRACK_CHANGE : TEXT.BUTTON_TRACK_UPLOAD,
+      buttonText: trackDataFile.length ? TEXT.BUTTON_TRACK_CHANGE : TEXT.BUTTON_TRACK_UPLOAD,
       onPressEvent: selectTrackDataFile,
     },
     {
@@ -188,77 +188,9 @@ const NewProject = (props: Props) => {
         buttonText={TEXT.BUTTON_START}
         onPressSubmitEvent={createProject}
       />
-      <Modal
-        animationType="slide"
-        presentationStyle="pageSheet"
-        style={modalStyles.modal}
-        visible={modalVisible}
-        onRequestClose={() => {
-          setModalVisible(!modalVisible);
-        }}
-      >
-        <View style={modalStyles.centeredView}>
-          <View style={modalStyles.modalView}>
-            <Text style={modalStyles.modalText}>Hello World!</Text>
-            <Pressable
-              style={[modalStyles.button, modalStyles.buttonClose]}
-              onPress={() => setModalVisible(!modalVisible)}
-            >
-              <Text style={modalStyles.textStyle}>Hide Modal</Text>
-            </Pressable>
-          </View>
-        </View>
-      </Modal>
+      <ModalPageSheet />
     </>
   );
 };
-
-const modalStyles = StyleSheet.create({
-  modal: {
-    backgroundColor: "#333",
-  },
-  centeredView: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-    marginTop: 22,
-  },
-  modalView: {
-    margin: 20,
-    backgroundColor: "white",
-    borderRadius: 20,
-    width: 300,
-    padding: 35,
-    alignItems: "center",
-    shadowColor: "#000",
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.25,
-    shadowRadius: 4,
-    elevation: 5,
-  },
-  button: {
-    borderRadius: 20,
-    padding: 10,
-    elevation: 2,
-  },
-  buttonOpen: {
-    backgroundColor: "#F194FF",
-  },
-  buttonClose: {
-    backgroundColor: "#2196F3",
-  },
-  textStyle: {
-    color: "white",
-    fontWeight: "bold",
-    textAlign: "center",
-  },
-  modalText: {
-    marginBottom: 15,
-    textAlign: "center",
-  },
-});
 
 export default NewProject;
