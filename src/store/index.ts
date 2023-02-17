@@ -7,7 +7,9 @@ import myProjectsDetailReducer from "./MyProjectsDetailSlice";
 import myProjectsItemsReducer from "./MyProjectsItemsSlice";
 import newProjectReducer from "./NewProjectSlice";
 import overlayReducer from "./OverlaySlice";
-import SubscribeReducer from "./SubscribeSlice";
+import subscribeReducer from "./SubscribeSlice";
+import trackListDetailReducer from "./TrackListDetailSlice";
+import trackListItemsReducer from "./TrackListItemsSlice";
 
 export const store = configureStore({
   reducer: {
@@ -18,7 +20,9 @@ export const store = configureStore({
     myProjectsItems: myProjectsItemsReducer,
     newProject: newProjectReducer,
     overlay: overlayReducer,
-    subscribe: SubscribeReducer,
+    subscribe: subscribeReducer,
+    trackListDetail: trackListDetailReducer,
+    trackListItems: trackListItemsReducer,
   },
 });
 
