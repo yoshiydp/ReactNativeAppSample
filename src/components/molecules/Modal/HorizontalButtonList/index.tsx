@@ -23,7 +23,7 @@ const HorizontalButtonList = () => {
       if (!uid) return;
       const docRef = doc(db, "users", uid);
       await updateDoc(docRef, {
-        projectData: arrayRemove({ ...myProjectsState }),
+        myProjectsData: arrayRemove({ ...myProjectsState }),
       }).then(() => {
         dispatch(hideOverlay());
         dispatch(activeHidden());
