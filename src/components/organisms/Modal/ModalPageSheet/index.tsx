@@ -1,10 +1,13 @@
-import React, { useEffect } from "react";
-import { Modal, Text, Pressable, View } from "react-native";
+import React, { useState } from "react";
+import { Modal, ScrollView, View } from "react-native";
 import { useDispatch } from "react-redux";
 
 // Store
 import { useSelector } from "store/index";
 import { hideModalPageSheet } from "store/ModalPageSheetSlice";
+
+// Components
+import ModalControlHeader from "components/organisms/Modal/ModalControlHeader";
 
 // Styles
 import styles from "./ModalPageSheet.scss";
@@ -12,12 +15,13 @@ import styles from "./ModalPageSheet.scss";
 const ModalPageSheet = () => {
   const dispatch = useDispatch();
   const modalPageSheet = useSelector((state) => state.modalPageSheet.modalPageSheet);
+  const [targetWidth, setTargetWidth] = useState<number>(0);
 
-  useEffect(() => {
-    console.log("modalPageSheet: " + modalPageSheet);
-  }, [modalPageSheet]);
+  const getTargetWidth = (object: any) => {
+    setTargetWidth(object.nativeEvent.layout.width);
+  };
 
-  const onPressClose = () => {
+  const modalClose = () => {
     dispatch(hideModalPageSheet());
   };
 
@@ -26,15 +30,15 @@ const ModalPageSheet = () => {
       animationType="slide"
       presentationStyle="pageSheet"
       visible={modalPageSheet}
-      onRequestClose={onPressClose}
+      onRequestClose={modalClose}
     >
       <View style={styles.container}>
-        <View>
-          <Text>Hello World!</Text>
-          <Pressable onPress={onPressClose}>
-            <Text>Hide Modal</Text>
-          </Pressable>
-        </View>
+        <ModalControlHeader />
+        <ScrollView></ScrollView>
+        <View
+          style={[styles.swipeBorder, { transform: [{ translateX: -(targetWidth / 2) }] }]}
+          onLayout={getTargetWidth}
+        ></View>
       </View>
     </Modal>
   );
