@@ -5,6 +5,7 @@ export const APP_NAME = "Lyrics";
 export const BUTTON_MY_PROJECTS_CREATE = "新しいプロジェクトを作成";
 export const BUTTON_NEW_ACCOUNT_CREATE = "新規アカウント作成";
 export const BUTTON_NEW_PASSWORD_SAVE = "新しいパスワードを保存する";
+export const BUTTON_NEW_TRACK_UPLOAD = "新しいトラックを追加";
 export const BUTTON_SIGN_IN = "ログイン";
 export const BUTTON_SIGN_UP = "サインアップ";
 export const BUTTON_START = "スタート";
@@ -47,7 +48,7 @@ export const LABEL_INPUT_USERNAME = "ユーザー名";
 // LABEL NOTES
 export const LABEL_NOTES_EMAIL = "（受信可能なアドレスを入力してください）";
 export const LABEL_NOTES_PASSWORD = "（半角の英数大・小文字、記号を含めた8文字以上）";
-export const LABEL_NOTES_TRACK_DATA = "（下のボタンからデータをアップロードします）";
+export const LABEL_NOTES_TRACK_DATA = "（下のボタンからアップロードします）";
 export const LABEL_NOTES_USERNAME = "（半角英数字のみ入力可能）";
 
 // PLACEHOLDER
@@ -84,6 +85,8 @@ export const MODAL_TITLE_DELETE_TRACK = "このトラックを削除しますか
 
 // MODAL DESCRIPTION
 export const MODAL_DESC_DELETE_NOTE = "一度削除すると復元はできませんので、ご注意ください。";
+export const MODAL_DESC_DELETE_TRACK_NOTE =
+  "このトラックはプロジェクトに紐付けされています。\nプロジェクト内で再度トラックを設定し直す必要があります。\nよろしいですか？";
 
 // MODAL BUTTON TEXT
 export const MODAL_BUTTON_TEXT_YES = "Yes";
