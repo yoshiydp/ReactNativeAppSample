@@ -26,6 +26,7 @@ import { TrackListDetailType } from "interfaces/trackListInterface";
 
 // Constants
 import * as COLOR from "constants/color";
+import * as SVGPATH from "constants/svgPath";
 import * as TEXT from "constants/text";
 
 // Styles
@@ -50,7 +51,7 @@ const TrackListItem = (props: Props) => {
   }, [activeHiddenState]);
 
   const renderRightActions = () => {
-    return <ButtonDelete onPressEvent={onPressDeleteProject} />;
+    return <ButtonDelete onPressEvent={onPressDeleteTrack} />;
   };
 
   const navigateEditProject = async () => {
@@ -61,19 +62,30 @@ const TrackListItem = (props: Props) => {
     swipeable.current?.openRight();
   };
 
-  const onPressDeleteProject = () => {
+  const onPressDeleteTrack = () => {
     dispatch(showOverlay());
     dispatch(inactiveHidden());
     dispatch(showCenterModal());
-    dispatch(setCenterModalTitle(TEXT.MODAL_TITLE_DELETE_PROJECT));
-    dispatch(setCenterModalDataTitle(setTrackData.trackDataPath));
-    dispatch(setCenterModalDescription(TEXT.MODAL_DESC_DELETE_NOTE));
+    dispatch(setCenterModalTitle(TEXT.MODAL_TITLE_DELETE_TRACK));
+    dispatch(
+      setCenterModalDataTitle(
+        setTrackData.trackTitle.length > 20
+          ? textExtensionSubstring(setTrackData.trackTitle, 20)
+          : textExtensionSubstring(setTrackData.trackTitle),
+      ),
+    );
+    dispatch(setCenterModalDescription(TEXT.MODAL_DESC_DELETE_TRACK_NOTE));
     dispatch(setCenterModalSubmitButtonText);
     dispatch(setTrackListDetail(setTrackData));
   };
 
-  const textSubstring = (value: string, count: number) => {
+  const textSubstring = (value: string, count = 100) => {
     return value.substring(0, count) + "...";
+  };
+
+  const textExtensionSubstring = (value: string, count = 100) => {
+    const textReplace = value.replace(/.mp3/g, "").replace(/.wav/g, "");
+    return textReplace.substring(0, count);
   };
 
   const setTrackData = {
@@ -99,10 +111,19 @@ const TrackListItem = (props: Props) => {
         </View>
         <View style={styles.textWrap}>
           <Text style={styles.title}>
-            {props.trackTitle.length > 15 ? textSubstring(props.trackTitle, 15) : props.trackTitle}{" "}
+            {props.trackTitle.length > 20
+              ? textExtensionSubstring(props.trackTitle, 20)
+              : textExtensionSubstring(props.trackTitle)}{" "}
             /{props.artistName.length > 15 ? textSubstring(props.artistName, 15) : props.artistName}
           </Text>
-          <Text style={styles.text}>{textSubstring(props.trackTitle, 15)}</Text>
+          <Text style={styles.text}>{textSubstring(props.trackTitle, 20)}</Text>
+          <View style={styles.linkedProjects}>
+            {props.linkedMyProjects.map((item, index) => (
+              <Text style={styles.linkedProjectsText} key={index}>
+                {item.projectTitle}
+              </Text>
+            ))}
+          </View>
         </View>
         <TouchableOpacity
           style={styles.ellipsisButton}
