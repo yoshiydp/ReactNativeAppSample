@@ -85,6 +85,8 @@ export const MODAL_TITLE_DELETE_TRACK = "このトラックを削除しますか
 
 // MODAL DESCRIPTION
 export const MODAL_DESC_DELETE_NOTE = "一度削除すると復元はできませんので、ご注意ください。";
+export const MODAL_DESC_DELETE_TRACK_NOTE =
+  "このトラックはプロジェクトに紐付けされています。\nプロジェクト内で再度トラックを設定し直す必要があります。\nよろしいですか？";
 
 // MODAL BUTTON TEXT
 export const MODAL_BUTTON_TEXT_YES = "Yes";
