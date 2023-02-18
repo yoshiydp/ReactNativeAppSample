@@ -82,12 +82,12 @@ const SignUp = (props: Props) => {
       if (!userDoc.exists()) {
         await setDoc(doc(db, "users", user.uid), {
           displayName: userName,
-          projectData: [],
+          myProjectsData: [],
+          trackListData: [],
           createdAt: serverTimestamp(),
           deletedAt: null,
         });
       }
-      console.log("userDoc.exists: " + userDoc.exists());
     } catch (error: any) {
       if (error.code === "auth/missing-email") {
         validateUserName(userName, setErrorUserName);

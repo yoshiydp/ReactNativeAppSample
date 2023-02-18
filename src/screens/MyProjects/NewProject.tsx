@@ -3,7 +3,7 @@ import { useDispatch } from "react-redux";
 import DocumentPicker from "react-native-document-picker";
 import { firebaseAuth, db } from "src/config/firebase";
 import { getStorage, ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
-import { doc, updateDoc, arrayUnion } from "firebase/firestore";
+import { doc, updateDoc, arrayUnion, serverTimestamp } from "firebase/firestore";
 
 // Store
 import { useSelector } from "store/index";
@@ -21,9 +21,6 @@ import * as TEXT from "constants/text";
 
 // Validators
 import { validateProjectTitle } from "src/validators/NewProjectValidator";
-
-// Styles
-import styles from "./MyProjects.scss";
 
 interface Props {
   navigation: any;
@@ -81,6 +78,7 @@ const NewProject = (props: Props) => {
 
     const storageRef = ref(storage, uid + directory + fileName);
     const metadata = {
+      name: fileName,
       contentType: fileType,
     };
 
@@ -133,13 +131,23 @@ const NewProject = (props: Props) => {
         });
 
       await updateDoc(doc(db, "users", uid), {
-        projectData: arrayUnion({
+        myProjectsData: arrayUnion({
           projectTitle: projectTitle,
           lyric: "",
           trackDataPath: trackDataDownloadUrl ? trackDataDownloadUrl : "",
           trackTitle: trackDataFile[0]?.name,
           artistName: "",
           artWorkPath: artWorkDownloadUrl ? artWorkDownloadUrl : "",
+        }),
+      });
+
+      await updateDoc(doc(db, "users", uid), {
+        trackListData: arrayUnion({
+          trackDataPath: trackDataDownloadUrl ? trackDataDownloadUrl : "",
+          trackTitle: trackDataFile[0]?.name,
+          artistName: "",
+          artWorkPath: artWorkDownloadUrl ? artWorkDownloadUrl : "",
+          linkedMyProjects: [{ projectTitle: projectTitle }],
         }),
       });
     }

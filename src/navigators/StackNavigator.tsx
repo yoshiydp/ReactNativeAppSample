@@ -58,7 +58,8 @@ const StackNavigator = () => {
       if (!userDoc.exists()) {
         await setDoc(doc(db, "users", user.uid), {
           displayName: user.displayName,
-          projectData: [],
+          myProjectsData: [],
+          trackListData: [],
           createdAt: serverTimestamp(),
           deletedAt: null,
         });

@@ -11,9 +11,11 @@ import { unsubscribe } from "store/SubscribeSlice";
 // Components
 import MainTitleHeader from "components/organisms/MainTitleHeader";
 import MyProjectsList from "src/components/organisms/MyProjects/MyProjectsList";
+import TrackList from "src/components/organisms/TrackList/TrackList";
 
 // Interfaces
 import { MyProjectsDetailType } from "interfaces/myProjectsInterface";
+import { TrackListDetailType } from "interfaces/trackListInterface";
 
 // Constants
 import * as TEXT from "constants/text";
@@ -25,6 +27,7 @@ interface Props {
   navigation: any;
   title: string;
   myProjectDataItems: Array<MyProjectsDetailType>;
+  trackListDataItems: Array<TrackListDetailType>;
   setSearchValue?: (value: string) => void;
 }
 
@@ -57,7 +60,7 @@ const MainScreen = (props: Props) => {
             navigation={props.navigation}
           />
         ) : props.title === TEXT.TITLE_TRACK_LIST ? (
-          <Text>{TEXT.TITLE_TRACK_LIST} screen</Text>
+          <TrackList trackListDataItems={props.trackListDataItems} navigation={props.navigation} />
         ) : props.title === TEXT.TITLE_RECORD_AUDIO ? (
           <Text>{TEXT.TITLE_RECORD_AUDIO} screen</Text>
         ) : props.title === TEXT.TITLE_MY_ACCOUNT ? (

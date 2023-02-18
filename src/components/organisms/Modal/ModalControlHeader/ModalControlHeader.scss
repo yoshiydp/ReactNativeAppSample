@@ -1,0 +1,21 @@
+@use "src/globalStyles/" as g;
+
+.container {
+  position: relative;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  width: 100%;
+  padding: 32px 20px 26px 12px;
+}
+
+.closeButtonWrap {
+  margin-right: auto;
+}
+
+.closeButton {
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+}

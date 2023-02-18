@@ -28,7 +28,7 @@ const MyProjects = (props: Props) => {
   const getProjectData = async () => {
     const docSnap = await getDoc(docRef);
     if (docSnap.exists()) {
-      dispatch(setMyProjectsItems(docSnap.data().projectData));
+      dispatch(setMyProjectsItems(docSnap.data().myProjectsData));
     } else {
       console.log("No such document!");
     }
@@ -37,7 +37,7 @@ const MyProjects = (props: Props) => {
   useEffect(() => {
     getProjectData();
     onSnapshot(docRef, (doc) => {
-      dispatch(setMyProjectsItems(doc.data()?.projectData));
+      dispatch(setMyProjectsItems(doc.data()?.myProjectsData));
     });
   }, []);
 

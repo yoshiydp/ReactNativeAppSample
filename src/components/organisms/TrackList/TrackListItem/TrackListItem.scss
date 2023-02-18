@@ -1,0 +1,68 @@
+@use "src/globalStyles/" as g;
+
+.container {
+  position: relative;
+  flex-direction: row;
+  width: 100%;
+  padding-right: 20px;
+  padding-left: 20px;
+  background: g.colors(blue, bg);
+}
+
+%image {
+  width: 60px;
+  height: 60px;
+}
+
+.artwork {
+  overflow: hidden;
+  border-radius: 2px;
+  @extend %image;
+}
+
+.image {
+  @extend %image;
+}
+
+.title {
+  font-family: g.$font-dm-serif-display;
+  font-size: 16px;
+  color: g.colors(white, base);
+}
+
+.textWrap {
+  width: 100%;
+  margin-left: 12px;
+}
+
+.text {
+  margin-top: 7px;
+  font-size: 10px;
+  color: g.colors(gray, type3);
+}
+
+.linkedProjects {
+  flex-direction: row;
+  margin-top: 7px;
+}
+
+.linkedProjectsIcon {
+  width: 12px;
+  height: 12px;
+  margin-right: 4px;
+}
+
+.linkedProjectsText {
+  font-size: 10px;
+  color: g.colors(green, base);
+}
+
+.ellipsisButton {
+  position: absolute;
+  right: 20px;
+  flex: 1;
+  align-items: center;
+  justify-content: center;
+  width: 25px;
+  height: 100%;
+}
