@@ -6,7 +6,7 @@ interface LoadingFullScreenType {
 }
 
 const initialState: LoadingFullScreenType = {
-  loadingFullScreen: true,
+  loadingFullScreen: false,
   message: "",
 };
 
