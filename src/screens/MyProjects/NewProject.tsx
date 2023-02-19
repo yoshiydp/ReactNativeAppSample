@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { View } from "react-native";
 import { useDispatch } from "react-redux";
 import DocumentPicker from "react-native-document-picker";
 import { firebaseAuth, db } from "src/config/firebase";
@@ -7,12 +8,18 @@ import { doc, updateDoc, arrayUnion, serverTimestamp } from "firebase/firestore"
 
 // Store
 import { useSelector } from "store/index";
+import {
+  showLoadingFullScreen,
+  hideLoadingFullScreen,
+  setLoadingFullScreenMessage,
+} from "store/LoadingFullScreenSlice";
 import { hideOverlay } from "store/OverlaySlice";
 import { hideMainTabMenu } from "store/MainTabMenuSlice";
 import { showModalPageSheet } from "store/ModalPageSheetSlice";
 import { setTrackDataFile } from "store/NewProjectSlice";
 
 // Components
+import LoadingFullScreen from "components/molecules/Loading/LoadingFullScreen";
 import LowerScreen from "components/templates/LowerScreen";
 import ModalPageSheet from "components/organisms/Modal/ModalPageSheet";
 
@@ -32,6 +39,7 @@ const NewProject = (props: Props) => {
   const dispatch = useDispatch();
   const artWork = useSelector((state) => state.newProject.artWork);
   const trackDataFile = useSelector((state) => state.newProject.trackDataFile);
+  const loadingFullScreen = useSelector((state) => state.loadingFullScreen.loadingFullScreen);
 
   useEffect(() => {
     dispatch(hideOverlay());
@@ -99,57 +107,66 @@ const NewProject = (props: Props) => {
     let artWorkDownloadUrl;
     let trackDataDownloadUrl;
 
-    // artWorkのアップロード
-    if (artWork.length) {
-      await fileUpload(artWork[0]?.uri, artWork[0]?.fileName, artWork[0]?.type, "/artworks/");
-      await getDownloadURL(ref(storage, uid + "/artworks/" + artWork[0]?.fileName))
-        .then((url) => {
-          artWorkDownloadUrl = url;
-          console.log("artWorkDownloadUrl: " + artWorkDownloadUrl);
-        })
-        .catch((error) => {
-          console.log(error);
+    try {
+      dispatch(showLoadingFullScreen());
+      dispatch(setLoadingFullScreenMessage(TEXT.LOADING_MESSAGE_CREATE_PROJECT));
+
+      // artWorkのアップロード
+      if (artWork.length) {
+        await fileUpload(artWork[0]?.uri, artWork[0]?.fileName, artWork[0]?.type, "/artworks/");
+        await getDownloadURL(ref(storage, uid + "/artworks/" + artWork[0]?.fileName))
+          .then((url) => {
+            artWorkDownloadUrl = url;
+            console.log("artWorkDownloadUrl: " + artWorkDownloadUrl);
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+      }
+
+      // trackDataFileのアップロード
+      if (trackDataFile.length) {
+        await fileUpload(
+          trackDataFile[0]?.uri,
+          trackDataFile[0]?.name,
+          trackDataFile[0]?.type,
+          "/track_data_files/",
+        );
+
+        await getDownloadURL(ref(storage, uid + "/track_data_files/" + trackDataFile[0]?.name))
+          .then((url) => {
+            trackDataDownloadUrl = url;
+            console.log("trackDataDownloadUrl: " + trackDataDownloadUrl);
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+
+        await updateDoc(doc(db, "users", uid), {
+          myProjectsData: arrayUnion({
+            projectTitle: projectTitle,
+            lyric: "",
+            trackDataPath: trackDataDownloadUrl ? trackDataDownloadUrl : "",
+            trackTitle: trackDataFile[0]?.name,
+            artistName: "",
+            artWorkPath: artWorkDownloadUrl ? artWorkDownloadUrl : "",
+          }),
         });
-    }
 
-    // trackDataFileのアップロード
-    if (trackDataFile.length) {
-      await fileUpload(
-        trackDataFile[0]?.uri,
-        trackDataFile[0]?.name,
-        trackDataFile[0]?.type,
-        "/track_data_files/",
-      );
-
-      await getDownloadURL(ref(storage, uid + "/track_data_files/" + trackDataFile[0]?.name))
-        .then((url) => {
-          trackDataDownloadUrl = url;
-          console.log("trackDataDownloadUrl: " + trackDataDownloadUrl);
-        })
-        .catch((error) => {
-          console.log(error);
+        await updateDoc(doc(db, "users", uid), {
+          trackListData: arrayUnion({
+            trackDataPath: trackDataDownloadUrl ? trackDataDownloadUrl : "",
+            trackTitle: trackDataFile[0]?.name,
+            artistName: "",
+            artWorkPath: artWorkDownloadUrl ? artWorkDownloadUrl : "",
+            linkedMyProjects: [{ projectTitle: projectTitle }],
+          }),
         });
-
-      await updateDoc(doc(db, "users", uid), {
-        myProjectsData: arrayUnion({
-          projectTitle: projectTitle,
-          lyric: "",
-          trackDataPath: trackDataDownloadUrl ? trackDataDownloadUrl : "",
-          trackTitle: trackDataFile[0]?.name,
-          artistName: "",
-          artWorkPath: artWorkDownloadUrl ? artWorkDownloadUrl : "",
-        }),
-      });
-
-      await updateDoc(doc(db, "users", uid), {
-        trackListData: arrayUnion({
-          trackDataPath: trackDataDownloadUrl ? trackDataDownloadUrl : "",
-          trackTitle: trackDataFile[0]?.name,
-          artistName: "",
-          artWorkPath: artWorkDownloadUrl ? artWorkDownloadUrl : "",
-          linkedMyProjects: [{ projectTitle: projectTitle }],
-        }),
-      });
+      }
+    } catch (error: any) {
+      console.log(error);
+    } finally {
+      dispatch(hideLoadingFullScreen());
     }
   };
 
@@ -197,6 +214,7 @@ const NewProject = (props: Props) => {
         onPressSubmitEvent={createProject}
       />
       <ModalPageSheet />
+      <LoadingFullScreen isShow={loadingFullScreen} />
     </>
   );
 };
