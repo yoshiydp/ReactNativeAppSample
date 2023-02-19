@@ -1,6 +1,7 @@
 import { configureStore } from "@reduxjs/toolkit";
 import { useSelector as rawUseSelector, TypedUseSelectorHook } from "react-redux";
 import centerModalReducer from "./CenterModalSlice";
+import loadingFullScreenReducer from "./LoadingFullScreenSlice";
 import mainTabMenuReducer from "./MainTabMenuSlice";
 import modalPageSheetReducer from "./ModalPageSheetSlice";
 import myProjectsDetailReducer from "./MyProjectsDetailSlice";
@@ -14,6 +15,7 @@ import trackListItemsReducer from "./TrackListItemsSlice";
 export const store = configureStore({
   reducer: {
     centerModal: centerModalReducer,
+    loadingFullScreen: loadingFullScreenReducer,
     mainTabMenu: mainTabMenuReducer,
     modalPageSheet: modalPageSheetReducer,
     myProjectsDetail: myProjectsDetailReducer,
