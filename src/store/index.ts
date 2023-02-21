@@ -6,6 +6,7 @@ import mainTabMenuReducer from "./MainTabMenuSlice";
 import modalPageSheetReducer from "./ModalPageSheetSlice";
 import myProjectsDetailReducer from "./MyProjectsDetailSlice";
 import myProjectsItemsReducer from "./MyProjectsItemsSlice";
+import myProjectsModalFlagReducer from "./MyProjectsModalFlagSlice";
 import newProjectReducer from "./NewProjectSlice";
 import overlayReducer from "./OverlaySlice";
 import subscribeReducer from "./SubscribeSlice";
@@ -20,6 +21,7 @@ export const store = configureStore({
     modalPageSheet: modalPageSheetReducer,
     myProjectsDetail: myProjectsDetailReducer,
     myProjectsItems: myProjectsItemsReducer,
+    myProjectsModalFlag: myProjectsModalFlagReducer,
     newProject: newProjectReducer,
     overlay: overlayReducer,
     subscribe: subscribeReducer,

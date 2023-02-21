@@ -117,13 +117,15 @@ const TrackListItem = (props: Props) => {
             /{props.artistName.length > 15 ? textSubstring(props.artistName, 15) : props.artistName}
           </Text>
           <Text style={styles.text}>{textSubstring(props.trackTitle, 30)}</Text>
-          <View style={styles.linkedProjects}>
-            {props.linkedMyProjects.map((item, index) => (
-              <Text style={styles.linkedProjectsText} key={index}>
-                {item.projectTitle}
-              </Text>
-            ))}
-          </View>
+          {props.linkedMyProjects?.length && (
+            <View style={styles.linkedProjects}>
+              {props.linkedMyProjects?.map((item, index) => (
+                <Text style={styles.linkedProjectsText} key={index}>
+                  {item.projectTitle}
+                </Text>
+              ))}
+            </View>
+          )}
         </View>
         <TouchableOpacity
           style={styles.ellipsisButton}
