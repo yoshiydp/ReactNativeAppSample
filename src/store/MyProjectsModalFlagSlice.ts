@@ -12,11 +12,15 @@ export const MyProjectsModalFlagSlice = createSlice({
   name: "myProjectsModalFlag",
   initialState,
   reducers: {
-    setMyProjectsModalFlag: (state: { modalFlag: boolean }) => {
+    activeMyProjectsModalFlag: (state: { modalFlag: boolean }) => {
       state.modalFlag = true;
+    },
+    inactiveMyProjectsModalFlag: (state: { modalFlag: boolean }) => {
+      state.modalFlag = false;
     },
   },
 });
 
-export const { setMyProjectsModalFlag } = MyProjectsModalFlagSlice.actions;
+export const { activeMyProjectsModalFlag, inactiveMyProjectsModalFlag } =
+  MyProjectsModalFlagSlice.actions;
 export default MyProjectsModalFlagSlice.reducer;

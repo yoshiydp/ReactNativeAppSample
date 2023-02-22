@@ -15,7 +15,7 @@ import {
   setCenterModalSubmitButtonText,
 } from "store/CenterModalSlice";
 import { setMyProjectsDetail } from "store/MyProjectsDetailSlice";
-import { setMyProjectsModalFlag } from "store/MyProjectsModalFlagSlice";
+import { activeMyProjectsModalFlag } from "store/MyProjectsModalFlagSlice";
 import { showOverlay, inactiveHidden } from "store/OverlaySlice";
 
 // Components
@@ -71,7 +71,7 @@ const MyProjectsItem = (props: Props) => {
     dispatch(setCenterModalDescription(TEXT.MODAL_DESC_DELETE_NOTE));
     dispatch(setCenterModalSubmitButtonText);
     dispatch(setMyProjectsDetail(setProjectData));
-    dispatch(setMyProjectsModalFlag());
+    dispatch(activeMyProjectsModalFlag());
   };
 
   const textSubstring = (value: string, count: number) => {
