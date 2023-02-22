@@ -71,3 +71,13 @@ export interface svgType6 extends svgCommonProps {
   pathTransform2?: string;
   pathTransform3?: string;
 }
+
+export interface svgType7 extends svgCommonProps {
+  parentGTransform?: string;
+  childGTransform?: string;
+  grandchildGTransform?: string;
+  pathD1?: string;
+  pathD2?: string;
+  pathTransform1?: string;
+  pathTransform2?: string;
+}

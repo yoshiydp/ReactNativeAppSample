@@ -119,6 +119,21 @@ const TrackListItem = (props: Props) => {
           <Text style={styles.text}>{textSubstring(props.trackTitle, 30)}</Text>
           {props.linkedMyProjects?.length && (
             <View style={styles.linkedProjects}>
+              <Icon
+                svgType={7}
+                width="12"
+                height="12"
+                viewBox="0 0 12 12"
+                parentGTransform="translate(0.993 1.001)"
+                childGTransform="translate(-0.993 -1)"
+                grandchildGTransform="translate(0 0)"
+                pathD1={SVGPATH.ICON_LINKED_PROJECTS_PATH1}
+                pathD2={SVGPATH.ICON_LINKED_PROJECTS_PATH2}
+                pathTransform1="translate(0.993 -172.815)"
+                pathTransform2="translate(-185.461 1)"
+                pathFill={COLOR.COLOR_GREEN_BASE}
+                containerStyle={styles.iconLinkedMyProjects}
+              />
               {props.linkedMyProjects?.map((item, index) => (
                 <Text style={styles.linkedProjectsText} key={index}>
                   {item.projectTitle}
