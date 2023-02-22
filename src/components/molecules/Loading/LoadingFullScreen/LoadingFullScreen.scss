@@ -1,0 +1,23 @@
+@use "src/globalStyles/" as g;
+
+.container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  flex: 1;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  background: g.colors(black, base);
+  opacity: 0.5;
+}
+
+.message {
+  padding: 0 20px;
+  margin-bottom: 20px;
+  font-size: 14px;
+  font-weight: bold;
+  color: g.colors(white, base);
+  text-align: center;
+}

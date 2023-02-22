@@ -5,7 +5,7 @@ export interface TrackListDetailType {
   artWorkPath: string;
   linkedMyProjects: [
     {
-      projectTitle: string;
+      projectTitle?: string;
     },
   ];
 }

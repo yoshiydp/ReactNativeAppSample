@@ -10,9 +10,10 @@ import {
   svgType4,
   svgType5,
   svgType6,
+  svgType7,
 } from "interfaces/svgInterface";
 
-interface Props extends svgType1, svgType2, svgType3, svgType4, svgType5, svgType6 {
+interface Props extends svgType1, svgType2, svgType3, svgType4, svgType5, svgType6, svgType7 {
   containerStyle?: any;
 }
 
@@ -89,6 +90,17 @@ const Icon = (props: Props) => {
                 transform={props.pathTransform3}
                 fill={props.pathFill}
               />
+            </G>
+          </G>
+        </Svg>
+      ) : props.svgType === 7 ? (
+        <Svg width={props.width} height={props.height} viewBox={props.viewBox}>
+          <G transform={props.parentGTransform}>
+            <G transform={props.childGTransform}>
+              <G transform={props.grandchildGTransform}>
+                <Path d={props.pathD1} transform={props.pathTransform1} fill={props.pathFill} />
+                <Path d={props.pathD2} transform={props.pathTransform2} fill={props.pathFill} />
+              </G>
             </G>
           </G>
         </Svg>
