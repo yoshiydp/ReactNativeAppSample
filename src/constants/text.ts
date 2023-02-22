@@ -71,6 +71,9 @@ export const TITLE_EDIT_TRACK = "Edit Track";
 export const TITLE_EDIT_MY_ACCOUNT = "Edit My Account";
 export const TITLE_PASSWORD_RESET = "Password Reset";
 
+// LOADING MESSAGE
+export const LOADING_MESSAGE_CREATE_PROJECT = "プロジェクトを作成中です";
+
 // MAIN SCREEN TITLE
 export const TITLE_MY_PROJECTS = "My Projects";
 export const TITLE_TRACK_LIST = "Track List";
