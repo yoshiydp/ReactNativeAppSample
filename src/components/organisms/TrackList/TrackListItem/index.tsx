@@ -117,7 +117,7 @@ const TrackListItem = (props: Props) => {
             /{props.artistName.length > 15 ? textSubstring(props.artistName, 15) : props.artistName}
           </Text>
           <Text style={styles.text}>{textSubstring(props.trackTitle, 30)}</Text>
-          {props.linkedMyProjects?.length && (
+          {props.linkedMyProjects.length > 0 && (
             <View style={styles.linkedProjects}>
               <Icon
                 svgType={7}
@@ -134,7 +134,7 @@ const TrackListItem = (props: Props) => {
                 pathFill={COLOR.COLOR_GREEN_BASE}
                 containerStyle={styles.iconLinkedMyProjects}
               />
-              {props.linkedMyProjects?.map((item, index) => (
+              {props.linkedMyProjects.map((item, index) => (
                 <Text style={styles.linkedProjectsText} key={index}>
                   {item.projectTitle}
                 </Text>

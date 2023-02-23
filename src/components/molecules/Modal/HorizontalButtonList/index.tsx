@@ -55,7 +55,7 @@ const HorizontalButtonList = () => {
                   trackTitle: items.trackTitle,
                   artistName: items.artistName,
                   artWorkPath: items.artWorkPath,
-                  linkedMyProjects: [{ projectTitle: "" }],
+                  linkedMyProjects: [],
                 }),
               });
             }
