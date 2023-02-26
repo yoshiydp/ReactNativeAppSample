@@ -16,6 +16,8 @@ import {
 } from "store/CenterModalSlice";
 import { setTrackListDetail } from "store/TrackListDetailSlice";
 import { showOverlay, inactiveHidden } from "store/OverlaySlice";
+import { hideModalPageSheet } from "store/ModalPageSheetSlice";
+import { setTrackDataFile } from "store/NewProjectSlice";
 
 // Components
 import ButtonDelete from "components/atoms/ButtonDelete";
@@ -40,6 +42,7 @@ const TrackListItem = (props: Props) => {
   const swipeable = useRef<Swipeable>(null);
   const dispatch = useDispatch();
   const activeHiddenState = useSelector((state) => state.overlay.inactiveHidden);
+  const activeModalPageSheet = useSelector((state) => state.modalPageSheet.modalPageSheet);
   const { uid }: any = firebaseAuth.currentUser;
   if (!uid) return;
   const docRef = doc(db, "users", uid);
@@ -54,8 +57,20 @@ const TrackListItem = (props: Props) => {
     return <ButtonDelete onPressEvent={onPressDeleteTrack} />;
   };
 
-  const navigateEditProject = async () => {
-    await props.navigation.navigate("EditProject");
+  const actionsOff = () => {
+    return "";
+  };
+
+  const selectTrack = async () => {
+    dispatch(hideModalPageSheet());
+    dispatch(setTrackDataFile([]));
+    dispatch(setTrackListDetail(setTrackData));
+    console.log(setTrackData);
+    console.log("hideModalPageSheet close");
+  };
+
+  const navigateEditTrack = async () => {
+    await props.navigation.navigate("EditTrack");
   };
 
   const onPressRightSwipeActions = () => {
@@ -97,8 +112,16 @@ const TrackListItem = (props: Props) => {
   };
 
   return (
-    <Swipeable ref={swipeable} renderRightActions={renderRightActions} rightThreshold={44}>
-      <TouchableOpacity style={styles.container} onPress={navigateEditProject} activeOpacity={1}>
+    <Swipeable
+      ref={swipeable}
+      renderRightActions={activeModalPageSheet ? actionsOff : renderRightActions}
+      rightThreshold={44}
+    >
+      <TouchableOpacity
+        style={styles.container}
+        onPress={activeModalPageSheet ? selectTrack : navigateEditTrack}
+        activeOpacity={1}
+      >
         <View style={styles.artwork}>
           <Image
             style={styles.image}

@@ -3,7 +3,7 @@ import { useDispatch } from "react-redux";
 import DocumentPicker from "react-native-document-picker";
 import { firebaseAuth, db } from "src/config/firebase";
 import { getStorage, ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
-import { doc, updateDoc, arrayUnion } from "firebase/firestore";
+import { doc, updateDoc, arrayUnion, arrayRemove } from "firebase/firestore";
 
 // Store
 import { useSelector } from "store/index";
@@ -39,6 +39,8 @@ const NewProject = (props: Props) => {
   const artWork = useSelector((state) => state.newProject.artWork);
   const trackDataFile = useSelector((state) => state.newProject.trackDataFile);
   const trackListItems = useSelector((state) => state.trackListItems.trackListItems);
+  const trackListDetailTitle = useSelector((state) => state.trackListDetail.trackTitle);
+  const trackListDetailDataPath = useSelector((state) => state.trackListDetail.trackDataPath);
   const loadingFullScreen = useSelector((state) => state.loadingFullScreen.loadingFullScreen);
 
   useEffect(() => {
@@ -125,7 +127,7 @@ const NewProject = (props: Props) => {
       }
 
       // trackDataFileのアップロード
-      if (trackDataFile.length) {
+      if (trackDataFile.length > 0) {
         await fileUpload(
           trackDataFile[0]?.uri,
           trackDataFile[0]?.name,
@@ -163,6 +165,40 @@ const NewProject = (props: Props) => {
           }),
         });
       }
+
+      // トラックリストから選択した場合のアップロード
+      if (trackDataFile.length === 0 && trackListDetailTitle && trackListDetailDataPath) {
+        await updateDoc(doc(db, "users", uid), {
+          myProjectsData: arrayUnion({
+            projectTitle: projectTitle,
+            lyric: "",
+            trackDataPath: trackListDetailDataPath ? trackListDetailDataPath : "",
+            trackTitle: trackListDetailTitle,
+            artistName: "",
+            artWorkPath: artWorkDownloadUrl ? artWorkDownloadUrl : "",
+          }),
+        });
+
+        await updateDoc(doc(db, "users", uid), {
+          trackListData: arrayRemove({
+            trackDataPath: trackListDetailDataPath,
+            trackTitle: trackListDetailTitle,
+            artistName: "",
+            artWorkPath: artWorkDownloadUrl ? artWorkDownloadUrl : "",
+            linkedMyProjects: [],
+          }),
+        });
+
+        await updateDoc(doc(db, "users", uid), {
+          trackListData: arrayUnion({
+            trackDataPath: trackListDetailDataPath,
+            trackTitle: trackListDetailTitle,
+            artistName: "",
+            artWorkPath: artWorkDownloadUrl ? artWorkDownloadUrl : "",
+            linkedMyProjects: [{ projectTitle: projectTitle }],
+          }),
+        });
+      }
     } catch (error: any) {
       console.log(error);
     } finally {
@@ -183,7 +219,7 @@ const NewProject = (props: Props) => {
     {
       label: TEXT.LABEL_INPUT_TRACK_DATA,
       placeholder: TEXT.PLACEHOLDER_NO_TRACK,
-      value: trackDataFile[0]?.name,
+      value: trackDataFile.length ? trackDataFile[0]?.name : trackListDetailTitle,
       required: true,
       notes: TEXT.LABEL_NOTES_TRACK_DATA,
       editable: false,
