@@ -28,7 +28,13 @@ const TrackList = (props: Props) => {
   const getTrackListData = async () => {
     const docSnap = await getDoc(docRef);
     if (docSnap.exists()) {
-      dispatch(setTrackListItems(docSnap.data().trackListData));
+      const trackListData = docSnap.data().trackListData;
+      const sorted = trackListData.sort((a: any, b: any) => {
+        a = a.trackTitle.toString().toLowerCase();
+        b = b.trackTitle.toString().toLowerCase();
+        return a > b ? 1 : b > a ? -1 : 0;
+      });
+      dispatch(setTrackListItems(sorted));
     } else {
       console.log("No such document!");
     }
@@ -37,7 +43,12 @@ const TrackList = (props: Props) => {
   useEffect(() => {
     getTrackListData();
     onSnapshot(docRef, (doc) => {
-      dispatch(setTrackListItems(doc.data()?.trackListData));
+      const sorted = doc.data()?.trackListData.sort((a: any, b: any) => {
+        a = a.trackTitle.toString().toLowerCase();
+        b = b.trackTitle.toString().toLowerCase();
+        return a > b ? 1 : b > a ? -1 : 0;
+      });
+      dispatch(setTrackListItems(sorted));
     });
   }, []);
 

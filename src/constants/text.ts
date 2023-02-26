@@ -103,3 +103,5 @@ export const NO_DATA_TEXT_RECORD_AUDIO =
   "音声ファイルがまだありません。\n下のボタンから新しくプロジェクトを作成してください。";
 export const NO_DATA_TEXT_TRACK_LIST =
   "トラックがまだありません。\n下のボタンから新しくトラックを追加してください。";
+export const NO_DATA_TEXT_TRACK_LIST_MODAL =
+  "トラックがまだありません。\nTrack Listからトラックを追加してください。";

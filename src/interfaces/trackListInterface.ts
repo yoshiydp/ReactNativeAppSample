@@ -3,11 +3,7 @@ export interface TrackListDetailType {
   trackTitle: string;
   artistName: string;
   artWorkPath: string;
-  linkedMyProjects: [
-    {
-      projectTitle?: string;
-    },
-  ];
+  linkedMyProjects: [];
 }
 
 export interface TrackListItemsType {

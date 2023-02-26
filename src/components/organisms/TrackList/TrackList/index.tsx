@@ -1,6 +1,9 @@
 import React from "react";
 import { View } from "react-native";
 
+// Store
+import { useSelector } from "store/index";
+
 // Components
 import NoData from "components/molecules/NoData";
 import TrackListItem from "components/organisms/TrackList/TrackListItem";
@@ -20,13 +23,15 @@ interface Props {
 }
 
 const TrackList = (props: Props) => {
+  const activeModalPageSheet = useSelector((state) => state.modalPageSheet.modalPageSheet);
+
   const navigateNewTrack = async () => {
     await props.navigation.navigate("NewTrack");
   };
 
   return (
     <View style={styles.container}>
-      {props.trackListDataItems.length ? (
+      {props.trackListDataItems?.length ? (
         props.trackListDataItems.map((item, index) => (
           <View style={index != 0 ? styles.itemMargin : ""} key={index}>
             <TrackListItem
@@ -41,7 +46,9 @@ const TrackList = (props: Props) => {
         ))
       ) : (
         <NoData
-          text={TEXT.NO_DATA_TEXT_TRACK_LIST}
+          text={
+            activeModalPageSheet ? TEXT.NO_DATA_TEXT_TRACK_LIST_MODAL : TEXT.NO_DATA_TEXT_TRACK_LIST
+          }
           buttonText={TEXT.BUTTON_NEW_TRACK_UPLOAD}
           onPressEvent={navigateNewTrack}
         />
