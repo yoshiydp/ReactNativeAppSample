@@ -38,6 +38,7 @@ const NewProject = (props: Props) => {
   const dispatch = useDispatch();
   const artWork = useSelector((state) => state.newProject.artWork);
   const trackDataFile = useSelector((state) => state.newProject.trackDataFile);
+  const trackListItems = useSelector((state) => state.trackListItems.trackListItems);
   const loadingFullScreen = useSelector((state) => state.loadingFullScreen.loadingFullScreen);
 
   useEffect(() => {
@@ -212,7 +213,7 @@ const NewProject = (props: Props) => {
         buttonText={TEXT.BUTTON_START}
         onPressSubmitEvent={createProject}
       />
-      <ModalPageSheet />
+      <ModalPageSheet trackListDataItems={trackListItems} />
       <LoadingFullScreen isShow={loadingFullScreen} />
     </>
   );

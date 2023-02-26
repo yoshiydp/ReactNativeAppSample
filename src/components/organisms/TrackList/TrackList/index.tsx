@@ -1,5 +1,5 @@
 import React from "react";
-import { View, Text } from "react-native";
+import { View } from "react-native";
 
 // Store
 import { useSelector } from "store/index";
@@ -44,13 +44,11 @@ const TrackList = (props: Props) => {
             />
           </View>
         ))
-      ) : !props.trackListDataItems?.length && activeModalPageSheet ? (
-        <View>
-          <Text>{activeModalPageSheet ? "true" : ""}</Text>
-        </View>
       ) : (
         <NoData
-          text={TEXT.NO_DATA_TEXT_TRACK_LIST}
+          text={
+            activeModalPageSheet ? TEXT.NO_DATA_TEXT_TRACK_LIST_MODAL : TEXT.NO_DATA_TEXT_TRACK_LIST
+          }
           buttonText={TEXT.BUTTON_NEW_TRACK_UPLOAD}
           onPressEvent={navigateNewTrack}
         />
