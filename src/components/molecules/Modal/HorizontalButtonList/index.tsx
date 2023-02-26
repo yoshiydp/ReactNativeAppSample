@@ -38,7 +38,6 @@ const HorizontalButtonList = () => {
         trackListItems.filter(async (items: any, index: number) => {
           await items.linkedMyProjects.some(async (linkedMyProjects: any) => {
             if (linkedMyProjects.projectTitle === myProjectsState.projectTitle) {
-              console.log(index);
               await updateDoc(docRef, {
                 trackListData: arrayRemove({
                   trackDataPath: items.trackDataPath,

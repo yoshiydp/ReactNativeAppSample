@@ -8,11 +8,20 @@ import { hideModalPageSheet } from "store/ModalPageSheetSlice";
 
 // Components
 import ModalControlHeader from "components/organisms/Modal/ModalControlHeader";
+import TrackList from "src/components/organisms/TrackList/TrackList";
+
+// Interfaces
+import { TrackListDetailType } from "interfaces/trackListInterface";
 
 // Styles
 import styles from "./ModalPageSheet.scss";
 
-const ModalPageSheet = () => {
+interface Props {
+  navigation: any;
+  trackListDataItems: Array<TrackListDetailType>;
+}
+
+const ModalPageSheet = (props: Props) => {
   const dispatch = useDispatch();
   const modalPageSheet = useSelector((state) => state.modalPageSheet.modalPageSheet);
   const [targetWidth, setTargetWidth] = useState<number>(0);
@@ -34,7 +43,9 @@ const ModalPageSheet = () => {
     >
       <View style={styles.container}>
         <ModalControlHeader />
-        <ScrollView></ScrollView>
+        <ScrollView>
+          <TrackList trackListDataItems={props.trackListDataItems} navigation={props.navigation} />
+        </ScrollView>
         <View
           style={[styles.swipeBorder, { transform: [{ translateX: -(targetWidth / 2) }] }]}
           onLayout={getTargetWidth}

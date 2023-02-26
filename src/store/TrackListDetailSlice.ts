@@ -8,11 +8,7 @@ const initialState: TrackListDetailType = {
   trackTitle: "",
   artistName: "",
   artWorkPath: "",
-  linkedMyProjects: [
-    {
-      projectTitle: "",
-    },
-  ],
+  linkedMyProjects: [],
 };
 
 export const TrackListDetailSlice = createSlice({
@@ -20,20 +16,15 @@ export const TrackListDetailSlice = createSlice({
   initialState,
   reducers: {
     setTrackListDetail: (state, action: PayloadAction<TrackListDetailType>) => {
-      const {
-        trackDataPath,
-        trackTitle,
-        artistName,
-        artWorkPath,
-        linkedMyProjects: [{ projectTitle }],
-      } = action.payload;
+      const { trackDataPath, trackTitle, artistName, artWorkPath, linkedMyProjects } =
+        action.payload;
 
       Object.assign(state, {
         trackDataPath,
         trackTitle,
         artistName,
         artWorkPath,
-        linkedMyProjects: [{ projectTitle }],
+        linkedMyProjects,
       });
     },
   },
