@@ -28,7 +28,13 @@ const MyProjects = (props: Props) => {
   const getProjectData = async () => {
     const docSnap = await getDoc(docRef);
     if (docSnap.exists()) {
-      dispatch(setMyProjectsItems(docSnap.data().myProjectsData));
+      const myProjectsData = docSnap.data().myProjectsData;
+      const sorted = myProjectsData.sort((a: any, b: any) => {
+        a = a.projectTitle.toString().toLowerCase();
+        b = b.projectTitle.toString().toLowerCase();
+        return a > b ? 1 : b > a ? -1 : 0;
+      });
+      dispatch(setMyProjectsItems(sorted));
     } else {
       console.log("No such document!");
     }
@@ -37,7 +43,12 @@ const MyProjects = (props: Props) => {
   useEffect(() => {
     getProjectData();
     onSnapshot(docRef, (doc) => {
-      dispatch(setMyProjectsItems(doc.data()?.myProjectsData));
+      const sorted = doc.data()?.myProjectsData.sort((a: any, b: any) => {
+        a = a.projectTitle.toString().toLowerCase();
+        b = b.projectTitle.toString().toLowerCase();
+        return a > b ? 1 : b > a ? -1 : 0;
+      });
+      dispatch(setMyProjectsItems(sorted));
     });
   }, []);
 
