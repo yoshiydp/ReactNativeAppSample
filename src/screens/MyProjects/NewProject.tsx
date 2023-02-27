@@ -15,7 +15,8 @@ import {
 import { hideOverlay } from "store/OverlaySlice";
 import { hideMainTabMenu } from "store/MainTabMenuSlice";
 import { showModalPageSheet } from "store/ModalPageSheetSlice";
-import { setTrackDataFile } from "store/NewProjectSlice";
+import { setArtWork, setTrackDataFile } from "store/NewProjectSlice";
+import { setTrackListDetail } from "store/TrackListDetailSlice";
 
 // Components
 import LoadingFullScreen from "components/molecules/Loading/LoadingFullScreen";
@@ -47,6 +48,14 @@ const NewProject = (props: Props) => {
     dispatch(hideOverlay());
     dispatch(hideMainTabMenu());
   }, [projectTitle, artWork, trackDataFile]);
+
+  useEffect(() => {
+    return () => {
+      dispatch(setArtWork([]));
+      dispatch(setTrackDataFile([]));
+      dispatch(setTrackListDetail(resetTrackData));
+    };
+  }, []);
 
   const selectTrackDataFile = async () => {
     try {
@@ -238,6 +247,14 @@ const NewProject = (props: Props) => {
       onPressEvent: selectTrackList,
     },
   ];
+
+  const resetTrackData = {
+    trackDataPath: "",
+    trackTitle: "",
+    artistName: "",
+    artWorkPath: "",
+    linkedMyProjects: [],
+  };
 
   return (
     <>
