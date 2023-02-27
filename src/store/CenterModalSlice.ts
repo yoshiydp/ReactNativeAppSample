@@ -4,7 +4,8 @@ interface CenterModalStateType {
   centerModal: boolean;
   title: string;
   dataTitle: string;
-  description: string;
+  notes: string;
+  notesTrackListDetail: string;
   submitButtonText: string;
 }
 
@@ -12,7 +13,8 @@ const initialState: CenterModalStateType = {
   centerModal: false,
   title: "",
   dataTitle: "",
-  description: "",
+  notes: "",
+  notesTrackListDetail: "",
   submitButtonText: "Yes",
 };
 
@@ -32,8 +34,14 @@ export const CenterModalSlice = createSlice({
     setCenterModalDataTitle: (state: { dataTitle: string }, action: PayloadAction<string>) => {
       state.dataTitle = action.payload;
     },
-    setCenterModalDescription: (state: { description: string }, action: PayloadAction<string>) => {
-      state.description = action.payload;
+    setCenterModalNotes: (state: { notes: string }, action: PayloadAction<string>) => {
+      state.notes = action.payload;
+    },
+    setCenterModalNoteTrackListDetail: (
+      state: { notesTrackListDetail: string },
+      action: PayloadAction<string>,
+    ) => {
+      state.notesTrackListDetail = action.payload;
     },
     setCenterModalSubmitButtonText: (
       state: { submitButtonText: string },
@@ -49,7 +57,8 @@ export const {
   hideCenterModal,
   setCenterModalTitle,
   setCenterModalDataTitle,
-  setCenterModalDescription,
+  setCenterModalNotes,
+  setCenterModalNoteTrackListDetail,
   setCenterModalSubmitButtonText,
 } = CenterModalSlice.actions;
 export default CenterModalSlice.reducer;

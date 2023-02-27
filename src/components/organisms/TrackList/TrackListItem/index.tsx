@@ -11,7 +11,7 @@ import {
   showCenterModal,
   setCenterModalTitle,
   setCenterModalDataTitle,
-  setCenterModalDescription,
+  setCenterModalNoteTrackListDetail,
   setCenterModalSubmitButtonText,
 } from "store/CenterModalSlice";
 import { setTrackListDetail } from "store/TrackListDetailSlice";
@@ -89,7 +89,7 @@ const TrackListItem = (props: Props) => {
           : textExtensionSubstring(setTrackData.trackTitle),
       ),
     );
-    dispatch(setCenterModalDescription(TEXT.MODAL_DESC_DELETE_TRACK_NOTE));
+    dispatch(setCenterModalNoteTrackListDetail(TEXT.MODAL_DESC_DELETE_TRACK_NOTE));
     dispatch(setCenterModalSubmitButtonText);
     dispatch(setTrackListDetail(setTrackData));
   };
