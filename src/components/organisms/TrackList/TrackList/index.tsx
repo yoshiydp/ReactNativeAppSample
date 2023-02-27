@@ -20,6 +20,7 @@ import styles from "./TrackList.scss";
 interface Props {
   trackListDataItems: Array<TrackListDetailType>;
   navigation: any;
+  containerStyle?: any;
 }
 
 const TrackList = (props: Props) => {
@@ -30,7 +31,7 @@ const TrackList = (props: Props) => {
   };
 
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, props.containerStyle]}>
       {props.trackListDataItems?.length ? (
         props.trackListDataItems.map((item, index) => (
           <View style={index != 0 ? styles.itemMargin : ""} key={index}>
