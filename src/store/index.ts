@@ -12,6 +12,7 @@ import overlayReducer from "./OverlaySlice";
 import subscribeReducer from "./SubscribeSlice";
 import trackListDetailReducer from "./TrackListDetailSlice";
 import trackListItemsReducer from "./TrackListItemsSlice";
+import trackListModalFlagReducer from "./TrackListModalFlagSlice";
 
 export const store = configureStore({
   reducer: {
@@ -27,6 +28,7 @@ export const store = configureStore({
     subscribe: subscribeReducer,
     trackListDetail: trackListDetailReducer,
     trackListItems: trackListItemsReducer,
+    trackListModalFlag: trackListModalFlagReducer,
   },
 });
 

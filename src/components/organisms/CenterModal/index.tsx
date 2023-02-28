@@ -20,7 +20,13 @@ interface Props {
 const CenterModal = (props: Props) => {
   const centerModalTitleState = useSelector((state) => state.centerModal.title);
   const centerModalDataTitleState = useSelector((state) => state.centerModal.dataTitle);
-  const centerModalDescriptionState = useSelector((state) => state.centerModal.description);
+  const centerModalNotesState = useSelector((state) => state.centerModal.notes);
+  const centerModalNotesTrackListDetailState = useSelector(
+    (state) => state.centerModal.notesTrackListDetail,
+  );
+  const trackListDetailLinkedMyProjects = useSelector(
+    (state) => state.trackListDetail.linkedMyProjects,
+  );
   const scaleValue = useRef(new Animated.Value(0)).current;
   const [targetWidth, setTargetWidth] = useState<number>(0);
   const [targetHeight, setTargetHeight] = useState<number>(0);
@@ -36,7 +42,8 @@ const CenterModal = (props: Props) => {
     props.isShow,
     centerModalTitleState,
     centerModalDataTitleState,
-    centerModalDescriptionState,
+    centerModalNotesState,
+    centerModalNotesTrackListDetailState,
     targetWidth,
     targetHeight,
   ]);
@@ -81,8 +88,9 @@ const CenterModal = (props: Props) => {
       {centerModalDataTitleState && (
         <Text style={styles.dataTitle}>{centerModalDataTitleState}</Text>
       )}
-      {centerModalDescriptionState && (
-        <Text style={styles.description}>{centerModalDescriptionState}</Text>
+      {centerModalNotesState && <Text style={styles.notes}>{centerModalNotesState}</Text>}
+      {centerModalNotesTrackListDetailState && trackListDetailLinkedMyProjects.length > 0 && (
+        <Text style={styles.notes}>{centerModalNotesTrackListDetailState}</Text>
       )}
       <HorizontalButtonList />
     </Animated.View>

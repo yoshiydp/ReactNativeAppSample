@@ -44,7 +44,11 @@ const ModalPageSheet = (props: Props) => {
       <View style={styles.container}>
         <ModalControlHeader />
         <ScrollView>
-          <TrackList trackListDataItems={props.trackListDataItems} navigation={props.navigation} />
+          <TrackList
+            trackListDataItems={props.trackListDataItems}
+            navigation={props.navigation}
+            containerStyle={styles.containerScrollView}
+          />
         </ScrollView>
         <View
           style={[styles.swipeBorder, { transform: [{ translateX: -(targetWidth / 2) }] }]}

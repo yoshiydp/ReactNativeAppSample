@@ -11,7 +11,7 @@ import {
   showCenterModal,
   setCenterModalTitle,
   setCenterModalDataTitle,
-  setCenterModalDescription,
+  setCenterModalNotes,
   setCenterModalSubmitButtonText,
 } from "store/CenterModalSlice";
 import { setMyProjectsDetail } from "store/MyProjectsDetailSlice";
@@ -68,7 +68,7 @@ const MyProjectsItem = (props: Props) => {
     dispatch(showCenterModal());
     dispatch(setCenterModalTitle(TEXT.MODAL_TITLE_DELETE_PROJECT));
     dispatch(setCenterModalDataTitle(setProjectData.projectTitle));
-    dispatch(setCenterModalDescription(TEXT.MODAL_DESC_DELETE_NOTE));
+    dispatch(setCenterModalNotes(TEXT.MODAL_DESC_DELETE_NOTE));
     dispatch(setCenterModalSubmitButtonText);
     dispatch(setMyProjectsDetail(setProjectData));
     dispatch(activeMyProjectsModalFlag());
@@ -110,7 +110,8 @@ const MyProjectsItem = (props: Props) => {
             {props.lyric ? textSubstring(props.lyric, 25) : "No lyric"}
           </Text>
           <Text style={styles.text}>
-            {textSubstring(props.trackTitle, 15)} / {props.artistName}
+            {props.trackTitle ? textSubstring(props.trackTitle, 15) : "Not Track data"} /{" "}
+            {props.artistName && props.artistName}
           </Text>
         </View>
         <TouchableOpacity

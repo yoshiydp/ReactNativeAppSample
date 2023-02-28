@@ -3,6 +3,7 @@ import { View, Animated, Pressable } from "react-native";
 import { useDispatch } from "react-redux";
 
 // Store
+import { useSelector } from "store/index";
 import { hideModalPageSheet } from "store/ModalPageSheetSlice";
 
 // Components
@@ -25,6 +26,8 @@ const ModalControlHeader = (props: Props) => {
   const dispatch = useDispatch();
   const [isHidden, setIsHidden] = useState(false);
   const opacityValue = useRef(new Animated.Value(1)).current;
+  const myProjectsItems = useSelector((state) => state.myProjectsItems.myProjectsItems);
+  const trackListItems = useSelector((state) => state.trackListItems.trackListItems);
 
   const minOpacityAnimated = () => {
     setIsHidden(true);
@@ -72,11 +75,13 @@ const ModalControlHeader = (props: Props) => {
           />
         </Pressable>
       </Animated.View>
-      <SearchBar
-        activeMinOpacityAnimated={minOpacityAnimated}
-        activeMaxOpacityAnimated={maxOpacityAnimated}
-        setSearchValue={props.setSearchValue}
-      />
+      {(myProjectsItems.length > 0 || trackListItems.length > 0) && (
+        <SearchBar
+          activeMinOpacityAnimated={minOpacityAnimated}
+          activeMaxOpacityAnimated={maxOpacityAnimated}
+          setSearchValue={props.setSearchValue}
+        />
+      )}
     </View>
   );
 };
