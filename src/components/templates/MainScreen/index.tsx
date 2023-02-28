@@ -58,9 +58,14 @@ const MainScreen = (props: Props) => {
           <MyProjectsList
             myProjectDataItems={props.myProjectDataItems}
             navigation={props.navigation}
+            containerStyle={styles.containerScrollView}
           />
         ) : props.title === TEXT.TITLE_TRACK_LIST ? (
-          <TrackList trackListDataItems={props.trackListDataItems} navigation={props.navigation} />
+          <TrackList
+            trackListDataItems={props.trackListDataItems}
+            navigation={props.navigation}
+            containerStyle={styles.containerScrollView}
+          />
         ) : props.title === TEXT.TITLE_RECORD_AUDIO ? (
           <Text>{TEXT.TITLE_RECORD_AUDIO} screen</Text>
         ) : props.title === TEXT.TITLE_MY_ACCOUNT ? (

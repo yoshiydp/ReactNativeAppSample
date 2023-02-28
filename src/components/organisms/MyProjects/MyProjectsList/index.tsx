@@ -17,6 +17,7 @@ import styles from "./MyProjectsList.scss";
 interface Props {
   myProjectDataItems: Array<MyProjectsDetailType>;
   navigation: any;
+  containerStyle?: any;
 }
 
 const MyProjectsList = (props: Props) => {
@@ -25,7 +26,7 @@ const MyProjectsList = (props: Props) => {
   };
 
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, props.containerStyle]}>
       {props.myProjectDataItems.length ? (
         props.myProjectDataItems.map((item, index) => (
           <View style={index != 0 ? styles.itemMargin : ""} key={index}>

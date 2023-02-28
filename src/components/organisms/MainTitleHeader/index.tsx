@@ -1,6 +1,9 @@
 import React, { useRef, useState } from "react";
 import { View, Animated } from "react-native";
 
+// Store
+import { useSelector } from "store/index";
+
 // Components
 import SearchBar from "components/molecules/SearchBar";
 
@@ -18,6 +21,8 @@ interface Props {
 const MainTitleHeader = (props: Props) => {
   const [isHidden, setIsHidden] = useState(false);
   const opacityValue = useRef(new Animated.Value(1)).current;
+  const myProjectsItems = useSelector((state) => state.myProjectsItems.myProjectsItems);
+  const trackListItems = useSelector((state) => state.trackListItems.trackListItems);
 
   const minOpacityAnimated = () => {
     setIsHidden(true);
@@ -49,11 +54,13 @@ const MainTitleHeader = (props: Props) => {
   return (
     <View style={styles.container}>
       <Animated.Text style={[styles.title, animatedOpacityStyle]}>{props.title}</Animated.Text>
-      <SearchBar
-        activeMinOpacityAnimated={minOpacityAnimated}
-        activeMaxOpacityAnimated={maxOpacityAnimated}
-        setSearchValue={props.setSearchValue}
-      />
+      {(myProjectsItems.length > 0 || trackListItems.length > 0) && (
+        <SearchBar
+          activeMinOpacityAnimated={minOpacityAnimated}
+          activeMaxOpacityAnimated={maxOpacityAnimated}
+          setSearchValue={props.setSearchValue}
+        />
+      )}
     </View>
   );
 };

@@ -11,10 +11,11 @@ import {
   showCenterModal,
   setCenterModalTitle,
   setCenterModalDataTitle,
-  setCenterModalDescription,
+  setCenterModalNoteTrackListDetail,
   setCenterModalSubmitButtonText,
 } from "store/CenterModalSlice";
 import { setTrackListDetail } from "store/TrackListDetailSlice";
+import { activeTrackListModalFlag } from "store/TrackListModalFlagSlice";
 import { showOverlay, inactiveHidden } from "store/OverlaySlice";
 import { hideModalPageSheet } from "store/ModalPageSheetSlice";
 import { setTrackDataFile } from "store/NewProjectSlice";
@@ -89,9 +90,10 @@ const TrackListItem = (props: Props) => {
           : textExtensionSubstring(setTrackData.trackTitle),
       ),
     );
-    dispatch(setCenterModalDescription(TEXT.MODAL_DESC_DELETE_TRACK_NOTE));
+    dispatch(setCenterModalNoteTrackListDetail(TEXT.MODAL_DESC_DELETE_TRACK_NOTE));
     dispatch(setCenterModalSubmitButtonText);
     dispatch(setTrackListDetail(setTrackData));
+    dispatch(activeTrackListModalFlag());
   };
 
   const textSubstring = (value: string, count = 100) => {

@@ -3,7 +3,7 @@ import { useDispatch } from "react-redux";
 import DocumentPicker from "react-native-document-picker";
 import { firebaseAuth, db } from "src/config/firebase";
 import { getStorage, ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
-import { doc, updateDoc, arrayUnion, arrayRemove } from "firebase/firestore";
+import { doc, getDoc, updateDoc, arrayUnion, arrayRemove } from "firebase/firestore";
 
 // Store
 import { useSelector } from "store/index";
@@ -15,7 +15,9 @@ import {
 import { hideOverlay } from "store/OverlaySlice";
 import { hideMainTabMenu } from "store/MainTabMenuSlice";
 import { showModalPageSheet } from "store/ModalPageSheetSlice";
-import { setTrackDataFile } from "store/NewProjectSlice";
+import { setArtWork, setTrackDataFile } from "store/NewProjectSlice";
+import { setTrackListDetail } from "store/TrackListDetailSlice";
+import { setTrackListItems } from "store/TrackListItemsSlice";
 
 // Components
 import LoadingFullScreen from "components/molecules/Loading/LoadingFullScreen";
@@ -42,11 +44,39 @@ const NewProject = (props: Props) => {
   const trackListDetailTitle = useSelector((state) => state.trackListDetail.trackTitle);
   const trackListDetailDataPath = useSelector((state) => state.trackListDetail.trackDataPath);
   const loadingFullScreen = useSelector((state) => state.loadingFullScreen.loadingFullScreen);
+  const { uid }: any = firebaseAuth.currentUser;
+  if (!uid) return;
+  const docRef = doc(db, "users", uid);
+  const storage = getStorage();
+
+  const getTrackListData = async () => {
+    const docSnap = await getDoc(docRef);
+    if (docSnap.exists()) {
+      const trackListData = docSnap.data().trackListData;
+      const sorted = trackListData.sort((a: any, b: any) => {
+        a = a.trackTitle.toString().toLowerCase();
+        b = b.trackTitle.toString().toLowerCase();
+        return a > b ? 1 : b > a ? -1 : 0;
+      });
+      dispatch(setTrackListItems(sorted));
+    } else {
+      console.log("No such document!");
+    }
+  };
 
   useEffect(() => {
+    getTrackListData();
     dispatch(hideOverlay());
     dispatch(hideMainTabMenu());
   }, [projectTitle, artWork, trackDataFile]);
+
+  useEffect(() => {
+    return () => {
+      dispatch(setArtWork([]));
+      dispatch(setTrackDataFile([]));
+      dispatch(setTrackListDetail(resetTrackData));
+    };
+  }, []);
 
   const selectTrackDataFile = async () => {
     try {
@@ -62,9 +92,6 @@ const NewProject = (props: Props) => {
   const selectTrackList = async () => {
     dispatch(showModalPageSheet());
   };
-
-  const { uid }: any = firebaseAuth.currentUser;
-  const storage = getStorage();
 
   const fileUpload = async (
     fileUri: string,
@@ -238,6 +265,15 @@ const NewProject = (props: Props) => {
       onPressEvent: selectTrackList,
     },
   ];
+
+  // Unmountされたときにトラックデータをリセットするためのオブジェクト
+  const resetTrackData = {
+    trackDataPath: "",
+    trackTitle: "",
+    artistName: "",
+    artWorkPath: "",
+    linkedMyProjects: [],
+  };
 
   return (
     <>
