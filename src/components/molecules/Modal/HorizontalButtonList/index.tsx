@@ -80,59 +80,32 @@ const HorizontalButtonList = () => {
 
         // 削除するトラックデータに紐づいているプロジェクトデータを更新
         myProjectsItems.filter(async (items: any, index: number) => {
-          // console.log(items);
-          await items.trackTitle.some(async (item: string) => {
-            console.log(item);
-            // if (linkedMyProjects.projectTitle === myProjectsDetail.projectTitle) {
-            //   await updateDoc(docRef, {
-            //     trackListData: arrayRemove({
-            //       trackDataPath: items.trackDataPath,
-            //       trackTitle: items.trackTitle,
-            //       artistName: items.artistName,
-            //       artWorkPath: items.artWorkPath,
-            //       linkedMyProjects: [{ projectTitle: myProjectsDetail.projectTitle }],
-            //     }),
-            //   });
+          console.log(items.trackTitle);
+          console.log(items.trackTitle === trackListDetail.trackTitle);
+          if (items.trackTitle === trackListDetail.trackTitle) {
+            await updateDoc(docRef, {
+              myProjectsData: arrayRemove({
+                projectTitle: items.projectTitle,
+                lyric: items.lyric,
+                trackDataPath: items.trackDataPath,
+                trackTitle: items.trackTitle,
+                artistName: items.artistName,
+                artWorkPath: items.artWorkPath,
+              }),
+            });
 
-            //   await updateDoc(docRef, {
-            //     trackListData: arrayUnion({
-            //       trackDataPath: items.trackDataPath,
-            //       trackTitle: items.trackTitle,
-            //       artistName: items.artistName,
-            //       artWorkPath: items.artWorkPath,
-            //       linkedMyProjects: [],
-            //     }),
-            //   });
-            // }
-          });
+            await updateDoc(docRef, {
+              myProjectsData: arrayUnion({
+                projectTitle: items.projectTitle,
+                lyric: items.lyric,
+                trackDataPath: items.trackDataPath,
+                trackTitle: "",
+                artistName: items.artistName,
+                artWorkPath: items.artWorkPath,
+              }),
+            });
+          }
         });
-        // myProjectsItems.some(async (item: any) => {
-        //   console.log(item.trackTitle);
-        // if (item.trackTitle === trackListDetail.trackTitle) {
-        //   console.log(item.trackTitle === trackListDetail.trackTitle);
-        //   await updateDoc(docRef, {
-        //     myProjectsData: arrayRemove({
-        //       projectTitle: item.projectTitle,
-        //       lyric: item.lyric,
-        //       trackDataPath: item.trackDataPath,
-        //       trackTitle: item.trackTitle,
-        //       artistName: item.artistName,
-        //       artWorkPath: item.artWorkPath,
-        //     }),
-        //   });
-
-        //   await updateDoc(docRef, {
-        //     myProjectsData: arrayUnion({
-        //       projectTitle: item.projectTitle,
-        //       lyric: item.lyric,
-        //       trackDataPath: item.trackDataPath,
-        //       trackTitle: "",
-        //       artistName: item.artistName,
-        //       artWorkPath: item.artWorkPath,
-        //     }),
-        //   });
-        // }
-        // });
       }
     } catch (error: any) {
       console.log(error);
