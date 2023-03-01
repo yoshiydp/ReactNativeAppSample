@@ -375,6 +375,9 @@ PODS:
     - RCTTypeSafety
     - React-Core
     - ReactCommon/turbomodule/core
+  - react-native-track-player (3.2.0):
+    - React-Core
+    - SwiftAudioEx (= 0.15.3)
   - React-perflogger (0.70.5)
   - React-RCTActionSheet (0.70.5):
     - React-Core/RCTActionSheetHeaders (= 0.70.5)
@@ -467,6 +470,7 @@ PODS:
   - RNVectorIcons (9.2.0):
     - React-Core
   - SocketRocket (0.6.0)
+  - SwiftAudioEx (0.15.3)
   - Yoga (1.14.0)
   - YogaKit (1.18.1):
     - Yoga (~> 1.14)
@@ -524,6 +528,7 @@ DEPENDENCIES:
   - react-native-document-picker (from `../node_modules/react-native-document-picker`)
   - react-native-image-picker (from `../node_modules/react-native-image-picker`)
   - react-native-safe-area-context (from `../node_modules/react-native-safe-area-context`)
+  - react-native-track-player (from `../node_modules/react-native-track-player`)
   - React-perflogger (from `../node_modules/react-native/ReactCommon/reactperflogger`)
   - React-RCTActionSheet (from `../node_modules/react-native/Libraries/ActionSheetIOS`)
   - React-RCTAnimation (from `../node_modules/react-native/Libraries/NativeAnimation`)
@@ -574,6 +579,7 @@ SPEC REPOS:
     - OpenSSL-Universal
     - PromisesObjC
     - SocketRocket
+    - SwiftAudioEx
     - YogaKit
 
 EXTERNAL SOURCES:
@@ -625,6 +631,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native-image-picker"
   react-native-safe-area-context:
     :path: "../node_modules/react-native-safe-area-context"
+  react-native-track-player:
+    :path: "../node_modules/react-native-track-player"
   React-perflogger:
     :path: "../node_modules/react-native/ReactCommon/reactperflogger"
   React-RCTActionSheet:
@@ -720,6 +728,7 @@ SPEC CHECKSUMS:
   react-native-document-picker: 958e2bc82e128be69055be261aeac8d872c8d34c
   react-native-image-picker: c33d4e79f0a14a2b66e5065e14946ae63749660b
   react-native-safe-area-context: 39c2d8be3328df5d437ac1700f4f3a4f75716acc
+  react-native-track-player: 0c26d981b5097910486cbbeb6d8f5352d41be069
   React-perflogger: e68d3795cf5d247a0379735cbac7309adf2fb931
   React-RCTActionSheet: 05452c3b281edb27850253db13ecd4c5a65bc247
   React-RCTAnimation: 578eebac706428e68466118e84aeacf3a282b4da
@@ -743,6 +752,7 @@ SPEC CHECKSUMS:
   RNSVG: c1e76b81c76cdcd34b4e1188852892dc280eb902
   RNVectorIcons: fcc2f6cb32f5735b586e66d14103a74ce6ad61f8
   SocketRocket: fccef3f9c5cedea1353a9ef6ada904fde10d6608
+  SwiftAudioEx: 83eabba2940924fc1c0d5cb0896049921365229c
   Yoga: eca980a5771bf114c41a754098cd85e6e0d90ed7
   YogaKit: f782866e155069a2cca2517aafea43200b01fd5a
 
