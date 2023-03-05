@@ -1,7 +1,11 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { Animated, View, ScrollView } from "react-native";
 
 // Components
 import LowerScreen from "components/templates/LowerScreen";
+
+// Styles
+import styles from "./MyProjects.scss";
 
 interface Props {
   navigation: any;
