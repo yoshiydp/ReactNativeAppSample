@@ -77,13 +77,13 @@ const StackNavigator = () => {
         </>
       ) : (
         <>
-          {/* <Stack.Screen name="EditProject" component={EditProjectScreen} /> */}
+          <Stack.Screen name="EditProject" component={EditProjectScreen} />
           <Stack.Screen name="Login" component={LoginScreen} />
           <Stack.Screen name="SignUp" component={SignUpScreen} />
         </>
       )}
       <Stack.Screen name="EditMyAccount" component={EditMyAccountScreen} />
-      <Stack.Screen name="EditProject" component={EditProjectScreen} />
+      {/* <Stack.Screen name="EditProject" component={EditProjectScreen} /> */}
       <Stack.Screen name="EditTrack" component={EditTrackScreen} />
       <Stack.Screen name="Loading" component={LoadingScreen} />
       <Stack.Screen name="NewProject" component={NewProjectScreen} />
