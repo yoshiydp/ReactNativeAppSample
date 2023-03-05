@@ -1,16 +1,7 @@
 @use "src/globalStyles/" as g;
 
-%container {
+.container {
   flex: 1;
+  padding-top: 60px;
   background: g.colors(blue, bg);
-}
-
-.containerNewProject {
-  padding: 88px 35px 90px;
-  @extend %container;
-}
-
-.containerEditProject {
-  padding: 88px 35px 90px;
-  @extend %container;
 }
