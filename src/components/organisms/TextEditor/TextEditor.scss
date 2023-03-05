@@ -1,0 +1,39 @@
+@use "src/globalStyles/" as g;
+
+.container {
+  width: 100%;
+  padding: 0 20px;
+}
+
+.project-title {
+  font-family: g.$font-dm-serif-display;
+  font-size: 20px;
+  color: g.colors(white, base);
+}
+
+.lyric-wrap {
+  margin-top: 18px;
+}
+
+.lyric-text {
+  font-size: 16px;
+  color: g.colors(gray, type1);
+  line-height: 24px;
+}
+
+.rich-editor-wrap {
+  margin: 0;
+  padding: 0;
+}
+
+.rich-editor {
+  font-size: 16px;
+  color: g.colors(gray, type1);
+  line-height: 24px;
+  background: g.colors(blue, bg);
+}
+
+.rich-toolbar {
+  color: g.colors(gray, type1);
+  background: g.colors(blue, overlay);
+}
