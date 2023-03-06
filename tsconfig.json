@@ -36,5 +36,6 @@
   "include": [
     "src/**/*.ts",
     "src/**/*.tsx",
+    "src/services/trackPlayerService.js",
   ]
 }
