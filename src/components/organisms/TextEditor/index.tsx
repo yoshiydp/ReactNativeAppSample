@@ -20,10 +20,6 @@ interface Props {
   projectTitle: string;
 }
 
-interface Props {
-  projectTitle: string;
-}
-
 const TextEditor = (props: Props) => {
   const richText = useRef();
 
@@ -70,7 +66,8 @@ const TextEditor = (props: Props) => {
             onChange={richTextHandle}
             placeholder="ここにリリックを入力してください"
             androidHardwareAccelerationDisabled={true}
-            initialHeight={417}
+            // initialHeight={417}
+            initialHeight={188}
             editorStyle={styles["rich-editor"]}
           />
           <RichToolbar

@@ -8,6 +8,7 @@ import { showOverlay } from "store/OverlaySlice";
 
 // Components
 import TextEditor from "components/organisms/TextEditor";
+import SeekBar from "components/organisms/SeekBar";
 import CenterModal from "components/organisms/CenterModal";
 import EditProjectHeader from "components/molecules/EditProjectHeader";
 import Overlay from "components/atoms/Overlay";
@@ -36,11 +37,14 @@ const EditProject = (props: Props) => {
 
   return (
     <View style={styles["container"]}>
-      <EditProjectHeader
-        onPressHomeButton={onPressGoBackHome}
-        onPressMenuButton={onPressOpenMenu}
-      />
-      <TextEditor projectTitle="Project Title" />
+      <View>
+        <EditProjectHeader
+          onPressHomeButton={onPressGoBackHome}
+          onPressMenuButton={onPressOpenMenu}
+        />
+        <TextEditor projectTitle="Project Title" />
+        <SeekBar />
+      </View>
       <Overlay isShow={overlay} />
       {/* <CenterModal isShow={centerModal} /> */}
     </View>
