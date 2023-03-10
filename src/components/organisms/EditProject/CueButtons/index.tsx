@@ -1,5 +1,6 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import { Pressable, Text, View } from "react-native";
+import { TapGestureHandler, State } from "react-native-gesture-handler";
 
 // Constants
 import * as COLOR from "constants/color";
@@ -13,94 +14,164 @@ const CueButtons = () => {
   const [cueC, setCueC] = useState<boolean>(false);
   const [cueD, setCueD] = useState<boolean>(false);
   const [cueE, setCueE] = useState<boolean>(false);
+  const doubleTapCueARef = useRef(null);
+  const doubleTapCueBRef = useRef(null);
+  const doubleTapCueCRef = useRef(null);
+  const doubleTapCueDRef = useRef(null);
+  const doubleTapCueERef = useRef(null);
 
-  const onPressActiveCueA = () => {
-    console.log("onPressActiveCueA!");
-    setCueA(true);
+  const onPressActiveCueA = (event: any) => {
+    if (event.nativeEvent.state === State.ACTIVE) {
+      setCueA(true);
+    }
   };
 
-  const onLongPressResetCueA = () => {
-    console.log("onLongPressResetCueA!");
-    setCueA(false);
+  const onDoubleTapResetCueA = (event: any) => {
+    if (event.nativeEvent.state === State.ACTIVE) {
+      setCueA(false);
+    }
   };
 
-  const onPressActiveCueB = () => {
-    console.log("onPressActiveCueB!");
-    setCueB(true);
+  const onLongPressCueA = () => {
+    console.log("onLongPressCueA!");
   };
 
-  const onLongPressResetCueB = () => {
-    console.log("onLongPressResetCueB!");
-    setCueB(false);
+  const onPressActiveCueB = (event: any) => {
+    if (event.nativeEvent.state === State.ACTIVE) {
+      setCueB(true);
+    }
   };
 
-  const onPressActiveCueC = () => {
-    console.log("onPressActiveCueC!");
-    setCueC(true);
+  const onDoubleTapResetCueB = (event: any) => {
+    if (event.nativeEvent.state === State.ACTIVE) {
+      setCueB(false);
+    }
   };
 
-  const onLongPressResetCueC = () => {
-    console.log("onLongPressResetCueC!");
-    setCueC(false);
+  const onLongPressCueB = () => {
+    console.log("onLongPressCueB!");
   };
 
-  const onPressActiveCueD = () => {
-    console.log("onPressActiveCueD!");
-    setCueD(true);
+  const onPressActiveCueC = (event: any) => {
+    if (event.nativeEvent.state === State.ACTIVE) {
+      setCueC(true);
+    }
   };
 
-  const onLongPressResetCueD = () => {
-    console.log("onLongPressResetCueD!");
-    setCueD(false);
+  const onDoubleTapResetCueC = (event: any) => {
+    if (event.nativeEvent.state === State.ACTIVE) {
+      setCueC(false);
+    }
   };
 
-  const onPressActiveCueE = () => {
-    console.log("onPressActiveCueE!");
-    setCueE(true);
+  const onLongPressCueC = () => {
+    console.log("onLongPressCueC!");
   };
 
-  const onLongPressResetCueE = () => {
-    console.log("onLongPressResetCueE!");
-    setCueE(false);
+  const onPressActiveCueD = (event: any) => {
+    if (event.nativeEvent.state === State.ACTIVE) {
+      setCueD(true);
+    }
+  };
+
+  const onDoubleTapResetCueD = (event: any) => {
+    if (event.nativeEvent.state === State.ACTIVE) {
+      setCueD(false);
+    }
+  };
+
+  const onLongPressCueD = () => {
+    console.log("onLongPressCueD!");
+  };
+
+  const onPressActiveCueE = (event: any) => {
+    if (event.nativeEvent.state === State.ACTIVE) {
+      setCueE(true);
+    }
+  };
+
+  const onDoubleTapResetCueE = (event: any) => {
+    if (event.nativeEvent.state === State.ACTIVE) {
+      setCueE(false);
+    }
+  };
+
+  const onLongPressCueE = () => {
+    console.log("onLongPressCueE!");
   };
 
   return (
     <View style={styles["container"]}>
-      <Pressable
-        style={cueA ? styles["buttonItem--firstActive"] : styles["buttonItem--first"]}
-        onPress={onPressActiveCueA}
-        onLongPress={onLongPressResetCueA}
-      >
-        <Text style={styles["text"]}>Cue A</Text>
-      </Pressable>
-      <Pressable
-        style={cueB ? styles["buttonItem--active"] : styles["buttonItem"]}
-        onPress={onPressActiveCueB}
-        onLongPress={onLongPressResetCueB}
-      >
-        <Text style={styles["text"]}>Cue B</Text>
-      </Pressable>
-      <Pressable
-        style={cueC ? styles["buttonItem--active"] : styles["buttonItem"]}
-        onPress={onPressActiveCueC}
-        onLongPress={onLongPressResetCueC}
-      >
-        <Text style={styles["text"]}>Cue C</Text>
-      </Pressable>
-      <Pressable
-        style={cueD ? styles["buttonItem--active"] : styles["buttonItem"]}
-        onPress={onPressActiveCueD}
-        onLongPress={onLongPressResetCueD}
-      >
-        <Text style={styles["text"]}>Cue D</Text>
-      </Pressable>
-      <Pressable
-        style={cueE ? styles["buttonItem--active"] : styles["buttonItem"]}
-        onPress={onPressActiveCueE}
-        onLongPress={onLongPressResetCueE}
-      >
-        <Text style={styles["text"]}>Cue E</Text>
-      </Pressable>
+      <TapGestureHandler onHandlerStateChange={onPressActiveCueA} waitFor={doubleTapCueARef}>
+        <TapGestureHandler
+          ref={doubleTapCueARef}
+          onHandlerStateChange={onDoubleTapResetCueA}
+          numberOfTaps={2}
+        >
+          <Pressable
+            onLongPress={onLongPressCueA}
+            style={cueA ? styles["buttonItem--firstActive"] : styles["buttonItem--first"]}
+          >
+            <Text style={styles["text"]}>Cue A</Text>
+          </Pressable>
+        </TapGestureHandler>
+      </TapGestureHandler>
+      <TapGestureHandler onHandlerStateChange={onPressActiveCueB} waitFor={doubleTapCueBRef}>
+        <TapGestureHandler
+          ref={doubleTapCueBRef}
+          onHandlerStateChange={onDoubleTapResetCueB}
+          numberOfTaps={2}
+        >
+          <Pressable
+            onLongPress={onLongPressCueB}
+            style={cueB ? styles["buttonItem--active"] : styles["buttonItem"]}
+          >
+            <Text style={styles["text"]}>Cue B</Text>
+          </Pressable>
+        </TapGestureHandler>
+      </TapGestureHandler>
+      <TapGestureHandler onHandlerStateChange={onPressActiveCueC} waitFor={doubleTapCueCRef}>
+        <TapGestureHandler
+          ref={doubleTapCueCRef}
+          onHandlerStateChange={onDoubleTapResetCueC}
+          numberOfTaps={2}
+        >
+          <Pressable
+            onLongPress={onLongPressCueC}
+            style={cueC ? styles["buttonItem--active"] : styles["buttonItem"]}
+          >
+            <Text style={styles["text"]}>Cue C</Text>
+          </Pressable>
+        </TapGestureHandler>
+      </TapGestureHandler>
+      <TapGestureHandler onHandlerStateChange={onPressActiveCueD} waitFor={doubleTapCueDRef}>
+        <TapGestureHandler
+          ref={doubleTapCueDRef}
+          onHandlerStateChange={onDoubleTapResetCueD}
+          numberOfTaps={2}
+        >
+          <Pressable
+            onLongPress={onLongPressCueD}
+            style={cueD ? styles["buttonItem--active"] : styles["buttonItem"]}
+          >
+            <Text style={styles["text"]}>Cue D</Text>
+          </Pressable>
+        </TapGestureHandler>
+      </TapGestureHandler>
+      <TapGestureHandler onHandlerStateChange={onPressActiveCueE} waitFor={doubleTapCueERef}>
+        <TapGestureHandler
+          ref={doubleTapCueERef}
+          onHandlerStateChange={onDoubleTapResetCueE}
+          numberOfTaps={2}
+        >
+          <Pressable
+            onLongPress={onLongPressCueE}
+            style={cueE ? styles["buttonItem--active"] : styles["buttonItem"]}
+          >
+            <Text style={styles["text"]}>Cue E</Text>
+          </Pressable>
+        </TapGestureHandler>
+      </TapGestureHandler>
     </View>
   );
 };
