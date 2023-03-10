@@ -35,6 +35,7 @@ const Icon = (props: Props) => {
             <Path d={props.pathD1} transform={props.pathTransform1} fill={props.pathFill} />
             <Path d={props.pathD2} transform={props.pathTransform2} fill={props.pathFill} />
             <Path d={props.pathD3} transform={props.pathTransform3} fill={props.pathFill} />
+            <Path d={props.pathD4} transform={props.pathTransform4} fill={props.pathFill} />
           </G>
         </Svg>
       ) : props.svgType === 2 ? (
