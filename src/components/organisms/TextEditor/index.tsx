@@ -9,9 +9,14 @@ import {
   View,
 } from "react-native";
 import { actions, RichEditor, RichToolbar } from "react-native-pell-rich-editor";
+import LinearGradient from "react-native-linear-gradient";
+
+// Components
+import Icon from "components/atoms/Icon";
 
 // Constants
 import * as COLOR from "constants/color";
+import * as SVGPATH from "constants/svgPath";
 
 // Styles
 import styles from "./TextEditor.scss";
@@ -24,7 +29,8 @@ const TextEditor = (props: Props) => {
   const richText = useRef();
 
   const [descHTML, setDescHTML] = useState("");
-  const [showDescError, setShowDescError] = useState(false);
+  const [showDescError, setShowDescError] = useState<boolean>(false);
+  const [activeEditor, setActiveEditor] = useState<boolean>(false);
 
   const richTextHandle = (descriptionText: string) => {
     if (descriptionText) {
@@ -47,24 +53,23 @@ const TextEditor = (props: Props) => {
     }
   };
 
+  const onPressActiveEditor = () => {
+    setActiveEditor(true);
+  };
+
+  const onPressInactiveEditor = () => {
+    setActiveEditor(false);
+  };
+
   return (
-    <ScrollView style={styles["container"]}>
+    <View style={styles["container"]}>
       <Text style={styles["project-title"]}>{props.projectTitle}</Text>
       <ScrollView style={styles["lyric-wrap"]}>
-        {/* <Text style={styles["lyric-text"]}>
-          歌詞が表示されます。歌詞が表示されます。歌詞が表示されます。歌詞が表示されます。歌詞が表示されます。歌詞が表示されます。歌詞が表示されます。歌詞が表示されます。歌詞が表示されます。歌詞が表示されます。歌詞が表示されます。歌詞が表示されます。歌詞が表示されます。歌詞が表示されます。歌詞が表示されます。歌詞が表示されます。歌詞が表示されます。歌詞が表示されます。歌詞が表示されます。歌詞が表示されます。歌詞が表示されます。歌詞が表示されます。歌詞が表示されます。歌詞が表示されます。歌詞が表示されます。歌詞が表示されます。歌詞が表示されます。歌詞が表示されます。歌詞が表示されます。歌詞が表示されます。歌詞が表示されます。歌詞が表示されます。
-        </Text> */}
         <SafeAreaView edges={["bottom", "left", "right"]} style={styles["rich-editor-wrap"]}>
-          {/* <Pressable onPress={() => richText.current?.dismissKeyboard()}>
-              <Text style={editorStyles.headerStyle}>Your awesome Content</Text>
-              <View style={editorStyles.htmlBoxStyle}>
-                <Text>{descHTML}</Text>
-              </View>
-            </Pressable> */}
           <RichEditor
             ref={richText}
             onChange={richTextHandle}
-            placeholder="ここにリリックを入力してください"
+            placeholder="ここにリリックを入力してくださいここにリリックを入力してくださいここにリリックを入力してくださいここにリリックを入力してくださいここにリリックを入力してくださいここにリリックを入力してくださいここにリリックを入力してくださいここにリリックを入力してくださいここにリリックを入力してくださいここにリリックを入力してくださいここにリリックを入力してくださいここにリリックを入力してくださいここにリリックを入力してくださいここにリリックを入力してくださいここにリリックを入力してくださいここにリリックを入力してくださいここにリリックを入力してくださいここにリリックを入力してくださいここにリリックを入力してくださいここにリリックを入力してくださいここにリリックを入力してくださいここにリリックを入力してくださいここにリリックを入力してください"
             androidHardwareAccelerationDisabled={true}
             // initialHeight={417}
             initialHeight={188}
@@ -84,97 +89,47 @@ const TextEditor = (props: Props) => {
             ]}
             style={styles["rich-toolbar"]}
           />
-          {/* <TouchableOpacity style={editorStyles.saveButtonStyle} onPress={submitContentHandle}>
-              <Text style={editorStyles.textButtonStyle}>Save</Text>
-            </TouchableOpacity> */}
         </SafeAreaView>
       </ScrollView>
-    </ScrollView>
+      <LinearGradient
+        colors={["rgba(27,34,46,0)", "rgba(27,34,46,1)"]}
+        style={styles["cover-gradient"]}
+      ></LinearGradient>
+      <View style={styles["toggle-button-wrap"]}>
+        {activeEditor ? (
+          <Pressable style={styles["close-button"]} onPress={onPressInactiveEditor}>
+            <Icon
+              svgType={1}
+              width="12"
+              height="6.84"
+              viewBox="0 0 12 6.84"
+              gTransform="translate(12.001 103.981) rotate(180)"
+              pathD1={SVGPATH.ICON_ARROW_UP}
+              pathTransform1="translate(0)"
+              pathFill={COLOR.COLOR_GRAY_TYPE1}
+              containerStyle={styles["icon-arrow-up"]}
+            />
+            <Text style={styles["toggle-button__text"]}>Close Lyrics</Text>
+          </Pressable>
+        ) : (
+          <Pressable style={styles["open-button"]} onPress={onPressActiveEditor}>
+            <Text style={styles["toggle-button__text"]}>Edit Lyrics</Text>
+            <Icon
+              svgType={1}
+              width="12"
+              height="6.84"
+              viewBox="0 0 12 6.84"
+              gTransform="translate(-0.001 -97.141)"
+              pathD1={SVGPATH.ICON_ARROW_DOWN}
+              pathTransform1="translate(0)"
+              pathFill={COLOR.COLOR_GRAY_TYPE1}
+              containerStyle={styles["icon-arrow-down"]}
+            />
+          </Pressable>
+        )}
+      </View>
+    </View>
   );
 };
-
-const editorStyles = StyleSheet.create({
-  container: {
-    flex: 1,
-    height: "100%",
-    backgroundColor: "#ccaf9b",
-    alignItems: "center",
-  },
-
-  headerStyle: {
-    fontSize: 20,
-    fontWeight: "600",
-    color: "#312921",
-  },
-
-  htmlBoxStyle: {
-    height: 200,
-    width: 330,
-    backgroundColor: "#fff",
-    borderRadius: 10,
-    marginBottom: 10,
-  },
-
-  richTextContainer: {
-    display: "flex",
-    flexDirection: "column-reverse",
-    width: "100%",
-  },
-
-  richTextEditorStyle: {
-    borderBottomLeftRadius: 10,
-    borderBottomRightRadius: 10,
-    borderWidth: 1,
-    borderColor: "#ccaf9b",
-    shadowColor: "#000",
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.23,
-    shadowRadius: 2.62,
-    elevation: 4,
-    fontSize: 20,
-  },
-
-  richTextToolbarStyle: {
-    backgroundColor: "#c6c3b3",
-    borderColor: "#c6c3b3",
-    borderTopLeftRadius: 10,
-    borderTopRightRadius: 10,
-    borderWidth: 1,
-  },
-
-  errorTextStyle: {
-    color: "#FF0000",
-    marginBottom: 10,
-  },
-
-  saveButtonStyle: {
-    backgroundColor: "#c6c3b3",
-    borderWidth: 1,
-    borderColor: "#c6c3b3",
-    borderRadius: 10,
-    padding: 10,
-    width: "25%",
-    alignItems: "center",
-    justifyContent: "center",
-    shadowColor: "#000",
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.23,
-    shadowRadius: 2.62,
-    elevation: 4,
-    fontSize: 20,
-  },
-
-  textButtonStyle: {
-    fontSize: 18,
-    fontWeight: "600",
-    color: "#312921",
-  },
-});
 
 export default TextEditor;
