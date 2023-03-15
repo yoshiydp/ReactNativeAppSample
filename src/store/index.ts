@@ -1,9 +1,11 @@
 import { configureStore } from "@reduxjs/toolkit";
 import { useSelector as rawUseSelector, TypedUseSelectorHook } from "react-redux";
 import centerModalReducer from "./CenterModalSlice";
+import editProjectModalFlagReducer from "./EditProjectModalFlagSlice";
 import loadingFullScreenReducer from "./LoadingFullScreenSlice";
 import mainTabMenuReducer from "./MainTabMenuSlice";
 import modalPageSheetReducer from "./ModalPageSheetSlice";
+import modalProjectSettingsReducer from "./ModalProjectSettingsSlice";
 import myProjectsDetailReducer from "./MyProjectsDetailSlice";
 import myProjectsItemsReducer from "./MyProjectsItemsSlice";
 import myProjectsModalFlagReducer from "./MyProjectsModalFlagSlice";
@@ -17,9 +19,11 @@ import trackListModalFlagReducer from "./TrackListModalFlagSlice";
 export const store = configureStore({
   reducer: {
     centerModal: centerModalReducer,
+    editProjectModalFlag: editProjectModalFlagReducer,
     loadingFullScreen: loadingFullScreenReducer,
     mainTabMenu: mainTabMenuReducer,
     modalPageSheet: modalPageSheetReducer,
+    modalProjectSettings: modalProjectSettingsReducer,
     myProjectsDetail: myProjectsDetailReducer,
     myProjectsItems: myProjectsItemsReducer,
     myProjectsModalFlag: myProjectsModalFlagReducer,
