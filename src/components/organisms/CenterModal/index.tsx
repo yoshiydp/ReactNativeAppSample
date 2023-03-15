@@ -15,6 +15,7 @@ import styles from "./CenterModal.scss";
 
 interface Props {
   isShow: boolean;
+  navigation: any;
 }
 
 const CenterModal = (props: Props) => {
@@ -92,7 +93,7 @@ const CenterModal = (props: Props) => {
       {centerModalNotesTrackListDetailState && trackListDetailLinkedMyProjects.length > 0 && (
         <Text style={styles.notes}>{centerModalNotesTrackListDetailState}</Text>
       )}
-      <HorizontalButtonList />
+      <HorizontalButtonList navigation={props.navigation} />
     </Animated.View>
   );
 };
