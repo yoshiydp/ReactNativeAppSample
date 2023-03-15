@@ -11,17 +11,23 @@ import { hideCenterModal } from "store/CenterModalSlice";
 import { hideOverlay, activeHidden } from "store/OverlaySlice";
 import { inactiveMyProjectsModalFlag } from "store/MyProjectsModalFlagSlice";
 import { inactiveTrackListModalFlag } from "store/TrackListModalFlagSlice";
+import { inactiveEditProjectModalFlag } from "store/EditProjectModalFlagSlice";
 
 // Styles
 import styles from "./HorizontalButtonList.scss";
 
-const HorizontalButtonList = () => {
+interface Props {
+  navigation: any;
+}
+
+const HorizontalButtonList = (props: Props) => {
   const dispatch = useDispatch();
   const centerModalSubmitTextState = useSelector((state) => state.centerModal.submitButtonText);
   const myProjectsItems = useSelector((state) => state.myProjectsItems.myProjectsItems);
   const myProjectsDetail = useSelector((state) => state.myProjectsDetail);
   const myProjectsModalFlag = useSelector((state) => state.myProjectsModalFlag.modalFlag);
   const trackListModalFlag = useSelector((state) => state.trackListModalFlag.modalFlag);
+  const editProjectModalFlag = useSelector((state) => state.editProjectModalFlag.modalFlag);
   const trackListItems = useSelector((state) => state.trackListItems.trackListItems);
   const trackListDetail = useSelector((state) => state.trackListDetail);
 
@@ -107,15 +113,29 @@ const HorizontalButtonList = () => {
           }
         });
       }
+
+      // EditProjectからのモーダル表示の処理
+      if (editProjectModalFlag) {
+        console.log("editProjectModalFlag!");
+      }
     } catch (error: any) {
       console.log(error);
     } finally {
       dispatch(hideOverlay());
       dispatch(activeHidden());
       dispatch(hideCenterModal());
-      if (myProjectsModalFlag) dispatch(inactiveMyProjectsModalFlag());
-      if (trackListModalFlag) dispatch(inactiveTrackListModalFlag());
-      console.log("delete data");
+      if (myProjectsModalFlag) {
+        dispatch(inactiveMyProjectsModalFlag());
+        console.log("delete project data");
+      }
+      if (trackListModalFlag) {
+        dispatch(inactiveTrackListModalFlag());
+        console.log("delete track data");
+      }
+      if (editProjectModalFlag) {
+        dispatch(inactiveEditProjectModalFlag());
+        props.navigation.goBack();
+      }
     }
   };
 
