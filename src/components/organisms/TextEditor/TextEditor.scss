@@ -20,19 +20,19 @@
 
 .lyric-text {
   font-size: 16px;
-  color: g.colors(gray, type1);
   line-height: 24px;
+  color: g.colors(gray, type1);
 }
 
 .rich-editor-wrap {
-  margin: 0;
   padding: 0;
+  margin: 0;
 }
 
 .rich-editor {
   font-size: 16px;
-  color: g.colors(gray, type1);
   line-height: 24px;
+  color: g.colors(gray, type1);
   background: g.colors(blue, bg);
 }
 
@@ -57,18 +57,18 @@
 }
 
 %toggle-button__text {
-  text-align: center;
-  color: g.colors(white, base);
   font-size: 14px;
   font-weight: bold;
+  color: g.colors(white, base);
+  text-align: center;
 }
 
 .toggle-button-wrap {
-  justify-content: center;
-  align-items: center;
   position: absolute;
   bottom: -46px;
   left: 20px;
+  align-items: center;
+  justify-content: center;
   width: 100%;
 }
 

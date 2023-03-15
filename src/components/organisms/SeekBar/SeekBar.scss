@@ -8,8 +8,8 @@
 
 .track-style {
   height: 2px;
-  border-radius: 50px;
   background: transparent;
+  border-radius: 50px;
 }
 
 .thumb-style {
@@ -19,8 +19,8 @@
 }
 
 .icon-style {
-  bottom: 5px;
   right: 6px;
+  bottom: 5px;
 }
 
 .seek-time-wrap {
@@ -32,6 +32,6 @@
 }
 
 .seek-time {
-  color: g.colors(white, base);
   font-size: 12px;
+  color: g.colors(white, base);
 }

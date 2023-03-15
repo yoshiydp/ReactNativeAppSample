@@ -2,8 +2,8 @@
 
 %container {
   flex-direction: row;
-  justify-content: center;
   align-items: center;
+  justify-content: center;
   width: 100%;
 }
 
@@ -18,13 +18,13 @@
 }
 
 .play-button {
-  justify-content: center;
   align-items: center;
+  justify-content: center;
   width: 64px;
   height: 64px;
+  background: g.colors(blue, overlay);
   border: solid 2px g.colors(white, base);
   border-radius: 50px;
-  background: g.colors(blue, overlay);
 }
 
 .icon-start {
@@ -37,8 +37,8 @@
 }
 
 .repeat-button {
-  justify-content: center;
   align-items: center;
+  justify-content: center;
   width: 48px;
   margin-right: 46px;
   margin-left: 12px;
@@ -50,8 +50,8 @@
 }
 
 .icon-repeat {
-  justify-content: center;
   align-items: center;
+  justify-content: center;
   width: 44px;
   height: 44px;
 }

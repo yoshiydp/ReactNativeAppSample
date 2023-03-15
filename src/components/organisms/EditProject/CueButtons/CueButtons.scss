@@ -6,16 +6,16 @@
 }
 
 %button {
-  justify-content: center;
   align-items: center;
+  justify-content: center;
   width: calc(100% / 5);
   height: 48px;
   background: g.colors(yellow, dark);
 }
 
 %buttonActive {
-  justify-content: center;
   align-items: center;
+  justify-content: center;
   width: calc(100% / 5);
   height: 48px;
   background: g.colors(yellow, light);
