@@ -52,6 +52,7 @@ export const LABEL_NOTES_TRACK_DATA = "（下のボタンからアップロー�
 export const LABEL_NOTES_USERNAME = "（半角英数字のみ入力可能）";
 
 // PLACEHOLDER
+export const PLACEHOLDER_EDIT_PROJECT = "ここからリリックを入力してください";
 export const PLACEHOLDER_INPUT_EMAIL = "example@example.com";
 export const PLACEHOLDER_INPUT_PASSWORD = "Password";
 export const PLACEHOLDER_INPUT_SEARCH = "検索";
