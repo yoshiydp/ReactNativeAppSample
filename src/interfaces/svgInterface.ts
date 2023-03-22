@@ -15,6 +15,8 @@ export interface svgType1 extends svgCommonProps {
   pathTransform2?: string;
   pathD3?: string;
   pathTransform3?: string;
+  pathD4?: string;
+  pathTransform4?: string;
 }
 
 export interface svgType2 extends svgCommonProps {
@@ -80,4 +82,12 @@ export interface svgType7 extends svgCommonProps {
   pathD2?: string;
   pathTransform1?: string;
   pathTransform2?: string;
+}
+
+export interface svgType8 extends svgCommonProps {
+  rectWidth?: string;
+  rectHeight?: string;
+  rectRx?: string;
+  rectTransform1?: string;
+  rectTransform2?: string;
 }

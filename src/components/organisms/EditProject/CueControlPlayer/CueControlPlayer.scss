@@ -1,0 +1,67 @@
+@use "src/globalStyles/" as g;
+
+%container {
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+}
+
+%text {
+  font-size: 16px;
+  font-weight: 900;
+  color: g.colors(white, base);
+}
+
+.container {
+  @extend %container;
+}
+
+.play-button {
+  align-items: center;
+  justify-content: center;
+  width: 64px;
+  height: 64px;
+  background: g.colors(blue, overlay);
+  border: solid 2px g.colors(white, base);
+  border-radius: 50px;
+}
+
+.icon-start {
+  margin-left: 3px;
+}
+
+.icon-pause {
+  margin-bottom: 4px;
+  margin-left: 2px;
+}
+
+.repeat-button {
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  margin-right: 46px;
+  margin-left: 12px;
+}
+
+.repeat-button__text {
+  color: g.colors(white, base);
+  @extend %text;
+}
+
+.icon-repeat {
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+}
+
+.cue-reset-button {
+  width: 60px;
+  margin-left: 48px;
+}
+
+.cue-reset-button__text {
+  text-align: center;
+  @extend %text;
+}

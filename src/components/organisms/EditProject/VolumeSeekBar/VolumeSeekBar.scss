@@ -1,0 +1,41 @@
+@use "src/globalStyles/" as g;
+
+.container {
+  position: relative;
+  width: 100%;
+  padding-right: 48px;
+  padding-left: 40px;
+  margin-top: 32px;
+}
+
+.track-style {
+  height: 2px;
+  background: transparent;
+  border-radius: 50px;
+}
+
+.thumb-style {
+  width: 20px;
+  height: 20px;
+  background: transparent;
+}
+
+.icon-thumb-style {
+  right: 6px;
+  bottom: 5px;
+}
+
+%icon-style {
+  position: absolute;
+  top: 14px;
+}
+
+.icon-speaker-style {
+  right: 20px;
+  @extend %icon-style;
+}
+
+.icon-speaker-low-style {
+  left: 20px;
+  @extend %icon-style;
+}

@@ -1,0 +1,15 @@
+@use "src/globalStyles/" as g;
+
+.container {
+  flex: 1;
+  padding-top: 60px;
+  background: g.colors(blue, bg);
+}
+
+.cue-buttons-wrap {
+  margin-top: 40px;
+}
+
+.cue-control-player-wrap {
+  margin-top: 44px;
+}
