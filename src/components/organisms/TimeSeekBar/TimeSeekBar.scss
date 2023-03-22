@@ -1,0 +1,37 @@
+@use "src/globalStyles/" as g;
+
+.container {
+  position: relative;
+  width: 100%;
+  padding: 0 20px;
+}
+
+.track-style {
+  height: 2px;
+  background: transparent;
+  border-radius: 50px;
+}
+
+.thumb-style {
+  width: 20px;
+  height: 20px;
+  background: transparent;
+}
+
+.icon-style {
+  right: 6px;
+  bottom: 5px;
+}
+
+.seek-time-wrap {
+  position: relative;
+  top: -6px;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.seek-time {
+  font-size: 12px;
+  color: g.colors(white, base);
+}

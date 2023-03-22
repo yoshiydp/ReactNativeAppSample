@@ -1,6 +1,6 @@
 import React from "react";
 import { View } from "react-native";
-import Svg, { Circle, G, Path } from "react-native-svg";
+import Svg, { Circle, G, Path, Rect } from "react-native-svg";
 
 // Interfaces
 import {
@@ -11,9 +11,18 @@ import {
   svgType5,
   svgType6,
   svgType7,
+  svgType8,
 } from "interfaces/svgInterface";
 
-interface Props extends svgType1, svgType2, svgType3, svgType4, svgType5, svgType6, svgType7 {
+interface Props
+  extends svgType1,
+    svgType2,
+    svgType3,
+    svgType4,
+    svgType5,
+    svgType6,
+    svgType7,
+    svgType8 {
   containerStyle?: any;
 }
 
@@ -26,6 +35,7 @@ const Icon = (props: Props) => {
             <Path d={props.pathD1} transform={props.pathTransform1} fill={props.pathFill} />
             <Path d={props.pathD2} transform={props.pathTransform2} fill={props.pathFill} />
             <Path d={props.pathD3} transform={props.pathTransform3} fill={props.pathFill} />
+            <Path d={props.pathD4} transform={props.pathTransform4} fill={props.pathFill} />
           </G>
         </Svg>
       ) : props.svgType === 2 ? (
@@ -102,6 +112,25 @@ const Icon = (props: Props) => {
                 <Path d={props.pathD2} transform={props.pathTransform2} fill={props.pathFill} />
               </G>
             </G>
+          </G>
+        </Svg>
+      ) : props.svgType === 8 ? (
+        <Svg width={props.width} height={props.height} viewBox={props.viewBox}>
+          <G transform={props.gTransform}>
+            <Rect
+              width={props.rectWidth}
+              height={props.rectHeight}
+              rx={props.rectRx}
+              transform={props.rectTransform1}
+              fill={props.pathFill}
+            />
+            <Rect
+              width={props.rectWidth}
+              height={props.rectHeight}
+              rx={props.rectRx}
+              transform={props.rectTransform2}
+              fill={props.pathFill}
+            />
           </G>
         </Svg>
       ) : (

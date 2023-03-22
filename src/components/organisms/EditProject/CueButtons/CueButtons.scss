@@ -1,0 +1,46 @@
+@use "src/globalStyles/" as g;
+
+.container {
+  flex-direction: row;
+  width: 100%;
+}
+
+%button {
+  align-items: center;
+  justify-content: center;
+  width: calc(100% / 5);
+  height: 48px;
+  background: g.colors(yellow, dark);
+}
+
+%buttonActive {
+  align-items: center;
+  justify-content: center;
+  width: calc(100% / 5);
+  height: 48px;
+  background: g.colors(yellow, light);
+}
+
+.buttonItem {
+  margin-left: 1px;
+  @extend %button;
+}
+
+.buttonItem--first {
+  @extend %button;
+}
+
+.buttonItem--active {
+  margin-left: 1px;
+  @extend %buttonActive;
+}
+
+.buttonItem--firstActive {
+  @extend %buttonActive;
+}
+
+.text {
+  font-size: 18px;
+  font-weight: 900;
+  color: g.colors(black, base);
+}

@@ -52,6 +52,7 @@ export const LABEL_NOTES_TRACK_DATA = "（下のボタンからアップロー�
 export const LABEL_NOTES_USERNAME = "（半角英数字のみ入力可能）";
 
 // PLACEHOLDER
+export const PLACEHOLDER_EDIT_PROJECT = "ここからリリックを入力してください";
 export const PLACEHOLDER_INPUT_EMAIL = "example@example.com";
 export const PLACEHOLDER_INPUT_PASSWORD = "Password";
 export const PLACEHOLDER_INPUT_SEARCH = "検索";
@@ -85,6 +86,7 @@ export const TITLE_SIGNUP = "Sign Up";
 // MODAL TITLE
 export const MODAL_TITLE_DELETE_PROJECT = "このプロジェクトを削除しますか？";
 export const MODAL_TITLE_DELETE_TRACK = "このトラックを削除しますか？";
+export const MODAL_TITLE_SAVE_PROJECT = "プロジェクトを保存して\n終了しますか？";
 
 // MODAL DESCRIPTION
 export const MODAL_DESC_DELETE_NOTE = "一度削除すると復元はできませんので、ご注意ください。";
