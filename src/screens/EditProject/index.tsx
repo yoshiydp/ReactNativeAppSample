@@ -17,9 +17,10 @@ import { activeEditProjectModalFlag } from "store/EditProjectModalFlagSlice";
 
 // Components
 import TextEditor from "components/organisms/TextEditor";
-import SeekBar from "components/organisms/SeekBar";
+import TimeSeekBar from "components/organisms/TimeSeekBar";
 import CueButtons from "components/organisms/EditProject/CueButtons";
 import CueControlPlayer from "components/organisms/EditProject/CueControlPlayer";
+import VolumeSeekBar from "components/organisms/EditProject/VolumeSeekBar";
 import CenterModal from "components/organisms/CenterModal";
 import ModalProjectSettings from "components/organisms/Modal/ModalProjectSettings";
 import EditProjectHeader from "components/molecules/EditProjectHeader";
@@ -63,13 +64,14 @@ const EditProject = (props: Props) => {
           onPressMenuButton={onPressOpenMenu}
         />
         <TextEditor projectTitle="Project Title" />
-        <SeekBar />
+        <TimeSeekBar />
         <View style={styles["cue-buttons-wrap"]}>
           <CueButtons />
         </View>
         <View style={styles["cue-control-player-wrap"]}>
           <CueControlPlayer />
         </View>
+        <VolumeSeekBar />
       </View>
       <Overlay isShow={overlay} />
       <ModalProjectSettings />
