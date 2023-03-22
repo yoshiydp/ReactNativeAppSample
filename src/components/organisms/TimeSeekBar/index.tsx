@@ -9,9 +9,9 @@ import { Slider, Text, Icon } from "@rneui/themed";
 import * as COLOR from "constants/color";
 
 // Styles
-import styles from "./SeekBar.scss";
+import styles from "./TimeSeekBar.scss";
 
-const SeekBar = () => {
+const TimeSeekBar = () => {
   const [displayNone, setDisplayNone] = useState(false);
   const [isTrackPlayerInit, setIsTrackPlayerInit] = useState(false);
   const [isPlaying, setIsPlaying] = useState(false);
@@ -119,4 +119,4 @@ const SeekBar = () => {
   );
 };
 
-export default SeekBar;
+export default TimeSeekBar;
