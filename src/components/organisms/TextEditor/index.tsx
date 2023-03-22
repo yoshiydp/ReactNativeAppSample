@@ -1,5 +1,6 @@
 import React, { useRef, useState } from "react";
 import {
+  Animated,
   ScrollView,
   Pressable,
   SafeAreaView,
@@ -7,6 +8,7 @@ import {
   Text,
   TouchableOpacity,
   View,
+  useWindowDimensions,
 } from "react-native";
 import { actions, RichEditor, RichToolbar } from "react-native-pell-rich-editor";
 import LinearGradient from "react-native-linear-gradient";
@@ -17,6 +19,8 @@ import Icon from "components/atoms/Icon";
 // Constants
 import * as COLOR from "constants/color";
 import * as SVGPATH from "constants/svgPath";
+import * as TEXT from "constants/text";
+import * as VALUE from "constants/value";
 
 // Styles
 import styles from "./TextEditor.scss";
@@ -27,10 +31,17 @@ interface Props {
 
 const TextEditor = (props: Props) => {
   const richText = useRef();
-
   const [descHTML, setDescHTML] = useState("");
   const [showDescError, setShowDescError] = useState<boolean>(false);
   const [activeEditor, setActiveEditor] = useState<boolean>(false);
+  const [disabledEditor, setDisabledEditor] = useState<boolean>(true);
+  const [targetHeight, setTargetHeight] = useState<number>(0);
+  const windowHeight = useWindowDimensions().height;
+  const initialContainerHeight = windowHeight / 4;
+  const richEditorHeight = windowHeight / 3;
+  const containerHeightValue = useRef(new Animated.Value(initialContainerHeight)).current;
+  const coverGradientHeightValue = useRef(new Animated.Value(initialContainerHeight)).current;
+  const opacityValue = useRef(new Animated.Value(1)).current;
 
   const richTextHandle = (descriptionText: string) => {
     if (descriptionText) {
@@ -55,24 +66,83 @@ const TextEditor = (props: Props) => {
 
   const onPressActiveEditor = () => {
     setActiveEditor(true);
+    setDisabledEditor(false);
+    heightAnimatedFunc(
+      containerHeightValue,
+      targetHeight + 70 + richEditorHeight,
+      VALUE.DURATION_200,
+      0,
+    );
+    heightAnimatedFunc(coverGradientHeightValue, 0, VALUE.DURATION_200, 200);
+    opacityAnimatedFunc(0);
   };
 
   const onPressInactiveEditor = () => {
     setActiveEditor(false);
+    setDisabledEditor(true);
+    heightAnimatedFunc(containerHeightValue, initialContainerHeight, VALUE.DURATION_200, 0);
+    heightAnimatedFunc(coverGradientHeightValue, initialContainerHeight, 0, 0);
+    opacityAnimatedFunc(1);
+  };
+
+  const heightAnimatedFunc = (object: any, value: number, duration: number, delay: number) => {
+    Animated.timing(object, {
+      toValue: value,
+      duration: duration,
+      delay: delay,
+      useNativeDriver: false,
+    }).start();
+  };
+
+  const opacityAnimatedFunc = (value: number) => {
+    Animated.timing(opacityValue, {
+      toValue: value,
+      duration: VALUE.DURATION_200,
+      useNativeDriver: false,
+    }).start();
+  };
+
+  const containerHeightStyle = {
+    height: containerHeightValue,
+  };
+
+  const coverGradientHeightStyle = {
+    height: coverGradientHeightValue,
+  };
+
+  const richEditorHeightStyle = {
+    height: richEditorHeight,
+  };
+
+  const animatedOpacity = opacityValue.interpolate({
+    inputRange: [0, 1],
+    outputRange: [0, 1],
+  });
+
+  const animatedOpacityStyle = {
+    opacity: animatedOpacity,
+  };
+
+  const getTargetPosition = (object: any) => {
+    setTargetHeight(object.nativeEvent.layout.height);
   };
 
   return (
-    <View style={styles["container"]}>
-      <Text style={styles["project-title"]}>{props.projectTitle}</Text>
+    <Animated.View style={[styles["container"], containerHeightStyle]}>
+      <Text style={styles["project-title"]} onLayout={getTargetPosition}>
+        {props.projectTitle}
+      </Text>
       <ScrollView style={styles["lyric-wrap"]}>
         <SafeAreaView edges={["bottom", "left", "right"]} style={styles["rich-editor-wrap"]}>
           <RichEditor
             ref={richText}
             onChange={richTextHandle}
-            placeholder="ここにリリックを入力してくださいここにリリックを入力してくださいここにリリックを入力してくださいここにリリックを入力してくださいここにリリックを入力してくださいここにリリックを入力してくださいここにリリックを入力してくださいここにリリックを入力してくださいここにリリックを入力してくださいここにリリックを入力してくださいここにリリックを入力してくださいここにリリックを入力してくださいここにリリックを入力してくださいここにリリックを入力してくださいここにリリックを入力してくださいここにリリックを入力してくださいここにリリックを入力してくださいここにリリックを入力してくださいここにリリックを入力してくださいここにリリックを入力してくださいここにリリックを入力してくださいここにリリックを入力してくださいここにリリックを入力してください"
+            placeholder={TEXT.PLACEHOLDER_EDIT_PROJECT}
             androidHardwareAccelerationDisabled={true}
-            initialHeight={188}
             editorStyle={styles["rich-editor"]}
+            useContainer={false}
+            containerStyle={richEditorHeightStyle}
+            disabled={disabledEditor}
           />
           <RichToolbar
             editor={richText}
@@ -90,10 +160,14 @@ const TextEditor = (props: Props) => {
           />
         </SafeAreaView>
       </ScrollView>
-      <LinearGradient
-        colors={["rgba(27,34,46,0)", "rgba(27,34,46,1)"]}
-        style={styles["cover-gradient"]}
-      ></LinearGradient>
+      <Animated.View
+        style={[styles["container-cover-gradient"], animatedOpacityStyle, coverGradientHeightStyle]}
+      >
+        <LinearGradient
+          colors={["rgba(27,34,46,0)", "rgba(27,34,46,1)"]}
+          style={styles["cover-gradient"]}
+        ></LinearGradient>
+      </Animated.View>
       <View style={styles["toggle-button-wrap"]}>
         {activeEditor ? (
           <Pressable style={styles["close-button"]} onPress={onPressInactiveEditor}>
@@ -127,7 +201,7 @@ const TextEditor = (props: Props) => {
           </Pressable>
         )}
       </View>
-    </View>
+    </Animated.View>
   );
 };
 
