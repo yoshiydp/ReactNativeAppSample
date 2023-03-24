@@ -139,6 +139,7 @@ PODS:
   - GTMSessionFetcher/Core (2.3.0)
   - hermes-engine (0.70.5)
   - libevent (2.1.12)
+  - Mute (0.6.1)
   - OpenSSL-Universal (1.1.1100)
   - PromisesObjC (2.1.1)
   - RCT-Folly (2021.07.22.00):
@@ -159,8 +160,6 @@ PODS:
     - glog
     - libevent
   - RCTRequired (0.70.5)
-  - RCTSystemSetting (1.7.6):
-    - React
   - RCTTypeSafety (0.70.5):
     - FBLazyVector (= 0.70.5)
     - RCTRequired (= 0.70.5)
@@ -384,6 +383,9 @@ PODS:
   - react-native-track-player (3.2.0):
     - React-Core
     - SwiftAudioEx (= 0.15.3)
+  - react-native-volume-manager (1.2.1):
+    - Mute
+    - React-Core
   - react-native-webview (11.26.1):
     - React-Core
   - React-perflogger (0.70.5)
@@ -519,7 +521,6 @@ DEPENDENCIES:
   - OpenSSL-Universal (= 1.1.1100)
   - RCT-Folly (from `../node_modules/react-native/third-party-podspecs/RCT-Folly.podspec`)
   - RCTRequired (from `../node_modules/react-native/Libraries/RCTRequired`)
-  - RCTSystemSetting (from `../node_modules/react-native-system-setting`)
   - RCTTypeSafety (from `../node_modules/react-native/Libraries/TypeSafety`)
   - React (from `../node_modules/react-native/`)
   - React-bridging (from `../node_modules/react-native/ReactCommon`)
@@ -540,6 +541,7 @@ DEPENDENCIES:
   - react-native-safe-area-context (from `../node_modules/react-native-safe-area-context`)
   - "react-native-slider (from `../node_modules/@react-native-community/slider`)"
   - react-native-track-player (from `../node_modules/react-native-track-player`)
+  - react-native-volume-manager (from `../node_modules/react-native-volume-manager`)
   - react-native-webview (from `../node_modules/react-native-webview`)
   - React-perflogger (from `../node_modules/react-native/ReactCommon/reactperflogger`)
   - React-RCTActionSheet (from `../node_modules/react-native/Libraries/ActionSheetIOS`)
@@ -588,6 +590,7 @@ SPEC REPOS:
     - GTMAppAuth
     - GTMSessionFetcher
     - libevent
+    - Mute
     - OpenSSL-Universal
     - PromisesObjC
     - SocketRocket
@@ -613,8 +616,6 @@ EXTERNAL SOURCES:
     :podspec: "../node_modules/react-native/third-party-podspecs/RCT-Folly.podspec"
   RCTRequired:
     :path: "../node_modules/react-native/Libraries/RCTRequired"
-  RCTSystemSetting:
-    :path: "../node_modules/react-native-system-setting"
   RCTTypeSafety:
     :path: "../node_modules/react-native/Libraries/TypeSafety"
   React:
@@ -651,6 +652,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/@react-native-community/slider"
   react-native-track-player:
     :path: "../node_modules/react-native-track-player"
+  react-native-volume-manager:
+    :path: "../node_modules/react-native-volume-manager"
   react-native-webview:
     :path: "../node_modules/react-native-webview"
   React-perflogger:
@@ -729,11 +732,11 @@ SPEC CHECKSUMS:
   GTMSessionFetcher: 3a63d75eecd6aa32c2fc79f578064e1214dfdec2
   hermes-engine: 7fe5fc6ef707b7fdcb161b63898ec500e285653d
   libevent: 4049cae6c81cdb3654a443be001fb9bdceff7913
+  Mute: 20135a96076f140cc82bfc8b810e2d6150d8ec7e
   OpenSSL-Universal: ebc357f1e6bc71fa463ccb2fe676756aff50e88c
   PromisesObjC: ab77feca74fa2823e7af4249b8326368e61014cb
   RCT-Folly: 0080d0a6ebf2577475bda044aa59e2ca1f909cda
   RCTRequired: 21229f84411088e5d8538f21212de49e46cc83e2
-  RCTSystemSetting: 5107b7350d63b3f7b42a1277d07e4e5d9df879be
   RCTTypeSafety: 62eed57a32924b09edaaf170a548d1fc96223086
   React: f0254ccddeeef1defe66c6b1bb9133a4f040792b
   React-bridging: e46911666b7ec19538a620a221d6396cd293d687
@@ -752,6 +755,7 @@ SPEC CHECKSUMS:
   react-native-safe-area-context: 39c2d8be3328df5d437ac1700f4f3a4f75716acc
   react-native-slider: 33b8d190b59d4f67a541061bb91775d53d617d9d
   react-native-track-player: 0c26d981b5097910486cbbeb6d8f5352d41be069
+  react-native-volume-manager: 3c58b64125fd42438fb8b95776566910dce54a46
   react-native-webview: 9f111dfbcfc826084d6c507f569e5e03342ee1c1
   React-perflogger: e68d3795cf5d247a0379735cbac7309adf2fb931
   React-RCTActionSheet: 05452c3b281edb27850253db13ecd4c5a65bc247
