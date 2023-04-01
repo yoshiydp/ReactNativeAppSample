@@ -55,7 +55,14 @@ const MyProjectsItem = (props: Props) => {
   };
 
   const navigateEditProject = async () => {
-    await props.navigation.navigate("EditProject");
+    await props.navigation.navigate("EditProject", {
+      projectTitle: setProjectData.projectTitle,
+      lyric: setProjectData.lyric,
+      trackDataPath: setProjectData.trackDataPath,
+      trackTitle: setProjectData.trackTitle,
+      artistName: setProjectData.artistName,
+      artWorkPath: setProjectData.artWorkPath,
+    });
   };
 
   const onPressRightSwipeActions = () => {
