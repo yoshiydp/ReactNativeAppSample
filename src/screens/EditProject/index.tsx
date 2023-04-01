@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Animated, View, ScrollView } from "react-native";
+import { Animated, View, ScrollView, Text } from "react-native";
 import { useDispatch } from "react-redux";
 
 // Store
@@ -34,6 +34,7 @@ import styles from "./EditProject.scss";
 
 interface Props {
   navigation: any;
+  route: any;
 }
 
 const EditProject = (props: Props) => {
@@ -41,6 +42,8 @@ const EditProject = (props: Props) => {
   const overlay = useSelector((state) => state.overlay.overlay);
   const activeHiddenState = useSelector((state) => state.overlay.inactiveHidden);
   const centerModal = useSelector((state) => state.centerModal.centerModal);
+  const { projectTitle, lyric, trackDataPath, trackTitle, artistName, artWorkPath } =
+    props.route.params;
 
   const onPressGoBackHome = () => {
     console.log("onPressGoBackHome!");
@@ -63,6 +66,12 @@ const EditProject = (props: Props) => {
           onPressHomeButton={onPressGoBackHome}
           onPressMenuButton={onPressOpenMenu}
         />
+        <Text>{projectTitle}</Text>
+        <Text>{lyric}</Text>
+        <Text>{trackDataPath}</Text>
+        <Text>{trackTitle}</Text>
+        <Text>{artistName}</Text>
+        <Text>{artWorkPath}</Text>
         <TextEditor projectTitle="Project Title" />
         <TimeSeekBar />
         <View style={styles["cue-buttons-wrap"]}>
