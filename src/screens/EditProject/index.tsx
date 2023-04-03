@@ -94,13 +94,11 @@ const EditProject = (props: Props) => {
           onPressHomeButton={onPressGoBackHome}
           onPressMenuButton={onPressOpenMenu}
         />
-        <Text>{projectTitle}</Text>
-        <Text>{lyric}</Text>
         <Text>{trackDataPath}</Text>
         <Text>{trackTitle}</Text>
         <Text>{artistName}</Text>
         <Text>{artWorkPath}</Text>
-        <TextEditor projectTitle="Project Title" />
+        <TextEditor projectTitle={projectTitle} lyric={lyric} />
         <TimeSeekBar />
         <View style={styles["cue-buttons-wrap"]}>
           <CueButtons onLongPressEvent={editCueName} />
