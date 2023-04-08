@@ -40,6 +40,7 @@ const MyProjectsItem = (props: Props) => {
   const swipeable = useRef<Swipeable>(null);
   const dispatch = useDispatch();
   const activeHiddenState = useSelector((state) => state.overlay.inactiveHidden);
+  const myProjectsDetail = useSelector((state) => state.myProjectsDetail);
   const { uid }: any = firebaseAuth.currentUser;
   if (!uid) return;
   const docRef = doc(db, "users", uid);
@@ -92,6 +93,16 @@ const MyProjectsItem = (props: Props) => {
     trackTitle: props.trackTitle,
     artistName: props.artistName,
     artWorkPath: props.artWorkPath,
+  };
+
+  // UnmountしたときにMyProjectの中身をリセット
+  const resetProjectData = {
+    projectTitle: "",
+    lyric: "",
+    trackDataPath: "",
+    trackTitle: "",
+    artistName: "",
+    artWorkPath: "",
   };
 
   return (
