@@ -1,12 +1,15 @@
 import React, { useState, useEffect } from "react";
 import { Pressable, Text, View } from "react-native";
-import TrackPlayer, { Capability, Event } from "react-native-track-player";
+import TrackPlayer, {
+  AppKilledPlaybackBehavior,
+  Capability,
+  Event,
+} from "react-native-track-player";
 import { useProgress } from "react-native-track-player/lib/hooks";
 import { useDispatch } from "react-redux";
 
 // Store
 import { useSelector } from "store/index";
-import { setMyProjectsDetail } from "store/MyProjectsDetailSlice";
 
 // Components
 import Icon from "components/atoms/Icon";
@@ -22,7 +25,7 @@ import * as SVGPATH from "constants/svgPath";
 import styles from "./CueControlPlayer.scss";
 
 interface Props {
-  trackDataPath: string;
+  myProjectsDetail: MyProjectsDetailType;
 }
 
 const CueControlPlayer = (props: Props) => {
@@ -31,33 +34,48 @@ const CueControlPlayer = (props: Props) => {
   const [start, setStart] = useState<boolean>(true);
   const [pause, setPause] = useState<boolean>(false);
 
-  TrackPlayer.updateOptions({
-    stopWithApp: false,
-    capabilities: [
-      Capability.Play,
-      Capability.Pause,
-      Capability.SkipToNext,
-      Capability.SkipToPrevious,
-      Capability.Stop,
-      Capability.SeekTo,
-    ],
-    compactCapabilities: [Capability.Play, Capability.Pause],
-  });
+  // トラックデータの情報を格納
+  const setTrackData = [
+    {
+      id: 1,
+      url: myProjectsDetail.trackDataPath,
+      artwork: "https://url_to_artwork.jpg",
+      artist: "author",
+      title: myProjectsDetail.trackTitle,
+    },
+  ];
 
   const setUpTrackPlayer = async () => {
     try {
-      await TrackPlayer.setupPlayer();
-      await TrackPlayer.add(props.trackDataPath);
+      await TrackPlayer.updateOptions({
+        android: {
+          appKilledPlaybackBehavior: AppKilledPlaybackBehavior.StopPlaybackAndRemoveNotification,
+        },
+        capabilities: [
+          Capability.Play,
+          Capability.Pause,
+          Capability.JumpForward,
+          Capability.JumpBackward,
+          Capability.SeekTo,
+          Capability.Stop,
+        ],
+        compactCapabilities: [
+          Capability.Play,
+          Capability.Pause,
+          Capability.JumpForward,
+          Capability.JumpBackward,
+        ],
+      });
+      await TrackPlayer.reset();
+      await TrackPlayer.add(setTrackData);
     } catch (e) {
       console.log(e);
     }
   };
 
   useEffect(() => {
+    TrackPlayer.setupPlayer();
     setUpTrackPlayer();
-    return () => {
-      TrackPlayer.destroy();
-    };
   }, []);
 
   const onPressPlayStart = async () => {
@@ -67,10 +85,11 @@ const CueControlPlayer = (props: Props) => {
     await TrackPlayer.play();
   };
 
-  const onPressPause = () => {
+  const onPressPause = async () => {
     console.log("onPressPause!");
     setStart(true);
     setPause(false);
+    await TrackPlayer.pause();
   };
 
   const onPressRepeat = () => {

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { Animated, View, ScrollView, Text } from "react-native";
 import { useDispatch } from "react-redux";
 
@@ -41,7 +41,6 @@ import styles from "./EditProject.scss";
 
 interface Props {
   navigation: any;
-  route: any;
 }
 
 const EditProject = (props: Props) => {
@@ -53,36 +52,6 @@ const EditProject = (props: Props) => {
     (state) => state.editCueNameTextField.editCueNameTextField,
   );
   const centerModal = useSelector((state) => state.centerModal.centerModal);
-  const { projectTitle, lyric, trackDataPath, trackTitle, artistName, artWorkPath } =
-    props.route.params;
-
-  // Mountedしたときにroute paramsから値を代入
-  const setMyProjectsDetailData = {
-    projectTitle: projectTitle,
-    lyric: lyric,
-    trackDataPath: trackDataPath,
-    trackTitle: trackTitle,
-    artistName: artistName,
-    artWorkPath: artWorkPath,
-  };
-
-  // Unmountしたときにデータの中身をリセット
-  const resetMyProjectsDetailData = {
-    projectTitle: "",
-    lyric: "",
-    trackDataPath: "",
-    trackTitle: "",
-    artistName: "",
-    artWorkPath: "",
-  };
-
-  useEffect(() => {
-    dispatch(setMyProjectsDetail(setMyProjectsDetailData));
-    console.log(myProjectsDetail);
-    return () => {
-      dispatch(setMyProjectsDetail(resetMyProjectsDetailData));
-    };
-  }, []);
 
   const onPressGoBackHome = () => {
     console.log("onPressGoBackHome!");
@@ -128,16 +97,13 @@ const EditProject = (props: Props) => {
         <Text>{setMyProjectsDetailData.trackTitle}</Text>
         <Text>{setMyProjectsDetailData.artistName}</Text>
         <Text>{setMyProjectsDetailData.artWorkPath}</Text> */}
-        <TextEditor
-          projectTitle={setMyProjectsDetailData.projectTitle}
-          lyric={setMyProjectsDetailData.lyric}
-        />
-        <TimeSeekBar trackDataPath={setMyProjectsDetailData.trackDataPath} />
+        <TextEditor projectTitle={myProjectsDetail.projectTitle} lyric={myProjectsDetail.lyric} />
+        {/* <TimeSeekBar trackDataPath={setMyProjectsDetailData.trackDataPath} /> */}
         <View style={styles["cue-buttons-wrap"]}>
           <CueButtons onLongPressEvent={editCueName} />
         </View>
         <View style={styles["cue-control-player-wrap"]}>
-          <CueControlPlayer trackDataPath={setMyProjectsDetailData.trackDataPath} />
+          <CueControlPlayer myProjectsDetail={myProjectsDetail} />
         </View>
         <VolumeSeekBar />
       </View>

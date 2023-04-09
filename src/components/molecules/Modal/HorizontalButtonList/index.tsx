@@ -10,6 +10,7 @@ import { useSelector } from "store/index";
 import { hideCenterModal } from "store/CenterModalSlice";
 import { hideOverlay, activeHidden } from "store/OverlaySlice";
 import { inactiveMyProjectsModalFlag } from "store/MyProjectsModalFlagSlice";
+import { setMyProjectsDetail } from "store/MyProjectsDetailSlice";
 import { inactiveTrackListModalFlag } from "store/TrackListModalFlagSlice";
 import { inactiveEditProjectModalFlag } from "store/EditProjectModalFlagSlice";
 
@@ -32,6 +33,16 @@ const HorizontalButtonList = (props: Props) => {
   const trackListDetail = useSelector((state) => state.trackListDetail);
 
   const { uid }: any = firebaseAuth.currentUser;
+
+  // Unmountしたときにデータの中身をリセット
+  const resetMyProjectsDetail = {
+    projectTitle: "",
+    lyric: "",
+    trackDataPath: "",
+    trackTitle: "",
+    artistName: "",
+    artWorkPath: "",
+  };
 
   const onPressSubmit = async () => {
     try {
@@ -134,6 +145,7 @@ const HorizontalButtonList = (props: Props) => {
       }
       if (editProjectModalFlag) {
         dispatch(inactiveEditProjectModalFlag());
+        dispatch(setMyProjectsDetail(resetMyProjectsDetail));
         props.navigation.goBack();
       }
     }
