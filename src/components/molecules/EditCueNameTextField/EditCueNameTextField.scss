@@ -1,0 +1,25 @@
+@use "src/globalStyles/" as g;
+
+.container {
+  flex-direction: row;
+  align-items: center;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  min-width: 200px;
+  min-height: 62px;
+  padding-right: 6px;
+  padding-left: 20px;
+  background: g.colors(yellow, light);
+  border-radius: 50px;
+}
+
+.button-save {
+  justify-content: center;
+  align-items: center;
+  width: 44px;
+  height: 44px;
+  column-gap: 16px;
+  border-radius: 50px;
+  // background: g.colors(gray, type3);
+}

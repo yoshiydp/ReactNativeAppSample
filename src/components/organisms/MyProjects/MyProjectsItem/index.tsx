@@ -55,6 +55,7 @@ const MyProjectsItem = (props: Props) => {
   };
 
   const navigateEditProject = async () => {
+    dispatch(setMyProjectsDetail(setProjectData));
     await props.navigation.navigate("EditProject");
   };
 

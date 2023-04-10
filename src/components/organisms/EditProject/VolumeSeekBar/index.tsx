@@ -1,9 +1,7 @@
-import React, { useRef, useEffect, useState } from "react";
-import { TouchableOpacity, View } from "react-native";
-import TrackPlayer, { Capability, Event } from "react-native-track-player";
-import { useProgress } from "react-native-track-player/lib/hooks";
-// import Slider from "@react-native-community/slider";
-import { Slider, Text, Icon } from "@rneui/themed";
+import React, { useEffect, useState } from "react";
+import { View } from "react-native";
+import { Slider, Icon } from "@rneui/themed";
+import { VolumeManager } from "react-native-volume-manager";
 
 // Components
 import SvgIcon from "components/atoms/Icon";
@@ -16,87 +14,41 @@ import * as SVGPATH from "constants/svgPath";
 import styles from "./VolumeSeekBar.scss";
 
 const VolumeSeekBar = () => {
-  const [isTrackPlayerInit, setIsTrackPlayerInit] = useState(false);
-  const [isPlaying, setIsPlaying] = useState(false);
-  const [sliderValue, setSliderValue] = useState(0);
-  const [isSeeking, setIsSeeking] = useState(false);
-  const { position, duration } = useProgress(250);
-
-  TrackPlayer.updateOptions({
-    stopWithApp: false,
-    capabilities: [
-      Capability.Play,
-      Capability.Pause,
-      Capability.SkipToNext,
-      Capability.SkipToPrevious,
-      Capability.Stop,
-      Capability.SeekTo,
-    ],
-    compactCapabilities: [Capability.Play, Capability.Pause],
-  });
+  const [deviceVolume, setDeviceVolume] = useState<number | any>(0);
 
   useEffect(() => {
-    setUpTrackPlayer();
-    setSliderValue;
-    return () => {
-      // TrackPlayer.destroy();
-    };
+    getInitialDeviceVolume();
+    const volumeListener = VolumeManager.addVolumeListener((result) => {
+      setDeviceVolume(result.volume);
+    });
+    return () => volumeListener.remove();
   }, []);
 
-  useEffect(() => {
-    if (!isSeeking && position && duration) {
-      setSliderValue(position / duration);
-    }
-  }, [position, duration]);
-
-  const setUpTrackPlayer = async () => {
-    try {
-      await TrackPlayer.setupPlayer();
-      // await TrackPlayer.add(tracks);
-    } catch (e) {
-      console.log(e);
-    }
+  const getInitialDeviceVolume = async () => {
+    await VolumeManager.getVolume("music").then((result) => {
+      setDeviceVolume(result);
+    });
   };
 
-  const slidingStarted = () => {
-    setIsSeeking(true);
-  };
-
-  // Seekbar setting
-  const slidingCompleted = async (value: number) => {
-    await TrackPlayer.seekTo(value * duration);
-    setSliderValue(value);
-    setIsSeeking(false);
-  };
-
-  const playStart = async () => {
-    await TrackPlayer.play();
+  const onChangeVolume = async (volume: any) => {
+    setDeviceVolume(volume);
+    await VolumeManager.setVolume(volume, {
+      type: "system",
+      showUI: true,
+      playSound: false,
+    });
   };
 
   return (
     <View style={styles["container"]}>
-      {/* <Slider
-        style={styles.progressBar}
-        minimumValue={0}
-        maximumValue={1}
-        value={sliderValue}
-        thumbSize={15}
-        minimumTrackTintColor={COLOR.COLOR_GREEN_BASE}
-        maximumTrackTintColor={COLOR.COLOR_GRAY_TYPE3}
-        onSlidingStart={slidingStarted}
-        onSlidingComplete={slidingCompleted}
-      /> */}
       <Slider
-        value={sliderValue}
-        onValueChange={setSliderValue}
+        value={deviceVolume}
+        onValueChange={onChangeVolume}
         maximumValue={1}
         minimumValue={0}
         minimumTrackTintColor={COLOR.COLOR_GRAY_TYPE1}
         maximumTrackTintColor={COLOR.COLOR_GRAY_TYPE3}
         step={0}
-        allowTouchTrack
-        onSlidingStart={slidingStarted}
-        onSlidingComplete={slidingCompleted}
         trackStyle={styles["track-style"]}
         thumbStyle={styles["thumb-style"]}
         thumbProps={{

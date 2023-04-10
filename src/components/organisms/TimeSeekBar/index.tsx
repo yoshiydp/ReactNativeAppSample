@@ -11,7 +11,11 @@ import * as COLOR from "constants/color";
 // Styles
 import styles from "./TimeSeekBar.scss";
 
-const TimeSeekBar = () => {
+interface Props {
+  trackDataPath: string;
+}
+
+const TimeSeekBar = (props: Props) => {
   const [displayNone, setDisplayNone] = useState(false);
   const [isTrackPlayerInit, setIsTrackPlayerInit] = useState(false);
   const [isPlaying, setIsPlaying] = useState(false);
@@ -32,11 +36,20 @@ const TimeSeekBar = () => {
     compactCapabilities: [Capability.Play, Capability.Pause],
   });
 
+  const setUpTrackPlayer = async () => {
+    try {
+      await TrackPlayer.setupPlayer();
+      await TrackPlayer.add(props.trackDataPath);
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
   useEffect(() => {
     setUpTrackPlayer();
     setSliderValue;
     return () => {
-      // TrackPlayer.destroy();
+      TrackPlayer.destroy();
     };
   }, []);
 
@@ -45,15 +58,6 @@ const TimeSeekBar = () => {
       setSliderValue(position / duration);
     }
   }, [position, duration]);
-
-  const setUpTrackPlayer = async () => {
-    try {
-      await TrackPlayer.setupPlayer();
-      // await TrackPlayer.add(tracks);
-    } catch (e) {
-      console.log(e);
-    }
-  };
 
   const slidingStarted = () => {
     setIsSeeking(true);
