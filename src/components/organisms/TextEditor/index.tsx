@@ -27,6 +27,7 @@ import styles from "./TextEditor.scss";
 
 interface Props {
   projectTitle: string;
+  lyric: string;
 }
 
 const TextEditor = (props: Props) => {
@@ -137,6 +138,7 @@ const TextEditor = (props: Props) => {
           <RichEditor
             ref={richText}
             onChange={richTextHandle}
+            initialContentHTML={props.lyric ? props.lyric : ""}
             placeholder={TEXT.PLACEHOLDER_EDIT_PROJECT}
             androidHardwareAccelerationDisabled={true}
             editorStyle={styles["rich-editor"]}

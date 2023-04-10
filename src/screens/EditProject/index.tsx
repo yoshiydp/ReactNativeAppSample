@@ -1,9 +1,10 @@
-import React, { useEffect, useState } from "react";
-import { Animated, View, ScrollView } from "react-native";
+import React from "react";
+import { Animated, View, ScrollView, Text } from "react-native";
 import { useDispatch } from "react-redux";
 
 // Store
 import { useSelector } from "store/index";
+import { setMyProjectsDetail } from "store/MyProjectsDetailSlice";
 import {
   showCenterModal,
   setCenterModalTitle,
@@ -11,11 +12,17 @@ import {
   setCenterModalNotes,
   setCenterModalSubmitButtonText,
 } from "store/CenterModalSlice";
-import { showOverlay, inactiveHidden } from "store/OverlaySlice";
+import { showOverlay, hideOverlay, activeHidden, inactiveHidden } from "store/OverlaySlice";
 import { showModalProjectSettings } from "store/ModalProjectSettingsSlice";
 import { activeEditProjectModalFlag } from "store/EditProjectModalFlagSlice";
+import {
+  showEditCueNameTextField,
+  hideEditCueNameTextField,
+  setCueName,
+} from "store/EditCueNameTextFieldSlice";
 
 // Components
+import EditCueNameTextField from "components/molecules/EditCueNameTextField";
 import TextEditor from "components/organisms/TextEditor";
 import TimeSeekBar from "components/organisms/TimeSeekBar";
 import CueButtons from "components/organisms/EditProject/CueButtons";
@@ -40,6 +47,10 @@ const EditProject = (props: Props) => {
   const dispatch = useDispatch();
   const overlay = useSelector((state) => state.overlay.overlay);
   const activeHiddenState = useSelector((state) => state.overlay.inactiveHidden);
+  const myProjectsDetail = useSelector((state) => state.myProjectsDetail);
+  const editCueNameTextField = useSelector(
+    (state) => state.editCueNameTextField.editCueNameTextField,
+  );
   const centerModal = useSelector((state) => state.centerModal.centerModal);
 
   const onPressGoBackHome = () => {
@@ -56,6 +67,25 @@ const EditProject = (props: Props) => {
     dispatch(showModalProjectSettings());
   };
 
+  const editCueName = (flag: boolean, name: string) => {
+    dispatch(showOverlay());
+    dispatch(inactiveHidden());
+    dispatch(showEditCueNameTextField());
+    console.log(flag, name);
+
+    // flagとnameがない場合はreturn
+    if (!(flag && name)) return;
+
+    if (flag) dispatch(setCueName(name));
+  };
+
+  const saveCueName = () => {
+    dispatch(hideOverlay());
+    dispatch(activeHidden());
+    dispatch(setCueName(""));
+    dispatch(hideEditCueNameTextField());
+  };
+
   return (
     <View style={styles["container"]}>
       <View>
@@ -63,17 +93,22 @@ const EditProject = (props: Props) => {
           onPressHomeButton={onPressGoBackHome}
           onPressMenuButton={onPressOpenMenu}
         />
-        <TextEditor projectTitle="Project Title" />
-        <TimeSeekBar />
+        {/* <Text>{setMyProjectsDetailData.trackDataPath}</Text>
+        <Text>{setMyProjectsDetailData.trackTitle}</Text>
+        <Text>{setMyProjectsDetailData.artistName}</Text>
+        <Text>{setMyProjectsDetailData.artWorkPath}</Text> */}
+        <TextEditor projectTitle={myProjectsDetail.projectTitle} lyric={myProjectsDetail.lyric} />
+        {/* <TimeSeekBar trackDataPath={setMyProjectsDetailData.trackDataPath} /> */}
         <View style={styles["cue-buttons-wrap"]}>
-          <CueButtons />
+          <CueButtons onLongPressEvent={editCueName} />
         </View>
         <View style={styles["cue-control-player-wrap"]}>
-          <CueControlPlayer />
+          <CueControlPlayer myProjectsDetail={myProjectsDetail} />
         </View>
         <VolumeSeekBar />
       </View>
       <Overlay isShow={overlay} />
+      <EditCueNameTextField isShow={editCueNameTextField} onPressSave={saveCueName} />
       <ModalProjectSettings />
       <CenterModal isShow={centerModal} navigation={props.navigation} />
     </View>
