@@ -98,7 +98,7 @@ const EditProject = (props: Props) => {
         <Text>{setMyProjectsDetailData.artistName}</Text>
         <Text>{setMyProjectsDetailData.artWorkPath}</Text> */}
         <TextEditor projectTitle={myProjectsDetail.projectTitle} lyric={myProjectsDetail.lyric} />
-        {/* <TimeSeekBar trackDataPath={setMyProjectsDetailData.trackDataPath} /> */}
+        <TimeSeekBar myProjectsDetail={myProjectsDetail} />
         <View style={styles["cue-buttons-wrap"]}>
           <CueButtons onLongPressEvent={editCueName} />
         </View>

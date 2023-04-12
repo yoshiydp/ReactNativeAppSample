@@ -37,10 +37,7 @@ const CueControlPlayer = (props: Props) => {
   // トラックデータの情報を格納
   const setTrackData = [
     {
-      id: 1,
       url: myProjectsDetail.trackDataPath,
-      artwork: "https://url_to_artwork.jpg",
-      artist: "author",
       title: myProjectsDetail.trackTitle,
     },
   ];

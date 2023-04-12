@@ -1,21 +1,32 @@
 import React, { useRef, useEffect, useState } from "react";
 import { TouchableOpacity, View } from "react-native";
-import TrackPlayer, { Capability, Event } from "react-native-track-player";
+import TrackPlayer, {
+  AppKilledPlaybackBehavior,
+  Capability,
+  Event,
+} from "react-native-track-player";
 import { useProgress } from "react-native-track-player/lib/hooks";
 // import Slider from "@react-native-community/slider";
 import { Slider, Text, Icon } from "@rneui/themed";
 
+// Store
+import { useSelector } from "store/index";
+
 // Constants
 import * as COLOR from "constants/color";
+
+// Interfaces
+import { MyProjectsDetailType } from "interfaces/myProjectsInterface";
 
 // Styles
 import styles from "./TimeSeekBar.scss";
 
 interface Props {
-  trackDataPath: string;
+  myProjectsDetail: MyProjectsDetailType;
 }
 
 const TimeSeekBar = (props: Props) => {
+  const myProjectsDetail = useSelector((state) => state.myProjectsDetail);
   const [displayNone, setDisplayNone] = useState(false);
   const [isTrackPlayerInit, setIsTrackPlayerInit] = useState(false);
   const [isPlaying, setIsPlaying] = useState(false);
@@ -23,34 +34,45 @@ const TimeSeekBar = (props: Props) => {
   const [isSeeking, setIsSeeking] = useState(false);
   const { position, duration } = useProgress(250);
 
-  TrackPlayer.updateOptions({
-    stopWithApp: false,
-    capabilities: [
-      Capability.Play,
-      Capability.Pause,
-      Capability.SkipToNext,
-      Capability.SkipToPrevious,
-      Capability.Stop,
-      Capability.SeekTo,
-    ],
-    compactCapabilities: [Capability.Play, Capability.Pause],
-  });
+  // トラックデータの情報を格納
+  const setTrackData = [
+    {
+      url: myProjectsDetail.trackDataPath,
+      title: myProjectsDetail.trackTitle,
+    },
+  ];
 
   const setUpTrackPlayer = async () => {
     try {
-      await TrackPlayer.setupPlayer();
-      await TrackPlayer.add(props.trackDataPath);
+      await TrackPlayer.updateOptions({
+        android: {
+          appKilledPlaybackBehavior: AppKilledPlaybackBehavior.StopPlaybackAndRemoveNotification,
+        },
+        capabilities: [
+          Capability.Play,
+          Capability.Pause,
+          Capability.JumpForward,
+          Capability.JumpBackward,
+          Capability.SeekTo,
+          Capability.Stop,
+        ],
+        compactCapabilities: [
+          Capability.Play,
+          Capability.Pause,
+          Capability.JumpForward,
+          Capability.JumpBackward,
+        ],
+      });
+      await TrackPlayer.reset();
+      await TrackPlayer.add(setTrackData);
     } catch (e) {
       console.log(e);
     }
   };
 
   useEffect(() => {
+    TrackPlayer.setupPlayer();
     setUpTrackPlayer();
-    setSliderValue;
-    return () => {
-      TrackPlayer.destroy();
-    };
   }, []);
 
   useEffect(() => {
