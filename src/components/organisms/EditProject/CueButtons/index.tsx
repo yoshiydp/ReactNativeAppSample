@@ -1,11 +1,6 @@
 import React, { useState, useRef } from "react";
 import { Pressable, Text, View } from "react-native";
 import { TapGestureHandler, State } from "react-native-gesture-handler";
-import { useDispatch } from "react-redux";
-
-// Store
-import { showOverlay, inactiveHidden } from "store/OverlaySlice";
-import { showEditCueNameTextField } from "store/EditCueNameTextFieldSlice";
 
 // Styles
 import styles from "./CueButtons.scss";
@@ -20,7 +15,6 @@ interface CueTypes {
 }
 
 const CueButtons = (props: Props) => {
-  const dispatch = useDispatch();
   const [cueA, setCueA] = useState<CueTypes>({ flag: false, name: "" });
   const [cueB, setCueB] = useState<CueTypes>({ flag: false, name: "" });
   const [cueC, setCueC] = useState<CueTypes>({ flag: false, name: "" });
@@ -44,12 +38,6 @@ const CueButtons = (props: Props) => {
     }
   };
 
-  const onLongPressCueA = () => {
-    dispatch(showOverlay());
-    dispatch(inactiveHidden());
-    dispatch(showEditCueNameTextField());
-  };
-
   const onPressActiveCueB = (event: any) => {
     if (event.nativeEvent.state === State.ACTIVE) {
       setCueB({ flag: true, name: "cueB" });
@@ -60,12 +48,6 @@ const CueButtons = (props: Props) => {
     if (event.nativeEvent.state === State.ACTIVE) {
       setCueB({ flag: false, name: "" });
     }
-  };
-
-  const onLongPressCueB = () => {
-    dispatch(showOverlay());
-    dispatch(inactiveHidden());
-    dispatch(showEditCueNameTextField());
   };
 
   const onPressActiveCueC = (event: any) => {
@@ -80,12 +62,6 @@ const CueButtons = (props: Props) => {
     }
   };
 
-  const onLongPressCueC = () => {
-    dispatch(showOverlay());
-    dispatch(inactiveHidden());
-    dispatch(showEditCueNameTextField());
-  };
-
   const onPressActiveCueD = (event: any) => {
     if (event.nativeEvent.state === State.ACTIVE) {
       setCueD({ flag: true, name: "cueD" });
@@ -98,12 +74,6 @@ const CueButtons = (props: Props) => {
     }
   };
 
-  const onLongPressCueD = () => {
-    dispatch(showOverlay());
-    dispatch(inactiveHidden());
-    dispatch(showEditCueNameTextField());
-  };
-
   const onPressActiveCueE = (event: any) => {
     if (event.nativeEvent.state === State.ACTIVE) {
       setCueE({ flag: true, name: "cueE" });
@@ -114,12 +84,6 @@ const CueButtons = (props: Props) => {
     if (event.nativeEvent.state === State.ACTIVE) {
       setCueE({ flag: false, name: "" });
     }
-  };
-
-  const onLongPressCueE = () => {
-    dispatch(showOverlay());
-    dispatch(inactiveHidden());
-    dispatch(showEditCueNameTextField());
   };
 
   const notOnLongPress = () => {
