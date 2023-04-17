@@ -1,8 +1,6 @@
-import React, { useRef, useEffect, useState } from "react";
-import { TouchableOpacity, View } from "react-native";
-import TrackPlayer, { Capability, Event } from "react-native-track-player";
-import { useProgress } from "react-native-track-player/lib/hooks";
-// import Slider from "@react-native-community/slider";
+import React from "react";
+import { View } from "react-native";
+import { useProgress } from "react-native-track-player";
 import { Slider, Text, Icon } from "@rneui/themed";
 
 // Constants
@@ -12,92 +10,31 @@ import * as COLOR from "constants/color";
 import styles from "./TimeSeekBar.scss";
 
 interface Props {
-  trackDataPath: string;
+  minSeekTime: string;
+  maxSeekTime: string;
+  onValueChange: (value: number) => void;
+  onSlidingStart: () => void;
+  onSlidingCompleted: (value: number) => void;
 }
 
 const TimeSeekBar = (props: Props) => {
-  const [displayNone, setDisplayNone] = useState(false);
-  const [isTrackPlayerInit, setIsTrackPlayerInit] = useState(false);
-  const [isPlaying, setIsPlaying] = useState(false);
-  const [sliderValue, setSliderValue] = useState(0);
-  const [isSeeking, setIsSeeking] = useState(false);
-  const { position, duration } = useProgress(250);
-
-  TrackPlayer.updateOptions({
-    stopWithApp: false,
-    capabilities: [
-      Capability.Play,
-      Capability.Pause,
-      Capability.SkipToNext,
-      Capability.SkipToPrevious,
-      Capability.Stop,
-      Capability.SeekTo,
-    ],
-    compactCapabilities: [Capability.Play, Capability.Pause],
-  });
-
-  const setUpTrackPlayer = async () => {
-    try {
-      await TrackPlayer.setupPlayer();
-      await TrackPlayer.add(props.trackDataPath);
-    } catch (e) {
-      console.log(e);
-    }
-  };
-
-  useEffect(() => {
-    setUpTrackPlayer();
-    setSliderValue;
-    return () => {
-      TrackPlayer.destroy();
-    };
-  }, []);
-
-  useEffect(() => {
-    if (!isSeeking && position && duration) {
-      setSliderValue(position / duration);
-    }
-  }, [position, duration]);
-
-  const slidingStarted = () => {
-    setIsSeeking(true);
-  };
-
-  // Seekbar setting
-  const slidingCompleted = async (value: number) => {
-    await TrackPlayer.seekTo(value * duration);
-    setSliderValue(value);
-    setIsSeeking(false);
-  };
-
-  const playStart = async () => {
-    await TrackPlayer.play();
-  };
+  const progress = useProgress();
 
   return (
     <View style={styles["container"]}>
-      {/* <Slider
-        style={styles.progressBar}
-        minimumValue={0}
-        maximumValue={1}
-        value={sliderValue}
-        thumbSize={15}
-        minimumTrackTintColor={COLOR.COLOR_GREEN_BASE}
-        maximumTrackTintColor={COLOR.COLOR_GRAY_TYPE3}
-        onSlidingStart={slidingStarted}
-        onSlidingComplete={slidingCompleted}
-      /> */}
       <Slider
-        value={sliderValue}
-        onValueChange={setSliderValue}
-        maximumValue={1}
+        value={progress.position}
         minimumValue={0}
+        maximumValue={progress.duration}
         minimumTrackTintColor={COLOR.COLOR_GREEN_BASE}
         maximumTrackTintColor={COLOR.COLOR_GRAY_TYPE3}
-        step={0}
-        allowTouchTrack
-        onSlidingStart={slidingStarted}
-        onSlidingComplete={slidingCompleted}
+        onValueChange={(value: number) => {
+          props.onValueChange(value);
+        }}
+        onSlidingStart={props.onSlidingStart}
+        onSlidingComplete={(value: number) => {
+          props.onSlidingCompleted(value);
+        }}
         trackStyle={styles["track-style"]}
         thumbStyle={styles["thumb-style"]}
         thumbProps={{
@@ -112,12 +49,8 @@ const TimeSeekBar = (props: Props) => {
         }}
       />
       <View style={styles["seek-time-wrap"]}>
-        <Text style={styles["seek-time"]}>
-          {new Date(position * 1000).toISOString().substr(14, 5)}
-        </Text>
-        <Text style={styles["seek-time"]}>
-          {new Date((duration - position) * 1000).toISOString().substr(14, 5)}
-        </Text>
+        <Text style={styles["seek-time"]}>{props.minSeekTime}</Text>
+        <Text style={styles["seek-time"]}>{props.maxSeekTime}</Text>
       </View>
     </View>
   );
