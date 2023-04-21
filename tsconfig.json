@@ -34,6 +34,7 @@
   },
   "exclude": ["node_modules"],
   "include": [
+    "./.eslintrc",
     "src/**/*.ts",
     "src/**/*.tsx",
     "src/services/trackPlayerService.js",
