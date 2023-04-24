@@ -86,6 +86,7 @@ const MyProjectsItem = (props: Props) => {
     trackTitle: props.trackTitle,
     artistName: props.artistName,
     artWorkPath: props.artWorkPath,
+    cueButtons: props.cueButtons,
   };
 
   return (

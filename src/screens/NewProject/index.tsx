@@ -179,6 +179,13 @@ const NewProject = (props: Props) => {
             trackTitle: trackDataFile[0]?.name,
             artistName: "",
             artWorkPath: artWorkDownloadUrl ? artWorkDownloadUrl : "",
+            cueButtons: [
+              { cueA: "Cue A" },
+              { cueB: "Cue B" },
+              { cueC: "Cue C" },
+              { cueD: "Cue D" },
+              { cueE: "Cue E" },
+            ],
           }),
         });
 

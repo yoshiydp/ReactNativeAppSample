@@ -15,6 +15,11 @@ interface Props {
   onValueChange: (value: number) => void;
   onSlidingStart: () => void;
   onSlidingCompleted: (value: number) => void;
+  setCueA: [{ flag: boolean }, { name: string }, { position: number }];
+  setCueB: [{ flag: boolean }, { name: string }, { position: number }];
+  setCueC: [{ flag: boolean }, { name: string }, { position: number }];
+  setCueD: [{ flag: boolean }, { name: string }, { position: number }];
+  setCueE: [{ flag: boolean }, { name: string }, { position: number }];
 }
 
 const TimeSeekBar = (props: Props) => {
