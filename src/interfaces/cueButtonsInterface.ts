@@ -8,6 +8,7 @@ export interface CueButtonsNameType {
 
 export interface OnPressEventType {
   onPressActiveCue: (cueType: string, name: string) => void;
+  onPressInactiveCue: (cueType: string, name: string) => void;
   onLongPressEvent: (flag: boolean, name: string) => void;
 }
 
