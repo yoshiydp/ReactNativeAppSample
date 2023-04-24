@@ -10,6 +10,7 @@ const initialState: MyProjectsDetailType = {
   trackTitle: "",
   artistName: "",
   artWorkPath: "",
+  cueButtons: [{ cueA: "" }, { cueB: "" }, { cueC: "" }, { cueD: "" }, { cueE: "" }],
 };
 
 export const MyProjectsDetailSlice = createSlice({
@@ -17,17 +18,27 @@ export const MyProjectsDetailSlice = createSlice({
   initialState,
   reducers: {
     setMyProjectsDetail: (state, action: PayloadAction<MyProjectsDetailType>) => {
-      const { projectTitle, lyric, trackDataPath, trackTitle, artistName, artWorkPath } =
-        action.payload;
-
-      Object.assign(state, {
+      const {
         projectTitle,
         lyric,
         trackDataPath,
         trackTitle,
         artistName,
         artWorkPath,
-      });
+        cueButtons,
+      } = action.payload;
+
+      if (cueButtons) {
+        Object.assign(state, {
+          projectTitle,
+          lyric,
+          trackDataPath,
+          trackTitle,
+          artistName,
+          artWorkPath,
+          cueButtons,
+        });
+      }
     },
   },
 });
