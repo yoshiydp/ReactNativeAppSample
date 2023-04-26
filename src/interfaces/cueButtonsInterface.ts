@@ -1,9 +1,7 @@
-export interface CueButtonsNameType {
-  cueA: string;
-  cueB: string;
-  cueC: string;
-  cueD: string;
-  cueE: string;
+export interface CueButtonsType {
+  flag: boolean;
+  name: string;
+  position: number;
 }
 
 export interface OnPressEventType {
