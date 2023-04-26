@@ -125,9 +125,17 @@ const EditProject = (props: Props) => {
     await TrackPlayer.pause();
   };
 
+  const playStart = async () => {
+    if (playbackState === State.Paused || playbackState === State.Ready) {
+      await TrackPlayer.play();
+      setStart(false);
+      setPause(true);
+    }
+  };
+
   const onSlidingCompleted = async (value: number) => {
-    await TrackPlayer.play();
     await TrackPlayer.seekTo(value);
+    playStart();
   };
 
   const activeCue = async (cueType: string, cueName: string) => {
@@ -209,12 +217,7 @@ const EditProject = (props: Props) => {
   };
 
   const controlStart = async () => {
-    if (playbackState === State.Paused || playbackState === State.Ready) {
-      await TrackPlayer.play();
-      console.log("controlStart!");
-      setStart(false);
-      setPause(true);
-    }
+    playStart();
   };
 
   const controlPause = async () => {
@@ -251,11 +254,6 @@ const EditProject = (props: Props) => {
         />
         <View style={styles["cue-buttons-wrap"]}>
           <CueButtons
-            cueA={myProjectsDetail.cueButtons[0].cueA}
-            cueB={myProjectsDetail.cueButtons[1].cueB}
-            cueC={myProjectsDetail.cueButtons[2].cueC}
-            cueD={myProjectsDetail.cueButtons[3].cueD}
-            cueE={myProjectsDetail.cueButtons[4].cueE}
             onPressActiveCue={activeCue}
             onPressInactiveCue={inactiveCue}
             onLongPressEvent={editCueName}
