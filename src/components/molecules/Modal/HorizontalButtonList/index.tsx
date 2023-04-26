@@ -146,7 +146,7 @@ const HorizontalButtonList = (props: Props) => {
       if (editProjectModalFlag) {
         dispatch(inactiveEditProjectModalFlag());
         dispatch(setMyProjectsDetail(resetMyProjectsDetail));
-        props.navigation.goBack();
+        props.navigation.navigate("MainTabBar");
       }
     }
   };
