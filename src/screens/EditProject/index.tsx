@@ -99,6 +99,7 @@ const EditProject = (props: Props) => {
     });
     setUpTrackPlayer();
     return () => {
+      controlPause();
       TrackPlayer.reset();
     };
   }, []);
