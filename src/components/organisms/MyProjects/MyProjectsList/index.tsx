@@ -37,6 +37,7 @@ const MyProjectsList = (props: Props) => {
               trackTitle={item.trackTitle}
               artistName={item.artistName}
               artWorkPath={item.artWorkPath}
+              cueButtons={item.cueButtons}
               navigation={props.navigation}
             />
           </View>

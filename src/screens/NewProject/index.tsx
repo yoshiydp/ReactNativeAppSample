@@ -15,6 +15,7 @@ import {
 import { hideOverlay } from "store/OverlaySlice";
 import { hideMainTabMenu } from "store/MainTabMenuSlice";
 import { showModalPageSheet } from "store/ModalPageSheetSlice";
+import { setMyProjectsDetail } from "store/MyProjectsDetailSlice";
 import { setArtWork, setTrackDataFile } from "store/NewProjectSlice";
 import { setTrackListDetail } from "store/TrackListDetailSlice";
 import { setTrackListItems } from "store/TrackListItemsSlice";
@@ -179,6 +180,13 @@ const NewProject = (props: Props) => {
             trackTitle: trackDataFile[0]?.name,
             artistName: "",
             artWorkPath: artWorkDownloadUrl ? artWorkDownloadUrl : "",
+            cueButtons: [
+              { flag: false, name: "Cue A", position: 0 },
+              { flag: false, name: "Cue B", position: 0 },
+              { flag: false, name: "Cue C", position: 0 },
+              { flag: false, name: "Cue D", position: 0 },
+              { flag: false, name: "Cue E", position: 0 },
+            ],
           }),
         });
 
@@ -203,6 +211,13 @@ const NewProject = (props: Props) => {
             trackTitle: trackListDetailTitle,
             artistName: "",
             artWorkPath: artWorkDownloadUrl ? artWorkDownloadUrl : "",
+            cueButtons: [
+              { flag: false, name: "Cue A", position: 0 },
+              { flag: false, name: "Cue B", position: 0 },
+              { flag: false, name: "Cue C", position: 0 },
+              { flag: false, name: "Cue D", position: 0 },
+              { flag: false, name: "Cue E", position: 0 },
+            ],
           }),
         });
 
@@ -230,6 +245,47 @@ const NewProject = (props: Props) => {
       console.log(error);
     } finally {
       dispatch(hideLoadingFullScreen());
+
+      // trackDataFileのアップロードの場合のstoreへの保存
+      if (trackDataFile.length > 0) {
+        const setNewProjectUploadTrackData = {
+          projectTitle: projectTitle,
+          lyric: "",
+          trackDataPath: trackDataDownloadUrl ? trackDataDownloadUrl : "",
+          trackTitle: trackDataFile[0]?.name,
+          artistName: "",
+          artWorkPath: artWorkDownloadUrl ? artWorkDownloadUrl : "",
+          cueButtons: [
+            { flag: false, name: "Cue A", position: 0 },
+            { flag: false, name: "Cue B", position: 0 },
+            { flag: false, name: "Cue C", position: 0 },
+            { flag: false, name: "Cue D", position: 0 },
+            { flag: false, name: "Cue E", position: 0 },
+          ],
+        };
+        dispatch(setMyProjectsDetail(setNewProjectUploadTrackData));
+      }
+
+      // トラックリストから選択した場合のアップロードのstoreへの保存
+      if (trackDataFile.length === 0 && trackListDetailTitle && trackListDetailDataPath) {
+        const setNewProjectSelectTrackListData = {
+          projectTitle: projectTitle,
+          lyric: "",
+          trackDataPath: trackListDetailDataPath ? trackListDetailDataPath : "",
+          trackTitle: trackListDetailTitle,
+          artistName: "",
+          artWorkPath: artWorkDownloadUrl ? artWorkDownloadUrl : "",
+          cueButtons: [
+            { flag: false, name: "Cue A", position: 0 },
+            { flag: false, name: "Cue B", position: 0 },
+            { flag: false, name: "Cue C", position: 0 },
+            { flag: false, name: "Cue D", position: 0 },
+            { flag: false, name: "Cue E", position: 0 },
+          ],
+        };
+        dispatch(setMyProjectsDetail(setNewProjectSelectTrackListData));
+      }
+      await props.navigation.navigate("EditProject");
     }
   };
 

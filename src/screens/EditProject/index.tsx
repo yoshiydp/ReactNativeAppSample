@@ -10,12 +10,11 @@ import TrackPlayer, {
   useTrackPlayerEvents,
   AppKilledPlaybackBehavior,
 } from "react-native-track-player";
-// import { useProgress } from "react-native-track-player/lib/hooks";
 import { useDispatch } from "react-redux";
 
 // Store
 import { useSelector } from "store/index";
-import { setMyProjectsDetail } from "store/MyProjectsDetailSlice";
+import { setCueA, setCueB, setCueC, setCueD, setCueE } from "store/CueButtonsSlice";
 import {
   showCenterModal,
   setCenterModalTitle,
@@ -33,8 +32,6 @@ import {
 } from "store/EditCueNameTextFieldSlice";
 
 // Components
-import EditProjectPlayer from "components/templates/EditProjectPlayer";
-import EditCueNameTextField from "components/molecules/EditCueNameTextField";
 import TextEditor from "components/organisms/TextEditor";
 import TimeSeekBar from "components/organisms/TimeSeekBar";
 import CueButtons from "components/organisms/EditProject/CueButtons";
@@ -42,6 +39,7 @@ import CueControlPlayer from "components/organisms/EditProject/CueControlPlayer"
 import VolumeSeekBar from "components/organisms/EditProject/VolumeSeekBar";
 import CenterModal from "components/organisms/CenterModal";
 import ModalProjectSettings from "components/organisms/Modal/ModalProjectSettings";
+import EditCueNameTextField from "components/molecules/EditCueNameTextField";
 import EditProjectHeader from "components/molecules/EditProjectHeader";
 import Overlay from "components/atoms/Overlay";
 
@@ -101,6 +99,7 @@ const EditProject = (props: Props) => {
     });
     setUpTrackPlayer();
     return () => {
+      controlPause();
       TrackPlayer.reset();
     };
   }, []);
@@ -117,6 +116,86 @@ const EditProject = (props: Props) => {
   const onPressOpenMenu = () => {
     console.log("onPressOpenMenu!");
     dispatch(showModalProjectSettings());
+  };
+
+  const onValueChange = (value: number) => {
+    setSliderValue(value);
+  };
+
+  const onSlidingStart = async () => {
+    await TrackPlayer.pause();
+  };
+
+  const playStart = async () => {
+    if (playbackState === State.Paused || playbackState === State.Ready) {
+      await TrackPlayer.play();
+      setStart(false);
+      setPause(true);
+    }
+  };
+
+  const onSlidingCompleted = async (value: number) => {
+    await TrackPlayer.seekTo(value);
+    playStart();
+  };
+
+  const activeCue = async (cueType: string, cueName: string) => {
+    if (cueType === "A" && cueName) {
+      const getPositionA = await TrackPlayer.getPosition();
+      console.log(cueType, cueName, getPositionA);
+      dispatch(setCueA([{ flag: true }, { name: cueName }, { position: getPositionA }]));
+    }
+
+    if (cueType === "B" && cueName) {
+      const getPositionB = await TrackPlayer.getPosition();
+      console.log(cueType, cueName, getPositionB);
+      dispatch(setCueB([{ flag: true }, { name: cueName }, { position: getPositionB }]));
+    }
+
+    if (cueType === "C" && cueName) {
+      const getPositionC = await TrackPlayer.getPosition();
+      console.log(cueType, cueName, getPositionC);
+      dispatch(setCueC([{ flag: true }, { name: cueName }, { position: getPositionC }]));
+    }
+
+    if (cueType === "D" && cueName) {
+      const getPositionD = await TrackPlayer.getPosition();
+      console.log(cueType, cueName, getPositionD);
+      dispatch(setCueD([{ flag: true }, { name: cueName }, { position: getPositionD }]));
+    }
+
+    if (cueType === "E" && cueName) {
+      const getPositionE = await TrackPlayer.getPosition();
+      console.log(cueType, cueName, getPositionE);
+      dispatch(setCueE([{ flag: true }, { name: cueName }, { position: getPositionE }]));
+    }
+  };
+
+  const inactiveCue = async (cueType: string, cueName: string) => {
+    if (cueType === "A" && cueName) {
+      console.log(cueType, cueName);
+      dispatch(setCueA([{ flag: false }, { name: "" }, { position: 0 }]));
+    }
+
+    if (cueType === "B" && cueName) {
+      console.log(cueType, cueName);
+      dispatch(setCueB([{ flag: false }, { name: "" }, { position: 0 }]));
+    }
+
+    if (cueType === "C" && cueName) {
+      console.log(cueType, cueName);
+      dispatch(setCueC([{ flag: false }, { name: "" }, { position: 0 }]));
+    }
+
+    if (cueType === "D" && cueName) {
+      console.log(cueType, cueName);
+      dispatch(setCueD([{ flag: false }, { name: "" }, { position: 0 }]));
+    }
+
+    if (cueType === "E" && cueName) {
+      console.log(cueType, cueName);
+      dispatch(setCueE([{ flag: false }, { name: "" }, { position: 0 }]));
+    }
   };
 
   const editCueName = (flag: boolean, name: string) => {
@@ -139,12 +218,7 @@ const EditProject = (props: Props) => {
   };
 
   const controlStart = async () => {
-    if (playbackState === State.Paused || playbackState === State.Ready) {
-      await TrackPlayer.play();
-      console.log("controlStart!");
-      setStart(false);
-      setPause(true);
-    }
+    playStart();
   };
 
   const controlPause = async () => {
@@ -164,19 +238,6 @@ const EditProject = (props: Props) => {
     console.log("controlAllCueReset!");
   };
 
-  const onValueChange = (value: number) => {
-    setSliderValue(value);
-  };
-
-  const onSlidingStart = async () => {
-    await TrackPlayer.pause();
-  };
-
-  const onSlidingCompleted = async (value: number) => {
-    await TrackPlayer.play();
-    await TrackPlayer.seekTo(value);
-  };
-
   return (
     <View style={styles["container"]}>
       <View>
@@ -193,7 +254,11 @@ const EditProject = (props: Props) => {
           onSlidingCompleted={onSlidingCompleted}
         />
         <View style={styles["cue-buttons-wrap"]}>
-          <CueButtons onLongPressEvent={editCueName} />
+          <CueButtons
+            onPressActiveCue={activeCue}
+            onPressInactiveCue={inactiveCue}
+            onLongPressEvent={editCueName}
+          />
         </View>
         <View style={styles["cue-control-player-wrap"]}>
           <CueControlPlayer

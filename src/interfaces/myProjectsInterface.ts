@@ -1,3 +1,4 @@
+import { CueButtonsType } from "interfaces/cueButtonsInterface";
 export interface MyProjectsDetailType {
   projectTitle: string;
   lyric: string;
@@ -5,6 +6,7 @@ export interface MyProjectsDetailType {
   trackTitle: string;
   artistName: string;
   artWorkPath: string;
+  cueButtons: CueButtonsType[];
 }
 
 export interface MyProjectsItemsType {
