@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { View, Text } from "react-native";
 
 // Styles
@@ -10,8 +10,23 @@ interface Props {
 }
 
 const CuePoint = (props: Props) => {
+  const sec = 60;
+  const hundredfold = 100;
+  const cuePointWidth = 24;
+
+  useEffect(() => {
+    if (props.position) {
+      console.log("props.position: " + (props.position / sec) * hundredfold + cuePointWidth);
+    }
+  }, [props.position]);
+
   return (
-    <View style={[styles["container"], { left: props.position ? props.position + 36 : 0 }]}>
+    <View
+      style={[
+        styles["container"],
+        { left: props.position && (props.position / sec) * hundredfold + cuePointWidth },
+      ]}
+    >
       <Text style={[styles["name"]]}>{props.name}</Text>
       <View style={styles["point"]}></View>
     </View>
