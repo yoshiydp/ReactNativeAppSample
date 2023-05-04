@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useRef } from "react";
 import { Pressable, Text, View } from "react-native";
 import { TapGestureHandler, State } from "react-native-gesture-handler";
 
@@ -6,14 +6,13 @@ import { TapGestureHandler, State } from "react-native-gesture-handler";
 import { useSelector } from "store/index";
 
 // Interfaces
-import { CueButtonsNameType, OnPressEventType } from "interfaces/cueButtonsInterface";
+import { OnPressEventType } from "interfaces/cueButtonsInterface";
 
 // Styles
 import styles from "./CueButtons.scss";
 
-interface Props extends CueButtonsNameType, OnPressEventType {}
-
-const CueButtons = (props: Props) => {
+const CueButtons = (props: OnPressEventType) => {
+  const cueButtons = useSelector((state) => state.myProjectsDetail.cueButtons);
   const cueA = useSelector((state) => state.cueButtons.cueA);
   const cueB = useSelector((state) => state.cueButtons.cueB);
   const cueC = useSelector((state) => state.cueButtons.cueC);
@@ -27,61 +26,61 @@ const CueButtons = (props: Props) => {
 
   const onPressActiveCueA = (event: any) => {
     if (event.nativeEvent.state === State.ACTIVE) {
-      props.onPressActiveCue("A", props.cueA);
+      props.onPressActiveCue("A", cueButtons[0].name);
     }
   };
 
   const onDoubleTapResetCueA = (event: any) => {
     if (event.nativeEvent.state === State.ACTIVE) {
-      props.onPressInactiveCue("A", props.cueA);
+      props.onPressInactiveCue("A", cueButtons[0].name);
     }
   };
 
   const onPressActiveCueB = (event: any) => {
     if (event.nativeEvent.state === State.ACTIVE) {
-      props.onPressActiveCue("B", props.cueB);
+      props.onPressActiveCue("B", cueButtons[1].name);
     }
   };
 
   const onDoubleTapResetCueB = (event: any) => {
     if (event.nativeEvent.state === State.ACTIVE) {
-      props.onPressInactiveCue("B", props.cueB);
+      props.onPressInactiveCue("B", cueButtons[1].name);
     }
   };
 
   const onPressActiveCueC = (event: any) => {
     if (event.nativeEvent.state === State.ACTIVE) {
-      props.onPressActiveCue("C", props.cueC);
+      props.onPressActiveCue("C", cueButtons[2].name);
     }
   };
 
   const onDoubleTapResetCueC = (event: any) => {
     if (event.nativeEvent.state === State.ACTIVE) {
-      props.onPressInactiveCue("C", props.cueC);
+      props.onPressInactiveCue("C", cueButtons[2].name);
     }
   };
 
   const onPressActiveCueD = (event: any) => {
     if (event.nativeEvent.state === State.ACTIVE) {
-      props.onPressActiveCue("D", props.cueD);
+      props.onPressActiveCue("D", cueButtons[3].name);
     }
   };
 
   const onDoubleTapResetCueD = (event: any) => {
     if (event.nativeEvent.state === State.ACTIVE) {
-      props.onPressInactiveCue("D", props.cueD);
+      props.onPressInactiveCue("D", cueButtons[3].name);
     }
   };
 
   const onPressActiveCueE = (event: any) => {
     if (event.nativeEvent.state === State.ACTIVE) {
-      props.onPressActiveCue("E", props.cueE);
+      props.onPressActiveCue("E", cueButtons[4].name);
     }
   };
 
   const onDoubleTapResetCueE = (event: any) => {
     if (event.nativeEvent.state === State.ACTIVE) {
-      props.onPressInactiveCue("E", props.cueE);
+      props.onPressInactiveCue("E", cueButtons[4].name);
     }
   };
 
@@ -105,7 +104,7 @@ const CueButtons = (props: Props) => {
             }
             style={cueA[0].flag ? styles["buttonItem--firstActive"] : styles["buttonItem--first"]}
           >
-            <Text style={styles["text"]}>{props.cueA}</Text>
+            <Text style={styles["text"]}>{cueButtons[0].name}</Text>
           </Pressable>
         </TapGestureHandler>
       </TapGestureHandler>
@@ -123,7 +122,7 @@ const CueButtons = (props: Props) => {
             }
             style={cueB[0].flag ? styles["buttonItem--active"] : styles["buttonItem"]}
           >
-            <Text style={styles["text"]}>{props.cueB}</Text>
+            <Text style={styles["text"]}>{cueButtons[1].name}</Text>
           </Pressable>
         </TapGestureHandler>
       </TapGestureHandler>
@@ -141,7 +140,7 @@ const CueButtons = (props: Props) => {
             }
             style={cueC[0].flag ? styles["buttonItem--active"] : styles["buttonItem"]}
           >
-            <Text style={styles["text"]}>{props.cueC}</Text>
+            <Text style={styles["text"]}>{cueButtons[2].name}</Text>
           </Pressable>
         </TapGestureHandler>
       </TapGestureHandler>
@@ -159,7 +158,7 @@ const CueButtons = (props: Props) => {
             }
             style={cueD[0].flag ? styles["buttonItem--active"] : styles["buttonItem"]}
           >
-            <Text style={styles["text"]}>{props.cueD}</Text>
+            <Text style={styles["text"]}>{cueButtons[3].name}</Text>
           </Pressable>
         </TapGestureHandler>
       </TapGestureHandler>
@@ -177,7 +176,7 @@ const CueButtons = (props: Props) => {
             }
             style={cueE[0].flag ? styles["buttonItem--active"] : styles["buttonItem"]}
           >
-            <Text style={styles["text"]}>{props.cueE}</Text>
+            <Text style={styles["text"]}>{cueButtons[4].name}</Text>
           </Pressable>
         </TapGestureHandler>
       </TapGestureHandler>

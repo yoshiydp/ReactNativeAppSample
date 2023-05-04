@@ -1,0 +1,28 @@
+@use "src/globalStyles/" as g;
+
+.container {
+  position: absolute;
+  top: -6px;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding-top: 21px;
+  z-index: 2;
+}
+
+.name {
+  position: absolute;
+  top: 0;
+  width: 400%;
+  text-align: center;
+  color: g.colors(yellow, light);
+  font-size: 12px;
+  font-weight: bold;
+}
+
+.point {
+  width: 10px;
+  height: 10px;
+  border-radius: 50px;
+  background: g.colors(yellow, light);
+}

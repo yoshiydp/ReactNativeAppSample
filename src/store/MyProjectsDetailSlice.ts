@@ -1,6 +1,7 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 // Interfaces
+import { CueButtonsType } from "interfaces/cueButtonsInterface";
 import { MyProjectsDetailType } from "interfaces/myProjectsInterface";
 
 const initialState: MyProjectsDetailType = {
@@ -10,7 +11,13 @@ const initialState: MyProjectsDetailType = {
   trackTitle: "",
   artistName: "",
   artWorkPath: "",
-  cueButtons: [{ cueA: "" }, { cueB: "" }, { cueC: "" }, { cueD: "" }, { cueE: "" }],
+  cueButtons: <CueButtonsType[]>[
+    { flag: false, name: "", position: 0 },
+    { flag: false, name: "", position: 0 },
+    { flag: false, name: "", position: 0 },
+    { flag: false, name: "", position: 0 },
+    { flag: false, name: "", position: 0 },
+  ],
 };
 
 export const MyProjectsDetailSlice = createSlice({
