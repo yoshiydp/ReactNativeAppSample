@@ -1,4 +1,3 @@
-// prettier-ignore
 {
   "extends": "@tsconfig/react-native/tsconfig.json",
   "compilerOptions": {
@@ -11,15 +10,10 @@
       "config/*": ["src/config/*"],
       "interfaces/*": ["src/interfaces/*"],
       "store/*": ["src/store/*"],
-      "validators/*": ["src/validators/*"],
+      "validators/*": ["src/validators/*"]
     },
     "target": "es6",
-    "module": "es2015",
-    "lib": [
-      "dom",
-      "dom.iterable",
-      "esnext"
-    ],
+    "lib": ["dom", "dom.iterable", "esnext"],
     "allowJs": true,
     "skipLibCheck": true,
     "esModuleInterop": true,
@@ -30,13 +24,8 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
     "noEmit": true,
-    "jsx": "preserve",
+    "jsx": "preserve"
   },
   "exclude": ["node_modules"],
-  "include": [
-    "./.eslintrc",
-    "src/**/*.ts",
-    "src/**/*.tsx",
-    "src/services/trackPlayerService.js",
-  ]
+  "include": ["./.eslintrc", "src/**/*.ts", "src/**/*.tsx", "src/services/trackPlayerService.js"]
 }
