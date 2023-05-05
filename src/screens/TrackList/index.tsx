@@ -40,6 +40,14 @@ const TrackList = (props: Props) => {
     }
   };
 
+  const searchFilter = () => {
+    if (searchValue) {
+      dispatch(setTrackListFilterItems(searchValue));
+    } else {
+      getTrackListData();
+    }
+  };
+
   useEffect(() => {
     getTrackListData();
     onSnapshot(docRef, (doc) => {
@@ -56,14 +64,6 @@ const TrackList = (props: Props) => {
     console.log("searchValue: " + searchValue);
     searchFilter();
   }, [searchValue]);
-
-  const searchFilter = () => {
-    if (searchValue) {
-      dispatch(setTrackListFilterItems(searchValue));
-    } else {
-      getTrackListData();
-    }
-  };
 
   return (
     <>

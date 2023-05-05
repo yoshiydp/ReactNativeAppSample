@@ -20,8 +20,8 @@ export const TrackListItemsSlice = createSlice({
     setTrackListFilterItems: (state, action: PayloadAction<string>) => {
       const filterItems = state.trackListItems.filter((items: TrackListItemsType) =>
         Object.values(items).some(
-          (item: string) => item?.indexOf(action.payload.toLowerCase()) !== -1,
-        ),
+          (item: string) => item?.indexOf(action.payload.toLowerCase()) !== -1
+        )
       );
       state.trackListItems.splice(0);
       state.trackListItems.push(...filterItems);

@@ -39,13 +39,13 @@ export const CenterModalSlice = createSlice({
     },
     setCenterModalNoteTrackListDetail: (
       state: { notesTrackListDetail: string },
-      action: PayloadAction<string>,
+      action: PayloadAction<string>
     ) => {
       state.notesTrackListDetail = action.payload;
     },
     setCenterModalSubmitButtonText: (
       state: { submitButtonText: string },
-      action: PayloadAction<string>,
+      action: PayloadAction<string>
     ) => {
       action.payload ? (state.submitButtonText = action.payload) : state.submitButtonText;
     },

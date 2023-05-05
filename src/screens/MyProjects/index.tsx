@@ -40,6 +40,14 @@ const MyProjects = (props: Props) => {
     }
   };
 
+  const searchFilter = () => {
+    if (searchValue) {
+      dispatch(setMyProjectsFilterItems(searchValue));
+    } else {
+      getProjectData();
+    }
+  };
+
   useEffect(() => {
     getProjectData();
     onSnapshot(docRef, (doc) => {
@@ -56,14 +64,6 @@ const MyProjects = (props: Props) => {
     console.log("searchValue: " + searchValue);
     searchFilter();
   }, [searchValue]);
-
-  const searchFilter = () => {
-    if (searchValue) {
-      dispatch(setMyProjectsFilterItems(searchValue));
-    } else {
-      getProjectData();
-    }
-  };
 
   return (
     <>

@@ -65,20 +65,6 @@ const NewProject = (props: Props) => {
     }
   };
 
-  useEffect(() => {
-    getTrackListData();
-    dispatch(hideOverlay());
-    dispatch(hideMainTabMenu());
-  }, [projectTitle, artWork, trackDataFile]);
-
-  useEffect(() => {
-    return () => {
-      dispatch(setArtWork([]));
-      dispatch(setTrackDataFile([]));
-      dispatch(setTrackListDetail(resetTrackData));
-    };
-  }, []);
-
   const selectTrackDataFile = async () => {
     try {
       const results: any = await DocumentPicker.pickMultiple({
@@ -90,7 +76,7 @@ const NewProject = (props: Props) => {
     }
   };
 
-  const selectTrackList = async () => {
+  const selectTrackList = () => {
     dispatch(showModalPageSheet());
   };
 
@@ -98,7 +84,7 @@ const NewProject = (props: Props) => {
     fileUri: string,
     fileName: string,
     fileType: string,
-    directory: string,
+    directory: string
   ) => {
     if (!uid) return;
     const blob: any = await new Promise((resolve, reject) => {
@@ -160,7 +146,7 @@ const NewProject = (props: Props) => {
           trackDataFile[0]?.uri,
           trackDataFile[0]?.name,
           trackDataFile[0]?.type,
-          "/track_data_files/",
+          "/track_data_files/"
         );
 
         await getDownloadURL(ref(storage, uid + "/track_data_files/" + trackDataFile[0]?.name))
@@ -174,7 +160,7 @@ const NewProject = (props: Props) => {
 
         await updateDoc(doc(db, "users", uid), {
           myProjectsData: arrayUnion({
-            projectTitle: projectTitle,
+            projectTitle,
             lyric: "",
             trackDataPath: trackDataDownloadUrl ? trackDataDownloadUrl : "",
             trackTitle: trackDataFile[0]?.name,
@@ -196,7 +182,7 @@ const NewProject = (props: Props) => {
             trackTitle: trackDataFile[0]?.name,
             artistName: "",
             artWorkPath: artWorkDownloadUrl ? artWorkDownloadUrl : "",
-            linkedMyProjects: [{ projectTitle: projectTitle }],
+            linkedMyProjects: [{ projectTitle }],
           }),
         });
       }
@@ -205,7 +191,7 @@ const NewProject = (props: Props) => {
       if (trackDataFile.length === 0 && trackListDetailTitle && trackListDetailDataPath) {
         await updateDoc(doc(db, "users", uid), {
           myProjectsData: arrayUnion({
-            projectTitle: projectTitle,
+            projectTitle,
             lyric: "",
             trackDataPath: trackListDetailDataPath ? trackListDetailDataPath : "",
             trackTitle: trackListDetailTitle,
@@ -237,7 +223,7 @@ const NewProject = (props: Props) => {
             trackTitle: trackListDetailTitle,
             artistName: "",
             artWorkPath: artWorkDownloadUrl ? artWorkDownloadUrl : "",
-            linkedMyProjects: [{ projectTitle: projectTitle }],
+            linkedMyProjects: [{ projectTitle }],
           }),
         });
       }
@@ -249,7 +235,7 @@ const NewProject = (props: Props) => {
       // trackDataFileのアップロードの場合のstoreへの保存
       if (trackDataFile.length > 0) {
         const setNewProjectUploadTrackData = {
-          projectTitle: projectTitle,
+          projectTitle,
           lyric: "",
           trackDataPath: trackDataDownloadUrl ? trackDataDownloadUrl : "",
           trackTitle: trackDataFile[0]?.name,
@@ -269,7 +255,7 @@ const NewProject = (props: Props) => {
       // トラックリストから選択した場合のアップロードのstoreへの保存
       if (trackDataFile.length === 0 && trackListDetailTitle && trackListDetailDataPath) {
         const setNewProjectSelectTrackListData = {
-          projectTitle: projectTitle,
+          projectTitle,
           lyric: "",
           trackDataPath: trackListDetailDataPath ? trackListDetailDataPath : "",
           trackTitle: trackListDetailTitle,
@@ -330,6 +316,20 @@ const NewProject = (props: Props) => {
     artWorkPath: "",
     linkedMyProjects: [],
   };
+
+  useEffect(() => {
+    getTrackListData();
+    dispatch(hideOverlay());
+    dispatch(hideMainTabMenu());
+  }, [projectTitle, artWork, trackDataFile]);
+
+  useEffect(() => {
+    return () => {
+      dispatch(setArtWork([]));
+      dispatch(setTrackDataFile([]));
+      dispatch(setTrackListDetail(resetTrackData));
+    };
+  }, []);
 
   return (
     <>

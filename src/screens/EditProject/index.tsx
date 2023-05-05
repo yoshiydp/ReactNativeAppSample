@@ -59,7 +59,7 @@ const EditProject = (props: Props) => {
   const activeHiddenState = useSelector((state) => state.overlay.inactiveHidden);
   const myProjectsDetail = useSelector((state) => state.myProjectsDetail);
   const editCueNameTextField = useSelector(
-    (state) => state.editCueNameTextField.editCueNameTextField,
+    (state) => state.editCueNameTextField.editCueNameTextField
   );
   const centerModal = useSelector((state) => state.centerModal.centerModal);
   const playbackState = usePlaybackState();
@@ -92,17 +92,6 @@ const EditProject = (props: Props) => {
       console.log(e);
     }
   };
-
-  useEffect(() => {
-    TrackPlayer.setupPlayer({
-      waitForBuffer: true,
-    });
-    setUpTrackPlayer();
-    return () => {
-      controlPause();
-      TrackPlayer.reset();
-    };
-  }, []);
 
   const onPressGoBackHome = () => {
     console.log("onPressGoBackHome!");
@@ -171,7 +160,7 @@ const EditProject = (props: Props) => {
     }
   };
 
-  const inactiveCue = async (cueType: string, cueName: string) => {
+  const inactiveCue = (cueType: string, cueName: string) => {
     if (cueType === "A" && cueName) {
       console.log(cueType, cueName);
       dispatch(setCueA([{ flag: false }, { name: "" }, { position: 0 }]));
@@ -217,7 +206,7 @@ const EditProject = (props: Props) => {
     dispatch(hideEditCueNameTextField());
   };
 
-  const controlStart = async () => {
+  const controlStart = () => {
     playStart();
   };
 
@@ -238,8 +227,19 @@ const EditProject = (props: Props) => {
     console.log("controlAllCueReset!");
   };
 
+  useEffect(() => {
+    TrackPlayer.setupPlayer({
+      waitForBuffer: true,
+    });
+    setUpTrackPlayer();
+    return () => {
+      controlPause();
+      TrackPlayer.reset();
+    };
+  }, []);
+
   return (
-    <View style={styles["container"]}>
+    <View style={styles.container}>
       <View>
         <EditProjectHeader
           onPressHomeButton={onPressGoBackHome}

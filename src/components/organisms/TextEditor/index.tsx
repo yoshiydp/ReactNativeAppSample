@@ -65,6 +65,23 @@ const TextEditor = (props: Props) => {
     }
   };
 
+  const heightAnimatedFunc = (object: any, value: number, duration: number, delay: number) => {
+    Animated.timing(object, {
+      toValue: value,
+      duration,
+      delay,
+      useNativeDriver: false,
+    }).start();
+  };
+
+  const opacityAnimatedFunc = (value: number) => {
+    Animated.timing(opacityValue, {
+      toValue: value,
+      duration: VALUE.DURATION_200,
+      useNativeDriver: false,
+    }).start();
+  };
+
   const onPressActiveEditor = () => {
     setActiveEditor(true);
     setDisabledEditor(false);
@@ -72,7 +89,7 @@ const TextEditor = (props: Props) => {
       containerHeightValue,
       targetHeight + 70 + richEditorHeight,
       VALUE.DURATION_200,
-      0,
+      0
     );
     heightAnimatedFunc(coverGradientHeightValue, 0, VALUE.DURATION_200, 200);
     opacityAnimatedFunc(0);
@@ -84,23 +101,6 @@ const TextEditor = (props: Props) => {
     heightAnimatedFunc(containerHeightValue, initialContainerHeight, VALUE.DURATION_200, 0);
     heightAnimatedFunc(coverGradientHeightValue, initialContainerHeight, 0, 0);
     opacityAnimatedFunc(1);
-  };
-
-  const heightAnimatedFunc = (object: any, value: number, duration: number, delay: number) => {
-    Animated.timing(object, {
-      toValue: value,
-      duration: duration,
-      delay: delay,
-      useNativeDriver: false,
-    }).start();
-  };
-
-  const opacityAnimatedFunc = (value: number) => {
-    Animated.timing(opacityValue, {
-      toValue: value,
-      duration: VALUE.DURATION_200,
-      useNativeDriver: false,
-    }).start();
   };
 
   const containerHeightStyle = {
@@ -129,7 +129,7 @@ const TextEditor = (props: Props) => {
   };
 
   return (
-    <Animated.View style={[styles["container"], containerHeightStyle]}>
+    <Animated.View style={[styles.container, containerHeightStyle]}>
       <Text style={styles["project-title"]} onLayout={getTargetPosition}>
         {props.projectTitle}
       </Text>

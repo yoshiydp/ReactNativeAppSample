@@ -27,7 +27,7 @@ export const validatePassword = (password: string, setState: (value: string) => 
 export const validateUserNotFound = (
   setEmailState: (emailValue: string) => void,
   password: string,
-  setPasswordState: (passwordValue: string) => void,
+  setPasswordState: (passwordValue: string) => void
 ) => {
   setEmailState(TEXT.ERROR_NOT_FOUND_USER);
   if (password.length < 8) {
@@ -39,7 +39,7 @@ export const validateUserNotFound = (
 
 export const validateNetworkRequestFailed = (
   setEmailState: (emailValue: string) => void,
-  setPasswordState: (passwordValue: string) => void,
+  setPasswordState: (passwordValue: string) => void
 ) => {
   setEmailState(TEXT.ERROR_NETWORK_FAILED);
   setPasswordState(TEXT.ERROR_NETWORK_FAILED);
@@ -47,7 +47,7 @@ export const validateNetworkRequestFailed = (
 
 export const validateTooManyRequests = (
   setEmailState: (emailValue: string) => void,
-  setPasswordState: (passwordValue: string) => void,
+  setPasswordState: (passwordValue: string) => void
 ) => {
   setEmailState(TEXT.ERROR_TOO_MANY_REQUESTS);
   setPasswordState(TEXT.ERROR_TOO_MANY_REQUESTS);

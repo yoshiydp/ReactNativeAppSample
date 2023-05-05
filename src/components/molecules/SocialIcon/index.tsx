@@ -5,12 +5,12 @@ import { TouchableOpacity } from "react-native";
 import Icon from "components/atoms/Icon";
 
 // Interfaces
-import { svgType1, svgType2, svgType3, svgType4, svgType5 } from "interfaces/svgInterface";
+import { SvgType1, SvgType2, SvgType3, SvgType4, SvgType5 } from "interfaces/svgInterface";
 
 // Styles
 import styles from "./SocialIcon.scss";
 
-interface Props extends svgType1, svgType2, svgType3, svgType4, svgType5 {
+interface Props extends SvgType1, SvgType2, SvgType3, SvgType4, SvgType5 {
   onPressEvent?: () => void;
 }
 

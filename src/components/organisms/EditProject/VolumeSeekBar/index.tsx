@@ -16,6 +16,12 @@ import styles from "./VolumeSeekBar.scss";
 const VolumeSeekBar = () => {
   const [deviceVolume, setDeviceVolume] = useState<number | any>(0);
 
+  const getInitialDeviceVolume = async () => {
+    await VolumeManager.getVolume("music").then((result) => {
+      setDeviceVolume(result);
+    });
+  };
+
   useEffect(() => {
     getInitialDeviceVolume();
     const volumeListener = VolumeManager.addVolumeListener((result) => {
@@ -23,12 +29,6 @@ const VolumeSeekBar = () => {
     });
     return () => volumeListener.remove();
   }, []);
-
-  const getInitialDeviceVolume = async () => {
-    await VolumeManager.getVolume("music").then((result) => {
-      setDeviceVolume(result);
-    });
-  };
 
   const onChangeVolume = async (volume: any) => {
     setDeviceVolume(volume);
@@ -40,7 +40,7 @@ const VolumeSeekBar = () => {
   };
 
   return (
-    <View style={styles["container"]}>
+    <View style={styles.container}>
       <Slider
         value={deviceVolume}
         onValueChange={onChangeVolume}
