@@ -20,8 +20,8 @@ export const MyProjectsItemsSlice = createSlice({
     setMyProjectsFilterItems: (state, action: PayloadAction<string>) => {
       const filterItems = state.myProjectsItems.filter((items: MyProjectsItemsType) =>
         Object.values(items).some(
-          (item: string) => item?.toLowerCase().indexOf(action.payload.toLowerCase()) !== -1,
-        ),
+          (item: string) => item?.toLowerCase().indexOf(action.payload.toLowerCase()) !== -1
+        )
       );
       state.myProjectsItems.splice(0);
       state.myProjectsItems.push(...filterItems);

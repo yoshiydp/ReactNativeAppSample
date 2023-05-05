@@ -48,21 +48,25 @@ const TrackListItem = (props: Props) => {
   if (!uid) return;
   const docRef = doc(db, "users", uid);
 
+  const setTrackData = {
+    trackDataPath: props.trackDataPath,
+    trackTitle: props.trackTitle,
+    artistName: props.artistName,
+    artWorkPath: props.artWorkPath,
+    linkedMyProjects: props.linkedMyProjects,
+  };
+
   useEffect(() => {
     onSnapshot(docRef, () => {
       swipeable.current?.close();
     });
   }, [activeHiddenState]);
 
-  const renderRightActions = () => {
-    return <ButtonDelete onPressEvent={onPressDeleteTrack} />;
-  };
-
   const actionsOff = () => {
     return "";
   };
 
-  const selectTrack = async () => {
+  const selectTrack = () => {
     dispatch(hideModalPageSheet());
     dispatch(setTrackDataFile([]));
     dispatch(setTrackListDetail(setTrackData));
@@ -78,6 +82,11 @@ const TrackListItem = (props: Props) => {
     swipeable.current?.openRight();
   };
 
+  const textExtensionSubstring = (value: string, count = 100) => {
+    const textReplace = value.replace(/.mp3/g, "").replace(/.wav/g, "");
+    return textReplace.substring(0, count);
+  };
+
   const onPressDeleteTrack = () => {
     dispatch(showOverlay());
     dispatch(inactiveHidden());
@@ -87,8 +96,8 @@ const TrackListItem = (props: Props) => {
       setCenterModalDataTitle(
         setTrackData.trackTitle.length > 20
           ? textExtensionSubstring(setTrackData.trackTitle, 20)
-          : textExtensionSubstring(setTrackData.trackTitle),
-      ),
+          : textExtensionSubstring(setTrackData.trackTitle)
+      )
     );
     dispatch(setCenterModalNoteTrackListDetail(TEXT.MODAL_DESC_DELETE_TRACK_NOTE));
     dispatch(setCenterModalSubmitButtonText);
@@ -100,17 +109,8 @@ const TrackListItem = (props: Props) => {
     return value.substring(0, count) + "...";
   };
 
-  const textExtensionSubstring = (value: string, count = 100) => {
-    const textReplace = value.replace(/.mp3/g, "").replace(/.wav/g, "");
-    return textReplace.substring(0, count);
-  };
-
-  const setTrackData = {
-    trackDataPath: props.trackDataPath,
-    trackTitle: props.trackTitle,
-    artistName: props.artistName,
-    artWorkPath: props.artWorkPath,
-    linkedMyProjects: props.linkedMyProjects,
+  const renderRightActions = () => {
+    return <ButtonDelete onPressEvent={onPressDeleteTrack} />;
   };
 
   return (

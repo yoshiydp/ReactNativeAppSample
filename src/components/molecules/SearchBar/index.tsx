@@ -31,21 +31,6 @@ const SearchBar = (props: Props) => {
     if (props.setSearchValue) props.setSearchValue(value);
   }, [value]);
 
-  const activePress = () => {
-    setIsEnabled(true);
-    widthAnimatedFunc(widthValue, 1);
-    opacityAnimatedFunc(opacityValue, 1, VALUE.DURATION_300);
-    props.activeMinOpacityAnimated();
-  };
-
-  const inactivePress = () => {
-    setIsEnabled(false);
-    setValue("");
-    widthAnimatedFunc(widthValue, 0);
-    opacityAnimatedFunc(opacityValue, 0, VALUE.DURATION_200);
-    props.activeMaxOpacityAnimated();
-  };
-
   const widthAnimatedFunc = (object: any, value: number) => {
     Animated.timing(object, {
       toValue: value,
@@ -66,7 +51,7 @@ const SearchBar = (props: Props) => {
   const opacityAnimatedFunc = (object: any, value: number, duration: number) => {
     Animated.timing(object, {
       toValue: value,
-      duration: duration,
+      duration,
       useNativeDriver: false,
     }).start();
   };
@@ -78,6 +63,21 @@ const SearchBar = (props: Props) => {
 
   const animatedOpacityStyle = {
     opacity: animatedOpacity,
+  };
+
+  const activePress = () => {
+    setIsEnabled(true);
+    widthAnimatedFunc(widthValue, 1);
+    opacityAnimatedFunc(opacityValue, 1, VALUE.DURATION_300);
+    props.activeMinOpacityAnimated();
+  };
+
+  const inactivePress = () => {
+    setIsEnabled(false);
+    setValue("");
+    widthAnimatedFunc(widthValue, 0);
+    opacityAnimatedFunc(opacityValue, 0, VALUE.DURATION_200);
+    props.activeMaxOpacityAnimated();
   };
 
   return (

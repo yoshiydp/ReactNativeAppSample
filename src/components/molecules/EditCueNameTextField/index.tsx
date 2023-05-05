@@ -31,18 +31,6 @@ const EditCueNameTextField = (props: Props) => {
     setTargetHeight(object.nativeEvent.layout.height);
   };
 
-  useEffect(() => {
-    props.isShow ? maxScaleAnimated() : minScaleAnimated();
-  }, [props.isShow, targetWidth, targetHeight]);
-
-  const minScaleAnimated = () => {
-    scaleAnimatedFunc(scaleValue, 0);
-  };
-
-  const maxScaleAnimated = () => {
-    scaleAnimatedFunc(scaleValue, 1);
-  };
-
   const scaleAnimatedFunc = (object: any, value: number) => {
     Animated.timing(object, {
       toValue: value,
@@ -57,10 +45,22 @@ const EditCueNameTextField = (props: Props) => {
     outputRange: [0, 1],
   });
 
+  const minScaleAnimated = () => {
+    scaleAnimatedFunc(scaleValue, 0);
+  };
+
+  const maxScaleAnimated = () => {
+    scaleAnimatedFunc(scaleValue, 1);
+  };
+
+  useEffect(() => {
+    props.isShow ? maxScaleAnimated() : minScaleAnimated();
+  }, [props.isShow, targetWidth, targetHeight]);
+
   return (
     <Animated.View
       style={[
-        styles["container"],
+        styles.container,
         {
           transform: [
             { translateX: -(targetWidth / 2) },

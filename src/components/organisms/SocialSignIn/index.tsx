@@ -5,7 +5,7 @@ import { View, Text } from "react-native";
 import SocialIcon from "components/molecules/SocialIcon";
 
 // Interfaces
-import { svgType1, svgType2, svgType3, svgType4, svgType5 } from "interfaces/svgInterface";
+import { SvgType1, SvgType2, SvgType3, SvgType4, SvgType5 } from "interfaces/svgInterface";
 
 // Styles
 import styles from "./SocialSignIn.scss";
@@ -16,7 +16,7 @@ interface OnPressEvent {
 
 interface Props {
   title: string;
-  socialIconItems: Array<svgType1 & svgType2 & svgType3 & svgType4 & svgType5 & OnPressEvent>;
+  socialIconItems: Array<SvgType1 & SvgType2 & SvgType3 & SvgType4 & SvgType5 & OnPressEvent>;
 }
 
 const SocialSignIn = (props: Props) => {

@@ -23,12 +23,12 @@ const CuePoint = (props: Props) => {
   return (
     <View
       style={[
-        styles["container"],
+        styles.container,
         { left: props.position && (props.position / sec) * hundredfold + cuePointWidth },
       ]}
     >
-      <Text style={[styles["name"]]}>{props.name}</Text>
-      <View style={styles["point"]}></View>
+      <Text style={[styles.name]}>{props.name}</Text>
+      <View style={styles.point}></View>
     </View>
   );
 };

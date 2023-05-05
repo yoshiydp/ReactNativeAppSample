@@ -23,10 +23,10 @@ const CenterModal = (props: Props) => {
   const centerModalDataTitleState = useSelector((state) => state.centerModal.dataTitle);
   const centerModalNotesState = useSelector((state) => state.centerModal.notes);
   const centerModalNotesTrackListDetailState = useSelector(
-    (state) => state.centerModal.notesTrackListDetail,
+    (state) => state.centerModal.notesTrackListDetail
   );
   const trackListDetailLinkedMyProjects = useSelector(
-    (state) => state.trackListDetail.linkedMyProjects,
+    (state) => state.trackListDetail.linkedMyProjects
   );
   const scaleValue = useRef(new Animated.Value(0)).current;
   const [targetWidth, setTargetWidth] = useState<number>(0);
@@ -35,26 +35,6 @@ const CenterModal = (props: Props) => {
   const getTargetPosition = (object: any) => {
     setTargetWidth(object.nativeEvent.layout.width);
     setTargetHeight(object.nativeEvent.layout.height);
-  };
-
-  useEffect(() => {
-    props.isShow ? maxScaleAnimated() : minScaleAnimated();
-  }, [
-    props.isShow,
-    centerModalTitleState,
-    centerModalDataTitleState,
-    centerModalNotesState,
-    centerModalNotesTrackListDetailState,
-    targetWidth,
-    targetHeight,
-  ]);
-
-  const minScaleAnimated = () => {
-    scaleAnimatedFunc(scaleValue, 0);
-  };
-
-  const maxScaleAnimated = () => {
-    scaleAnimatedFunc(scaleValue, 1);
   };
 
   const scaleAnimatedFunc = (object: any, value: number) => {
@@ -70,6 +50,26 @@ const CenterModal = (props: Props) => {
     inputRange: [0, 1],
     outputRange: [0, 1],
   });
+
+  const minScaleAnimated = () => {
+    scaleAnimatedFunc(scaleValue, 0);
+  };
+
+  const maxScaleAnimated = () => {
+    scaleAnimatedFunc(scaleValue, 1);
+  };
+
+  useEffect(() => {
+    props.isShow ? maxScaleAnimated() : minScaleAnimated();
+  }, [
+    props.isShow,
+    centerModalTitleState,
+    centerModalDataTitleState,
+    centerModalNotesState,
+    centerModalNotesTrackListDetailState,
+    targetWidth,
+    targetHeight,
+  ]);
 
   return (
     <Animated.View

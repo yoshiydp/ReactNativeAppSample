@@ -42,12 +42,12 @@ const TimeSeekBar = (props: Props) => {
       cueB[2].position,
       cueC[2].position,
       cueD[2].position,
-      cueE[2].position,
+      cueE[2].position
     );
   }, []);
 
   return (
-    <View style={styles["container"]}>
+    <View style={styles.container}>
       {cueA[0].flag && cueA[2].position != 0 && (
         <CuePoint name={cueA[1].name} position={cueA[2].position} />
       )}

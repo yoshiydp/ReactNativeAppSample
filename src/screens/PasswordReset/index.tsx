@@ -19,7 +19,7 @@ const PasswordReset = (props: Props) => {
   const [errorNewPassword, setErrorNewPassword] = useState<string>("");
   const [errorConfirmPassword, setErrorConfirmPassword] = useState<string>("");
 
-  const passwordReset = async () => {
+  const passwordReset = () => {
     console.log("password reset!");
   };
 
