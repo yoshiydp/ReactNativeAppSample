@@ -4,9 +4,7 @@ import {
   ScrollView,
   Pressable,
   SafeAreaView,
-  StyleSheet,
   Text,
-  TouchableOpacity,
   View,
   useWindowDimensions,
 } from "react-native";

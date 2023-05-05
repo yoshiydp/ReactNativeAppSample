@@ -26,18 +26,6 @@ const Overlay = (props: Props) => {
   const heightValue = useRef(new Animated.Value(0)).current;
   const activeHiddenState = useSelector((state) => state.overlay.inactiveHidden);
 
-  useEffect(() => {
-    if (props.isShow) {
-      maxOpacityAnimated();
-      sizesAnimatedFunc(widthValue, windowWidth, 0);
-      sizesAnimatedFunc(heightValue, windowHeight, 0);
-    } else {
-      minOpacityAnimated();
-      sizesAnimatedFunc(widthValue, 0, VALUE.DURATION_200);
-      sizesAnimatedFunc(heightValue, 0, VALUE.DURATION_200);
-    }
-  }, [props.isShow, activeHiddenState]);
-
   const minOpacityAnimated = () => {
     opacityAnimatedFunc(opacityValue, 0);
   };
@@ -67,7 +55,7 @@ const Overlay = (props: Props) => {
     Animated.timing(object, {
       toValue: value,
       duration: 0,
-      delay: delay,
+      delay,
       useNativeDriver: false,
     }).start();
   };
@@ -84,6 +72,18 @@ const Overlay = (props: Props) => {
     if (!activeHiddenState) dispatch(hideOverlay());
     dispatch(hideMainTabMenu());
   };
+
+  useEffect(() => {
+    if (props.isShow) {
+      maxOpacityAnimated();
+      sizesAnimatedFunc(widthValue, windowWidth, 0);
+      sizesAnimatedFunc(heightValue, windowHeight, 0);
+    } else {
+      minOpacityAnimated();
+      sizesAnimatedFunc(widthValue, 0, VALUE.DURATION_200);
+      sizesAnimatedFunc(heightValue, 0, VALUE.DURATION_200);
+    }
+  }, [props.isShow, activeHiddenState]);
 
   return (
     <Animated.View

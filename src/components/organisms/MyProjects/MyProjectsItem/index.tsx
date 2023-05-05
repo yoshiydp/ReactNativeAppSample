@@ -44,15 +44,21 @@ const MyProjectsItem = (props: Props) => {
   if (!uid) return;
   const docRef = doc(db, "users", uid);
 
+  const setProjectData = {
+    projectTitle: props.projectTitle,
+    lyric: props.lyric,
+    trackDataPath: props.trackDataPath,
+    trackTitle: props.trackTitle,
+    artistName: props.artistName,
+    artWorkPath: props.artWorkPath,
+    cueButtons: props.cueButtons,
+  };
+
   useEffect(() => {
     onSnapshot(docRef, () => {
       swipeable.current?.close();
     });
   }, [activeHiddenState]);
-
-  const renderRightActions = () => {
-    return <ButtonDelete onPressEvent={onPressDeleteProject} />;
-  };
 
   const navigateEditProject = async () => {
     dispatch(setMyProjectsDetail(setProjectData));
@@ -79,14 +85,8 @@ const MyProjectsItem = (props: Props) => {
     return value.substring(0, count) + "...";
   };
 
-  const setProjectData = {
-    projectTitle: props.projectTitle,
-    lyric: props.lyric,
-    trackDataPath: props.trackDataPath,
-    trackTitle: props.trackTitle,
-    artistName: props.artistName,
-    artWorkPath: props.artWorkPath,
-    cueButtons: props.cueButtons,
+  const renderRightActions = () => {
+    return <ButtonDelete onPressEvent={onPressDeleteProject} />;
   };
 
   return (
