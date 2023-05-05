@@ -89,7 +89,7 @@ const CueButtons = (props: OnPressEventType) => {
   };
 
   return (
-    <View style={styles["container"]}>
+    <View style={styles.container}>
       <TapGestureHandler onHandlerStateChange={onPressActiveCueA} waitFor={doubleTapCueARef}>
         <TapGestureHandler
           ref={doubleTapCueARef}
@@ -104,7 +104,7 @@ const CueButtons = (props: OnPressEventType) => {
             }
             style={cueA[0].flag ? styles["buttonItem--firstActive"] : styles["buttonItem--first"]}
           >
-            <Text style={styles["text"]}>{cueButtons[0].name}</Text>
+            <Text style={styles.text}>{cueButtons[0].name}</Text>
           </Pressable>
         </TapGestureHandler>
       </TapGestureHandler>
@@ -120,9 +120,9 @@ const CueButtons = (props: OnPressEventType) => {
                 ? () => props.onLongPressEvent(cueB[0].flag, cueB[1].name)
                 : notOnLongPress
             }
-            style={cueB[0].flag ? styles["buttonItem--active"] : styles["buttonItem"]}
+            style={cueB[0].flag ? styles["buttonItem--active"] : styles.buttonItem}
           >
-            <Text style={styles["text"]}>{cueButtons[1].name}</Text>
+            <Text style={styles.text}>{cueButtons[1].name}</Text>
           </Pressable>
         </TapGestureHandler>
       </TapGestureHandler>
@@ -138,9 +138,9 @@ const CueButtons = (props: OnPressEventType) => {
                 ? () => props.onLongPressEvent(cueC[0].flag, cueC[1].name)
                 : notOnLongPress
             }
-            style={cueC[0].flag ? styles["buttonItem--active"] : styles["buttonItem"]}
+            style={cueC[0].flag ? styles["buttonItem--active"] : styles.buttonItem}
           >
-            <Text style={styles["text"]}>{cueButtons[2].name}</Text>
+            <Text style={styles.text}>{cueButtons[2].name}</Text>
           </Pressable>
         </TapGestureHandler>
       </TapGestureHandler>
@@ -156,9 +156,9 @@ const CueButtons = (props: OnPressEventType) => {
                 ? () => props.onLongPressEvent(cueD[0].flag, cueD[1].name)
                 : notOnLongPress
             }
-            style={cueD[0].flag ? styles["buttonItem--active"] : styles["buttonItem"]}
+            style={cueD[0].flag ? styles["buttonItem--active"] : styles.buttonItem}
           >
-            <Text style={styles["text"]}>{cueButtons[3].name}</Text>
+            <Text style={styles.text}>{cueButtons[3].name}</Text>
           </Pressable>
         </TapGestureHandler>
       </TapGestureHandler>
@@ -174,9 +174,9 @@ const CueButtons = (props: OnPressEventType) => {
                 ? () => props.onLongPressEvent(cueE[0].flag, cueE[1].name)
                 : notOnLongPress
             }
-            style={cueE[0].flag ? styles["buttonItem--active"] : styles["buttonItem"]}
+            style={cueE[0].flag ? styles["buttonItem--active"] : styles.buttonItem}
           >
-            <Text style={styles["text"]}>{cueButtons[4].name}</Text>
+            <Text style={styles.text}>{cueButtons[4].name}</Text>
           </Pressable>
         </TapGestureHandler>
       </TapGestureHandler>

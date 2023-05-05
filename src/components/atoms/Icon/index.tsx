@@ -4,25 +4,25 @@ import Svg, { Circle, G, Path, Rect } from "react-native-svg";
 
 // Interfaces
 import {
-  svgType1,
-  svgType2,
-  svgType3,
-  svgType4,
-  svgType5,
-  svgType6,
-  svgType7,
-  svgType8,
+  SvgType1,
+  SvgType2,
+  SvgType3,
+  SvgType4,
+  SvgType5,
+  SvgType6,
+  SvgType7,
+  SvgType8,
 } from "interfaces/svgInterface";
 
 interface Props
-  extends svgType1,
-    svgType2,
-    svgType3,
-    svgType4,
-    svgType5,
-    svgType6,
-    svgType7,
-    svgType8 {
+  extends SvgType1,
+    SvgType2,
+    SvgType3,
+    SvgType4,
+    SvgType5,
+    SvgType6,
+    SvgType7,
+    SvgType8 {
   containerStyle?: any;
 }
 

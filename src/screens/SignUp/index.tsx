@@ -58,16 +58,6 @@ const SignUp = (props: Props) => {
     forceCodeForRefreshToken: true,
   });
 
-  useEffect(() => {
-    if (!appleAuth.isSupported) return;
-    return appleAuth.onCredentialRevoked(async () => {
-      console.warn("Credential Revoked");
-      fetchAndUpdateCredentialState(updateCredentialStateForUser).catch((error) =>
-        updateCredentialStateForUser(error.code),
-      );
-    });
-  }, []);
-
   const signUp = async () => {
     setErrorUserName("");
     setErrorEmail("");
@@ -133,7 +123,7 @@ const SignUp = (props: Props) => {
       const { identityToken, nonce } = appleAuthRequestResponse;
       const appleCredential = auth.AppleAuthProvider.credential(identityToken, nonce);
       dispatch(subscribe());
-      return auth().signInWithCredential(appleCredential);
+      return await auth().signInWithCredential(appleCredential);
     } catch (error: any) {
       console.log(error, error.code);
     }
@@ -158,11 +148,21 @@ const SignUp = (props: Props) => {
       const { idToken } = await GoogleSignin.signIn();
       const googleCredential = auth.GoogleAuthProvider.credential(idToken);
       dispatch(subscribe());
-      return auth().signInWithCredential(googleCredential);
+      return await auth().signInWithCredential(googleCredential);
     } catch (error: any) {
       console.log(error, error.code);
     }
   };
+
+  useEffect(() => {
+    if (!appleAuth.isSupported) return;
+    return appleAuth.onCredentialRevoked(() => {
+      console.warn("Credential Revoked");
+      fetchAndUpdateCredentialState(updateCredentialStateForUser).catch((error) =>
+        updateCredentialStateForUser(error.code)
+      );
+    });
+  }, []);
 
   // テキストフォームリスト
   const formControlItems = [

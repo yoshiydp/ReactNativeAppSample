@@ -23,26 +23,6 @@ const LoadingFullScreen = (props: Props) => {
   const heightValue = useRef(new Animated.Value(0)).current;
   const message = useSelector((state) => state.loadingFullScreen.message);
 
-  useEffect(() => {
-    if (props.isShow) {
-      maxOpacityAnimated();
-      sizesAnimatedFunc(widthValue, windowWidth, 0);
-      sizesAnimatedFunc(heightValue, windowHeight, 0);
-    } else {
-      minOpacityAnimated();
-      sizesAnimatedFunc(widthValue, 0, VALUE.DURATION_200);
-      sizesAnimatedFunc(heightValue, 0, VALUE.DURATION_200);
-    }
-  }, [props.isShow]);
-
-  const minOpacityAnimated = () => {
-    opacityAnimatedFunc(opacityValue, 0);
-  };
-
-  const maxOpacityAnimated = () => {
-    opacityAnimatedFunc(opacityValue, 0.5);
-  };
-
   const opacityAnimatedFunc = (object: any, value: number) => {
     Animated.timing(object, {
       toValue: value,
@@ -64,7 +44,7 @@ const LoadingFullScreen = (props: Props) => {
     Animated.timing(object, {
       toValue: value,
       duration: 0,
-      delay: delay,
+      delay,
       useNativeDriver: false,
     }).start();
   };
@@ -76,6 +56,26 @@ const LoadingFullScreen = (props: Props) => {
   const animatedHeightStyle = {
     height: heightValue,
   };
+
+  const minOpacityAnimated = () => {
+    opacityAnimatedFunc(opacityValue, 0);
+  };
+
+  const maxOpacityAnimated = () => {
+    opacityAnimatedFunc(opacityValue, 0.5);
+  };
+
+  useEffect(() => {
+    if (props.isShow) {
+      maxOpacityAnimated();
+      sizesAnimatedFunc(widthValue, windowWidth, 0);
+      sizesAnimatedFunc(heightValue, windowHeight, 0);
+    } else {
+      minOpacityAnimated();
+      sizesAnimatedFunc(widthValue, 0, VALUE.DURATION_200);
+      sizesAnimatedFunc(heightValue, 0, VALUE.DURATION_200);
+    }
+  }, [props.isShow]);
 
   return (
     <Animated.View

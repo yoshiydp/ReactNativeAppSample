@@ -42,16 +42,6 @@ const MainTabMenu = (props: Props) => {
     setTargetWidth(object.nativeEvent.layout.width);
   };
 
-  useEffect(() => {
-    if (props.isShow) {
-      translateYAnimated(translateValue, 0);
-      positionAnimatedFunc(positionValue, 0, 0);
-    } else {
-      translateYAnimated(translateValue, containerHeight);
-      positionAnimatedFunc(positionValue, 0, VALUE.DURATION_200);
-    }
-  }, [containerHeight, targetWidth, props.isShow]);
-
   const translateYAnimated = (object: any, value: number) => {
     Animated.timing(object, {
       toValue: value,
@@ -73,7 +63,7 @@ const MainTabMenu = (props: Props) => {
     Animated.timing(object, {
       toValue: value,
       duration: 0,
-      delay: delay,
+      delay,
       useNativeDriver: false,
     }).start();
   };
@@ -109,8 +99,18 @@ const MainTabMenu = (props: Props) => {
         hideActivated();
       }
     },
-    [hideActivated],
+    [hideActivated]
   );
+
+  useEffect(() => {
+    if (props.isShow) {
+      translateYAnimated(translateValue, 0);
+      positionAnimatedFunc(positionValue, 0, 0);
+    } else {
+      translateYAnimated(translateValue, containerHeight);
+      positionAnimatedFunc(positionValue, 0, VALUE.DURATION_200);
+    }
+  }, [containerHeight, targetWidth, props.isShow]);
 
   return (
     <Animated.View

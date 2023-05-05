@@ -31,25 +31,6 @@ const StackNavigator = () => {
   const subscribed = useSelector((state) => state.subscribe.subscribe);
   const [user, setUser] = useState<any>("");
 
-  useEffect(() => {
-    console.log("social subscribed: " + subscribed);
-    if (subscribed) {
-      const socialSubscribe = auth().onAuthStateChanged(onSocialStateChanged);
-      return () => socialSubscribe();
-    } else {
-      const subscribe = onAuthStateChanged(firebaseAuth, (user) => {
-        if (user) {
-          setUser(user);
-          // console.log('stacked user:' + JSON.stringify(user));
-        } else {
-          setUser("");
-          // console.log('stack user:' + JSON.stringify(user));
-        }
-      });
-      return () => subscribe();
-    }
-  }, [subscribed]);
-
   const onSocialStateChanged = async (user: any) => {
     if (user) {
       setUser(user);
@@ -68,6 +49,25 @@ const StackNavigator = () => {
       setUser("");
     }
   };
+
+  useEffect(() => {
+    console.log("social subscribed: ", subscribed);
+    if (subscribed) {
+      const socialSubscribe = auth().onAuthStateChanged(onSocialStateChanged);
+      return () => socialSubscribe();
+    } else {
+      const subscribe = onAuthStateChanged(firebaseAuth, (user) => {
+        if (user) {
+          setUser(user);
+          // console.log('stacked user:' + JSON.stringify(user));
+        } else {
+          setUser("");
+          // console.log('stack user:' + JSON.stringify(user));
+        }
+      });
+      return () => subscribe();
+    }
+  }, [subscribed]);
 
   return (
     <Stack.Navigator screenOptions={{ headerShown: false }} initialRouteName="LoginScreen">

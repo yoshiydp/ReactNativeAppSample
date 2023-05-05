@@ -29,16 +29,6 @@ const ModalControlHeader = (props: Props) => {
   const myProjectsItems = useSelector((state) => state.myProjectsItems.myProjectsItems);
   const trackListItems = useSelector((state) => state.trackListItems.trackListItems);
 
-  const minOpacityAnimated = () => {
-    setIsHidden(true);
-    opacityAnimatedFunc(opacityValue, 0);
-  };
-
-  const maxOpacityAnimated = () => {
-    setIsHidden(false);
-    opacityAnimatedFunc(opacityValue, 1);
-  };
-
   const opacityAnimatedFunc = (object: any, value: number) => {
     Animated.timing(object, {
       toValue: value,
@@ -58,6 +48,16 @@ const ModalControlHeader = (props: Props) => {
 
   const animatedOpacityStyle = {
     opacity: animatedOpacity,
+  };
+
+  const minOpacityAnimated = () => {
+    setIsHidden(true);
+    opacityAnimatedFunc(opacityValue, 0);
+  };
+
+  const maxOpacityAnimated = () => {
+    setIsHidden(false);
+    opacityAnimatedFunc(opacityValue, 1);
   };
 
   return (

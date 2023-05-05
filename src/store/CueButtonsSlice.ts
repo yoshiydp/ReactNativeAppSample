@@ -17,7 +17,7 @@ export const CueButtonsSlice = createSlice({
   reducers: {
     setCueA: (
       state,
-      action: PayloadAction<[{ flag: boolean }, { name: string }, { position?: number }]>,
+      action: PayloadAction<[{ flag: boolean }, { name: string }, { position?: number }]>
     ) => {
       state.cueA.splice(0);
       if (!state.cueA.length) {
@@ -26,7 +26,7 @@ export const CueButtonsSlice = createSlice({
     },
     setCueB: (
       state,
-      action: PayloadAction<[{ flag: boolean }, { name: string }, { position?: number }]>,
+      action: PayloadAction<[{ flag: boolean }, { name: string }, { position?: number }]>
     ) => {
       state.cueB.splice(0);
       if (!state.cueB.length) {
@@ -35,7 +35,7 @@ export const CueButtonsSlice = createSlice({
     },
     setCueC: (
       state,
-      action: PayloadAction<[{ flag: boolean }, { name: string }, { position?: number }]>,
+      action: PayloadAction<[{ flag: boolean }, { name: string }, { position?: number }]>
     ) => {
       state.cueC.splice(0);
       if (!state.cueC.length) {
@@ -44,7 +44,7 @@ export const CueButtonsSlice = createSlice({
     },
     setCueD: (
       state,
-      action: PayloadAction<[{ flag: boolean }, { name: string }, { position?: number }]>,
+      action: PayloadAction<[{ flag: boolean }, { name: string }, { position?: number }]>
     ) => {
       state.cueD.splice(0);
       if (!state.cueD.length) {
@@ -53,7 +53,7 @@ export const CueButtonsSlice = createSlice({
     },
     setCueE: (
       state,
-      action: PayloadAction<[{ flag: boolean }, { name: string }, { position?: number }]>,
+      action: PayloadAction<[{ flag: boolean }, { name: string }, { position?: number }]>
     ) => {
       state.cueE.splice(0);
       if (!state.cueE.length) {

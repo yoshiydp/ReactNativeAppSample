@@ -22,7 +22,7 @@ interface Props {
 
 const CueControlPlayer = (props: Props) => {
   return (
-    <View style={styles["container"]}>
+    <View style={styles.container}>
       <Pressable style={styles["repeat-button"]} onPress={props.onPressRepeat}>
         <Text style={styles["repeat-button__text"]}>Cue A</Text>
         <Icon
