@@ -1,4 +1,3 @@
-// color
 $colors: (
   green: (
     base: #32c7b8,
@@ -26,10 +25,9 @@ $colors: (
   ),
   white: (
     base: #fff,
-  )
+  ),
 );
 
-// font-size
 $font-size: (
   10: 10px,
   11: 11px,
@@ -37,13 +35,12 @@ $font-size: (
   14: 14px,
   16: 16px,
   18: 18px,
-  22: 22px
+  22: 22px,
 );
 
-// font-family
-$font-family: -apple-system, "BlinkMacSystemFont", roboto, "SF Pro Text", "Hiragino Sans", "Noto Sans JP", sans-serif;
+$font-family: -apple-system, "BlinkMacSystemFont", roboto, "SF Pro Text", "Hiragino Sans",
+  "Noto Sans JP", sans-serif;
 $font-hurricane: "Hurricane-Regular";
 $font-dm-serif-display: "DM Serif Display";
 
-// transition
 $transition-duration: 0.25s;

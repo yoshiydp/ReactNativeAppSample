@@ -1,29 +1,6 @@
 @use "variables" as v;
 @use "functions" as g;
 
-// spacing : margin, padding
-@mixin spacing($spacing, $maps, $maxNum, $step) {
-  @each $position in $maps {
-    @for $i from 0 through $maxNum {
-      @if $i % $step == 0 {
-        .u-#{$spacing}-#{$position}-#{$i} {
-          #{$spacing}-#{$position}: $i + px;
-        }
-      }
-    }
-  }
-}
-
-@mixin spacing-irregular($spacing, $maps, $list) {
-  @each $position in $maps {
-    @each $value in $list {
-      .u-#{$spacing}-#{$position}-#{$value} {
-        #{$spacing}-#{$position}: $value + px;
-      }
-    }
-  }
-}
-
 // font
 @mixin font10-light {
   font-size: g.fontsize(10);
