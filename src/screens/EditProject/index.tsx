@@ -238,6 +238,13 @@ const EditProject = (props: Props) => {
     };
   }, []);
 
+  useEffect(() => {
+    if (new Date((duration - position) * 1000).toISOString().substr(14, 5) === "00:00") {
+      console.log(new Date((duration - position) * 1000).toISOString().substr(14, 5));
+      controlPause();
+    }
+  }, [position, duration]);
+
   return (
     <View style={styles.container}>
       <View>
