@@ -26,61 +26,61 @@ const CueButtons = (props: OnPressEventType) => {
 
   const onPressActiveCueA = (event: any) => {
     if (event.nativeEvent.state === State.ACTIVE) {
-      props.onPressActiveCue("A", cueButtons[0].name);
+      props.onPressActivateCue("A", cueButtons[0].name);
     }
   };
 
   const onDoubleTapResetCueA = (event: any) => {
     if (event.nativeEvent.state === State.ACTIVE) {
-      props.onPressInactiveCue("A", cueButtons[0].name);
+      props.onPressInactivateCue("A", cueButtons[0].name);
     }
   };
 
   const onPressActiveCueB = (event: any) => {
     if (event.nativeEvent.state === State.ACTIVE) {
-      props.onPressActiveCue("B", cueButtons[1].name);
+      props.onPressActivateCue("B", cueButtons[1].name);
     }
   };
 
   const onDoubleTapResetCueB = (event: any) => {
     if (event.nativeEvent.state === State.ACTIVE) {
-      props.onPressInactiveCue("B", cueButtons[1].name);
+      props.onPressInactivateCue("B", cueButtons[1].name);
     }
   };
 
   const onPressActiveCueC = (event: any) => {
     if (event.nativeEvent.state === State.ACTIVE) {
-      props.onPressActiveCue("C", cueButtons[2].name);
+      props.onPressActivateCue("C", cueButtons[2].name);
     }
   };
 
   const onDoubleTapResetCueC = (event: any) => {
     if (event.nativeEvent.state === State.ACTIVE) {
-      props.onPressInactiveCue("C", cueButtons[2].name);
+      props.onPressInactivateCue("C", cueButtons[2].name);
     }
   };
 
   const onPressActiveCueD = (event: any) => {
     if (event.nativeEvent.state === State.ACTIVE) {
-      props.onPressActiveCue("D", cueButtons[3].name);
+      props.onPressActivateCue("D", cueButtons[3].name);
     }
   };
 
   const onDoubleTapResetCueD = (event: any) => {
     if (event.nativeEvent.state === State.ACTIVE) {
-      props.onPressInactiveCue("D", cueButtons[3].name);
+      props.onPressInactivateCue("D", cueButtons[3].name);
     }
   };
 
   const onPressActiveCueE = (event: any) => {
     if (event.nativeEvent.state === State.ACTIVE) {
-      props.onPressActiveCue("E", cueButtons[4].name);
+      props.onPressActivateCue("E", cueButtons[4].name);
     }
   };
 
   const onDoubleTapResetCueE = (event: any) => {
     if (event.nativeEvent.state === State.ACTIVE) {
-      props.onPressInactiveCue("E", cueButtons[4].name);
+      props.onPressInactivateCue("E", cueButtons[4].name);
     }
   };
 
