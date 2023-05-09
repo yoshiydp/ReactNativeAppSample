@@ -46,6 +46,9 @@ import Overlay from "components/atoms/Overlay";
 // Constants
 import * as TEXT from "constants/text";
 
+// Interfaces
+import { SetCueActivityType } from "interfaces/cueButtonsInterface";
+
 // Styles
 import styles from "./EditProject.scss";
 
@@ -64,10 +67,11 @@ const EditProject = (props: Props) => {
   const centerModal = useSelector((state) => state.centerModal.centerModal);
   const playbackState = usePlaybackState();
   const { position, duration } = useProgress();
-
   const [sliderValue, setSliderValue] = useState<number>(0);
   const [start, setStart] = useState<boolean>(true);
   const [pause, setPause] = useState<boolean>(false);
+  const [cueActivity, setCueActivity] = useState<SetCueActivityType>({ flag: false, name: "" });
+  const [trackRepeat, setTrackRepeat] = useState<boolean>(false);
 
   // トラックデータの情報を格納
   const setTrackData = [
@@ -76,6 +80,10 @@ const EditProject = (props: Props) => {
       title: myProjectsDetail.trackTitle,
     },
   ];
+
+  // シークタイムを設定
+  const minSeekTime = new Date(position * 1000).toISOString().substr(14, 5);
+  const maxSeekTime = new Date((duration - position) * 1000).toISOString().substr(14, 5);
 
   const setUpTrackPlayer = async () => {
     try {
@@ -128,7 +136,7 @@ const EditProject = (props: Props) => {
     playStart();
   };
 
-  const activeCue = async (cueType: string, cueName: string) => {
+  const activateCue = async (cueType: string, cueName: string) => {
     if (cueType === "A" && cueName) {
       const getPositionA = await TrackPlayer.getPosition();
       console.log(cueType, cueName, getPositionA);
@@ -158,9 +166,12 @@ const EditProject = (props: Props) => {
       console.log(cueType, cueName, getPositionE);
       dispatch(setCueE([{ flag: true }, { name: cueName }, { position: getPositionE }]));
     }
+
+    // Cueのアクティビティをセット
+    setCueActivity({ flag: true, name: cueName });
   };
 
-  const inactiveCue = (cueType: string, cueName: string) => {
+  const inactivateCue = (cueType: string, cueName: string) => {
     if (cueType === "A" && cueName) {
       console.log(cueType, cueName);
       dispatch(setCueA([{ flag: false }, { name: "" }, { position: 0 }]));
@@ -185,6 +196,9 @@ const EditProject = (props: Props) => {
       console.log(cueType, cueName);
       dispatch(setCueE([{ flag: false }, { name: "" }, { position: 0 }]));
     }
+
+    // Cueのアクティビティをリセット
+    setCueActivity({ flag: false, name: "" });
   };
 
   const editCueName = (flag: boolean, name: string) => {
@@ -219,12 +233,31 @@ const EditProject = (props: Props) => {
     }
   };
 
-  const controlRepeat = () => {
-    console.log("controlRepeat!");
+  const controlTrackRepeat = async () => {
+    const getCurrentRepeatMode = await TrackPlayer.getRepeatMode();
+    if (getCurrentRepeatMode === 0) {
+      await TrackPlayer.setRepeatMode(RepeatMode.Track);
+      setTrackRepeat(true);
+      console.log("repeat on");
+    }
+    if (getCurrentRepeatMode === 1) {
+      await TrackPlayer.setRepeatMode(RepeatMode.Off);
+      setTrackRepeat(false);
+      console.log("repeat off");
+    }
+  };
+
+  const controlCueRepeat = () => {
+    console.log("controlCueRepeat!");
   };
 
   const controlAllCueReset = () => {
-    console.log("controlAllCueReset!");
+    dispatch(setCueA([{ flag: false }, { name: "" }, { position: 0 }]));
+    dispatch(setCueB([{ flag: false }, { name: "" }, { position: 0 }]));
+    dispatch(setCueC([{ flag: false }, { name: "" }, { position: 0 }]));
+    dispatch(setCueD([{ flag: false }, { name: "" }, { position: 0 }]));
+    dispatch(setCueE([{ flag: false }, { name: "" }, { position: 0 }]));
+    setCueActivity({ flag: false, name: "" });
   };
 
   useEffect(() => {
@@ -238,12 +271,15 @@ const EditProject = (props: Props) => {
     };
   }, []);
 
-  useEffect(() => {
-    if (new Date((duration - position) * 1000).toISOString().substr(14, 5) === "00:00") {
-      console.log(new Date((duration - position) * 1000).toISOString().substr(14, 5));
-      controlPause();
+  const trackPlayerEvents = [Event.PlaybackState, Event.PlaybackQueueEnded, Event.PlaybackError];
+
+  useTrackPlayerEvents(trackPlayerEvents, async (event) => {
+    if (event.type === Event.PlaybackQueueEnded) {
+      setStart(true);
+      setPause(false);
+      await TrackPlayer.seekTo(0);
     }
-  }, [position, duration]);
+  });
 
   return (
     <View style={styles.container}>
@@ -254,16 +290,16 @@ const EditProject = (props: Props) => {
         />
         <TextEditor projectTitle={myProjectsDetail.projectTitle} lyric={myProjectsDetail.lyric} />
         <TimeSeekBar
-          minSeekTime={new Date(position * 1000).toISOString().substr(14, 5)}
-          maxSeekTime={new Date((duration - position) * 1000).toISOString().substr(14, 5)}
+          minSeekTime={minSeekTime}
+          maxSeekTime={maxSeekTime}
           onValueChange={onValueChange}
           onSlidingStart={onSlidingStart}
           onSlidingCompleted={onSlidingCompleted}
         />
         <View style={styles["cue-buttons-wrap"]}>
           <CueButtons
-            onPressActiveCue={activeCue}
-            onPressInactiveCue={inactiveCue}
+            onPressActivateCue={activateCue}
+            onPressInactivateCue={inactivateCue}
             onLongPressEvent={editCueName}
           />
         </View>
@@ -271,9 +307,12 @@ const EditProject = (props: Props) => {
           <CueControlPlayer
             start={start}
             pause={pause}
+            cueActivity={cueActivity}
+            trackRepeat={trackRepeat}
             onPressStart={controlStart}
             onPressPause={controlPause}
-            onPressRepeat={controlRepeat}
+            onPressTrackRepeat={controlTrackRepeat}
+            onPressCueRepeat={controlCueRepeat}
             onPressAllCueReset={controlAllCueReset}
           />
         </View>
