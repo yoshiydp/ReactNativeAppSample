@@ -6,6 +6,7 @@ export interface CueButtonsType {
 
 export interface OnPressEventType {
   onPressActivateCue: (cueType: string, name: string) => void;
+  onPressPlaybackCue: (cueType: string, name: string) => void;
   onPressInactivateCue: (cueType: string, name: string) => void;
   onLongPressEvent: (flag: boolean, name: string) => void;
 }
