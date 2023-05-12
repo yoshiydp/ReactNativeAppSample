@@ -20,12 +20,9 @@ export const editCueNameTextFieldSlice = createSlice({
     hideEditCueNameTextField: (state: { editCueNameTextField: boolean }) => {
       state.editCueNameTextField = false;
     },
-    setCueName: (state: { cueName: string }, action: PayloadAction<string>) => {
-      state.cueName = action.payload;
-    },
   },
 });
 
-export const { showEditCueNameTextField, hideEditCueNameTextField, setCueName } =
+export const { showEditCueNameTextField, hideEditCueNameTextField } =
   editCueNameTextFieldSlice.actions;
 export default editCueNameTextFieldSlice.reducer;
