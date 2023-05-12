@@ -46,6 +46,9 @@ import Overlay from "components/atoms/Overlay";
 // Constants
 import * as TEXT from "constants/text";
 
+// Interfaces
+import { SetCueActivityType } from "interfaces/cueButtonsInterface";
+
 // Styles
 import styles from "./EditProject.scss";
 
@@ -62,12 +65,18 @@ const EditProject = (props: Props) => {
     (state) => state.editCueNameTextField.editCueNameTextField
   );
   const centerModal = useSelector((state) => state.centerModal.centerModal);
+  const cueA = useSelector((state) => state.cueButtons.cueA);
+  const cueB = useSelector((state) => state.cueButtons.cueB);
+  const cueC = useSelector((state) => state.cueButtons.cueC);
+  const cueD = useSelector((state) => state.cueButtons.cueD);
+  const cueE = useSelector((state) => state.cueButtons.cueE);
   const playbackState = usePlaybackState();
   const { position, duration } = useProgress();
-
   const [sliderValue, setSliderValue] = useState<number>(0);
   const [start, setStart] = useState<boolean>(true);
   const [pause, setPause] = useState<boolean>(false);
+  const [cueActivity, setCueActivity] = useState<SetCueActivityType>({ flag: false, name: "" });
+  const [trackRepeat, setTrackRepeat] = useState<boolean>(false);
 
   // トラックデータの情報を格納
   const setTrackData = [
@@ -76,6 +85,13 @@ const EditProject = (props: Props) => {
       title: myProjectsDetail.trackTitle,
     },
   ];
+
+  // シークタイムを設定
+  const minSeekTime = new Date(position * 1000).toISOString().substr(14, 5);
+  const maxSeekTime = new Date((duration - position) * 1000).toISOString().substr(14, 5);
+
+  // 現在のリピートモードを取得するための変数
+  let getCurrentRepeatMode;
 
   const setUpTrackPlayer = async () => {
     try {
@@ -128,7 +144,7 @@ const EditProject = (props: Props) => {
     playStart();
   };
 
-  const activeCue = async (cueType: string, cueName: string) => {
+  const activateCue = async (cueType: string, cueName: string) => {
     if (cueType === "A" && cueName) {
       const getPositionA = await TrackPlayer.getPosition();
       console.log(cueType, cueName, getPositionA);
@@ -158,12 +174,46 @@ const EditProject = (props: Props) => {
       console.log(cueType, cueName, getPositionE);
       dispatch(setCueE([{ flag: true }, { name: cueName }, { position: getPositionE }]));
     }
+
+    // Cueのアクティビティをセット
+    setCueActivity({ flag: true, name: cueName });
   };
 
-  const inactiveCue = (cueType: string, cueName: string) => {
+  const playbackCue = async (cueType: string, cueName: string) => {
+    if (cueType === "A" && cueName && cueA[2].position) {
+      await TrackPlayer.seekTo(cueA[2].position);
+    }
+
+    if (cueType === "B" && cueName && cueB[2].position) {
+      await TrackPlayer.seekTo(cueB[2].position);
+    }
+
+    if (cueType === "C" && cueName && cueC[2].position) {
+      await TrackPlayer.seekTo(cueC[2].position);
+    }
+
+    if (cueType === "D" && cueName && cueD[2].position) {
+      await TrackPlayer.seekTo(cueD[2].position);
+    }
+
+    if (cueType === "E" && cueName && cueE[2].position) {
+      await TrackPlayer.seekTo(cueE[2].position);
+    }
+
+    // Cueのアクティビティをセット
+    setCueActivity({ flag: true, name: cueName });
+  };
+
+  const inactivateCue = async (cueType: string, cueName: string) => {
     if (cueType === "A" && cueName) {
       console.log(cueType, cueName);
       dispatch(setCueA([{ flag: false }, { name: "" }, { position: 0 }]));
+      getCurrentRepeatMode = await TrackPlayer.getRepeatMode();
+      if (getCurrentRepeatMode === 1) {
+        await TrackPlayer.setRepeatMode(RepeatMode.Off);
+        setTrackRepeat(false);
+        console.log("repeat off");
+      }
     }
 
     if (cueType === "B" && cueName) {
@@ -185,6 +235,9 @@ const EditProject = (props: Props) => {
       console.log(cueType, cueName);
       dispatch(setCueE([{ flag: false }, { name: "" }, { position: 0 }]));
     }
+
+    // Cueのアクティビティをリセット
+    setCueActivity({ flag: false, name: "" });
   };
 
   const editCueName = (flag: boolean, name: string) => {
@@ -219,12 +272,31 @@ const EditProject = (props: Props) => {
     }
   };
 
-  const controlRepeat = () => {
-    console.log("controlRepeat!");
+  const controlTrackRepeat = async () => {
+    getCurrentRepeatMode = await TrackPlayer.getRepeatMode();
+    if (getCurrentRepeatMode === 0) {
+      await TrackPlayer.setRepeatMode(RepeatMode.Track);
+      setTrackRepeat(true);
+      console.log("repeat on");
+    }
+    if (getCurrentRepeatMode === 1) {
+      await TrackPlayer.setRepeatMode(RepeatMode.Off);
+      setTrackRepeat(false);
+      console.log("repeat off");
+    }
+  };
+
+  const controlCueRepeat = () => {
+    console.log("controlCueRepeat!");
   };
 
   const controlAllCueReset = () => {
-    console.log("controlAllCueReset!");
+    dispatch(setCueA([{ flag: false }, { name: "" }, { position: 0 }]));
+    dispatch(setCueB([{ flag: false }, { name: "" }, { position: 0 }]));
+    dispatch(setCueC([{ flag: false }, { name: "" }, { position: 0 }]));
+    dispatch(setCueD([{ flag: false }, { name: "" }, { position: 0 }]));
+    dispatch(setCueE([{ flag: false }, { name: "" }, { position: 0 }]));
+    setCueActivity({ flag: false, name: "" });
   };
 
   useEffect(() => {
@@ -238,6 +310,58 @@ const EditProject = (props: Props) => {
     };
   }, []);
 
+  const trackPlayerEvents = [Event.PlaybackState, Event.PlaybackQueueEnded, Event.PlaybackError];
+
+  const cueActivityEvent = (targetCue: any) => {
+    targetCue.find((item: any) => {
+      if (item.name === cueActivity.name) {
+        console.log(item.name, cueActivity.name, targetCue[2].position);
+        if (targetCue[2].position) {
+          TrackPlayer.seekTo(targetCue[2].position);
+          TrackPlayer.play();
+          setStart(false);
+          setPause(true);
+        }
+      }
+    });
+  };
+
+  useTrackPlayerEvents(trackPlayerEvents, async (event) => {
+    // RepeatMode.Trackを設定していない場合の処理
+    if (
+      event.type === Event.PlaybackQueueEnded &&
+      !cueA[0].flag &&
+      !cueB[0].flag &&
+      !cueC[0].flag &&
+      !cueD[0].flag &&
+      !cueE[0].flag
+    ) {
+      setStart(true);
+      setPause(false);
+      await TrackPlayer.seekTo(0);
+    }
+
+    // RepeatMode.Trackを設定していた場合の処理
+    if (
+      event.type === Event.PlaybackState &&
+      maxSeekTime === "00:00" &&
+      (cueA[0].flag || cueB[0].flag || cueC[0].flag || cueD[0].flag || cueE[0].flag)
+    ) {
+      getCurrentRepeatMode = await TrackPlayer.getRepeatMode();
+      console.log("getCurrentRepeatMode: ", getCurrentRepeatMode);
+      if (getCurrentRepeatMode === 1) {
+        await TrackPlayer.setRepeatMode(RepeatMode.Off);
+        setTrackRepeat(false);
+        console.log("repeat off");
+      }
+      cueActivityEvent(cueA);
+      cueActivityEvent(cueB);
+      cueActivityEvent(cueC);
+      cueActivityEvent(cueD);
+      cueActivityEvent(cueE);
+    }
+  });
+
   return (
     <View style={styles.container}>
       <View>
@@ -247,16 +371,17 @@ const EditProject = (props: Props) => {
         />
         <TextEditor projectTitle={myProjectsDetail.projectTitle} lyric={myProjectsDetail.lyric} />
         <TimeSeekBar
-          minSeekTime={new Date(position * 1000).toISOString().substr(14, 5)}
-          maxSeekTime={new Date((duration - position) * 1000).toISOString().substr(14, 5)}
+          minSeekTime={minSeekTime}
+          maxSeekTime={maxSeekTime}
           onValueChange={onValueChange}
           onSlidingStart={onSlidingStart}
           onSlidingCompleted={onSlidingCompleted}
         />
         <View style={styles["cue-buttons-wrap"]}>
           <CueButtons
-            onPressActiveCue={activeCue}
-            onPressInactiveCue={inactiveCue}
+            onPressActivateCue={activateCue}
+            onPressPlaybackCue={playbackCue}
+            onPressInactivateCue={inactivateCue}
             onLongPressEvent={editCueName}
           />
         </View>
@@ -264,9 +389,12 @@ const EditProject = (props: Props) => {
           <CueControlPlayer
             start={start}
             pause={pause}
+            cueActivity={cueActivity}
+            trackRepeat={trackRepeat}
             onPressStart={controlStart}
             onPressPause={controlPause}
-            onPressRepeat={controlRepeat}
+            onPressTrackRepeat={controlTrackRepeat}
+            onPressCueRepeat={controlCueRepeat}
             onPressAllCueReset={controlAllCueReset}
           />
         </View>
