@@ -90,7 +90,7 @@ const EditCueNameTextField = (props: Props) => {
       <TouchableOpacity
         style={props.value.length === 0 ? styles["button-save--disabled"] : styles["button-save"]}
         onPress={props.onPressSave}
-        disabled={props.value.length === 0 && true}
+        disabled={props.value.length === 0 ? true : false}
       >
         <Icon
           svgType={1}
