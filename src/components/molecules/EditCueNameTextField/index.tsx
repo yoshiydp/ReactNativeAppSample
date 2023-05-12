@@ -87,7 +87,11 @@ const EditCueNameTextField = (props: Props) => {
         value={props.value}
         autoCapitalize="none"
       />
-      <TouchableOpacity style={styles["button-save"]} onPress={props.onPressSave}>
+      <TouchableOpacity
+        style={props.value.length === 0 ? styles["button-save--disabled"] : styles["button-save"]}
+        onPress={props.onPressSave}
+        disabled={props.value.length === 0 && true}
+      >
         <Icon
           svgType={1}
           width="28"
