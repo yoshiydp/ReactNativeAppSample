@@ -7,10 +7,13 @@
   width: 100%;
 }
 
-%text {
+@mixin text($color, $text_center: false) {
   font-size: 16px;
   font-weight: 900;
-  color: g.colors(white, base);
+  color: $color;
+  @if ($text_center) {
+    text-align: center;
+  }
 }
 
 .container {
@@ -45,8 +48,7 @@
 }
 
 .repeat-button__text {
-  color: g.colors(white, base);
-  @extend %text;
+  @include text(g.colors(white, base));
 }
 
 .icon-repeat {
@@ -62,6 +64,9 @@
 }
 
 .cue-reset-button__text {
-  text-align: center;
-  @extend %text;
+  @include text(g.colors(white, base), true);
+}
+
+.cue-reset-button__text--inactive {
+  @include text(g.colors(gray, type3), true);
 }

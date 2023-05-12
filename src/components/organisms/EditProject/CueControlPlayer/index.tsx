@@ -8,23 +8,38 @@ import Icon from "components/atoms/Icon";
 import * as COLOR from "constants/color";
 import * as SVGPATH from "constants/svgPath";
 
+// Interfaces
+import { SetCueActivityType } from "interfaces/cueButtonsInterface";
+
 // Styles
 import styles from "./CueControlPlayer.scss";
 
 interface Props {
   start: boolean;
   pause: boolean;
+  cueActivity: SetCueActivityType;
+  trackRepeat: boolean;
   onPressStart: () => void;
   onPressPause: () => void;
-  onPressRepeat: () => void;
+  onPressTrackRepeat: () => void;
+  onPressCueRepeat: () => void;
   onPressAllCueReset: () => void;
 }
 
 const CueControlPlayer = (props: Props) => {
+  const notOnPress = () => {
+    console.log("notOnPress");
+  };
+
   return (
     <View style={styles.container}>
-      <Pressable style={styles["repeat-button"]} onPress={props.onPressRepeat}>
-        <Text style={styles["repeat-button__text"]}>Cue A</Text>
+      <Pressable
+        style={styles["repeat-button"]}
+        onPress={props.cueActivity.flag ? props.onPressCueRepeat : props.onPressTrackRepeat}
+      >
+        {props.cueActivity.flag && (
+          <Text style={styles["repeat-button__text"]}>{props.cueActivity.name}</Text>
+        )}
         <Icon
           svgType={1}
           width="24"
@@ -39,7 +54,11 @@ const CueControlPlayer = (props: Props) => {
           pathTransform3="translate(-0.001 -213.844)"
           pathD4={SVGPATH.ICON_REPEAT_PATH4}
           pathTransform4="translate(0 -286.352)"
-          pathFill={COLOR.COLOR_WHITE_BASE}
+          pathFill={
+            props.cueActivity.flag || props.trackRepeat
+              ? COLOR.COLOR_WHITE_BASE
+              : COLOR.COLOR_GRAY_TYPE3
+          }
           containerStyle={styles["icon-repeat"]}
         />
       </Pressable>
@@ -78,8 +97,19 @@ const CueControlPlayer = (props: Props) => {
           </Pressable>
         )}
       </View>
-      <Pressable style={styles["cue-reset-button"]} onPress={props.onPressAllCueReset}>
-        <Text style={styles["cue-reset-button__text"]}>All Cue Reset</Text>
+      <Pressable
+        style={styles["cue-reset-button"]}
+        onPress={props.cueActivity.flag ? props.onPressAllCueReset : notOnPress}
+      >
+        <Text
+          style={
+            props.cueActivity.flag
+              ? styles["cue-reset-button__text"]
+              : styles["cue-reset-button__text--inactive"]
+          }
+        >
+          All Cue Reset
+        </Text>
       </Pressable>
     </View>
   );

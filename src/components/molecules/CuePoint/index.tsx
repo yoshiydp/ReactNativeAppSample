@@ -16,7 +16,7 @@ const CuePoint = (props: Props) => {
 
   useEffect(() => {
     if (props.position) {
-      console.log("props.position: " + (props.position / sec) * hundredfold + cuePointWidth);
+      console.log("props.position: ", (props.position / sec) * hundredfold + cuePointWidth);
     }
   }, [props.position]);
 

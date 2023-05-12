@@ -25,62 +25,82 @@ const CueButtons = (props: OnPressEventType) => {
   const doubleTapCueERef = useRef(null);
 
   const onPressActiveCueA = (event: any) => {
-    if (event.nativeEvent.state === State.ACTIVE) {
-      props.onPressActiveCue("A", cueButtons[0].name);
+    if (event.nativeEvent.state === State.ACTIVE && !cueA[0].flag) {
+      props.onPressActivateCue("A", cueButtons[0].name);
+    }
+    if (event.nativeEvent.state === State.ACTIVE && cueA[0].flag) {
+      props.onPressPlaybackCue("A", cueButtons[0].name);
+      console.log("onPressPlaybackCueA");
     }
   };
 
   const onDoubleTapResetCueA = (event: any) => {
     if (event.nativeEvent.state === State.ACTIVE) {
-      props.onPressInactiveCue("A", cueButtons[0].name);
+      props.onPressInactivateCue("A", cueButtons[0].name);
     }
   };
 
   const onPressActiveCueB = (event: any) => {
-    if (event.nativeEvent.state === State.ACTIVE) {
-      props.onPressActiveCue("B", cueButtons[1].name);
+    if (event.nativeEvent.state === State.ACTIVE && !cueB[0].flag) {
+      props.onPressActivateCue("B", cueButtons[1].name);
+    }
+    if (event.nativeEvent.state === State.ACTIVE && cueB[0].flag) {
+      props.onPressPlaybackCue("B", cueButtons[1].name);
+      console.log("onPressPlaybackCueB");
     }
   };
 
   const onDoubleTapResetCueB = (event: any) => {
     if (event.nativeEvent.state === State.ACTIVE) {
-      props.onPressInactiveCue("B", cueButtons[1].name);
+      props.onPressInactivateCue("B", cueButtons[1].name);
     }
   };
 
   const onPressActiveCueC = (event: any) => {
-    if (event.nativeEvent.state === State.ACTIVE) {
-      props.onPressActiveCue("C", cueButtons[2].name);
+    if (event.nativeEvent.state === State.ACTIVE && !cueC[0].flag) {
+      props.onPressActivateCue("C", cueButtons[2].name);
+    }
+    if (event.nativeEvent.state === State.ACTIVE && cueC[0].flag) {
+      props.onPressPlaybackCue("C", cueButtons[2].name);
+      console.log("onPressPlaybackCueC");
     }
   };
 
   const onDoubleTapResetCueC = (event: any) => {
     if (event.nativeEvent.state === State.ACTIVE) {
-      props.onPressInactiveCue("C", cueButtons[2].name);
+      props.onPressInactivateCue("C", cueButtons[2].name);
     }
   };
 
   const onPressActiveCueD = (event: any) => {
-    if (event.nativeEvent.state === State.ACTIVE) {
-      props.onPressActiveCue("D", cueButtons[3].name);
+    if (event.nativeEvent.state === State.ACTIVE && !cueD[0].flag) {
+      props.onPressActivateCue("D", cueButtons[3].name);
+    }
+    if (event.nativeEvent.state === State.ACTIVE && cueD[0].flag) {
+      props.onPressPlaybackCue("D", cueButtons[3].name);
+      console.log("onPressPlaybackCueD");
     }
   };
 
   const onDoubleTapResetCueD = (event: any) => {
     if (event.nativeEvent.state === State.ACTIVE) {
-      props.onPressInactiveCue("D", cueButtons[3].name);
+      props.onPressInactivateCue("D", cueButtons[3].name);
     }
   };
 
   const onPressActiveCueE = (event: any) => {
-    if (event.nativeEvent.state === State.ACTIVE) {
-      props.onPressActiveCue("E", cueButtons[4].name);
+    if (event.nativeEvent.state === State.ACTIVE && !cueE[0].flag) {
+      props.onPressActivateCue("E", cueButtons[4].name);
+    }
+    if (event.nativeEvent.state === State.ACTIVE && cueE[0].flag) {
+      props.onPressPlaybackCue("E", cueButtons[4].name);
+      console.log("onPressPlaybackCueE");
     }
   };
 
   const onDoubleTapResetCueE = (event: any) => {
     if (event.nativeEvent.state === State.ACTIVE) {
-      props.onPressInactiveCue("E", cueButtons[4].name);
+      props.onPressInactivateCue("E", cueButtons[4].name);
     }
   };
 
