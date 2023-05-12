@@ -26,10 +26,19 @@
   border-bottom-color: g.colors(blue, bg);
 }
 
-.button-save {
+%button {
   justify-content: center;
   align-items: center;
   width: 44px;
   height: 44px;
   border-radius: 50px;
+}
+
+.button-save {
+  @extend %button;
+}
+
+.button-save--disabled {
+  opacity: 0.4;
+  @extend %button;
 }
