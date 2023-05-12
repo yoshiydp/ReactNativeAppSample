@@ -25,8 +25,12 @@ const CueButtons = (props: OnPressEventType) => {
   const doubleTapCueERef = useRef(null);
 
   const onPressActiveCueA = (event: any) => {
-    if (event.nativeEvent.state === State.ACTIVE) {
+    if (event.nativeEvent.state === State.ACTIVE && !cueA[0].flag) {
       props.onPressActivateCue("A", cueButtons[0].name);
+    }
+    if (event.nativeEvent.state === State.ACTIVE && cueA[0].flag) {
+      props.onPressPlaybackCue("A", cueButtons[0].name);
+      console.log("onPressPlaybackCueA");
     }
   };
 
@@ -37,8 +41,12 @@ const CueButtons = (props: OnPressEventType) => {
   };
 
   const onPressActiveCueB = (event: any) => {
-    if (event.nativeEvent.state === State.ACTIVE) {
+    if (event.nativeEvent.state === State.ACTIVE && !cueB[0].flag) {
       props.onPressActivateCue("B", cueButtons[1].name);
+    }
+    if (event.nativeEvent.state === State.ACTIVE && cueB[0].flag) {
+      props.onPressPlaybackCue("B", cueButtons[1].name);
+      console.log("onPressPlaybackCueB");
     }
   };
 
@@ -49,8 +57,12 @@ const CueButtons = (props: OnPressEventType) => {
   };
 
   const onPressActiveCueC = (event: any) => {
-    if (event.nativeEvent.state === State.ACTIVE) {
+    if (event.nativeEvent.state === State.ACTIVE && !cueC[0].flag) {
       props.onPressActivateCue("C", cueButtons[2].name);
+    }
+    if (event.nativeEvent.state === State.ACTIVE && cueC[0].flag) {
+      props.onPressPlaybackCue("C", cueButtons[2].name);
+      console.log("onPressPlaybackCueC");
     }
   };
 
@@ -61,8 +73,12 @@ const CueButtons = (props: OnPressEventType) => {
   };
 
   const onPressActiveCueD = (event: any) => {
-    if (event.nativeEvent.state === State.ACTIVE) {
+    if (event.nativeEvent.state === State.ACTIVE && !cueD[0].flag) {
       props.onPressActivateCue("D", cueButtons[3].name);
+    }
+    if (event.nativeEvent.state === State.ACTIVE && cueD[0].flag) {
+      props.onPressPlaybackCue("D", cueButtons[3].name);
+      console.log("onPressPlaybackCueD");
     }
   };
 
@@ -73,8 +89,12 @@ const CueButtons = (props: OnPressEventType) => {
   };
 
   const onPressActiveCueE = (event: any) => {
-    if (event.nativeEvent.state === State.ACTIVE) {
+    if (event.nativeEvent.state === State.ACTIVE && !cueE[0].flag) {
       props.onPressActivateCue("E", cueButtons[4].name);
+    }
+    if (event.nativeEvent.state === State.ACTIVE && cueE[0].flag) {
+      props.onPressPlaybackCue("E", cueButtons[4].name);
+      console.log("onPressPlaybackCueE");
     }
   };
 
