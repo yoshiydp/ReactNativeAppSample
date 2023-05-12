@@ -15,9 +15,10 @@
   column-gap: 8px;
 }
 
-.text-field {
+.text-input {
   width: 120px;
   padding-bottom: 6px;
+  color: g.colors(blue, bg);
   font-size: 18px;
   font-weight: bold;
   line-height: 24px;

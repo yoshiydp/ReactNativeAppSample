@@ -81,7 +81,7 @@ const EditCueNameTextField = (props: Props) => {
       onLayout={getTargetPosition}
     >
       <TextInput
-        style={styles["text-field"]}
+        style={styles["text-input"]}
         placeholderTextColor={COLOR.COLOR_BLUE_NAVY}
         onChangeText={onChangeText}
         value={props.value}
