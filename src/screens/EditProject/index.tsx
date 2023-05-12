@@ -28,7 +28,6 @@ import { activeEditProjectModalFlag } from "store/EditProjectModalFlagSlice";
 import {
   showEditCueNameTextField,
   hideEditCueNameTextField,
-  setCueName,
 } from "store/EditCueNameTextFieldSlice";
 
 // Components
@@ -77,6 +76,7 @@ const EditProject = (props: Props) => {
   const [pause, setPause] = useState<boolean>(false);
   const [cueActivity, setCueActivity] = useState<SetCueActivityType>({ flag: false, name: "" });
   const [trackRepeat, setTrackRepeat] = useState<boolean>(false);
+  const [cueName, setCueName] = useState<string>("");
 
   // トラックデータの情報を格納
   const setTrackData = [
@@ -241,21 +241,18 @@ const EditProject = (props: Props) => {
   };
 
   const editCueName = (flag: boolean, name: string) => {
+    // flagとnameがない場合はreturn
+    if (!(flag && name)) return;
     dispatch(showOverlay());
     dispatch(inactiveHidden());
     dispatch(showEditCueNameTextField());
     console.log(flag, name);
-
-    // flagとnameがない場合はreturn
-    if (!(flag && name)) return;
-
-    if (flag) dispatch(setCueName(name));
+    setCueName(name);
   };
 
   const saveCueName = () => {
     dispatch(hideOverlay());
     dispatch(activeHidden());
-    dispatch(setCueName(""));
     dispatch(hideEditCueNameTextField());
   };
 
@@ -401,7 +398,12 @@ const EditProject = (props: Props) => {
         <VolumeSeekBar />
       </View>
       <Overlay isShow={overlay} />
-      <EditCueNameTextField isShow={editCueNameTextField} onPressSave={saveCueName} />
+      <EditCueNameTextField
+        isShow={editCueNameTextField}
+        value={cueName}
+        onChangeText={(event) => setCueName(event)}
+        onPressSave={saveCueName}
+      />
       <ModalProjectSettings />
       <CenterModal isShow={centerModal} navigation={props.navigation} />
     </View>
