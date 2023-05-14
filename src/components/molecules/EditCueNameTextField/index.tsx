@@ -15,8 +15,9 @@ import styles from "./EditCueNameTextField.scss";
 interface Props {
   isShow: boolean;
   value: string;
+  cueType: string;
   onChangeText?: (value: string) => void;
-  onPressSave: () => void;
+  onPressSave: (cueType: string) => void;
 }
 
 const EditCueNameTextField = (props: Props) => {
@@ -89,7 +90,7 @@ const EditCueNameTextField = (props: Props) => {
       />
       <TouchableOpacity
         style={props.value.length === 0 ? styles["button-save--disabled"] : styles["button-save"]}
-        onPress={props.onPressSave}
+        onPress={() => props.onPressSave(props.cueType)}
         disabled={props.value.length === 0 ? true : false}
       >
         <Icon

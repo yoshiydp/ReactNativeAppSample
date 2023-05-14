@@ -11,6 +11,8 @@ import TrackPlayer, {
   AppKilledPlaybackBehavior,
 } from "react-native-track-player";
 import { useDispatch } from "react-redux";
+import { firebaseAuth, db } from "src/config/firebase";
+import { doc, getDoc, updateDoc, arrayUnion, arrayRemove } from "firebase/firestore";
 
 // Store
 import { useSelector } from "store/index";
@@ -60,6 +62,7 @@ const EditProject = (props: Props) => {
   const overlay = useSelector((state) => state.overlay.overlay);
   const activeHiddenState = useSelector((state) => state.overlay.inactiveHidden);
   const myProjectsDetail = useSelector((state) => state.myProjectsDetail);
+  const cueButtons = useSelector((state) => state.myProjectsDetail.cueButtons);
   const editCueNameTextField = useSelector(
     (state) => state.editCueNameTextField.editCueNameTextField
   );
@@ -75,8 +78,12 @@ const EditProject = (props: Props) => {
   const [start, setStart] = useState<boolean>(true);
   const [pause, setPause] = useState<boolean>(false);
   const [cueActivity, setCueActivity] = useState<SetCueActivityType>({ flag: false, name: "" });
+  const [cueType, setCueType] = useState<string>("");
   const [trackRepeat, setTrackRepeat] = useState<boolean>(false);
   const [cueName, setCueName] = useState<string>("");
+  const { uid }: any = firebaseAuth.currentUser;
+  if (!uid) return;
+  const docRef = doc(db, "users", uid);
 
   // トラックデータの情報を格納
   const setTrackData = [
@@ -85,6 +92,48 @@ const EditProject = (props: Props) => {
       title: myProjectsDetail.trackTitle,
     },
   ];
+
+  // onSnapshotしたときにセットするプロジェクト
+  const onSnapshotProjectData = {
+    projectTitle: myProjectsDetail.projectTitle,
+    lyric: myProjectsDetail.lyric,
+    trackDataPath: myProjectsDetail.trackDataPath ? myProjectsDetail.trackDataPath : "",
+    trackTitle: myProjectsDetail.trackTitle,
+    artistName: "",
+    artWorkPath: myProjectsDetail.artWorkPath ? myProjectsDetail.artWorkPath : "",
+    cueButtons: [
+      {
+        flag: cueA[0].flag ? cueA[0].flag : cueButtons[0].flag,
+        name: cueName ? cueName : cueButtons[0].name,
+        position:
+          cueA[2].position && cueA[2].position > 0 ? cueA[2].position : cueButtons[0].position,
+      },
+      {
+        flag: cueB[0].flag ? cueB[0].flag : cueButtons[1].flag,
+        name: cueName ? cueName : cueButtons[1].name,
+        position:
+          cueB[2].position && cueB[2].position > 0 ? cueB[2].position : cueButtons[1].position,
+      },
+      {
+        flag: cueC[0].flag ? cueC[0].flag : cueButtons[2].flag,
+        name: cueName ? cueName : cueButtons[2].name,
+        position:
+          cueC[2].position && cueC[2].position > 0 ? cueC[2].position : cueButtons[2].position,
+      },
+      {
+        flag: cueD[0].flag ? cueD[0].flag : cueButtons[3].flag,
+        name: cueName ? cueName : cueButtons[3].name,
+        position:
+          cueD[2].position && cueD[2].position > 0 ? cueD[2].position : cueButtons[3].position,
+      },
+      {
+        flag: cueE[0].flag ? cueE[0].flag : cueButtons[4].flag,
+        name: cueName ? cueName : cueButtons[4].name,
+        position:
+          cueE[2].position && cueE[2].position > 0 ? cueE[2].position : cueButtons[4].position,
+      },
+    ],
+  };
 
   // シークタイムを設定
   const minSeekTime = new Date(position * 1000).toISOString().substr(14, 5);
@@ -240,20 +289,77 @@ const EditProject = (props: Props) => {
     setCueActivity({ flag: false, name: "" });
   };
 
-  const editCueName = (flag: boolean, name: string) => {
-    // flagとnameがない場合はreturn
-    if (!(flag && name)) return;
+  // CueNameを編集する
+  const editCueName = (cueType: string, flag: boolean, name: string) => {
+    // cueTypeとflagとnameがない場合はreturn
+    if (!(cueType && flag && name)) return;
     dispatch(showOverlay());
     dispatch(inactiveHidden());
     dispatch(showEditCueNameTextField());
-    console.log(flag, name);
+    console.log(cueType, flag, name);
+    setCueType(cueType);
     setCueName(name);
   };
 
-  const saveCueName = () => {
-    dispatch(hideOverlay());
-    dispatch(activeHidden());
-    dispatch(hideEditCueNameTextField());
+  // CueNameの編集を保存する
+  const saveCueName = async (cueType: string) => {
+    try {
+      if (cueType === "A") {
+        await updateDoc(docRef, {
+          myProjectsData: [onSnapshotProjectData],
+        });
+        dispatch(
+          setCueA([{ flag: true }, { name: cueName }, { position: cueButtons[0].position }])
+        );
+        setCueActivity({ flag: true, name: cueName });
+      }
+
+      if (cueType === "B") {
+        await updateDoc(docRef, {
+          myProjectsData: [onSnapshotProjectData],
+        });
+        dispatch(
+          setCueB([{ flag: true }, { name: cueName }, { position: cueButtons[0].position }])
+        );
+        setCueActivity({ flag: true, name: cueName });
+      }
+
+      if (cueType === "C") {
+        await updateDoc(docRef, {
+          myProjectsData: [onSnapshotProjectData],
+        });
+        dispatch(
+          setCueC([{ flag: true }, { name: cueName }, { position: cueButtons[0].position }])
+        );
+        setCueActivity({ flag: true, name: cueName });
+      }
+
+      if (cueType === "D") {
+        await updateDoc(docRef, {
+          myProjectsData: [onSnapshotProjectData],
+        });
+        dispatch(
+          setCueD([{ flag: true }, { name: cueName }, { position: cueButtons[0].position }])
+        );
+        setCueActivity({ flag: true, name: cueName });
+      }
+
+      if (cueType === "E") {
+        await updateDoc(docRef, {
+          myProjectsData: [onSnapshotProjectData],
+        });
+        dispatch(
+          setCueE([{ flag: true }, { name: cueName }, { position: cueButtons[0].position }])
+        );
+        setCueActivity({ flag: true, name: cueName });
+      }
+    } catch (error: any) {
+      console.log(error);
+    } finally {
+      dispatch(hideOverlay());
+      dispatch(activeHidden());
+      dispatch(hideEditCueNameTextField());
+    }
   };
 
   const controlStart = () => {
@@ -297,6 +403,7 @@ const EditProject = (props: Props) => {
   };
 
   useEffect(() => {
+    console.log(cueButtons);
     TrackPlayer.setupPlayer({
       waitForBuffer: true,
     });
@@ -401,6 +508,7 @@ const EditProject = (props: Props) => {
       <EditCueNameTextField
         isShow={editCueNameTextField}
         value={cueName}
+        cueType={cueType}
         onChangeText={(event) => setCueName(event)}
         onPressSave={saveCueName}
       />

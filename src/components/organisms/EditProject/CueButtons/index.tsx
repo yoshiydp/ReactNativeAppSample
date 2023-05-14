@@ -119,12 +119,12 @@ const CueButtons = (props: OnPressEventType) => {
           <Pressable
             onLongPress={
               cueA[0].flag
-                ? () => props.onLongPressEvent(cueA[0].flag, cueA[1].name)
+                ? () => props.onLongPressEvent("A", cueA[0].flag, cueA[1].name)
                 : notOnLongPress
             }
             style={cueA[0].flag ? styles["buttonItem--firstActive"] : styles["buttonItem--first"]}
           >
-            <Text style={styles.text}>{cueButtons[0].name}</Text>
+            <Text style={styles.text}>{cueA[1].name ? cueA[1].name : cueButtons[0].name}</Text>
           </Pressable>
         </TapGestureHandler>
       </TapGestureHandler>
@@ -137,12 +137,12 @@ const CueButtons = (props: OnPressEventType) => {
           <Pressable
             onLongPress={
               cueB[0].flag
-                ? () => props.onLongPressEvent(cueB[0].flag, cueB[1].name)
+                ? () => props.onLongPressEvent("B", cueB[0].flag, cueB[1].name)
                 : notOnLongPress
             }
             style={cueB[0].flag ? styles["buttonItem--active"] : styles.buttonItem}
           >
-            <Text style={styles.text}>{cueButtons[1].name}</Text>
+            <Text style={styles.text}>{cueB[1].name ? cueB[1].name : cueButtons[1].name}</Text>
           </Pressable>
         </TapGestureHandler>
       </TapGestureHandler>
@@ -155,12 +155,12 @@ const CueButtons = (props: OnPressEventType) => {
           <Pressable
             onLongPress={
               cueC[0].flag
-                ? () => props.onLongPressEvent(cueC[0].flag, cueC[1].name)
+                ? () => props.onLongPressEvent("C", cueC[0].flag, cueC[1].name)
                 : notOnLongPress
             }
             style={cueC[0].flag ? styles["buttonItem--active"] : styles.buttonItem}
           >
-            <Text style={styles.text}>{cueButtons[2].name}</Text>
+            <Text style={styles.text}>{cueC[1].name ? cueC[1].name : cueButtons[2].name}</Text>
           </Pressable>
         </TapGestureHandler>
       </TapGestureHandler>
@@ -173,12 +173,12 @@ const CueButtons = (props: OnPressEventType) => {
           <Pressable
             onLongPress={
               cueD[0].flag
-                ? () => props.onLongPressEvent(cueD[0].flag, cueD[1].name)
+                ? () => props.onLongPressEvent("D", cueD[0].flag, cueD[1].name)
                 : notOnLongPress
             }
             style={cueD[0].flag ? styles["buttonItem--active"] : styles.buttonItem}
           >
-            <Text style={styles.text}>{cueButtons[3].name}</Text>
+            <Text style={styles.text}>{cueD[1].name ? cueD[1].name : cueButtons[3].name}</Text>
           </Pressable>
         </TapGestureHandler>
       </TapGestureHandler>
@@ -191,12 +191,12 @@ const CueButtons = (props: OnPressEventType) => {
           <Pressable
             onLongPress={
               cueE[0].flag
-                ? () => props.onLongPressEvent(cueE[0].flag, cueE[1].name)
+                ? () => props.onLongPressEvent("E", cueE[0].flag, cueE[1].name)
                 : notOnLongPress
             }
             style={cueE[0].flag ? styles["buttonItem--active"] : styles.buttonItem}
           >
-            <Text style={styles.text}>{cueButtons[4].name}</Text>
+            <Text style={styles.text}>{cueE[1].name ? cueE[1].name : cueButtons[4].name}</Text>
           </Pressable>
         </TapGestureHandler>
       </TapGestureHandler>
