@@ -6,19 +6,40 @@
   position: absolute;
   top: 50%;
   left: 50%;
-  min-width: 200px;
+  width: 200px;
   min-height: 62px;
-  padding-right: 6px;
+  padding-right: 8px;
   padding-left: 20px;
   background: g.colors(yellow, light);
   border-radius: 50px;
+  column-gap: 8px;
 }
 
-.button-save {
+.text-input {
+  width: 120px;
+  padding-bottom: 6px;
+  color: g.colors(blue, bg);
+  font-size: 18px;
+  font-weight: bold;
+  line-height: 24px;
+  border-bottom-width: 1;
+  border-bottom-style: solid;
+  border-bottom-color: g.colors(blue, bg);
+}
+
+%button {
   justify-content: center;
   align-items: center;
   width: 44px;
   height: 44px;
-  column-gap: 16px;
   border-radius: 50px;
+}
+
+.button-save {
+  @extend %button;
+}
+
+.button-save--disabled {
+  opacity: 0.4;
+  @extend %button;
 }

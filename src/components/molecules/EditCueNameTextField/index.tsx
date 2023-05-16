@@ -1,8 +1,5 @@
 import React, { useRef, useEffect, useState } from "react";
-import { Animated, Easing, TouchableOpacity, Text } from "react-native";
-
-// Store
-import { useSelector } from "store/index";
+import { Animated, Easing, TouchableOpacity, TextInput } from "react-native";
 
 // Components
 import Icon from "components/atoms/Icon";
@@ -17,14 +14,17 @@ import styles from "./EditCueNameTextField.scss";
 
 interface Props {
   isShow: boolean;
-  onPressSave: () => void;
+  value: string;
+  cueType: string;
+  onChangeText?: (value: string) => void;
+  onPressSave: (cueType: string) => void;
 }
 
 const EditCueNameTextField = (props: Props) => {
   const scaleValue = useRef(new Animated.Value(0)).current;
   const [targetWidth, setTargetWidth] = useState<number>(0);
   const [targetHeight, setTargetHeight] = useState<number>(0);
-  const cueName = useSelector((state) => state.editCueNameTextField.cueName);
+  const [value, valueHandler] = useState(props.value ? props.value : "");
 
   const getTargetPosition = (object: any) => {
     setTargetWidth(object.nativeEvent.layout.width);
@@ -55,7 +55,17 @@ const EditCueNameTextField = (props: Props) => {
 
   useEffect(() => {
     props.isShow ? maxScaleAnimated() : minScaleAnimated();
-  }, [props.isShow, targetWidth, targetHeight]);
+    valueHandler(props.value ? props.value : "");
+  }, [props.isShow, targetWidth, targetHeight, props.value]);
+
+  const onChangeText = (event: any) => {
+    valueHandler(event);
+
+    if (props.onChangeText) {
+      props.onChangeText(event);
+      console.log(event);
+    }
+  };
 
   return (
     <Animated.View
@@ -71,8 +81,18 @@ const EditCueNameTextField = (props: Props) => {
       ]}
       onLayout={getTargetPosition}
     >
-      <TouchableOpacity style={styles["button-save"]} onPress={props.onPressSave}>
-        <Text>{cueName}</Text>
+      <TextInput
+        style={styles["text-input"]}
+        placeholderTextColor={COLOR.COLOR_BLUE_NAVY}
+        onChangeText={onChangeText}
+        value={props.value}
+        autoCapitalize="none"
+      />
+      <TouchableOpacity
+        style={props.value.length === 0 ? styles["button-save--disabled"] : styles["button-save"]}
+        onPress={() => props.onPressSave(props.cueType)}
+        disabled={props.value.length === 0 ? true : false}
+      >
         <Icon
           svgType={1}
           width="28"

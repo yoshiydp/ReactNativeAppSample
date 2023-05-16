@@ -1,6 +1,9 @@
 import React from "react";
 import { Pressable, Text, View } from "react-native";
 
+// Store
+import { useSelector } from "store/index";
+
 // Components
 import Icon from "components/atoms/Icon";
 
@@ -27,6 +30,12 @@ interface Props {
 }
 
 const CueControlPlayer = (props: Props) => {
+  const cueA = useSelector((state) => state.cueButtons.cueA);
+  const cueB = useSelector((state) => state.cueButtons.cueB);
+  const cueC = useSelector((state) => state.cueButtons.cueC);
+  const cueD = useSelector((state) => state.cueButtons.cueD);
+  const cueE = useSelector((state) => state.cueButtons.cueE);
+
   const notOnPress = () => {
     console.log("notOnPress");
   };
@@ -99,11 +108,25 @@ const CueControlPlayer = (props: Props) => {
       </View>
       <Pressable
         style={styles["cue-reset-button"]}
-        onPress={props.cueActivity.flag ? props.onPressAllCueReset : notOnPress}
+        onPress={
+          props.cueActivity.flag ||
+          cueA[0].flag ||
+          cueB[0].flag ||
+          cueC[0].flag ||
+          cueD[0].flag ||
+          cueE[0].flag
+            ? props.onPressAllCueReset
+            : notOnPress
+        }
       >
         <Text
           style={
-            props.cueActivity.flag
+            props.cueActivity.flag ||
+            cueA[0].flag ||
+            cueB[0].flag ||
+            cueC[0].flag ||
+            cueD[0].flag ||
+            cueE[0].flag
               ? styles["cue-reset-button__text"]
               : styles["cue-reset-button__text--inactive"]
           }
