@@ -12,11 +12,12 @@ import TrackPlayer, {
 } from "react-native-track-player";
 import { useDispatch } from "react-redux";
 import { firebaseAuth, db } from "src/config/firebase";
-import { doc, getDoc, updateDoc, arrayUnion, arrayRemove } from "firebase/firestore";
+import { doc, updateDoc, arrayUnion, arrayRemove } from "firebase/firestore";
 
 // Store
 import { useSelector } from "store/index";
 import { setCueA, setCueB, setCueC, setCueD, setCueE } from "store/CueButtonsSlice";
+import { setMyProjectsDetail } from "store/MyProjectsDetailSlice";
 import {
   showCenterModal,
   setCenterModalTitle,
@@ -93,8 +94,8 @@ const EditProject = (props: Props) => {
     },
   ];
 
-  // onSnapshotしたときにセットするプロジェクト
-  const onSnapshotProjectData = {
+  // CueAの名前を保存する時のプロジェクトデータ
+  const saveCueAProjectData = {
     projectTitle: myProjectsDetail.projectTitle,
     lyric: myProjectsDetail.lyric,
     trackDataPath: myProjectsDetail.trackDataPath ? myProjectsDetail.trackDataPath : "",
@@ -104,31 +105,179 @@ const EditProject = (props: Props) => {
     cueButtons: [
       {
         flag: cueA[0].flag ? cueA[0].flag : cueButtons[0].flag,
-        name: cueName ? cueName : cueButtons[0].name,
+        name: cueType === "A" ? cueName : cueButtons[0].name,
         position:
           cueA[2].position && cueA[2].position > 0 ? cueA[2].position : cueButtons[0].position,
       },
       {
         flag: cueB[0].flag ? cueB[0].flag : cueButtons[1].flag,
-        name: cueName ? cueName : cueButtons[1].name,
+        name: cueButtons[1].name,
+        position: cueButtons[1].position,
+      },
+      {
+        flag: cueC[0].flag ? cueC[0].flag : cueButtons[2].flag,
+        name: cueButtons[2].name,
+        position: cueButtons[2].position,
+      },
+      {
+        flag: cueD[0].flag ? cueD[0].flag : cueButtons[3].flag,
+        name: cueButtons[3].name,
+        position: cueButtons[3].position,
+      },
+      {
+        flag: cueE[0].flag ? cueE[0].flag : cueButtons[4].flag,
+        name: cueButtons[4].name,
+        position: cueButtons[4].position,
+      },
+    ],
+  };
+
+  // CueBの名前を保存する時のプロジェクトデータ
+  const saveCueBProjectData = {
+    projectTitle: myProjectsDetail.projectTitle,
+    lyric: myProjectsDetail.lyric,
+    trackDataPath: myProjectsDetail.trackDataPath ? myProjectsDetail.trackDataPath : "",
+    trackTitle: myProjectsDetail.trackTitle,
+    artistName: "",
+    artWorkPath: myProjectsDetail.artWorkPath ? myProjectsDetail.artWorkPath : "",
+    cueButtons: [
+      {
+        flag: cueA[0].flag ? cueA[0].flag : cueButtons[0].flag,
+        name: cueButtons[0].name,
+        position: cueButtons[0].position,
+      },
+      {
+        flag: cueB[0].flag ? cueB[0].flag : cueButtons[1].flag,
+        name: cueType === "B" ? cueName : cueButtons[1].name,
         position:
           cueB[2].position && cueB[2].position > 0 ? cueB[2].position : cueButtons[1].position,
       },
       {
         flag: cueC[0].flag ? cueC[0].flag : cueButtons[2].flag,
-        name: cueName ? cueName : cueButtons[2].name,
+        name: cueButtons[2].name,
+        position: cueButtons[2].position,
+      },
+      {
+        flag: cueD[0].flag ? cueD[0].flag : cueButtons[3].flag,
+        name: cueButtons[3].name,
+        position: cueButtons[3].position,
+      },
+      {
+        flag: cueE[0].flag ? cueE[0].flag : cueButtons[4].flag,
+        name: cueButtons[4].name,
+        position: cueButtons[4].position,
+      },
+    ],
+  };
+
+  // CueCの名前を保存する時のプロジェクトデータ
+  const saveCueCProjectData = {
+    projectTitle: myProjectsDetail.projectTitle,
+    lyric: myProjectsDetail.lyric,
+    trackDataPath: myProjectsDetail.trackDataPath ? myProjectsDetail.trackDataPath : "",
+    trackTitle: myProjectsDetail.trackTitle,
+    artistName: "",
+    artWorkPath: myProjectsDetail.artWorkPath ? myProjectsDetail.artWorkPath : "",
+    cueButtons: [
+      {
+        flag: cueA[0].flag ? cueA[0].flag : cueButtons[0].flag,
+        name: cueButtons[0].name,
+        position: cueButtons[0].position,
+      },
+      {
+        flag: cueB[0].flag ? cueB[0].flag : cueButtons[1].flag,
+        name: cueButtons[1].name,
+        position: cueButtons[1].position,
+      },
+      {
+        flag: cueC[0].flag ? cueC[0].flag : cueButtons[2].flag,
+        name: cueType === "C" ? cueName : cueButtons[2].name,
         position:
           cueC[2].position && cueC[2].position > 0 ? cueC[2].position : cueButtons[2].position,
       },
       {
         flag: cueD[0].flag ? cueD[0].flag : cueButtons[3].flag,
-        name: cueName ? cueName : cueButtons[3].name,
+        name: cueButtons[3].name,
+        position: cueButtons[3].position,
+      },
+      {
+        flag: cueE[0].flag ? cueE[0].flag : cueButtons[4].flag,
+        name: cueButtons[4].name,
+        position: cueButtons[4].position,
+      },
+    ],
+  };
+
+  // CueDの名前を保存する時のプロジェクトデータ
+  const saveCueDProjectData = {
+    projectTitle: myProjectsDetail.projectTitle,
+    lyric: myProjectsDetail.lyric,
+    trackDataPath: myProjectsDetail.trackDataPath ? myProjectsDetail.trackDataPath : "",
+    trackTitle: myProjectsDetail.trackTitle,
+    artistName: "",
+    artWorkPath: myProjectsDetail.artWorkPath ? myProjectsDetail.artWorkPath : "",
+    cueButtons: [
+      {
+        flag: cueA[0].flag ? cueA[0].flag : cueButtons[0].flag,
+        name: cueButtons[0].name,
+        position: cueButtons[0].position,
+      },
+      {
+        flag: cueB[0].flag ? cueB[0].flag : cueButtons[1].flag,
+        name: cueButtons[1].name,
+        position: cueButtons[1].position,
+      },
+      {
+        flag: cueC[0].flag ? cueC[0].flag : cueButtons[2].flag,
+        name: cueButtons[2].name,
+        position: cueButtons[2].position,
+      },
+      {
+        flag: cueD[0].flag ? cueD[0].flag : cueButtons[3].flag,
+        name: cueType === "D" ? cueName : cueButtons[3].name,
         position:
           cueD[2].position && cueD[2].position > 0 ? cueD[2].position : cueButtons[3].position,
       },
       {
         flag: cueE[0].flag ? cueE[0].flag : cueButtons[4].flag,
-        name: cueName ? cueName : cueButtons[4].name,
+        name: cueButtons[4].name,
+        position: cueButtons[4].position,
+      },
+    ],
+  };
+
+  // CueEの名前を保存する時のプロジェクトデータ
+  const saveCueEProjectData = {
+    projectTitle: myProjectsDetail.projectTitle,
+    lyric: myProjectsDetail.lyric,
+    trackDataPath: myProjectsDetail.trackDataPath ? myProjectsDetail.trackDataPath : "",
+    trackTitle: myProjectsDetail.trackTitle,
+    artistName: "",
+    artWorkPath: myProjectsDetail.artWorkPath ? myProjectsDetail.artWorkPath : "",
+    cueButtons: [
+      {
+        flag: cueA[0].flag ? cueA[0].flag : cueButtons[0].flag,
+        name: cueButtons[0].name,
+        position: cueButtons[0].position,
+      },
+      {
+        flag: cueB[0].flag ? cueB[0].flag : cueButtons[1].flag,
+        name: cueButtons[1].name,
+        position: cueButtons[1].position,
+      },
+      {
+        flag: cueC[0].flag ? cueC[0].flag : cueButtons[2].flag,
+        name: cueButtons[2].name,
+        position: cueButtons[2].position,
+      },
+      {
+        flag: cueD[0].flag ? cueD[0].flag : cueButtons[3].flag,
+        name: cueButtons[3].name,
+        position: cueButtons[3].position,
+      },
+      {
+        flag: cueE[0].flag ? cueE[0].flag : cueButtons[4].flag,
+        name: cueType === "E" ? cueName : cueButtons[4].name,
         position:
           cueE[2].position && cueE[2].position > 0 ? cueE[2].position : cueButtons[4].position,
       },
@@ -304,58 +453,66 @@ const EditProject = (props: Props) => {
   // CueNameの編集を保存する
   const saveCueName = async (cueType: string) => {
     try {
+      // 編集前の現在のプロジェクトデータを削除
+      await updateDoc(docRef, {
+        myProjectsData: arrayRemove({ ...myProjectsDetail }),
+      });
+
       if (cueType === "A") {
+        dispatch(setCueA([{ flag: true }, { name: cueName }, { position: cueA[2].position }]));
         await updateDoc(docRef, {
-          myProjectsData: [onSnapshotProjectData],
+          myProjectsData: arrayUnion({ ...saveCueAProjectData }),
         });
-        dispatch(
-          setCueA([{ flag: true }, { name: cueName }, { position: cueButtons[0].position }])
-        );
-        setCueActivity({ flag: true, name: cueName });
       }
 
       if (cueType === "B") {
+        dispatch(setCueB([{ flag: true }, { name: cueName }, { position: cueB[2].position }]));
         await updateDoc(docRef, {
-          myProjectsData: [onSnapshotProjectData],
+          myProjectsData: arrayUnion({ ...saveCueBProjectData }),
         });
-        dispatch(
-          setCueB([{ flag: true }, { name: cueName }, { position: cueButtons[0].position }])
-        );
-        setCueActivity({ flag: true, name: cueName });
       }
 
       if (cueType === "C") {
+        dispatch(setCueC([{ flag: true }, { name: cueName }, { position: cueC[2].position }]));
         await updateDoc(docRef, {
-          myProjectsData: [onSnapshotProjectData],
+          myProjectsData: arrayUnion({ ...saveCueCProjectData }),
         });
-        dispatch(
-          setCueC([{ flag: true }, { name: cueName }, { position: cueButtons[0].position }])
-        );
-        setCueActivity({ flag: true, name: cueName });
       }
 
       if (cueType === "D") {
+        dispatch(setCueD([{ flag: true }, { name: cueName }, { position: cueD[2].position }]));
         await updateDoc(docRef, {
-          myProjectsData: [onSnapshotProjectData],
+          myProjectsData: arrayUnion({ ...saveCueDProjectData }),
         });
-        dispatch(
-          setCueD([{ flag: true }, { name: cueName }, { position: cueButtons[0].position }])
-        );
-        setCueActivity({ flag: true, name: cueName });
       }
 
       if (cueType === "E") {
+        dispatch(setCueE([{ flag: true }, { name: cueName }, { position: cueE[2].position }]));
         await updateDoc(docRef, {
-          myProjectsData: [onSnapshotProjectData],
+          myProjectsData: arrayUnion({ ...saveCueEProjectData }),
         });
-        dispatch(
-          setCueE([{ flag: true }, { name: cueName }, { position: cueButtons[0].position }])
-        );
-        setCueActivity({ flag: true, name: cueName });
       }
+
+      setCueActivity({ flag: true, name: cueName });
     } catch (error: any) {
       console.log(error);
     } finally {
+      // 保存したプロジェクトデータをstoreに保存
+      if (cueType === "A") {
+        dispatch(setMyProjectsDetail(saveCueAProjectData));
+      }
+      if (cueType === "B") {
+        dispatch(setMyProjectsDetail(saveCueBProjectData));
+      }
+      if (cueType === "C") {
+        dispatch(setMyProjectsDetail(saveCueCProjectData));
+      }
+      if (cueType === "D") {
+        dispatch(setMyProjectsDetail(saveCueDProjectData));
+      }
+      if (cueType === "E") {
+        dispatch(setMyProjectsDetail(saveCueEProjectData));
+      }
       dispatch(hideOverlay());
       dispatch(activeHidden());
       dispatch(hideEditCueNameTextField());
@@ -403,7 +560,6 @@ const EditProject = (props: Props) => {
   };
 
   useEffect(() => {
-    console.log(cueButtons);
     TrackPlayer.setupPlayer({
       waitForBuffer: true,
     });
