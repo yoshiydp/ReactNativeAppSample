@@ -11,6 +11,7 @@ import { hideCenterModal } from "store/CenterModalSlice";
 import { hideOverlay, activeHidden } from "store/OverlaySlice";
 import { inactiveMyProjectsModalFlag } from "store/MyProjectsModalFlagSlice";
 import { setMyProjectsDetail } from "store/MyProjectsDetailSlice";
+import { setCueA, setCueB, setCueC, setCueD, setCueE } from "store/CueButtonsSlice";
 import { inactiveTrackListModalFlag } from "store/TrackListModalFlagSlice";
 import { inactiveEditProjectModalFlag } from "store/EditProjectModalFlagSlice";
 
@@ -31,7 +32,6 @@ const HorizontalButtonList = (props: Props) => {
   const editProjectModalFlag = useSelector((state) => state.editProjectModalFlag.modalFlag);
   const trackListItems = useSelector((state) => state.trackListItems.trackListItems);
   const trackListDetail = useSelector((state) => state.trackListDetail);
-
   const { uid }: any = firebaseAuth.currentUser;
 
   // Unmountしたときにデータの中身をリセット
@@ -42,6 +42,13 @@ const HorizontalButtonList = (props: Props) => {
     trackTitle: "",
     artistName: "",
     artWorkPath: "",
+    cueButtons: [
+      { flag: false, name: "", position: 0 },
+      { flag: false, name: "", position: 0 },
+      { flag: false, name: "", position: 0 },
+      { flag: false, name: "", position: 0 },
+      { flag: false, name: "", position: 0 },
+    ],
   };
 
   const onPressSubmit = async () => {
@@ -128,6 +135,12 @@ const HorizontalButtonList = (props: Props) => {
       // EditProjectからのモーダル表示の処理
       if (editProjectModalFlag) {
         console.log("editProjectModalFlag!");
+        await updateDoc(docRef, {
+          myProjectsData: arrayRemove({ ...myProjectsDetail }),
+        });
+        await updateDoc(docRef, {
+          myProjectsData: arrayUnion({ ...myProjectsDetail }),
+        });
       }
     } catch (error: any) {
       console.log(error);
@@ -146,6 +159,11 @@ const HorizontalButtonList = (props: Props) => {
       if (editProjectModalFlag) {
         dispatch(inactiveEditProjectModalFlag());
         dispatch(setMyProjectsDetail(resetMyProjectsDetail));
+        dispatch(setCueA([{ flag: false }, { name: "" }, { position: 0 }]));
+        dispatch(setCueB([{ flag: false }, { name: "" }, { position: 0 }]));
+        dispatch(setCueC([{ flag: false }, { name: "" }, { position: 0 }]));
+        dispatch(setCueD([{ flag: false }, { name: "" }, { position: 0 }]));
+        dispatch(setCueE([{ flag: false }, { name: "" }, { position: 0 }]));
         props.navigation.navigate("MainTabBar");
       }
     }
