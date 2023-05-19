@@ -284,6 +284,23 @@ const EditProject = (props: Props) => {
     ],
   };
 
+  // Unmountしたときにデータの中身をリセット
+  const resetProjectDetail = {
+    projectTitle: "",
+    lyric: "",
+    trackDataPath: "",
+    trackTitle: "",
+    artistName: "",
+    artWorkPath: "",
+    cueButtons: [
+      { flag: false, name: "", position: 0 },
+      { flag: false, name: "", position: 0 },
+      { flag: false, name: "", position: 0 },
+      { flag: false, name: "", position: 0 },
+      { flag: false, name: "", position: 0 },
+    ],
+  };
+
   // シークタイムを設定
   const minSeekTime = new Date(position * 1000).toISOString().substr(14, 5);
   const maxSeekTime = new Date((duration - position) * 1000).toISOString().substr(14, 5);
@@ -565,6 +582,7 @@ const EditProject = (props: Props) => {
     });
     setUpTrackPlayer();
     return () => {
+      dispatch(setMyProjectsDetail(resetProjectDetail));
       controlPause();
       TrackPlayer.reset();
     };
