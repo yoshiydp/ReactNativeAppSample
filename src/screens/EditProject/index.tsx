@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Animated, View, ScrollView, Text } from "react-native";
+import { SafeAreaView, Animated, View, ScrollView, Text } from "react-native";
 import TrackPlayer, {
   Capability,
   Event,
@@ -641,7 +641,7 @@ const EditProject = (props: Props) => {
   });
 
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
       <View>
         <EditProjectHeader
           onPressHomeButton={onPressGoBackHome}
@@ -688,7 +688,7 @@ const EditProject = (props: Props) => {
       />
       <ModalProjectSettings />
       <CenterModal isShow={centerModal} navigation={props.navigation} />
-    </View>
+    </SafeAreaView>
   );
 };
 
