@@ -647,36 +647,38 @@ const EditProject = (props: Props) => {
           onPressHomeButton={onPressGoBackHome}
           onPressMenuButton={onPressOpenMenu}
         />
-        <TextEditor projectTitle={myProjectsDetail.projectTitle} lyric={myProjectsDetail.lyric} />
-        <TimeSeekBar
-          minSeekTime={minSeekTime}
-          maxSeekTime={maxSeekTime}
-          onValueChange={onValueChange}
-          onSlidingStart={onSlidingStart}
-          onSlidingCompleted={onSlidingCompleted}
-        />
-        <View style={styles["cue-buttons-wrap"]}>
-          <CueButtons
-            onPressActivateCue={activateCue}
-            onPressPlaybackCue={playbackCue}
-            onPressInactivateCue={inactivateCue}
-            onLongPressEvent={editCueName}
+        <ScrollView>
+          <TextEditor projectTitle={myProjectsDetail.projectTitle} lyric={myProjectsDetail.lyric} />
+          <TimeSeekBar
+            minSeekTime={minSeekTime}
+            maxSeekTime={maxSeekTime}
+            onValueChange={onValueChange}
+            onSlidingStart={onSlidingStart}
+            onSlidingCompleted={onSlidingCompleted}
           />
-        </View>
-        <View style={styles["cue-control-player-wrap"]}>
-          <CueControlPlayer
-            start={start}
-            pause={pause}
-            cueActivity={cueActivity}
-            trackRepeat={trackRepeat}
-            onPressStart={controlStart}
-            onPressPause={controlPause}
-            onPressTrackRepeat={controlTrackRepeat}
-            onPressCueRepeat={controlCueRepeat}
-            onPressAllCueReset={controlAllCueReset}
-          />
-        </View>
-        <VolumeSeekBar />
+          <View style={styles["cue-buttons-wrap"]}>
+            <CueButtons
+              onPressActivateCue={activateCue}
+              onPressPlaybackCue={playbackCue}
+              onPressInactivateCue={inactivateCue}
+              onLongPressEvent={editCueName}
+            />
+          </View>
+          <View style={styles["cue-control-player-wrap"]}>
+            <CueControlPlayer
+              start={start}
+              pause={pause}
+              cueActivity={cueActivity}
+              trackRepeat={trackRepeat}
+              onPressStart={controlStart}
+              onPressPause={controlPause}
+              onPressTrackRepeat={controlTrackRepeat}
+              onPressCueRepeat={controlCueRepeat}
+              onPressAllCueReset={controlAllCueReset}
+            />
+          </View>
+          <VolumeSeekBar />
+        </ScrollView>
       </View>
       <Overlay isShow={overlay} />
       <EditCueNameTextField
