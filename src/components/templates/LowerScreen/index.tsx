@@ -1,5 +1,5 @@
 import React from "react";
-import { View, ScrollView } from "react-native";
+import { SafeAreaView, ScrollView } from "react-native";
 
 // Components
 import LowerTitleHeader from "components/molecules/LowerTitleHeader";
@@ -27,7 +27,7 @@ interface Props {
 
 const LowerScreen = (props: Props) => {
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
       <LowerTitleHeader title={props.title} navigation={props.navigation} />
       <ScrollView>
         {props.title === TEXT.TITLE_NEW_PROJECT ? (
@@ -47,7 +47,7 @@ const LowerScreen = (props: Props) => {
           ""
         )}
       </ScrollView>
-    </View>
+    </SafeAreaView>
   );
 };
 
