@@ -10,6 +10,11 @@ import {
 } from "react-native";
 import { actions, RichEditor, RichToolbar } from "react-native-pell-rich-editor";
 import LinearGradient from "react-native-linear-gradient";
+import { useDispatch } from "react-redux";
+
+// Store
+import { useSelector } from "store/index";
+import { setTextValue } from "store/TextEditorSlice";
 
 // Components
 import Icon from "components/atoms/Icon";
@@ -30,11 +35,13 @@ interface Props {
 
 const TextEditor = (props: Props) => {
   const richText = useRef();
+  const dispatch = useDispatch();
   const [descHTML, setDescHTML] = useState("");
   const [showDescError, setShowDescError] = useState<boolean>(false);
   const [activeEditor, setActiveEditor] = useState<boolean>(false);
   const [disabledEditor, setDisabledEditor] = useState<boolean>(true);
   const [targetHeight, setTargetHeight] = useState<number>(0);
+  const textValue = useSelector((state) => state.textEditor.value);
   const windowHeight = useWindowDimensions().height;
   const initialContainerHeight = windowHeight / 4;
   const richEditorHeight = windowHeight / 3;
@@ -61,6 +68,11 @@ const TextEditor = (props: Props) => {
     } else {
       // send data to your server!
     }
+  };
+
+  const onChangeText = (event: any) => {
+    dispatch(setTextValue(event));
+    console.log(event);
   };
 
   const heightAnimatedFunc = (object: any, value: number, duration: number, delay: number) => {
@@ -135,7 +147,7 @@ const TextEditor = (props: Props) => {
         <SafeAreaView edges={["bottom", "left", "right"]} style={styles["rich-editor-wrap"]}>
           <RichEditor
             ref={richText}
-            onChange={richTextHandle}
+            onChange={onChangeText}
             initialContentHTML={props.lyric ? props.lyric : ""}
             placeholder={TEXT.PLACEHOLDER_EDIT_PROJECT}
             androidHardwareAccelerationDisabled={true}
