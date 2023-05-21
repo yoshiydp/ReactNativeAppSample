@@ -15,6 +15,7 @@ import {
   setCenterModalSubmitButtonText,
 } from "store/CenterModalSlice";
 import { setMyProjectsDetail } from "store/MyProjectsDetailSlice";
+import { setTextValue } from "store/TextEditorSlice";
 import { setCueA, setCueB, setCueC, setCueD, setCueE } from "store/CueButtonsSlice";
 import { activeMyProjectsModalFlag } from "store/MyProjectsModalFlagSlice";
 import { showOverlay, inactiveHidden } from "store/OverlaySlice";
@@ -68,6 +69,7 @@ const MyProjectsItem = (props: Props) => {
 
   const navigateEditProject = async () => {
     dispatch(setMyProjectsDetail(setProjectData));
+    dispatch(setTextValue(setProjectData.lyric));
     dispatch(
       setCueA([
         { flag: props.cueButtons[0].flag },
