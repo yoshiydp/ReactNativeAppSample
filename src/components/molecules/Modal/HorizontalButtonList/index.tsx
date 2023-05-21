@@ -32,7 +32,30 @@ const HorizontalButtonList = (props: Props) => {
   const editProjectModalFlag = useSelector((state) => state.editProjectModalFlag.modalFlag);
   const trackListItems = useSelector((state) => state.trackListItems.trackListItems);
   const trackListDetail = useSelector((state) => state.trackListDetail);
+  const textEditorValue = useSelector((state) => state.textEditor.value);
   const { uid }: any = firebaseAuth.currentUser;
+
+  // 初期レンダリング時のプロジェクトデータ
+  const initialMyProjectData = {
+    projectTitle: myProjectsDetail.projectTitle,
+    lyric: myProjectsDetail.lyric,
+    trackDataPath: myProjectsDetail.trackDataPath,
+    trackTitle: myProjectsDetail.trackTitle,
+    artistName: "",
+    artWorkPath: myProjectsDetail.artWorkPath,
+    cueButtons: myProjectsDetail.cueButtons,
+  };
+
+  // TextEditorで再編集されたプロジェクトデータ
+  const setTextValueMyProjectData = {
+    projectTitle: myProjectsDetail.projectTitle,
+    lyric: textEditorValue,
+    trackDataPath: myProjectsDetail.trackDataPath,
+    trackTitle: myProjectsDetail.trackTitle,
+    artistName: "",
+    artWorkPath: myProjectsDetail.artWorkPath,
+    cueButtons: myProjectsDetail.cueButtons,
+  };
 
   // Unmountしたときにデータの中身をリセット
   const resetMyProjectsDetail = {
@@ -136,10 +159,10 @@ const HorizontalButtonList = (props: Props) => {
       if (editProjectModalFlag) {
         console.log("editProjectModalFlag!");
         await updateDoc(docRef, {
-          myProjectsData: arrayRemove({ ...myProjectsDetail }),
+          myProjectsData: arrayRemove({ ...initialMyProjectData }),
         });
         await updateDoc(docRef, {
-          myProjectsData: arrayUnion({ ...myProjectsDetail }),
+          myProjectsData: arrayUnion({ ...setTextValueMyProjectData }),
         });
       }
     } catch (error: any) {
