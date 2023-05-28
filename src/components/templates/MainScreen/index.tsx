@@ -1,5 +1,5 @@
 import React from "react";
-import { View, ScrollView, Text, TouchableOpacity } from "react-native";
+import { SafeAreaView, ScrollView, Text, TouchableOpacity } from "react-native";
 import { useDispatch } from "react-redux";
 import { signOut } from "firebase/auth";
 import { firebaseAuth } from "src/config/firebase";
@@ -51,7 +51,7 @@ const MainScreen = (props: Props) => {
   };
 
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
       <MainTitleHeader title={props.title} setSearchValue={props.setSearchValue} />
       <ScrollView>
         {props.title === TEXT.TITLE_MY_PROJECTS ? (
@@ -98,7 +98,7 @@ const MainScreen = (props: Props) => {
           <Text style={{ color: "white" }}>Google SignOut</Text>
         </TouchableOpacity>
       </ScrollView>
-    </View>
+    </SafeAreaView>
   );
 };
 

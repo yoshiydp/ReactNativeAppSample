@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { View, ScrollView, Text } from "react-native";
+import { SafeAreaView, View, ScrollView, Text } from "react-native";
 import { useDispatch } from "react-redux";
 import { signInWithEmailAndPassword, onAuthStateChanged } from "firebase/auth";
 import { appleAuth } from "@invertase/react-native-apple-authentication";
@@ -198,29 +198,33 @@ const Login = (props: Props) => {
 
   return (
     <ScrollView style={styles.container}>
-      <IntroMessage />
-      <AuthForm
-        formControlItems={formControlItems}
-        buttonText={TEXT.BUTTON_SIGN_IN}
-        submitEvent={signIn}
-      />
-      <Text style={styles.forgotMessagge}>
-        パスワードをお忘れの場合は
-        <Text style={styles.linkText} onPress={() => props.navigation.navigate("PasswordReset")}>
-          こちら
+      <SafeAreaView>
+        <IntroMessage />
+        <AuthForm
+          formControlItems={formControlItems}
+          buttonText={TEXT.BUTTON_SIGN_IN}
+          submitEvent={signIn}
+        />
+        <Text style={styles.forgotMessagge}>
+          パスワードをお忘れの場合は
+          <Text style={styles.linkText} onPress={() => props.navigation.navigate("PasswordReset")}>
+            こちら
+          </Text>
+          から
         </Text>
-        から
-      </Text>
-      <SocialSignIn title={TEXT.TEXT_SIGN_IN_WITH} socialIconItems={socialIconItems} />
-      <View style={styles.signUpWrap}>
-        <Text style={styles.signUpMessage}>まだアカウントを作成していない場合は下のボタンから</Text>
-        <View style={styles.signUpButtonWrap}>
-          <ButtonSquare
-            text={TEXT.BUTTON_NEW_ACCOUNT_CREATE}
-            onPressEvent={() => props.navigation.navigate("SignUp")}
-          />
+        <SocialSignIn title={TEXT.TEXT_SIGN_IN_WITH} socialIconItems={socialIconItems} />
+        <View style={styles.signUpWrap}>
+          <Text style={styles.signUpMessage}>
+            まだアカウントを作成していない場合は下のボタンから
+          </Text>
+          <View style={styles.signUpButtonWrap}>
+            <ButtonSquare
+              text={TEXT.BUTTON_NEW_ACCOUNT_CREATE}
+              onPressEvent={() => props.navigation.navigate("SignUp")}
+            />
+          </View>
         </View>
-      </View>
+      </SafeAreaView>
     </ScrollView>
   );
 };

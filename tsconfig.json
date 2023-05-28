@@ -1,16 +1,16 @@
 {
   "extends": "@tsconfig/react-native/tsconfig.json",
   "compilerOptions": {
-    "baseUrl": ".",
+    "baseUrl": "./src",
     "paths": {
-      "src/*": ["src/*"],
-      "components/*": ["src/components/*"],
-      "screens/*": ["src/screens/*"],
-      "constants/*": ["src/constants/*"],
-      "config/*": ["src/config/*"],
-      "interfaces/*": ["src/interfaces/*"],
-      "store/*": ["src/store/*"],
-      "validators/*": ["src/validators/*"]
+      "src/*": ["./*"],
+      "components/*": ["./components/*"],
+      "screens/*": ["./screens/*"],
+      "constants/*": ["./constants/*"],
+      "config/*": ["./config/*"],
+      "interfaces/*": ["./interfaces/*"],
+      "store/*": ["./store/*"],
+      "validators/*": ["./validators/*"]
     },
     "target": "es6",
     "lib": ["dom", "dom.iterable", "esnext"],

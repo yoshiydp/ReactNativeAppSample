@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { ScrollView } from "react-native";
+import { SafeAreaView, ScrollView } from "react-native";
 import { useDispatch } from "react-redux";
 import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
 import { appleAuth } from "@invertase/react-native-apple-authentication";
@@ -230,13 +230,15 @@ const SignUp = (props: Props) => {
 
   return (
     <ScrollView style={styles.container}>
-      <IntroMessage message={TEXT.TEXT_INTRO_MESSAGE} />
-      <AuthForm
-        formControlItems={formControlItems}
-        buttonText={TEXT.BUTTON_SIGN_UP}
-        submitEvent={signUp}
-      />
-      <SocialSignIn title={TEXT.TEXT_SIGN_UP_WITH} socialIconItems={socialIconItems} />
+      <SafeAreaView>
+        <IntroMessage message={TEXT.TEXT_INTRO_MESSAGE} />
+        <AuthForm
+          formControlItems={formControlItems}
+          buttonText={TEXT.BUTTON_SIGN_UP}
+          submitEvent={signUp}
+        />
+        <SocialSignIn title={TEXT.TEXT_SIGN_UP_WITH} socialIconItems={socialIconItems} />
+      </SafeAreaView>
     </ScrollView>
   );
 };
