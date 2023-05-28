@@ -15,6 +15,8 @@ import {
   setCenterModalSubmitButtonText,
 } from "store/CenterModalSlice";
 import { setMyProjectsDetail } from "store/MyProjectsDetailSlice";
+import { setTextValue } from "store/TextEditorSlice";
+import { setCueA, setCueB, setCueC, setCueD, setCueE } from "store/CueButtonsSlice";
 import { activeMyProjectsModalFlag } from "store/MyProjectsModalFlagSlice";
 import { showOverlay, inactiveHidden } from "store/OverlaySlice";
 
@@ -40,6 +42,11 @@ const MyProjectsItem = (props: Props) => {
   const swipeable = useRef<Swipeable>(null);
   const dispatch = useDispatch();
   const activeHiddenState = useSelector((state) => state.overlay.inactiveHidden);
+  const cueA = useSelector((state) => state.cueButtons.cueA);
+  const cueB = useSelector((state) => state.cueButtons.cueB);
+  const cueC = useSelector((state) => state.cueButtons.cueC);
+  const cueD = useSelector((state) => state.cueButtons.cueD);
+  const cueE = useSelector((state) => state.cueButtons.cueE);
   const { uid }: any = firebaseAuth.currentUser;
   if (!uid) return;
   const docRef = doc(db, "users", uid);
@@ -62,6 +69,42 @@ const MyProjectsItem = (props: Props) => {
 
   const navigateEditProject = async () => {
     dispatch(setMyProjectsDetail(setProjectData));
+    dispatch(setTextValue(setProjectData.lyric));
+    dispatch(
+      setCueA([
+        { flag: props.cueButtons[0].flag },
+        { name: props.cueButtons[0].name },
+        { position: props.cueButtons[0].position },
+      ])
+    );
+    dispatch(
+      setCueB([
+        { flag: props.cueButtons[1].flag },
+        { name: props.cueButtons[1].name },
+        { position: props.cueButtons[1].position },
+      ])
+    );
+    dispatch(
+      setCueC([
+        { flag: props.cueButtons[2].flag },
+        { name: props.cueButtons[2].name },
+        { position: props.cueButtons[2].position },
+      ])
+    );
+    dispatch(
+      setCueD([
+        { flag: props.cueButtons[3].flag },
+        { name: props.cueButtons[3].name },
+        { position: props.cueButtons[3].position },
+      ])
+    );
+    dispatch(
+      setCueE([
+        { flag: props.cueButtons[4].flag },
+        { name: props.cueButtons[4].name },
+        { position: props.cueButtons[4].position },
+      ])
+    );
     await props.navigation.navigate("EditProject");
   };
 

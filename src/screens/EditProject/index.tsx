@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Animated, View, ScrollView, Text } from "react-native";
+import { SafeAreaView, Animated, View, ScrollView, Text } from "react-native";
 import TrackPlayer, {
   Capability,
   Event,
@@ -63,6 +63,7 @@ const EditProject = (props: Props) => {
   const overlay = useSelector((state) => state.overlay.overlay);
   const activeHiddenState = useSelector((state) => state.overlay.inactiveHidden);
   const myProjectsDetail = useSelector((state) => state.myProjectsDetail);
+  const textEditorValue = useSelector((state) => state.textEditor.value);
   const cueButtons = useSelector((state) => state.myProjectsDetail.cueButtons);
   const editCueNameTextField = useSelector(
     (state) => state.editCueNameTextField.editCueNameTextField
@@ -97,7 +98,7 @@ const EditProject = (props: Props) => {
   // CueAの名前を保存する時のプロジェクトデータ
   const saveCueAProjectData = {
     projectTitle: myProjectsDetail.projectTitle,
-    lyric: myProjectsDetail.lyric,
+    lyric: textEditorValue,
     trackDataPath: myProjectsDetail.trackDataPath ? myProjectsDetail.trackDataPath : "",
     trackTitle: myProjectsDetail.trackTitle,
     artistName: "",
@@ -135,7 +136,7 @@ const EditProject = (props: Props) => {
   // CueBの名前を保存する時のプロジェクトデータ
   const saveCueBProjectData = {
     projectTitle: myProjectsDetail.projectTitle,
-    lyric: myProjectsDetail.lyric,
+    lyric: textEditorValue,
     trackDataPath: myProjectsDetail.trackDataPath ? myProjectsDetail.trackDataPath : "",
     trackTitle: myProjectsDetail.trackTitle,
     artistName: "",
@@ -173,7 +174,7 @@ const EditProject = (props: Props) => {
   // CueCの名前を保存する時のプロジェクトデータ
   const saveCueCProjectData = {
     projectTitle: myProjectsDetail.projectTitle,
-    lyric: myProjectsDetail.lyric,
+    lyric: textEditorValue,
     trackDataPath: myProjectsDetail.trackDataPath ? myProjectsDetail.trackDataPath : "",
     trackTitle: myProjectsDetail.trackTitle,
     artistName: "",
@@ -211,7 +212,7 @@ const EditProject = (props: Props) => {
   // CueDの名前を保存する時のプロジェクトデータ
   const saveCueDProjectData = {
     projectTitle: myProjectsDetail.projectTitle,
-    lyric: myProjectsDetail.lyric,
+    lyric: textEditorValue,
     trackDataPath: myProjectsDetail.trackDataPath ? myProjectsDetail.trackDataPath : "",
     trackTitle: myProjectsDetail.trackTitle,
     artistName: "",
@@ -249,7 +250,7 @@ const EditProject = (props: Props) => {
   // CueEの名前を保存する時のプロジェクトデータ
   const saveCueEProjectData = {
     projectTitle: myProjectsDetail.projectTitle,
-    lyric: myProjectsDetail.lyric,
+    lyric: textEditorValue,
     trackDataPath: myProjectsDetail.trackDataPath ? myProjectsDetail.trackDataPath : "",
     trackTitle: myProjectsDetail.trackTitle,
     artistName: "",
@@ -281,6 +282,23 @@ const EditProject = (props: Props) => {
         position:
           cueE[2].position && cueE[2].position > 0 ? cueE[2].position : cueButtons[4].position,
       },
+    ],
+  };
+
+  // Unmountしたときにデータの中身をリセット
+  const resetProjectDetail = {
+    projectTitle: "",
+    lyric: "",
+    trackDataPath: "",
+    trackTitle: "",
+    artistName: "",
+    artWorkPath: "",
+    cueButtons: [
+      { flag: false, name: "", position: 0 },
+      { flag: false, name: "", position: 0 },
+      { flag: false, name: "", position: 0 },
+      { flag: false, name: "", position: 0 },
+      { flag: false, name: "", position: 0 },
     ],
   };
 
@@ -565,6 +583,7 @@ const EditProject = (props: Props) => {
     });
     setUpTrackPlayer();
     return () => {
+      dispatch(setMyProjectsDetail(resetProjectDetail));
       controlPause();
       TrackPlayer.reset();
     };
@@ -623,42 +642,44 @@ const EditProject = (props: Props) => {
   });
 
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
       <View>
         <EditProjectHeader
           onPressHomeButton={onPressGoBackHome}
           onPressMenuButton={onPressOpenMenu}
         />
-        <TextEditor projectTitle={myProjectsDetail.projectTitle} lyric={myProjectsDetail.lyric} />
-        <TimeSeekBar
-          minSeekTime={minSeekTime}
-          maxSeekTime={maxSeekTime}
-          onValueChange={onValueChange}
-          onSlidingStart={onSlidingStart}
-          onSlidingCompleted={onSlidingCompleted}
-        />
-        <View style={styles["cue-buttons-wrap"]}>
-          <CueButtons
-            onPressActivateCue={activateCue}
-            onPressPlaybackCue={playbackCue}
-            onPressInactivateCue={inactivateCue}
-            onLongPressEvent={editCueName}
+        <ScrollView>
+          <TextEditor projectTitle={myProjectsDetail.projectTitle} lyric={myProjectsDetail.lyric} />
+          <TimeSeekBar
+            minSeekTime={minSeekTime}
+            maxSeekTime={maxSeekTime}
+            onValueChange={onValueChange}
+            onSlidingStart={onSlidingStart}
+            onSlidingCompleted={onSlidingCompleted}
           />
-        </View>
-        <View style={styles["cue-control-player-wrap"]}>
-          <CueControlPlayer
-            start={start}
-            pause={pause}
-            cueActivity={cueActivity}
-            trackRepeat={trackRepeat}
-            onPressStart={controlStart}
-            onPressPause={controlPause}
-            onPressTrackRepeat={controlTrackRepeat}
-            onPressCueRepeat={controlCueRepeat}
-            onPressAllCueReset={controlAllCueReset}
-          />
-        </View>
-        <VolumeSeekBar />
+          <View style={styles["cue-buttons-wrap"]}>
+            <CueButtons
+              onPressActivateCue={activateCue}
+              onPressPlaybackCue={playbackCue}
+              onPressInactivateCue={inactivateCue}
+              onLongPressEvent={editCueName}
+            />
+          </View>
+          <View style={styles["cue-control-player-wrap"]}>
+            <CueControlPlayer
+              start={start}
+              pause={pause}
+              cueActivity={cueActivity}
+              trackRepeat={trackRepeat}
+              onPressStart={controlStart}
+              onPressPause={controlPause}
+              onPressTrackRepeat={controlTrackRepeat}
+              onPressCueRepeat={controlCueRepeat}
+              onPressAllCueReset={controlAllCueReset}
+            />
+          </View>
+          <VolumeSeekBar />
+        </ScrollView>
       </View>
       <Overlay isShow={overlay} />
       <EditCueNameTextField
@@ -670,7 +691,7 @@ const EditProject = (props: Props) => {
       />
       <ModalProjectSettings />
       <CenterModal isShow={centerModal} navigation={props.navigation} />
-    </View>
+    </SafeAreaView>
   );
 };
 
