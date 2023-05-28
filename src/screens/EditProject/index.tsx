@@ -63,6 +63,7 @@ const EditProject = (props: Props) => {
   const overlay = useSelector((state) => state.overlay.overlay);
   const activeHiddenState = useSelector((state) => state.overlay.inactiveHidden);
   const myProjectsDetail = useSelector((state) => state.myProjectsDetail);
+  const textEditorValue = useSelector((state) => state.textEditor.value);
   const cueButtons = useSelector((state) => state.myProjectsDetail.cueButtons);
   const editCueNameTextField = useSelector(
     (state) => state.editCueNameTextField.editCueNameTextField
@@ -97,7 +98,7 @@ const EditProject = (props: Props) => {
   // CueAの名前を保存する時のプロジェクトデータ
   const saveCueAProjectData = {
     projectTitle: myProjectsDetail.projectTitle,
-    lyric: myProjectsDetail.lyric,
+    lyric: textEditorValue,
     trackDataPath: myProjectsDetail.trackDataPath ? myProjectsDetail.trackDataPath : "",
     trackTitle: myProjectsDetail.trackTitle,
     artistName: "",
@@ -135,7 +136,7 @@ const EditProject = (props: Props) => {
   // CueBの名前を保存する時のプロジェクトデータ
   const saveCueBProjectData = {
     projectTitle: myProjectsDetail.projectTitle,
-    lyric: myProjectsDetail.lyric,
+    lyric: textEditorValue,
     trackDataPath: myProjectsDetail.trackDataPath ? myProjectsDetail.trackDataPath : "",
     trackTitle: myProjectsDetail.trackTitle,
     artistName: "",
@@ -173,7 +174,7 @@ const EditProject = (props: Props) => {
   // CueCの名前を保存する時のプロジェクトデータ
   const saveCueCProjectData = {
     projectTitle: myProjectsDetail.projectTitle,
-    lyric: myProjectsDetail.lyric,
+    lyric: textEditorValue,
     trackDataPath: myProjectsDetail.trackDataPath ? myProjectsDetail.trackDataPath : "",
     trackTitle: myProjectsDetail.trackTitle,
     artistName: "",
@@ -211,7 +212,7 @@ const EditProject = (props: Props) => {
   // CueDの名前を保存する時のプロジェクトデータ
   const saveCueDProjectData = {
     projectTitle: myProjectsDetail.projectTitle,
-    lyric: myProjectsDetail.lyric,
+    lyric: textEditorValue,
     trackDataPath: myProjectsDetail.trackDataPath ? myProjectsDetail.trackDataPath : "",
     trackTitle: myProjectsDetail.trackTitle,
     artistName: "",
@@ -249,7 +250,7 @@ const EditProject = (props: Props) => {
   // CueEの名前を保存する時のプロジェクトデータ
   const saveCueEProjectData = {
     projectTitle: myProjectsDetail.projectTitle,
-    lyric: myProjectsDetail.lyric,
+    lyric: textEditorValue,
     trackDataPath: myProjectsDetail.trackDataPath ? myProjectsDetail.trackDataPath : "",
     trackTitle: myProjectsDetail.trackTitle,
     artistName: "",
