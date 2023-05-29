@@ -10,6 +10,7 @@ import TrackPlayer, {
   useTrackPlayerEvents,
   AppKilledPlaybackBehavior,
 } from "react-native-track-player";
+import DocumentPicker from "react-native-document-picker";
 import { useDispatch } from "react-redux";
 import { firebaseAuth, db } from "src/config/firebase";
 import { doc, updateDoc, arrayUnion, arrayRemove } from "firebase/firestore";
@@ -74,6 +75,10 @@ const EditProject = (props: Props) => {
   const cueC = useSelector((state) => state.cueButtons.cueC);
   const cueD = useSelector((state) => state.cueButtons.cueD);
   const cueE = useSelector((state) => state.cueButtons.cueE);
+  const trackDataFile = useSelector((state) => state.newProject.trackDataFile);
+  const trackListItems = useSelector((state) => state.trackListItems.trackListItems);
+  const trackListDetailTitle = useSelector((state) => state.trackListDetail.trackTitle);
+  const trackListDetailDataPath = useSelector((state) => state.trackListDetail.trackDataPath);
   const playbackState = usePlaybackState();
   const { position, duration } = useProgress();
   const [sliderValue, setSliderValue] = useState<number>(0);
@@ -83,6 +88,8 @@ const EditProject = (props: Props) => {
   const [cueType, setCueType] = useState<string>("");
   const [trackRepeat, setTrackRepeat] = useState<boolean>(false);
   const [cueName, setCueName] = useState<string>("");
+  const [projectTitle, setProjectTitle] = useState<string>("");
+  const [errorProjectTitle, setErrorProjectTitle] = useState<string>("");
   const { uid }: any = firebaseAuth.currentUser;
   if (!uid) return;
   const docRef = doc(db, "users", uid);
@@ -641,6 +648,54 @@ const EditProject = (props: Props) => {
     }
   });
 
+  const selectTrackDataFile = async () => {
+    try {
+      const results: any = await DocumentPicker.pickMultiple({
+        type: [DocumentPicker.types.audio],
+      });
+      dispatch(setTrackDataFile(results));
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const selectTrackList = () => {
+    dispatch(showModalPageSheet());
+  };
+
+  // テキストフォームリスト
+  const formControlItems = [
+    {
+      label: TEXT.LABEL_INPUT_PROJECT_TITLE,
+      placeholder: TEXT.PLACEHOLDER_PROJECT_TITLE,
+      onChangeText: setProjectTitle,
+      value: projectTitle,
+      required: true,
+      errorText: errorProjectTitle,
+    },
+    {
+      label: TEXT.LABEL_INPUT_TRACK_DATA,
+      placeholder: TEXT.PLACEHOLDER_NO_TRACK,
+      value: trackDataFile.length ? trackDataFile[0]?.name : trackListDetailTitle,
+      required: true,
+      notes: TEXT.LABEL_NOTES_TRACK_DATA,
+      editable: false,
+      selectTextOnFocus: false,
+    },
+  ];
+
+  // コントロールボタンリスト
+  const controlButtonItems = [
+    {
+      buttonText: trackDataFile.length ? TEXT.BUTTON_TRACK_CHANGE : TEXT.BUTTON_TRACK_UPLOAD,
+      onPressEvent: selectTrackDataFile,
+    },
+    {
+      buttonText: TEXT.BUTTON_TRACK_SELECT,
+      onPressEvent: selectTrackList,
+    },
+  ];
+
   return (
     <SafeAreaView style={styles.container}>
       <View>
@@ -689,7 +744,13 @@ const EditProject = (props: Props) => {
         onChangeText={(event) => setCueName(event)}
         onPressSave={saveCueName}
       />
-      <ModalProjectSettings />
+      <ModalProjectSettings
+        modalTitle={TEXT.MODAL_TITLE_PROJECT_SETTINGS}
+        modalDescription={TEXT.MODAL_DESC_PROJECT_SETTINGS}
+        formControlItems={formControlItems}
+        controlButtonItems={controlButtonItems}
+        buttonText={TEXT.BUTTON_SAVE_PROJECT}
+      />
       <CenterModal isShow={centerModal} navigation={props.navigation} />
     </SafeAreaView>
   );
