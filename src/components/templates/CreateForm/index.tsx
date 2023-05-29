@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { View, KeyboardAvoidingView } from "react-native";
 
 // Components
-import FormControls from "components/organisms/FormControls";
+import UserFormControls from "components/organisms/UserFormControls";
 import ControlSetArtwork from "components/molecules/ControlSetArtwork";
 import ControlButtonList from "components/molecules/ControlButtonList";
 import ButtonSquare from "components/atoms/ButtonSquare";
@@ -34,7 +34,7 @@ const CreateForm = (props: Props) => {
     <KeyboardAvoidingView style={styles.container}>
       <ControlSetArtwork />
       <View style={styles.formControlsWrap}>
-        <FormControls formControlItems={props.formControlItems} />
+        <UserFormControls formControlItems={props.formControlItems} />
       </View>
       <View style={styles.controlButtonWrap}>
         <ControlButtonList controlButtonItems={props.controlButtonItems} />
