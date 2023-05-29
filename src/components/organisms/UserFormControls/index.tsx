@@ -9,7 +9,7 @@ import ErrorText from "components/atoms/ErrorText";
 import { FormControlsType } from "interfaces/formControlsInterface";
 
 // Styles
-import styles from "./FormControls.scss";
+import styles from "./UserFormControls.scss";
 
 interface Props {
   formControlItems: Array<FormControlsType>;
