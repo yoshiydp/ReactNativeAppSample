@@ -6,6 +6,7 @@ export const BUTTON_MY_PROJECTS_CREATE = "新しいプロジェクトを作成";
 export const BUTTON_NEW_ACCOUNT_CREATE = "新規アカウント作成";
 export const BUTTON_NEW_PASSWORD_SAVE = "新しいパスワードを保存する";
 export const BUTTON_NEW_TRACK_UPLOAD = "新しいトラックを追加";
+export const BUTTON_SAVE_PROJECT = "保存して閉じる";
 export const BUTTON_SIGN_IN = "ログイン";
 export const BUTTON_SIGN_UP = "サインアップ";
 export const BUTTON_START = "スタート";
