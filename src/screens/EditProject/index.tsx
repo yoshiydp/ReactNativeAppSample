@@ -19,13 +19,7 @@ import { doc, updateDoc, arrayUnion, arrayRemove } from "firebase/firestore";
 import { useSelector } from "store/index";
 import { setCueA, setCueB, setCueC, setCueD, setCueE } from "store/CueButtonsSlice";
 import { setMyProjectsDetail } from "store/MyProjectsDetailSlice";
-import {
-  showCenterModal,
-  setCenterModalTitle,
-  setCenterModalDataTitle,
-  setCenterModalNotes,
-  setCenterModalSubmitButtonText,
-} from "store/CenterModalSlice";
+import { showCenterModal, setCenterModalTitle } from "store/CenterModalSlice";
 import { showOverlay, hideOverlay, activeHidden, inactiveHidden } from "store/OverlaySlice";
 import { showModalProjectSettings } from "store/ModalProjectSettingsSlice";
 import { activeEditProjectModalFlag } from "store/EditProjectModalFlagSlice";
@@ -33,6 +27,7 @@ import {
   showEditCueNameTextField,
   hideEditCueNameTextField,
 } from "store/EditCueNameTextFieldSlice";
+import { setProjectSettingsTitle } from "store/ProjectSettingsSlice";
 
 // Components
 import TextEditor from "components/organisms/TextEditor";
@@ -51,6 +46,9 @@ import * as TEXT from "constants/text";
 
 // Interfaces
 import { SetCueActivityType } from "interfaces/cueButtonsInterface";
+
+// Validators
+import { validateProjectTitle } from "src/validators/ProjectSettingsValidator";
 
 // Styles
 import styles from "./EditProject.scss";
@@ -79,6 +77,7 @@ const EditProject = (props: Props) => {
   const trackListItems = useSelector((state) => state.trackListItems.trackListItems);
   const trackListDetailTitle = useSelector((state) => state.trackListDetail.trackTitle);
   const trackListDetailDataPath = useSelector((state) => state.trackListDetail.trackDataPath);
+  const projectSettingsTitle = useSelector((state) => state.projectSettings.projectTitle);
   const playbackState = usePlaybackState();
   const { position, duration } = useProgress();
   const [sliderValue, setSliderValue] = useState<number>(0);
@@ -589,6 +588,7 @@ const EditProject = (props: Props) => {
       waitForBuffer: true,
     });
     setUpTrackPlayer();
+    dispatch(setProjectSettingsTitle(myProjectsDetail.projectTitle));
     return () => {
       dispatch(setMyProjectsDetail(resetProjectDetail));
       controlPause();
@@ -669,7 +669,7 @@ const EditProject = (props: Props) => {
       label: TEXT.LABEL_INPUT_PROJECT_TITLE,
       placeholder: TEXT.PLACEHOLDER_PROJECT_TITLE,
       onChangeText: setProjectTitle,
-      value: projectTitle,
+      value: projectSettingsTitle ? projectSettingsTitle : projectTitle,
       required: true,
       errorText: errorProjectTitle,
     },
@@ -696,6 +696,16 @@ const EditProject = (props: Props) => {
     },
   ];
 
+  // ModalProjectSettingsの編集を保存する
+  const saveProjectSettings = () => {
+    console.log("ModalProjectSettings");
+    setErrorProjectTitle("");
+    validateProjectTitle(projectTitle, setErrorProjectTitle);
+
+    // プロジェクトタイトルが未入力の場合は以下を実行不可とする
+    if (!projectTitle) return;
+  };
+
   return (
     <SafeAreaView style={styles.container}>
       <View>
@@ -712,7 +722,7 @@ const EditProject = (props: Props) => {
             onSlidingStart={onSlidingStart}
             onSlidingCompleted={onSlidingCompleted}
           />
-          <View style={styles["cue-buttons-wrap"]}>
+          <View style={styles.cue_buttons_wrap}>
             <CueButtons
               onPressActivateCue={activateCue}
               onPressPlaybackCue={playbackCue}
@@ -720,7 +730,7 @@ const EditProject = (props: Props) => {
               onLongPressEvent={editCueName}
             />
           </View>
-          <View style={styles["cue-control-player-wrap"]}>
+          <View style={styles.cue_control_player_wrap}>
             <CueControlPlayer
               start={start}
               pause={pause}
@@ -750,6 +760,7 @@ const EditProject = (props: Props) => {
         formControlItems={formControlItems}
         controlButtonItems={controlButtonItems}
         buttonText={TEXT.BUTTON_SAVE_PROJECT}
+        submitEvent={saveProjectSettings}
       />
       <CenterModal isShow={centerModal} navigation={props.navigation} />
     </SafeAreaView>
