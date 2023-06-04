@@ -5,6 +5,7 @@ import { useDispatch } from "react-redux";
 // Store
 import { useSelector } from "store/index";
 import { hideModalProjectSettings } from "store/ModalProjectSettingsSlice";
+import { setProjectSettingsTitle } from "store/ProjectSettingsSlice";
 
 // Components
 import ModalTitleHeader from "components/organisms/Modal/ModalTitleHeader";
@@ -35,6 +36,7 @@ const ModalProjectSettings = (props: Props) => {
   const modalProjectSettings = useSelector(
     (state) => state.modalProjectSettings.modalProjectSettings
   );
+  const myProjectsDetail = useSelector((state) => state.myProjectsDetail);
   const [targetWidth, setTargetWidth] = useState<number>(0);
 
   const getTargetWidth = (object: any) => {
