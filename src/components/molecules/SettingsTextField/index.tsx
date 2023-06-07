@@ -32,7 +32,7 @@ const SettingsTextField = (props: Props) => {
 
   return (
     <View style={props.errorText ? styles["container--error"] : styles.container}>
-      <View style={styles["label-wrap"]}>
+      <View style={styles.label_wrap}>
         <Text style={styles.label}>{props.label}</Text>
         {props.required && <Text style={styles.required}>*</Text>}
         {props.notes && <Text style={styles.notes}>{props.notes}</Text>}
