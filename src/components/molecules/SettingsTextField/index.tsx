@@ -1,5 +1,9 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { View, Text, TextInput } from "react-native";
+import { useDispatch } from "react-redux";
+
+// Store
+import { setProjectSettingsTitle } from "store/ProjectSettingsSlice";
 
 // Styles
 import styles from "./SettingsTextField.scss";
@@ -15,17 +19,12 @@ interface Props extends TextFieldType {
 }
 
 const SettingsTextField = (props: Props) => {
-  const [value, valueHandler] = useState(props.value ? props.value : "");
-
-  useEffect(() => {
-    valueHandler(props.value ? props.value : "");
-  }, [props.value]);
+  const dispatch = useDispatch();
 
   const onChangeText = (event: any) => {
-    valueHandler(event);
-
     if (props.onChangeText) {
       props.onChangeText(event);
+      dispatch(setProjectSettingsTitle(event));
       console.log(event);
     }
   };

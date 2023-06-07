@@ -653,14 +653,14 @@ const EditProject = (props: Props) => {
       const results: any = await DocumentPicker.pickMultiple({
         type: [DocumentPicker.types.audio],
       });
-      dispatch(setTrackDataFile(results));
+      // dispatch(setTrackDataFile(results));
     } catch (error) {
       console.log(error);
     }
   };
 
   const selectTrackList = () => {
-    dispatch(showModalPageSheet());
+    // dispatch(showModalPageSheet());
   };
 
   // テキストフォームリスト
@@ -669,7 +669,7 @@ const EditProject = (props: Props) => {
       label: TEXT.LABEL_INPUT_PROJECT_TITLE,
       placeholder: TEXT.PLACEHOLDER_PROJECT_TITLE,
       onChangeText: setProjectTitle,
-      value: projectSettingsTitle ? projectSettingsTitle : projectTitle,
+      value: projectSettingsTitle,
       required: true,
       errorText: errorProjectTitle,
     },
@@ -700,10 +700,10 @@ const EditProject = (props: Props) => {
   const saveProjectSettings = () => {
     console.log("ModalProjectSettings");
     setErrorProjectTitle("");
-    validateProjectTitle(projectTitle, setErrorProjectTitle);
+    validateProjectTitle(projectSettingsTitle, setErrorProjectTitle);
 
     // プロジェクトタイトルが未入力の場合は以下を実行不可とする
-    if (!projectTitle) return;
+    if (!projectSettingsTitle) return;
   };
 
   return (
