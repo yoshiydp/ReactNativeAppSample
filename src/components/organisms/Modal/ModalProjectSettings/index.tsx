@@ -5,7 +5,7 @@ import { useDispatch } from "react-redux";
 // Store
 import { useSelector } from "store/index";
 import { hideModalProjectSettings } from "store/ModalProjectSettingsSlice";
-import { setProjectSettingsTitle } from "store/ProjectSettingsSlice";
+import { hideOverlay, activeHidden } from "store/OverlaySlice";
 
 // Components
 import ModalTitleHeader from "components/organisms/Modal/ModalTitleHeader";
@@ -45,13 +45,15 @@ const ModalProjectSettings = (props: Props) => {
 
   const modalClose = () => {
     dispatch(hideModalProjectSettings());
+    dispatch(hideOverlay());
+    dispatch(activeHidden());
   };
 
-  useEffect(() => {
-    props.formControlItems.map((item, index) => {
-      !item.value ? setDisabled(true) : setDisabled(false);
-    });
-  }, [props.formControlItems, disabled]);
+  // useEffect(() => {
+  //   props.formControlItems.map((item, index) => {
+  //     !item.value ? setDisabled(true) : setDisabled(false);
+  //   });
+  // }, [props.formControlItems, disabled]);
 
   return (
     <Modal

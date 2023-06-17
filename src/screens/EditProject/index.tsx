@@ -21,13 +21,18 @@ import { setCueA, setCueB, setCueC, setCueD, setCueE } from "store/CueButtonsSli
 import { setMyProjectsDetail } from "store/MyProjectsDetailSlice";
 import { showCenterModal, setCenterModalTitle } from "store/CenterModalSlice";
 import { showOverlay, hideOverlay, activeHidden, inactiveHidden } from "store/OverlaySlice";
-import { showModalProjectSettings } from "store/ModalProjectSettingsSlice";
+import {
+  showModalProjectSettings,
+  hideModalProjectSettings,
+} from "store/ModalProjectSettingsSlice";
 import { activeEditProjectModalFlag } from "store/EditProjectModalFlagSlice";
+import { showModalPageSheet } from "store/ModalPageSheetSlice";
 import {
   showEditCueNameTextField,
   hideEditCueNameTextField,
 } from "store/EditCueNameTextFieldSlice";
-import { setProjectSettingsTitle } from "store/ProjectSettingsSlice";
+import { setProjectSettingsTitle, activeSelectTrackList } from "store/ProjectSettingsSlice";
+import { setTrackDataFile } from "store/NewProjectSlice";
 
 // Components
 import TextEditor from "components/organisms/TextEditor";
@@ -40,6 +45,7 @@ import ModalProjectSettings from "components/organisms/Modal/ModalProjectSetting
 import EditCueNameTextField from "components/molecules/EditCueNameTextField";
 import EditProjectHeader from "components/molecules/EditProjectHeader";
 import Overlay from "components/atoms/Overlay";
+import ModalPageSheet from "components/organisms/Modal/ModalPageSheet";
 
 // Constants
 import * as TEXT from "constants/text";
@@ -343,6 +349,10 @@ const EditProject = (props: Props) => {
   const onPressOpenMenu = () => {
     console.log("onPressOpenMenu!");
     dispatch(showModalProjectSettings());
+    dispatch(showOverlay());
+    dispatch(inactiveHidden());
+    dispatch(setProjectSettingsTitle(myProjectsDetail.projectTitle));
+    dispatch(setTrackDataFile([]));
   };
 
   const onValueChange = (value: number) => {
@@ -588,7 +598,6 @@ const EditProject = (props: Props) => {
       waitForBuffer: true,
     });
     setUpTrackPlayer();
-    dispatch(setProjectSettingsTitle(myProjectsDetail.projectTitle));
     return () => {
       dispatch(setMyProjectsDetail(resetProjectDetail));
       controlPause();
@@ -653,14 +662,16 @@ const EditProject = (props: Props) => {
       const results: any = await DocumentPicker.pickMultiple({
         type: [DocumentPicker.types.audio],
       });
-      // dispatch(setTrackDataFile(results));
+      dispatch(setTrackDataFile(results));
     } catch (error) {
       console.log(error);
     }
   };
 
   const selectTrackList = () => {
-    // dispatch(showModalPageSheet());
+    dispatch(hideModalProjectSettings());
+    dispatch(showModalPageSheet());
+    dispatch(activeSelectTrackList());
   };
 
   // テキストフォームリスト
@@ -676,7 +687,7 @@ const EditProject = (props: Props) => {
     {
       label: TEXT.LABEL_INPUT_TRACK_DATA,
       placeholder: TEXT.PLACEHOLDER_NO_TRACK,
-      value: trackDataFile.length ? trackDataFile[0]?.name : trackListDetailTitle,
+      value: trackDataFile.length ? trackDataFile[0]?.name : myProjectsDetail.trackTitle,
       required: true,
       notes: TEXT.LABEL_NOTES_TRACK_DATA,
       editable: false,
@@ -754,6 +765,7 @@ const EditProject = (props: Props) => {
         onChangeText={(event) => setCueName(event)}
         onPressSave={saveCueName}
       />
+      <ModalPageSheet trackListDataItems={trackListItems} />
       <ModalProjectSettings
         modalTitle={TEXT.MODAL_TITLE_PROJECT_SETTINGS}
         modalDescription={TEXT.MODAL_DESC_PROJECT_SETTINGS}
