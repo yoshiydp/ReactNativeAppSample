@@ -19,6 +19,8 @@ import { activeTrackListModalFlag } from "store/TrackListModalFlagSlice";
 import { showOverlay, inactiveHidden } from "store/OverlaySlice";
 import { hideModalPageSheet } from "store/ModalPageSheetSlice";
 import { setTrackDataFile } from "store/NewProjectSlice";
+import { inactiveSelectTrackList } from "store/ProjectSettingsSlice";
+import { showModalProjectSettings } from "store/ModalProjectSettingsSlice";
 
 // Components
 import ButtonDelete from "components/atoms/ButtonDelete";
@@ -44,6 +46,7 @@ const TrackListItem = (props: Props) => {
   const dispatch = useDispatch();
   const activeHiddenState = useSelector((state) => state.overlay.inactiveHidden);
   const activeModalPageSheet = useSelector((state) => state.modalPageSheet.modalPageSheet);
+  const flagSelectTrackList = useSelector((state) => state.projectSettings.flagSelectTrackList);
   const { uid }: any = firebaseAuth.currentUser;
   if (!uid) return;
   const docRef = doc(db, "users", uid);
@@ -72,6 +75,11 @@ const TrackListItem = (props: Props) => {
     dispatch(setTrackListDetail(setTrackData));
     console.log(setTrackData);
     console.log("hideModalPageSheet close");
+
+    // ProjectSettingsのTrackListが場合は以下を実行不可とする
+    if (!flagSelectTrackList) return;
+    dispatch(inactiveSelectTrackList());
+    dispatch(showModalProjectSettings());
   };
 
   const navigateEditTrack = async () => {

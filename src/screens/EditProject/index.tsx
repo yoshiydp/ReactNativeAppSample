@@ -13,7 +13,8 @@ import TrackPlayer, {
 import DocumentPicker from "react-native-document-picker";
 import { useDispatch } from "react-redux";
 import { firebaseAuth, db } from "src/config/firebase";
-import { doc, updateDoc, arrayUnion, arrayRemove } from "firebase/firestore";
+import { getStorage } from "firebase/storage";
+import { doc, getDoc, updateDoc, arrayUnion, arrayRemove } from "firebase/firestore";
 
 // Store
 import { useSelector } from "store/index";
@@ -33,6 +34,7 @@ import {
 } from "store/EditCueNameTextFieldSlice";
 import { setProjectSettingsTitle, activeSelectTrackList } from "store/ProjectSettingsSlice";
 import { setTrackDataFile } from "store/NewProjectSlice";
+import { setTrackListItems } from "store/TrackListItemsSlice";
 
 // Components
 import TextEditor from "components/organisms/TextEditor";
@@ -98,6 +100,7 @@ const EditProject = (props: Props) => {
   const { uid }: any = firebaseAuth.currentUser;
   if (!uid) return;
   const docRef = doc(db, "users", uid);
+  const storage = getStorage();
 
   // トラックデータの情報を格納
   const setTrackData = [
@@ -593,11 +596,27 @@ const EditProject = (props: Props) => {
     setCueActivity({ flag: false, name: "" });
   };
 
+  const getTrackListData = async () => {
+    const docSnap = await getDoc(docRef);
+    if (docSnap.exists()) {
+      const trackListData = docSnap.data().trackListData;
+      const sorted = trackListData.sort((a: any, b: any) => {
+        a = a.trackTitle.toString().toLowerCase();
+        b = b.trackTitle.toString().toLowerCase();
+        return a > b ? 1 : b > a ? -1 : 0;
+      });
+      dispatch(setTrackListItems(sorted));
+    } else {
+      console.log("No such document!");
+    }
+  };
+
   useEffect(() => {
     TrackPlayer.setupPlayer({
       waitForBuffer: true,
     });
     setUpTrackPlayer();
+    getTrackListData();
     return () => {
       dispatch(setMyProjectsDetail(resetProjectDetail));
       controlPause();
