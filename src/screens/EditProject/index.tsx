@@ -34,6 +34,7 @@ import {
 } from "store/EditCueNameTextFieldSlice";
 import { setProjectSettingsTitle, activeSelectTrackList } from "store/ProjectSettingsSlice";
 import { setTrackDataFile } from "store/NewProjectSlice";
+import { setTrackListDetail } from "store/TrackListDetailSlice";
 import { setTrackListItems } from "store/TrackListItemsSlice";
 
 // Components
@@ -324,6 +325,15 @@ const EditProject = (props: Props) => {
   // 現在のリピートモードを取得するための変数
   let getCurrentRepeatMode;
 
+  // ModalProjectSettingsを開いたときにトラックデータをリセットするためのオブジェクト
+  const resetTrackData = {
+    trackDataPath: "",
+    trackTitle: "",
+    artistName: "",
+    artWorkPath: "",
+    linkedMyProjects: [],
+  };
+
   const setUpTrackPlayer = async () => {
     try {
       await TrackPlayer.updateOptions({
@@ -356,6 +366,7 @@ const EditProject = (props: Props) => {
     dispatch(inactiveHidden());
     dispatch(setProjectSettingsTitle(myProjectsDetail.projectTitle));
     dispatch(setTrackDataFile([]));
+    dispatch(setTrackListDetail(resetTrackData));
   };
 
   const onValueChange = (value: number) => {
@@ -706,7 +717,11 @@ const EditProject = (props: Props) => {
     {
       label: TEXT.LABEL_INPUT_TRACK_DATA,
       placeholder: TEXT.PLACEHOLDER_NO_TRACK,
-      value: trackDataFile.length ? trackDataFile[0]?.name : myProjectsDetail.trackTitle,
+      value: trackDataFile.length
+        ? trackDataFile[0]?.name
+        : trackListDetailTitle.length
+        ? trackListDetailTitle
+        : myProjectsDetail.trackTitle,
       required: true,
       notes: TEXT.LABEL_NOTES_TRACK_DATA,
       editable: false,
