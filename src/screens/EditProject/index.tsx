@@ -69,7 +69,6 @@ interface Props {
 const EditProject = (props: Props) => {
   const dispatch = useDispatch();
   const overlay = useSelector((state) => state.overlay.overlay);
-  const activeHiddenState = useSelector((state) => state.overlay.inactiveHidden);
   const myProjectsDetail = useSelector((state) => state.myProjectsDetail);
   const textEditorValue = useSelector((state) => state.textEditor.value);
   const cueButtons = useSelector((state) => state.myProjectsDetail.cueButtons);
@@ -87,6 +86,7 @@ const EditProject = (props: Props) => {
   const trackListDetailTitle = useSelector((state) => state.trackListDetail.trackTitle);
   const trackListDetailDataPath = useSelector((state) => state.trackListDetail.trackDataPath);
   const projectSettingsTitle = useSelector((state) => state.projectSettings.projectTitle);
+  const artWork = useSelector((state) => state.newProject.artWork);
   const playbackState = usePlaybackState();
   const { position, duration } = useProgress();
   const [sliderValue, setSliderValue] = useState<number>(0);
@@ -271,6 +271,52 @@ const EditProject = (props: Props) => {
     trackTitle: myProjectsDetail.trackTitle,
     artistName: "",
     artWorkPath: myProjectsDetail.artWorkPath ? myProjectsDetail.artWorkPath : "",
+    cueButtons: [
+      {
+        flag: cueA[0].flag ? cueA[0].flag : cueButtons[0].flag,
+        name: cueButtons[0].name,
+        position: cueButtons[0].position,
+      },
+      {
+        flag: cueB[0].flag ? cueB[0].flag : cueButtons[1].flag,
+        name: cueButtons[1].name,
+        position: cueButtons[1].position,
+      },
+      {
+        flag: cueC[0].flag ? cueC[0].flag : cueButtons[2].flag,
+        name: cueButtons[2].name,
+        position: cueButtons[2].position,
+      },
+      {
+        flag: cueD[0].flag ? cueD[0].flag : cueButtons[3].flag,
+        name: cueButtons[3].name,
+        position: cueButtons[3].position,
+      },
+      {
+        flag: cueE[0].flag ? cueE[0].flag : cueButtons[4].flag,
+        name: cueType === "E" ? cueName : cueButtons[4].name,
+        position:
+          cueE[2].position && cueE[2].position > 0 ? cueE[2].position : cueButtons[4].position,
+      },
+    ],
+  };
+
+  // ProjectSettingsで保存する時のプロジェクトデータ
+  const addProjectSettingsData = {
+    projectTitle: projectSettingsTitle,
+    lyric: textEditorValue,
+    trackDataPath: myProjectsDetail.trackDataPath ? myProjectsDetail.trackDataPath : "",
+    trackTitle: trackDataFile.length
+      ? trackDataFile[0]?.name
+      : trackListDetailTitle.length
+      ? trackListDetailTitle
+      : myProjectsDetail.trackTitle,
+    artistName: "",
+    artWorkPath: artWork.length
+      ? artWork[0].uri
+      : myProjectsDetail.artWorkPath
+      ? myProjectsDetail.artWorkPath
+      : "",
     cueButtons: [
       {
         flag: cueA[0].flag ? cueA[0].flag : cueButtons[0].flag,
@@ -742,13 +788,30 @@ const EditProject = (props: Props) => {
   ];
 
   // ModalProjectSettingsの編集を保存する
-  const saveProjectSettings = () => {
+  const saveProjectSettings = async () => {
     console.log("ModalProjectSettings");
     setErrorProjectTitle("");
     validateProjectTitle(projectSettingsTitle, setErrorProjectTitle);
 
     // プロジェクトタイトルが未入力の場合は以下を実行不可とする
     if (!projectSettingsTitle) return;
+
+    try {
+      // 編集前の現在のプロジェクトデータを削除
+      await updateDoc(docRef, {
+        myProjectsData: arrayRemove({ ...myProjectsDetail }),
+      });
+      // 編集後のプロジェクトデータを追加
+      await updateDoc(docRef, {
+        myProjectsData: arrayUnion({ ...addProjectSettingsData }),
+      });
+    } catch (error: any) {
+      console.log(error);
+    } finally {
+      dispatch(setMyProjectsDetail(addProjectSettingsData));
+      dispatch(hideModalProjectSettings());
+      dispatch(hideOverlay());
+    }
   };
 
   return (
