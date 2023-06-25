@@ -36,7 +36,6 @@ const ModalProjectSettings = (props: Props) => {
   const modalProjectSettings = useSelector(
     (state) => state.modalProjectSettings.modalProjectSettings
   );
-  const myProjectsDetail = useSelector((state) => state.myProjectsDetail);
   const [targetWidth, setTargetWidth] = useState<number>(0);
 
   const getTargetWidth = (object: any) => {
@@ -48,12 +47,6 @@ const ModalProjectSettings = (props: Props) => {
     dispatch(hideOverlay());
     dispatch(activeHidden());
   };
-
-  // useEffect(() => {
-  //   props.formControlItems.map((item, index) => {
-  //     !item.value ? setDisabled(true) : setDisabled(false);
-  //   });
-  // }, [props.formControlItems, disabled]);
 
   return (
     <Modal
