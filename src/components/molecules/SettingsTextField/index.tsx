@@ -3,7 +3,7 @@ import { View, Text, TextInput } from "react-native";
 import { useDispatch } from "react-redux";
 
 // Store
-import { setProjectSettingsTitle } from "store/ProjectSettingsSlice";
+import { setModalProjectSettingsTitle } from "store/ModalProjectSettingsSlice";
 
 // Styles
 import styles from "./SettingsTextField.scss";
@@ -24,7 +24,7 @@ const SettingsTextField = (props: Props) => {
   const onChangeText = (event: any) => {
     if (props.onChangeText) {
       props.onChangeText(event);
-      dispatch(setProjectSettingsTitle(event));
+      dispatch(setModalProjectSettingsTitle(event));
       console.log(event);
     }
   };
