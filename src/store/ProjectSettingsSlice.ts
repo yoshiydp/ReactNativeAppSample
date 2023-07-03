@@ -1,33 +1,36 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 interface ProjectSettingsType {
+  artWorkPath: string;
   projectTitle: string;
   trackDataPath: string;
-  flagSelectTrackList: boolean;
 }
 
 const initialState: ProjectSettingsType = {
+  artWorkPath: "",
   projectTitle: "",
   trackDataPath: "",
-  flagSelectTrackList: false,
 };
 
 export const ProjectSettingsSlice = createSlice({
   name: "projectSettings",
   initialState,
   reducers: {
+    setProjectSettingsArtWorkPath: (state, action: PayloadAction<string>) => {
+      state.artWorkPath = action.payload;
+    },
     setProjectSettingsTitle: (state, action: PayloadAction<string>) => {
       state.projectTitle = action.payload;
     },
-    activeSelectTrackList: (state: { flagSelectTrackList: boolean }) => {
-      state.flagSelectTrackList = true;
-    },
-    inactiveSelectTrackList: (state: { flagSelectTrackList: boolean }) => {
-      state.flagSelectTrackList = false;
+    setProjectSettingsTrackDataPath: (state, action: PayloadAction<string>) => {
+      state.trackDataPath = action.payload;
     },
   },
 });
 
-export const { setProjectSettingsTitle, activeSelectTrackList, inactiveSelectTrackList } =
-  ProjectSettingsSlice.actions;
+export const {
+  setProjectSettingsArtWorkPath,
+  setProjectSettingsTitle,
+  setProjectSettingsTrackDataPath,
+} = ProjectSettingsSlice.actions;
 export default ProjectSettingsSlice.reducer;
