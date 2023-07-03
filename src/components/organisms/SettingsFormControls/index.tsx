@@ -2,20 +2,20 @@ import React, { useEffect, useState } from "react";
 import { View } from "react-native";
 
 // Components
-import TextField from "components/molecules/TextField";
+import SettingsTextField from "components/molecules/SettingsTextField";
 import ErrorText from "components/atoms/ErrorText";
 
 // Interfaces
 import { FormControlsType } from "interfaces/formControlsInterface";
 
 // Styles
-import styles from "./FormControls.scss";
+import styles from "./SettingsFormControls.scss";
 
 interface Props {
   formControlItems: Array<FormControlsType>;
 }
 
-const FormControls = (props: Props) => {
+const SettingsFormControls = (props: Props) => {
   const [disabled, setDisabled] = useState<boolean>(false);
 
   useEffect(() => {
@@ -28,7 +28,7 @@ const FormControls = (props: Props) => {
     <>
       {props.formControlItems.map((item, index) => (
         <View style={styles.formControlItem} key={index}>
-          <TextField
+          <SettingsTextField
             label={item.label}
             placeholder={item.placeholder}
             onChangeText={item.onChangeText}
@@ -47,4 +47,4 @@ const FormControls = (props: Props) => {
   );
 };
 
-export default FormControls;
+export default SettingsFormControls;

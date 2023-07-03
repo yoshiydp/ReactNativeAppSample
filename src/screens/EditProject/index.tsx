@@ -10,28 +10,40 @@ import TrackPlayer, {
   useTrackPlayerEvents,
   AppKilledPlaybackBehavior,
 } from "react-native-track-player";
+import DocumentPicker from "react-native-document-picker";
 import { useDispatch } from "react-redux";
 import { firebaseAuth, db } from "src/config/firebase";
-import { doc, updateDoc, arrayUnion, arrayRemove } from "firebase/firestore";
+import { getStorage, ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
+import { doc, getDoc, updateDoc, arrayUnion, arrayRemove } from "firebase/firestore";
 
 // Store
 import { useSelector } from "store/index";
 import { setCueA, setCueB, setCueC, setCueD, setCueE } from "store/CueButtonsSlice";
 import { setMyProjectsDetail } from "store/MyProjectsDetailSlice";
-import {
-  showCenterModal,
-  setCenterModalTitle,
-  setCenterModalDataTitle,
-  setCenterModalNotes,
-  setCenterModalSubmitButtonText,
-} from "store/CenterModalSlice";
+import { showCenterModal, setCenterModalTitle } from "store/CenterModalSlice";
 import { showOverlay, hideOverlay, activeHidden, inactiveHidden } from "store/OverlaySlice";
-import { showModalProjectSettings } from "store/ModalProjectSettingsSlice";
+import {
+  showModalProjectSettings,
+  hideModalProjectSettings,
+  setModalProjectSettingsArtWorkPath,
+  setModalProjectSettingsTitle,
+  activeModalProjectSettingsSelectTrackList,
+  inactiveModalProjectSettingsSelectTrackList,
+} from "store/ModalProjectSettingsSlice";
 import { activeEditProjectModalFlag } from "store/EditProjectModalFlagSlice";
+import { showModalPageSheet } from "store/ModalPageSheetSlice";
 import {
   showEditCueNameTextField,
   hideEditCueNameTextField,
 } from "store/EditCueNameTextFieldSlice";
+import {
+  setProjectSettingsArtWorkPath,
+  setProjectSettingsTitle,
+  setProjectSettingsTrackDataPath,
+} from "store/ProjectSettingsSlice";
+import { setTrackDataFile } from "store/NewProjectSlice";
+import { setTrackListDetail } from "store/TrackListDetailSlice";
+import { setTrackListItems } from "store/TrackListItemsSlice";
 
 // Components
 import TextEditor from "components/organisms/TextEditor";
@@ -44,12 +56,16 @@ import ModalProjectSettings from "components/organisms/Modal/ModalProjectSetting
 import EditCueNameTextField from "components/molecules/EditCueNameTextField";
 import EditProjectHeader from "components/molecules/EditProjectHeader";
 import Overlay from "components/atoms/Overlay";
+import ModalPageSheet from "components/organisms/Modal/ModalPageSheet";
 
 // Constants
 import * as TEXT from "constants/text";
 
 // Interfaces
 import { SetCueActivityType } from "interfaces/cueButtonsInterface";
+
+// Validators
+import { validateProjectTitle } from "src/validators/ProjectSettingsValidator";
 
 // Styles
 import styles from "./EditProject.scss";
@@ -61,7 +77,6 @@ interface Props {
 const EditProject = (props: Props) => {
   const dispatch = useDispatch();
   const overlay = useSelector((state) => state.overlay.overlay);
-  const activeHiddenState = useSelector((state) => state.overlay.inactiveHidden);
   const myProjectsDetail = useSelector((state) => state.myProjectsDetail);
   const textEditorValue = useSelector((state) => state.textEditor.value);
   const cueButtons = useSelector((state) => state.myProjectsDetail.cueButtons);
@@ -74,6 +89,17 @@ const EditProject = (props: Props) => {
   const cueC = useSelector((state) => state.cueButtons.cueC);
   const cueD = useSelector((state) => state.cueButtons.cueD);
   const cueE = useSelector((state) => state.cueButtons.cueE);
+  const trackDataFile = useSelector((state) => state.newProject.trackDataFile);
+  const trackListItems = useSelector((state) => state.trackListItems.trackListItems);
+  const trackListDetailTitle = useSelector((state) => state.trackListDetail.trackTitle);
+  const trackListDetailDataPath = useSelector((state) => state.trackListDetail.trackDataPath);
+  const modalProjectSettingsArtWorkPath = useSelector(
+    (state) => state.modalProjectSettings.modalProjectSettingsArtWorkPath
+  );
+  const modalProjectSettingsProjectTitle = useSelector(
+    (state) => state.modalProjectSettings.modalProjectSettingsProjectTitle
+  );
+  const artWork = useSelector((state) => state.newProject.artWork);
   const playbackState = usePlaybackState();
   const { position, duration } = useProgress();
   const [sliderValue, setSliderValue] = useState<number>(0);
@@ -83,9 +109,12 @@ const EditProject = (props: Props) => {
   const [cueType, setCueType] = useState<string>("");
   const [trackRepeat, setTrackRepeat] = useState<boolean>(false);
   const [cueName, setCueName] = useState<string>("");
+  const [projectTitle, setProjectTitle] = useState<string>("");
+  const [errorProjectTitle, setErrorProjectTitle] = useState<string>("");
   const { uid }: any = firebaseAuth.currentUser;
   if (!uid) return;
   const docRef = doc(db, "users", uid);
+  const storage = getStorage();
 
   // トラックデータの情報を格納
   const setTrackData = [
@@ -309,6 +338,15 @@ const EditProject = (props: Props) => {
   // 現在のリピートモードを取得するための変数
   let getCurrentRepeatMode;
 
+  // ModalProjectSettingsを開いたときにトラックデータをリセットするためのオブジェクト
+  const resetTrackData = {
+    trackDataPath: "",
+    trackTitle: "",
+    artistName: "",
+    artWorkPath: "",
+    linkedMyProjects: [],
+  };
+
   const setUpTrackPlayer = async () => {
     try {
       await TrackPlayer.updateOptions({
@@ -337,6 +375,12 @@ const EditProject = (props: Props) => {
   const onPressOpenMenu = () => {
     console.log("onPressOpenMenu!");
     dispatch(showModalProjectSettings());
+    dispatch(showOverlay());
+    dispatch(inactiveHidden());
+    dispatch(setModalProjectSettingsArtWorkPath(myProjectsDetail.artWorkPath));
+    dispatch(setModalProjectSettingsTitle(myProjectsDetail.projectTitle));
+    dispatch(setTrackDataFile([]));
+    dispatch(setTrackListDetail(resetTrackData));
   };
 
   const onValueChange = (value: number) => {
@@ -577,11 +621,27 @@ const EditProject = (props: Props) => {
     setCueActivity({ flag: false, name: "" });
   };
 
+  const getTrackListData = async () => {
+    const docSnap = await getDoc(docRef);
+    if (docSnap.exists()) {
+      const trackListData = docSnap.data().trackListData;
+      const sorted = trackListData.sort((a: any, b: any) => {
+        a = a.trackTitle.toString().toLowerCase();
+        b = b.trackTitle.toString().toLowerCase();
+        return a > b ? 1 : b > a ? -1 : 0;
+      });
+      dispatch(setTrackListItems(sorted));
+    } else {
+      console.log("No such document!");
+    }
+  };
+
   useEffect(() => {
     TrackPlayer.setupPlayer({
       waitForBuffer: true,
     });
     setUpTrackPlayer();
+    getTrackListData();
     return () => {
       dispatch(setMyProjectsDetail(resetProjectDetail));
       controlPause();
@@ -641,6 +701,255 @@ const EditProject = (props: Props) => {
     }
   });
 
+  const selectTrackDataFile = async () => {
+    try {
+      const results: any = await DocumentPicker.pickMultiple({
+        type: [DocumentPicker.types.audio],
+      });
+      dispatch(setTrackDataFile(results));
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const selectTrackList = () => {
+    dispatch(hideModalProjectSettings());
+    dispatch(showModalPageSheet());
+    dispatch(activeModalProjectSettingsSelectTrackList());
+  };
+
+  // テキストフォームリスト
+  const formControlItems = [
+    {
+      label: TEXT.LABEL_INPUT_PROJECT_TITLE,
+      placeholder: TEXT.PLACEHOLDER_PROJECT_TITLE,
+      onChangeText: setProjectTitle,
+      value: modalProjectSettingsProjectTitle,
+      required: true,
+      errorText: errorProjectTitle,
+    },
+    {
+      label: TEXT.LABEL_INPUT_TRACK_DATA,
+      placeholder: TEXT.PLACEHOLDER_NO_TRACK,
+      value: trackDataFile.length
+        ? trackDataFile[0]?.name
+        : trackListDetailTitle.length
+        ? trackListDetailTitle
+        : myProjectsDetail.trackTitle,
+      required: true,
+      notes: TEXT.LABEL_NOTES_TRACK_DATA,
+      editable: false,
+      selectTextOnFocus: false,
+    },
+  ];
+
+  // コントロールボタンリスト
+  const controlButtonItems = [
+    {
+      buttonText: trackDataFile.length ? TEXT.BUTTON_TRACK_CHANGE : TEXT.BUTTON_TRACK_UPLOAD,
+      onPressEvent: selectTrackDataFile,
+    },
+    {
+      buttonText: TEXT.BUTTON_TRACK_SELECT,
+      onPressEvent: selectTrackList,
+    },
+  ];
+
+  const fileUpload = async (
+    fileUri: string,
+    fileName: string,
+    fileType: string,
+    directory: string
+  ) => {
+    if (!uid) return;
+    const blob: any = await new Promise((resolve, reject) => {
+      const xhr = new XMLHttpRequest();
+      xhr.onload = () => {
+        resolve(xhr.response);
+      };
+      xhr.onerror = () => {
+        reject(new TypeError("Network request failed"));
+      };
+      xhr.responseType = "blob";
+      xhr.open("GET", fileUri, true);
+      xhr.send(null);
+    });
+
+    const storageRef = ref(storage, uid + directory + fileName);
+    const metadata = {
+      name: fileName,
+      contentType: fileType,
+    };
+
+    try {
+      await uploadBytesResumable(storageRef, blob, metadata);
+    } catch (error) {
+      console.error("Upload failed", error);
+    }
+  };
+
+  // ModalProjectSettingsの編集を保存する
+  const saveProjectSettings = async () => {
+    console.log("ModalProjectSettings");
+    setErrorProjectTitle("");
+    validateProjectTitle(modalProjectSettingsProjectTitle, setErrorProjectTitle);
+
+    // プロジェクトタイトルが未入力の場合は以下を実行不可とする
+    if (!modalProjectSettingsProjectTitle) return;
+
+    let artWorkDownloadUrl;
+    let trackDataDownloadUrl;
+
+    try {
+      // artWorkのアップロード
+      if (artWork.length) {
+        await fileUpload(artWork[0]?.uri, artWork[0]?.fileName, artWork[0]?.type, "/artworks/");
+        await getDownloadURL(ref(storage, uid + "/artworks/" + artWork[0]?.fileName))
+          .then((url) => {
+            artWorkDownloadUrl = url;
+            // setProjectSettingsArtWorkUrl(url);
+            console.log("artWorkDownloadUrl: " + artWorkDownloadUrl);
+            dispatch(setProjectSettingsArtWorkPath(artWorkDownloadUrl));
+            console.log("modalProjectSettingsArtWorkPath: ", modalProjectSettingsArtWorkPath);
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+      }
+
+      // trackDataFileのアップロード
+      if (trackDataFile.length > 0) {
+        await fileUpload(
+          trackDataFile[0]?.uri,
+          trackDataFile[0]?.name,
+          trackDataFile[0]?.type,
+          "/track_data_files/"
+        );
+
+        await getDownloadURL(ref(storage, uid + "/track_data_files/" + trackDataFile[0]?.name))
+          .then((url) => {
+            trackDataDownloadUrl = url;
+            console.log("trackDataDownloadUrl: " + trackDataDownloadUrl);
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+
+        await updateDoc(doc(db, "users", uid), {
+          trackListData: arrayUnion({
+            trackDataPath: trackDataDownloadUrl ? trackDataDownloadUrl : "",
+            trackTitle: trackDataFile[0]?.name,
+            artistName: "",
+            artWorkPath: artWorkDownloadUrl ? artWorkDownloadUrl : "",
+            linkedMyProjects: [{ projectTitle }],
+          }),
+        });
+      }
+
+      // アートワークもしくはトラックがアップロードされた場合にupdateDocを実行
+      if (artWork.length || modalProjectSettingsProjectTitle.length || trackDataFile.length > 0) {
+        // 編集前の現在のプロジェクトデータを削除
+        updateDoc(docRef, {
+          myProjectsData: arrayRemove({ ...myProjectsDetail }),
+        });
+
+        // 編集後のプロジェクトデータを追加
+        updateDoc(docRef, {
+          myProjectsData: arrayUnion({
+            projectTitle: modalProjectSettingsProjectTitle,
+            lyric: textEditorValue,
+            trackDataPath: trackDataDownloadUrl
+              ? trackDataDownloadUrl
+              : myProjectsDetail.trackDataPath,
+            trackTitle: trackDataFile.length
+              ? trackDataFile[0]?.name
+              : trackListDetailTitle.length
+              ? trackListDetailTitle
+              : myProjectsDetail.trackTitle,
+            artistName: "",
+            artWorkPath: artWorkDownloadUrl ? artWorkDownloadUrl : myProjectsDetail.artWorkPath,
+            cueButtons: [
+              {
+                flag: cueA[0].flag ? cueA[0].flag : cueButtons[0].flag,
+                name: cueButtons[0].name,
+                position: cueButtons[0].position,
+              },
+              {
+                flag: cueB[0].flag ? cueB[0].flag : cueButtons[1].flag,
+                name: cueButtons[1].name,
+                position: cueButtons[1].position,
+              },
+              {
+                flag: cueC[0].flag ? cueC[0].flag : cueButtons[2].flag,
+                name: cueButtons[2].name,
+                position: cueButtons[2].position,
+              },
+              {
+                flag: cueD[0].flag ? cueD[0].flag : cueButtons[3].flag,
+                name: cueButtons[3].name,
+                position: cueButtons[3].position,
+              },
+              {
+                flag: cueE[0].flag ? cueE[0].flag : cueButtons[4].flag,
+                name: cueButtons[4].name,
+                position: cueButtons[4].position,
+              },
+            ],
+          }),
+        });
+      }
+    } catch (error: any) {
+      console.log(error);
+    } finally {
+      dispatch(
+        setMyProjectsDetail({
+          projectTitle: modalProjectSettingsProjectTitle,
+          lyric: textEditorValue,
+          trackDataPath: trackDataDownloadUrl
+            ? trackDataDownloadUrl
+            : myProjectsDetail.trackDataPath,
+          trackTitle: trackDataFile.length
+            ? trackDataFile[0]?.name
+            : trackListDetailTitle.length
+            ? trackListDetailTitle
+            : myProjectsDetail.trackTitle,
+          artistName: "",
+          artWorkPath: artWorkDownloadUrl ? artWorkDownloadUrl : myProjectsDetail.artWorkPath,
+          cueButtons: [
+            {
+              flag: cueA[0].flag ? cueA[0].flag : cueButtons[0].flag,
+              name: cueButtons[0].name,
+              position: cueButtons[0].position,
+            },
+            {
+              flag: cueB[0].flag ? cueB[0].flag : cueButtons[1].flag,
+              name: cueButtons[1].name,
+              position: cueButtons[1].position,
+            },
+            {
+              flag: cueC[0].flag ? cueC[0].flag : cueButtons[2].flag,
+              name: cueButtons[2].name,
+              position: cueButtons[2].position,
+            },
+            {
+              flag: cueD[0].flag ? cueD[0].flag : cueButtons[3].flag,
+              name: cueButtons[3].name,
+              position: cueButtons[3].position,
+            },
+            {
+              flag: cueE[0].flag ? cueE[0].flag : cueButtons[4].flag,
+              name: cueButtons[4].name,
+              position: cueButtons[4].position,
+            },
+          ],
+        })
+      );
+      dispatch(hideModalProjectSettings());
+      dispatch(hideOverlay());
+      dispatch(setProjectSettingsTitle(modalProjectSettingsProjectTitle));
+    }
+  };
+
   return (
     <SafeAreaView style={styles.container}>
       <View>
@@ -657,7 +966,7 @@ const EditProject = (props: Props) => {
             onSlidingStart={onSlidingStart}
             onSlidingCompleted={onSlidingCompleted}
           />
-          <View style={styles["cue-buttons-wrap"]}>
+          <View style={styles.cue_buttons_wrap}>
             <CueButtons
               onPressActivateCue={activateCue}
               onPressPlaybackCue={playbackCue}
@@ -665,7 +974,7 @@ const EditProject = (props: Props) => {
               onLongPressEvent={editCueName}
             />
           </View>
-          <View style={styles["cue-control-player-wrap"]}>
+          <View style={styles.cue_control_player_wrap}>
             <CueControlPlayer
               start={start}
               pause={pause}
@@ -689,7 +998,15 @@ const EditProject = (props: Props) => {
         onChangeText={(event) => setCueName(event)}
         onPressSave={saveCueName}
       />
-      <ModalProjectSettings />
+      <ModalPageSheet trackListDataItems={trackListItems} />
+      <ModalProjectSettings
+        modalTitle={TEXT.MODAL_TITLE_PROJECT_SETTINGS}
+        modalDescription={TEXT.MODAL_DESC_PROJECT_SETTINGS}
+        formControlItems={formControlItems}
+        controlButtonItems={controlButtonItems}
+        buttonText={TEXT.BUTTON_SAVE_PROJECT}
+        submitEvent={saveProjectSettings}
+      />
       <CenterModal isShow={centerModal} navigation={props.navigation} />
     </SafeAreaView>
   );

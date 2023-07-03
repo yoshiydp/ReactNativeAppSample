@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { View, Text, TextInput } from "react-native";
 
 // Styles
-import styles from "./TextField.scss";
+import styles from "./UserTextField.scss";
 
 // Interfaces
 import { TextFieldType } from "interfaces/formControlsInterface";
@@ -14,7 +14,7 @@ interface Props extends TextFieldType {
   errorText?: string;
 }
 
-const TextField = (props: Props) => {
+const UserTextField = (props: Props) => {
   const [value, valueHandler] = useState(props.value ? props.value : "");
 
   useEffect(() => {
@@ -52,4 +52,4 @@ const TextField = (props: Props) => {
   );
 };
 
-export default TextField;
+export default UserTextField;

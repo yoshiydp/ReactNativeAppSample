@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { TouchableOpacity, View, Image } from "react-native";
 import { useDispatch } from "react-redux";
 import * as ImagePicker from "react-native-image-picker";
@@ -20,6 +20,7 @@ import styles from "./ControlSetArtwork.scss";
 const ControlSetArtwork = () => {
   const dispatch = useDispatch();
   const artWork = useSelector((state) => state.newProject.artWork);
+  const myProjectsDetail = useSelector((state) => state.myProjectsDetail);
 
   const selectImageFile = async () => {
     try {
@@ -36,13 +37,23 @@ const ControlSetArtwork = () => {
     }
   };
 
+  useEffect(() => {
+    return () => {
+      dispatch(setArtWork([]));
+    };
+  }, []);
+
   return (
     <View style={styles.container}>
       <View style={styles.artwork}>
         <Image
           style={styles.image}
           source={
-            artWork.length ? artWork : require("src/assets/images/common/no-artwork-large.jpg")
+            artWork.length
+              ? artWork
+              : myProjectsDetail.artWorkPath
+              ? { uri: myProjectsDetail.artWorkPath }
+              : require("src/assets/images/common/no-artwork-large.jpg")
           }
         />
       </View>

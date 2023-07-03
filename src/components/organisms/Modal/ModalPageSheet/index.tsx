@@ -5,6 +5,10 @@ import { useDispatch } from "react-redux";
 // Store
 import { useSelector } from "store/index";
 import { hideModalPageSheet } from "store/ModalPageSheetSlice";
+import {
+  inactiveModalProjectSettingsSelectTrackList,
+  showModalProjectSettings,
+} from "store/ModalProjectSettingsSlice";
 
 // Components
 import ModalControlHeader from "components/organisms/Modal/ModalControlHeader";
@@ -24,6 +28,9 @@ interface Props {
 const ModalPageSheet = (props: Props) => {
   const dispatch = useDispatch();
   const modalPageSheet = useSelector((state) => state.modalPageSheet.modalPageSheet);
+  const modalProjectSettingsFlagSelectTrackList = useSelector(
+    (state) => state.modalProjectSettings.modalProjectSettingsFlagSelectTrackList
+  );
   const [targetWidth, setTargetWidth] = useState<number>(0);
 
   const getTargetWidth = (object: any) => {
@@ -32,6 +39,11 @@ const ModalPageSheet = (props: Props) => {
 
   const modalClose = () => {
     dispatch(hideModalPageSheet());
+
+    // ProjectSettingsのTrackListが場合は以下を実行不可とする
+    if (!modalProjectSettingsFlagSelectTrackList) return;
+    dispatch(inactiveModalProjectSettingsSelectTrackList());
+    dispatch(showModalProjectSettings());
   };
 
   return (
