@@ -13,6 +13,7 @@ import myProjectsItemsReducer from "./MyProjectsItemsSlice";
 import myProjectsModalFlagReducer from "./MyProjectsModalFlagSlice";
 import newProjectReducer from "./NewProjectSlice";
 import overlayReducer from "./OverlaySlice";
+import projectSettingsReducer from "./ProjectSettingsSlice";
 import subscribeReducer from "./SubscribeSlice";
 import textEditorReducer from "./TextEditorSlice";
 import trackListDetailReducer from "./TrackListDetailSlice";
@@ -34,6 +35,7 @@ export const store = configureStore({
     myProjectsModalFlag: myProjectsModalFlagReducer,
     newProject: newProjectReducer,
     overlay: overlayReducer,
+    projectSettings: projectSettingsReducer,
     subscribe: subscribeReducer,
     textEditor: textEditorReducer,
     trackListDetail: trackListDetailReducer,

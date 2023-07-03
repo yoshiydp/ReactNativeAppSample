@@ -5,6 +5,10 @@ import { useDispatch } from "react-redux";
 // Store
 import { useSelector } from "store/index";
 import { hideModalPageSheet } from "store/ModalPageSheetSlice";
+import {
+  inactiveModalProjectSettingsSelectTrackList,
+  showModalProjectSettings,
+} from "store/ModalProjectSettingsSlice";
 
 // Components
 import SearchBar from "components/molecules/SearchBar";
@@ -28,6 +32,9 @@ const ModalControlHeader = (props: Props) => {
   const opacityValue = useRef(new Animated.Value(1)).current;
   const myProjectsItems = useSelector((state) => state.myProjectsItems.myProjectsItems);
   const trackListItems = useSelector((state) => state.trackListItems.trackListItems);
+  const modalProjectSettingsFlagSelectTrackList = useSelector(
+    (state) => state.modalProjectSettings.modalProjectSettingsFlagSelectTrackList
+  );
 
   const opacityAnimatedFunc = (object: any, value: number) => {
     Animated.timing(object, {
@@ -39,6 +46,11 @@ const ModalControlHeader = (props: Props) => {
 
   const onPressClose = () => {
     dispatch(hideModalPageSheet());
+
+    // ProjectSettingsのTrackListが場合は以下を実行不可とする
+    if (!modalProjectSettingsFlagSelectTrackList) return;
+    dispatch(inactiveModalProjectSettingsSelectTrackList());
+    dispatch(showModalProjectSettings());
   };
 
   const animatedOpacity = opacityValue.interpolate({

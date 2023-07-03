@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { View, KeyboardAvoidingView } from "react-native";
 
 // Components
-import FormControls from "components/organisms/FormControls";
+import UserFormControls from "components/organisms/UserFormControls";
 import ButtonSquare from "components/atoms/ButtonSquare";
 
 // Interfaces
@@ -28,7 +28,7 @@ const AuthForm = (props: Props) => {
 
   return (
     <KeyboardAvoidingView style={styles.container}>
-      <FormControls formControlItems={props.formControlItems} />
+      <UserFormControls formControlItems={props.formControlItems} />
       <View style={styles.submitButtonWrap}>
         <ButtonSquare
           text={props.buttonText}

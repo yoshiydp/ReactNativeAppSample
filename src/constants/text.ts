@@ -6,6 +6,7 @@ export const BUTTON_MY_PROJECTS_CREATE = "新しいプロジェクトを作成";
 export const BUTTON_NEW_ACCOUNT_CREATE = "新規アカウント作成";
 export const BUTTON_NEW_PASSWORD_SAVE = "新しいパスワードを保存する";
 export const BUTTON_NEW_TRACK_UPLOAD = "新しいトラックを追加";
+export const BUTTON_SAVE_PROJECT = "保存して閉じる";
 export const BUTTON_SIGN_IN = "ログイン";
 export const BUTTON_SIGN_UP = "サインアップ";
 export const BUTTON_START = "スタート";
@@ -86,12 +87,15 @@ export const TITLE_SIGNUP = "Sign Up";
 // MODAL TITLE
 export const MODAL_TITLE_DELETE_PROJECT = "このプロジェクトを削除しますか？";
 export const MODAL_TITLE_DELETE_TRACK = "このトラックを削除しますか？";
+export const MODAL_TITLE_PROJECT_SETTINGS = "Project Settings";
 export const MODAL_TITLE_SAVE_PROJECT = "プロジェクトを保存して\n終了しますか？";
 
 // MODAL DESCRIPTION
 export const MODAL_DESC_DELETE_NOTE = "一度削除すると復元はできませんので、ご注意ください。";
 export const MODAL_DESC_DELETE_TRACK_NOTE =
   "このトラックはプロジェクトに紐付けされています。\nプロジェクト内で再度トラックを設定し直す必要があります。\nよろしいですか？";
+export const MODAL_DESC_PROJECT_SETTINGS =
+  "プロジェクトのアートワーク、タイトル、トラックデータをリアルタイムで変更することができます。";
 
 // MODAL BUTTON TEXT
 export const MODAL_BUTTON_TEXT_YES = "Yes";
