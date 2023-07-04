@@ -91,3 +91,25 @@ export interface SvgType8 extends SvgCommonProps {
   rectTransform1?: string;
   rectTransform2?: string;
 }
+
+export interface SvgType9 extends SvgCommonProps {
+  parentGTransform?: string;
+  childGTransform1?: string;
+  childGTransform2?: string;
+  childGTransform3?: string;
+  childGTransform4?: string;
+  childGTransform5?: string;
+  childGTransform6?: string;
+  pathD1?: string;
+  pathD2?: string;
+  pathD3?: string;
+  pathD4?: string;
+  pathD5?: string;
+  pathD6?: string;
+  pathTransform1?: string;
+  pathTransform2?: string;
+  pathTransform3?: string;
+  pathTransform4?: string;
+  pathTransform5?: string;
+  pathTransform6?: string;
+}
