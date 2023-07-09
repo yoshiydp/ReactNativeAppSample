@@ -14,6 +14,7 @@ interface FormControlsType {
 export type UserFormControlsType = FormControlsType;
 
 export interface SettingsFormControlsType extends FormControlsType {
+  trackEditable?: boolean;
   onPressEditable?: () => void;
 }
 
@@ -33,5 +34,6 @@ interface TextFieldType {
 export type UserTextFieldType = TextFieldType;
 
 export interface SettingsTextFieldType extends TextFieldType {
+  trackEditable?: boolean;
   onPressEditable?: () => void;
 }
