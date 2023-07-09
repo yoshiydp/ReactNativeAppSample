@@ -26,8 +26,8 @@ import styles from "./MainScreen.scss";
 interface Props {
   navigation: any;
   title: string;
-  myProjectDataItems: Array<MyProjectsDetailType>;
-  trackListDataItems: Array<TrackListDetailType>;
+  myProjectDataItems: MyProjectsDetailType[];
+  trackListDataItems: TrackListDetailType[];
   setSearchValue?: (value: string) => void;
 }
 
