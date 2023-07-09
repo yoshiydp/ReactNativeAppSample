@@ -15,7 +15,7 @@ import ControlButtonList from "components/molecules/ControlButtonList";
 import ButtonSquare from "components/atoms/ButtonSquare";
 
 // Interfaces
-import { FormControlsType } from "interfaces/formControlsInterface";
+import { SettingsFormControlsType } from "interfaces/formControlsInterface";
 import { ControlButtonsType } from "interfaces/controlButtonInterface";
 
 // Styles
@@ -24,8 +24,8 @@ import styles from "./ModalProjectSettings.scss";
 interface Props {
   modalTitle: string;
   modalDescription: string;
-  formControlItems: Array<FormControlsType>;
-  controlButtonItems: Array<ControlButtonsType>;
+  formControlItems: SettingsFormControlsType[];
+  controlButtonItems: ControlButtonsType[];
   buttonText: string;
   submitEvent?: () => void;
 }
