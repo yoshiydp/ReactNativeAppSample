@@ -28,7 +28,6 @@ import {
   setModalProjectSettingsArtWorkPath,
   setModalProjectSettingsTitle,
   activeModalProjectSettingsSelectTrackList,
-  inactiveModalProjectSettingsSelectTrackList,
 } from "store/ModalProjectSettingsSlice";
 import { activeEditProjectModalFlag } from "store/EditProjectModalFlagSlice";
 import { showModalPageSheet } from "store/ModalPageSheetSlice";
@@ -36,11 +35,7 @@ import {
   showEditCueNameTextField,
   hideEditCueNameTextField,
 } from "store/EditCueNameTextFieldSlice";
-import {
-  setProjectSettingsArtWorkPath,
-  setProjectSettingsTitle,
-  setProjectSettingsTrackDataPath,
-} from "store/ProjectSettingsSlice";
+import { setProjectSettingsArtWorkPath, setProjectSettingsTitle } from "store/ProjectSettingsSlice";
 import { setTrackDataFile } from "store/NewProjectSlice";
 import { setTrackListDetail } from "store/TrackListDetailSlice";
 import { setTrackListItems } from "store/TrackListItemsSlice";
@@ -110,6 +105,8 @@ const EditProject = (props: Props) => {
   const [trackRepeat, setTrackRepeat] = useState<boolean>(false);
   const [cueName, setCueName] = useState<string>("");
   const [projectTitle, setProjectTitle] = useState<string>("");
+  const [formEditable, setFormEditable] = useState<boolean>(false);
+  const [trackEditable, setTrackEditable] = useState<boolean>(false);
   const [errorProjectTitle, setErrorProjectTitle] = useState<string>("");
   const { uid }: any = firebaseAuth.currentUser;
   if (!uid) return;
@@ -381,6 +378,8 @@ const EditProject = (props: Props) => {
     dispatch(setModalProjectSettingsTitle(myProjectsDetail.projectTitle));
     dispatch(setTrackDataFile([]));
     dispatch(setTrackListDetail(resetTrackData));
+    setFormEditable(false);
+    setTrackEditable(false);
   };
 
   const onValueChange = (value: number) => {
@@ -701,6 +700,14 @@ const EditProject = (props: Props) => {
     }
   });
 
+  const settingsFormEditable = () => {
+    setFormEditable(true);
+  };
+
+  const settingsTrackEditable = () => {
+    setTrackEditable(true);
+  };
+
   const selectTrackDataFile = async () => {
     try {
       const results: any = await DocumentPicker.pickMultiple({
@@ -727,6 +734,8 @@ const EditProject = (props: Props) => {
       value: modalProjectSettingsProjectTitle,
       required: true,
       errorText: errorProjectTitle,
+      editable: formEditable,
+      onPressEditable: settingsFormEditable,
     },
     {
       label: TEXT.LABEL_INPUT_TRACK_DATA,
@@ -740,6 +749,8 @@ const EditProject = (props: Props) => {
       notes: TEXT.LABEL_NOTES_TRACK_DATA,
       editable: false,
       selectTextOnFocus: false,
+      trackEditable,
+      onPressEditable: settingsTrackEditable,
     },
   ];
 

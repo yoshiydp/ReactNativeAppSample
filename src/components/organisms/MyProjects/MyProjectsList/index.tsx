@@ -15,7 +15,7 @@ import * as TEXT from "constants/text";
 import styles from "./MyProjectsList.scss";
 
 interface Props {
-  myProjectDataItems: Array<MyProjectsDetailType>;
+  myProjectDataItems: MyProjectsDetailType[];
   navigation: any;
   containerStyle?: any;
 }

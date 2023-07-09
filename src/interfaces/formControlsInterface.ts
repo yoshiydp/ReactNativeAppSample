@@ -1,4 +1,4 @@
-export interface FormControlsType {
+interface FormControlsType {
   label: string;
   placeholder: string;
   onChangeText?: (value: string) => void;
@@ -11,7 +11,14 @@ export interface FormControlsType {
   errorText?: string;
 }
 
-export interface TextFieldType {
+export type UserFormControlsType = FormControlsType;
+
+export interface SettingsFormControlsType extends FormControlsType {
+  trackEditable?: boolean;
+  onPressEditable?: () => void;
+}
+
+interface TextFieldType {
   label: string;
   placeholder: string;
   onChangeText?: (value: string) => void;
@@ -21,4 +28,12 @@ export interface TextFieldType {
   notes?: string;
   editable?: boolean;
   selectTextOnFocus?: boolean;
+  errorText?: string;
+}
+
+export type UserTextFieldType = TextFieldType;
+
+export interface SettingsTextFieldType extends TextFieldType {
+  trackEditable?: boolean;
+  onPressEditable?: () => void;
 }

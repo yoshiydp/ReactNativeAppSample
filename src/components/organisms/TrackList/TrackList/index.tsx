@@ -18,7 +18,7 @@ import * as TEXT from "constants/text";
 import styles from "./TrackList.scss";
 
 interface Props {
-  trackListDataItems: Array<TrackListDetailType>;
+  trackListDataItems: TrackListDetailType[];
   navigation: any;
   containerStyle?: any;
 }

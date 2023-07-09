@@ -8,15 +8,15 @@ import ControlButtonList from "components/molecules/ControlButtonList";
 import ButtonSquare from "components/atoms/ButtonSquare";
 
 // Interfaces
-import { FormControlsType } from "interfaces/formControlsInterface";
+import { UserFormControlsType } from "interfaces/formControlsInterface";
 import { ControlButtonsType } from "interfaces/controlButtonInterface";
 
 // Styles
 import styles from "./CreateForm.scss";
 
 interface Props {
-  formControlItems: Array<FormControlsType>;
-  controlButtonItems: Array<ControlButtonsType>;
+  formControlItems: UserFormControlsType[];
+  controlButtonItems: ControlButtonsType[];
   buttonText: string;
   submitEvent?: () => void;
 }

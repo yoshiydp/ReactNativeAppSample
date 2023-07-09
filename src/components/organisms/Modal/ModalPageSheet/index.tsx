@@ -22,7 +22,7 @@ import styles from "./ModalPageSheet.scss";
 
 interface Props {
   navigation: any;
-  trackListDataItems: Array<TrackListDetailType>;
+  trackListDataItems: TrackListDetailType[];
 }
 
 const ModalPageSheet = (props: Props) => {

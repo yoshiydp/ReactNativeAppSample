@@ -7,7 +7,7 @@ import LowerScreen from "components/templates/LowerScreen";
 import * as TEXT from "constants/text";
 
 // Interfaces
-import { FormControlsType } from "interfaces/formControlsInterface";
+import { UserFormControlsType } from "interfaces/formControlsInterface";
 
 interface Props {
   navigation: any;
