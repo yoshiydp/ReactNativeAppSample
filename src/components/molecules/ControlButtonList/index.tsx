@@ -11,7 +11,7 @@ import { ControlButtonsType } from "interfaces/controlButtonInterface";
 import styles from "./ControlButtonList.scss";
 
 interface Props {
-  controlButtonItems: Array<ControlButtonsType>;
+  controlButtonItems: ControlButtonsType[];
 }
 
 const ControlButtonList = (props: Props) => {

@@ -5,12 +5,12 @@ import { View, Text, TextInput } from "react-native";
 import styles from "./UserTextField.scss";
 
 // Interfaces
-import { TextFieldType } from "interfaces/formControlsInterface";
+import { UserTextFieldType } from "interfaces/formControlsInterface";
 
 // Constants
 import * as COLOR from "constants/color";
 
-interface Props extends TextFieldType {
+interface Props extends UserTextFieldType {
   errorText?: string;
 }
 

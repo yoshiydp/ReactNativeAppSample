@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { Modal, ScrollView, View, Text, KeyboardAvoidingView } from "react-native";
 import { useDispatch } from "react-redux";
 
@@ -15,7 +15,7 @@ import ControlButtonList from "components/molecules/ControlButtonList";
 import ButtonSquare from "components/atoms/ButtonSquare";
 
 // Interfaces
-import { FormControlsType } from "interfaces/formControlsInterface";
+import { SettingsFormControlsType } from "interfaces/formControlsInterface";
 import { ControlButtonsType } from "interfaces/controlButtonInterface";
 
 // Styles
@@ -24,22 +24,41 @@ import styles from "./ModalProjectSettings.scss";
 interface Props {
   modalTitle: string;
   modalDescription: string;
-  formControlItems: Array<FormControlsType>;
-  controlButtonItems: Array<ControlButtonsType>;
+  formControlItems: SettingsFormControlsType[];
+  controlButtonItems: ControlButtonsType[];
   buttonText: string;
   submitEvent?: () => void;
 }
 
 const ModalProjectSettings = (props: Props) => {
   const dispatch = useDispatch();
-  const [disabled, setDisabled] = useState<boolean>(false);
+  const artWork = useSelector((state) => state.newProject.artWork);
   const modalProjectSettings = useSelector(
     (state) => state.modalProjectSettings.modalProjectSettings
   );
+  const modalProjectSettingsProjectTitle = useSelector(
+    (state) => state.modalProjectSettings.modalProjectSettingsProjectTitle
+  );
+  const trackDataFile = useSelector((state) => state.newProject.trackDataFile);
+  const trackListDetailTitle = useSelector((state) => state.trackListDetail.trackTitle);
   const [targetWidth, setTargetWidth] = useState<number>(0);
 
   const getTargetWidth = (object: any) => {
     setTargetWidth(object.nativeEvent.layout.width);
+  };
+
+  const disabledFlag = () => {
+    if (
+      modalProjectSettingsProjectTitle.length &&
+      (props.formControlItems[0].editable ||
+        artWork.length ||
+        trackDataFile.length ||
+        trackListDetailTitle.length)
+    ) {
+      return false;
+    } else {
+      return true;
+    }
   };
 
   const modalClose = () => {
@@ -62,14 +81,16 @@ const ModalProjectSettings = (props: Props) => {
           <KeyboardAvoidingView style={styles.container_settings_form}>
             <ControlSetArtwork />
             <SettingsFormControls formControlItems={props.formControlItems} />
-            <View style={styles.control_button_wrap}>
-              <ControlButtonList controlButtonItems={props.controlButtonItems} />
-            </View>
+            {props.formControlItems[1].trackEditable && (
+              <View style={styles.control_button_wrap}>
+                <ControlButtonList controlButtonItems={props.controlButtonItems} />
+              </View>
+            )}
             <View style={styles.submit_button_wrap}>
               <ButtonSquare
                 text={props.buttonText}
                 onPressEvent={props.submitEvent}
-                disabled={disabled}
+                disabled={disabledFlag()}
               />
             </View>
           </KeyboardAvoidingView>

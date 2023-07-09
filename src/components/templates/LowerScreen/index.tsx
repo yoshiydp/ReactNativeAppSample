@@ -7,7 +7,7 @@ import CreateForm from "components/templates/CreateForm";
 import AuthForm from "components/templates/AuthForm";
 
 // Interfaces
-import { FormControlsType } from "interfaces/formControlsInterface";
+import { UserFormControlsType } from "interfaces/formControlsInterface";
 import { ControlButtonsType } from "interfaces/controlButtonInterface";
 
 // Constants
@@ -19,8 +19,8 @@ import styles from "./LowerScreen.scss";
 interface Props {
   navigation: any;
   title: string;
-  formControlItems?: Array<FormControlsType> | any;
-  controlButtonItems?: Array<ControlButtonsType> | any;
+  formControlItems?: UserFormControlsType[] | any;
+  controlButtonItems?: ControlButtonsType[] | any;
   buttonText: string;
   onPressSubmitEvent: () => void;
 }

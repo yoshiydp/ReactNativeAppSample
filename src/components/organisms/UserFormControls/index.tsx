@@ -6,13 +6,13 @@ import UserTextField from "components/molecules/UserTextField";
 import ErrorText from "components/atoms/ErrorText";
 
 // Interfaces
-import { FormControlsType } from "interfaces/formControlsInterface";
+import { UserFormControlsType } from "interfaces/formControlsInterface";
 
 // Styles
 import styles from "./UserFormControls.scss";
 
 interface Props {
-  formControlItems: Array<FormControlsType>;
+  formControlItems: UserFormControlsType[];
 }
 
 const UserFormControls = (props: Props) => {

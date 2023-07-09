@@ -6,13 +6,13 @@ import UserFormControls from "components/organisms/UserFormControls";
 import ButtonSquare from "components/atoms/ButtonSquare";
 
 // Interfaces
-import { FormControlsType } from "interfaces/formControlsInterface";
+import { UserFormControlsType } from "interfaces/formControlsInterface";
 
 // Styles
 import styles from "./AuthForm.scss";
 
 interface Props {
-  formControlItems: Array<FormControlsType>;
+  formControlItems: UserFormControlsType[];
   buttonText: string;
   submitEvent?: () => void;
 }

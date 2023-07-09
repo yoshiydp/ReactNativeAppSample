@@ -26,14 +26,6 @@ const Overlay = (props: Props) => {
   const heightValue = useRef(new Animated.Value(0)).current;
   const activeHiddenState = useSelector((state) => state.overlay.inactiveHidden);
 
-  const minOpacityAnimated = () => {
-    opacityAnimatedFunc(opacityValue, 0);
-  };
-
-  const maxOpacityAnimated = () => {
-    opacityAnimatedFunc(opacityValue, 0.5);
-  };
-
   const opacityAnimatedFunc = (object: any, value: number) => {
     Animated.timing(object, {
       toValue: value,
@@ -58,6 +50,14 @@ const Overlay = (props: Props) => {
       delay,
       useNativeDriver: false,
     }).start();
+  };
+
+  const minOpacityAnimated = () => {
+    opacityAnimatedFunc(opacityValue, 0);
+  };
+
+  const maxOpacityAnimated = () => {
+    opacityAnimatedFunc(opacityValue, 0.5);
   };
 
   const animatedWidthStyle = {

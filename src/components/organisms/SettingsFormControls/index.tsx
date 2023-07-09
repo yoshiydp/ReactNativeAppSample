@@ -6,13 +6,13 @@ import SettingsTextField from "components/molecules/SettingsTextField";
 import ErrorText from "components/atoms/ErrorText";
 
 // Interfaces
-import { FormControlsType } from "interfaces/formControlsInterface";
+import { SettingsFormControlsType } from "interfaces/formControlsInterface";
 
 // Styles
 import styles from "./SettingsFormControls.scss";
 
 interface Props {
-  formControlItems: Array<FormControlsType>;
+  formControlItems: SettingsFormControlsType[];
 }
 
 const SettingsFormControls = (props: Props) => {
@@ -37,7 +37,9 @@ const SettingsFormControls = (props: Props) => {
             required={item.required}
             notes={item.notes}
             editable={item.editable}
+            onPressEditable={item.onPressEditable}
             selectTextOnFocus={item.selectTextOnFocus}
+            trackEditable={item.trackEditable}
             errorText={item.errorText}
           />
           {item.errorText && <ErrorText text={item.errorText} />}
