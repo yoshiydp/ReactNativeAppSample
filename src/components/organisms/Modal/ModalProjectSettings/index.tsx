@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Modal, ScrollView, View, Text, KeyboardAvoidingView } from "react-native";
 import { useDispatch } from "react-redux";
+import TrackPlayer, { useTrackPlayerEvents, Event } from "react-native-track-player";
 
 // Store
 import { useSelector } from "store/index";
@@ -13,6 +14,7 @@ import SettingsFormControls from "components/organisms/SettingsFormControls";
 import ControlSetArtwork from "components/molecules/ControlSetArtwork";
 import ControlButtonList from "components/molecules/ControlButtonList";
 import ButtonSquare from "components/atoms/ButtonSquare";
+import LoadingFullScreen from "components/molecules/Loading/LoadingFullScreen";
 
 // Interfaces
 import { SettingsFormControlsType } from "interfaces/formControlsInterface";
@@ -41,6 +43,7 @@ const ModalProjectSettings = (props: Props) => {
   );
   const trackDataFile = useSelector((state) => state.newProject.trackDataFile);
   const trackListDetailTitle = useSelector((state) => state.trackListDetail.trackTitle);
+  const loadingFullScreen = useSelector((state) => state.loadingFullScreen.loadingFullScreen);
   const [targetWidth, setTargetWidth] = useState<number>(0);
 
   const getTargetWidth = (object: any) => {
@@ -100,6 +103,7 @@ const ModalProjectSettings = (props: Props) => {
           onLayout={getTargetWidth}
         ></View>
       </View>
+      <LoadingFullScreen isShow={loadingFullScreen} />
     </Modal>
   );
 };
