@@ -39,6 +39,11 @@ import { setProjectSettingsArtWorkPath, setProjectSettingsTitle } from "store/Pr
 import { setTrackDataFile } from "store/NewProjectSlice";
 import { setTrackListDetail } from "store/TrackListDetailSlice";
 import { setTrackListItems } from "store/TrackListItemsSlice";
+import {
+  showLoadingFullScreen,
+  hideLoadingFullScreen,
+  setLoadingFullScreenMessage,
+} from "store/LoadingFullScreenSlice";
 
 // Components
 import TextEditor from "components/organisms/TextEditor";
@@ -97,6 +102,7 @@ const EditProject = (props: Props) => {
   const artWork = useSelector((state) => state.newProject.artWork);
   const playbackState = usePlaybackState();
   const { position, duration } = useProgress();
+  const [isPlayerInitialized, setIsPlayerInitialized] = useState<boolean | undefined>(false);
   const [sliderValue, setSliderValue] = useState<number>(0);
   const [start, setStart] = useState<boolean>(true);
   const [pause, setPause] = useState<boolean>(false);
@@ -346,15 +352,30 @@ const EditProject = (props: Props) => {
 
   const setUpTrackPlayer = async () => {
     try {
+      await TrackPlayer.setupPlayer({
+        waitForBuffer: true,
+      });
+      await TrackPlayer.reset();
       await TrackPlayer.updateOptions({
         android: {
           appKilledPlaybackBehavior: AppKilledPlaybackBehavior.StopPlaybackAndRemoveNotification,
         },
-        capabilities: [Capability.Play, Capability.Pause, Capability.SeekTo],
+        capabilities: [
+          Capability.Play,
+          Capability.Pause,
+          Capability.SeekTo,
+          Capability.SkipToNext,
+          Capability.SkipToPrevious,
+        ],
         compactCapabilities: [Capability.Play, Capability.Pause],
         notificationCapabilities: [Capability.Play, Capability.Pause],
       });
       await TrackPlayer.add(setTrackData);
+      // await TrackPlayer.add({
+      //   url: myProjectsDetail.trackDataPath,
+      //   title: myProjectsDetail.trackTitle,
+      // });
+      return true;
     } catch (e) {
       console.log(e);
     }
@@ -636,19 +657,27 @@ const EditProject = (props: Props) => {
   };
 
   useEffect(() => {
-    TrackPlayer.setupPlayer({
-      waitForBuffer: true,
-    });
-    setUpTrackPlayer();
+    const playerInitialized = async () => {
+      const isInit = await setUpTrackPlayer();
+      setIsPlayerInitialized(isInit);
+      await TrackPlayer.seekTo(0);
+    };
+    playerInitialized();
     getTrackListData();
     return () => {
       dispatch(setMyProjectsDetail(resetProjectDetail));
       controlPause();
-      TrackPlayer.reset();
+      // TrackPlayer.reset();
+      setIsPlayerInitialized(false);
     };
   }, []);
 
-  const trackPlayerEvents = [Event.PlaybackState, Event.PlaybackQueueEnded, Event.PlaybackError];
+  const trackPlayerEvents = [
+    Event.PlaybackState,
+    Event.PlaybackQueueEnded,
+    Event.PlaybackError,
+    Event.PlaybackTrackChanged,
+  ];
 
   const cueActivityEvent = (targetCue: any) => {
     targetCue.find((item: any) => {
@@ -697,6 +726,11 @@ const EditProject = (props: Props) => {
       cueActivityEvent(cueC);
       cueActivityEvent(cueD);
       cueActivityEvent(cueE);
+    }
+
+    if (event.type === Event.PlaybackTrackChanged) {
+      // setUpTrackPlayer();
+      console.log(event.type);
     }
   });
 
@@ -812,6 +846,9 @@ const EditProject = (props: Props) => {
     let trackDataDownloadUrl;
 
     try {
+      dispatch(showLoadingFullScreen());
+      dispatch(setLoadingFullScreenMessage(TEXT.LOADING_MESSAGE_MODAL_PROJECT_SETTINGS));
+
       // artWorkのアップロード
       if (artWork.length) {
         await fileUpload(artWork[0]?.uri, artWork[0]?.fileName, artWork[0]?.type, "/artworks/");
@@ -958,6 +995,7 @@ const EditProject = (props: Props) => {
       dispatch(hideModalProjectSettings());
       dispatch(hideOverlay());
       dispatch(setProjectSettingsTitle(modalProjectSettingsProjectTitle));
+      dispatch(hideLoadingFullScreen());
     }
   };
 
@@ -998,7 +1036,7 @@ const EditProject = (props: Props) => {
               onPressAllCueReset={controlAllCueReset}
             />
           </View>
-          <VolumeSeekBar />
+          {/* <VolumeSeekBar /> */}
         </ScrollView>
       </View>
       <Overlay isShow={overlay} />
