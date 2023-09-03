@@ -75,6 +75,7 @@ export const TITLE_PASSWORD_RESET = "Password Reset";
 
 // LOADING MESSAGE
 export const LOADING_MESSAGE_CREATE_PROJECT = "プロジェクトを作成中です";
+export const LOADING_MESSAGE_MODAL_PROJECT_SETTINGS = "変更を保存中です";
 
 // MAIN SCREEN TITLE
 export const TITLE_MY_PROJECTS = "My Projects";
