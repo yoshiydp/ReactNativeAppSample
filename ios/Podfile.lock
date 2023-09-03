@@ -404,9 +404,9 @@ PODS:
     - React-Core
   - react-native-slider (4.4.3):
     - React-Core
-  - react-native-track-player (4.0.0-rc07):
+  - react-native-track-player (3.2.0):
     - React-Core
-    - SwiftAudioEx (= 1.0.0-rc.5)
+    - SwiftAudioEx (= 0.15.3)
   - react-native-volume-manager (1.10.0):
     - Mute
     - React-Core
@@ -522,7 +522,7 @@ PODS:
   - RNVectorIcons (9.2.0):
     - React-Core
   - SocketRocket (0.6.1)
-  - SwiftAudioEx (1.0.0-rc.5)
+  - SwiftAudioEx (0.15.3)
   - Yoga (1.14.0)
   - YogaKit (1.18.1):
     - Yoga (~> 1.14)
@@ -795,7 +795,7 @@ SPEC CHECKSUMS:
   react-native-image-picker: 5fcac5a5ffcb3737837f0617d43fd767249290de
   react-native-safe-area-context: 7aa8e6d9d0f3100a820efb1a98af68aa747f9284
   react-native-slider: 1cdd6ba29675df21f30544253bf7351d3c2d68c4
-  react-native-track-player: e1adb47bbe6994869089da672cb02af7cb285304
+  react-native-track-player: 0c26d981b5097910486cbbeb6d8f5352d41be069
   react-native-volume-manager: 3c7d8047841b6831730dea7bf25250522388b4f4
   react-native-webview: 65f1143983cfeaedf02fd25b2621d3f4a37075de
   React-perflogger: 2d505bbe298e3b7bacdd9e542b15535be07220f6
@@ -822,7 +822,7 @@ SPEC CHECKSUMS:
   RNSVG: ed492aaf3af9ca01bc945f7a149d76d62e73ec82
   RNVectorIcons: fcc2f6cb32f5735b586e66d14103a74ce6ad61f8
   SocketRocket: f32cd54efbe0f095c4d7594881e52619cfe80b17
-  SwiftAudioEx: aa653186bfcb6bbbe6209009c8506dfc812e7759
+  SwiftAudioEx: 83eabba2940924fc1c0d5cb0896049921365229c
   Yoga: d56980c8914db0b51692f55533409e844b66133c
   YogaKit: f782866e155069a2cca2517aafea43200b01fd5a
 
