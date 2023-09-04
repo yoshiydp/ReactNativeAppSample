@@ -381,6 +381,27 @@ const EditProject = (props: Props) => {
     }
   };
 
+  const playStart = async () => {
+    if (playbackState === State.Paused || playbackState === State.Ready) {
+      await TrackPlayer.play();
+      setStart(false);
+      setPause(true);
+    }
+  };
+
+  const controlStart = () => {
+    playStart();
+  };
+
+  const controlPause = async () => {
+    if (playbackState === State.Playing) {
+      await TrackPlayer.pause();
+      console.log("controlPause!");
+      setStart(true);
+      setPause(false);
+    }
+  };
+
   const onPressGoBackHome = () => {
     console.log("onPressGoBackHome!");
     dispatch(showOverlay());
@@ -388,6 +409,7 @@ const EditProject = (props: Props) => {
     dispatch(showCenterModal());
     dispatch(setCenterModalTitle(TEXT.MODAL_TITLE_SAVE_PROJECT));
     dispatch(activeEditProjectModalFlag());
+    controlPause();
   };
 
   const onPressOpenMenu = () => {
@@ -409,14 +431,6 @@ const EditProject = (props: Props) => {
 
   const onSlidingStart = async () => {
     await TrackPlayer.pause();
-  };
-
-  const playStart = async () => {
-    if (playbackState === State.Paused || playbackState === State.Ready) {
-      await TrackPlayer.play();
-      setStart(false);
-      setPause(true);
-    }
   };
 
   const onSlidingCompleted = async (value: number) => {
@@ -598,19 +612,6 @@ const EditProject = (props: Props) => {
       dispatch(hideOverlay());
       dispatch(activeHidden());
       dispatch(hideEditCueNameTextField());
-    }
-  };
-
-  const controlStart = () => {
-    playStart();
-  };
-
-  const controlPause = async () => {
-    if (playbackState === State.Playing) {
-      await TrackPlayer.pause();
-      console.log("controlPause!");
-      setStart(true);
-      setPause(false);
     }
   };
 
