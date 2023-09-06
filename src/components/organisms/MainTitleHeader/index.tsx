@@ -5,7 +5,7 @@ import { View, Animated } from "react-native";
 import { useSelector } from "store/index";
 
 // Components
-import SearchBar from "components/molecules/SearchBar";
+// import SearchBar from "components/molecules/SearchBar";
 
 // Constants
 import * as VALUE from "constants/value";
@@ -54,13 +54,13 @@ const MainTitleHeader = (props: Props) => {
   return (
     <View style={styles.container}>
       <Animated.Text style={[styles.title, animatedOpacityStyle]}>{props.title}</Animated.Text>
-      {(myProjectsItems.length > 0 || trackListItems.length > 0) && (
+      {/* {(myProjectsItems.length > 0 || trackListItems.length > 0) && (
         <SearchBar
           activeMinOpacityAnimated={minOpacityAnimated}
           activeMaxOpacityAnimated={maxOpacityAnimated}
           setSearchValue={props.setSearchValue}
         />
-      )}
+      )} */}
     </View>
   );
 };
