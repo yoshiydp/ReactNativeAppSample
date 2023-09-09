@@ -17,9 +17,9 @@ const VolumeSeekBar = () => {
   const [deviceVolume, setDeviceVolume] = useState<number | any>(0);
 
   const getInitialDeviceVolume = async () => {
-    await VolumeManager.getVolume("music").then((result) => {
-      setDeviceVolume(result);
-    });
+    await VolumeManager.showNativeVolumeUI({ enabled: true });
+    const { volume } = await VolumeManager.getVolume();
+    setDeviceVolume(volume);
   };
 
   useEffect(() => {
@@ -31,7 +31,6 @@ const VolumeSeekBar = () => {
   }, []);
 
   const onChangeVolume = async (volume: any) => {
-    setDeviceVolume(volume);
     await VolumeManager.setVolume(volume, {
       type: "system",
       showUI: true,
