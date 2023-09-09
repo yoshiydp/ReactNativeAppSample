@@ -119,13 +119,13 @@ const EditProject = (props: Props) => {
   const docRef = doc(db, "users", uid);
   const storage = getStorage();
 
+  type SetTrackDataType = {
+    url: string;
+    title: string;
+  };
+
   // トラックデータの情報を格納
-  const setTrackData = [
-    {
-      url: myProjectsDetail.trackDataPath,
-      title: myProjectsDetail.trackTitle,
-    },
-  ];
+  let setTrackData: SetTrackDataType[] = [];
 
   // CueAの名前を保存する時のプロジェクトデータ
   const saveCueAProjectData = {
@@ -351,11 +351,17 @@ const EditProject = (props: Props) => {
   };
 
   const setUpTrackPlayer = async () => {
+    setTrackData = [
+      {
+        url: myProjectsDetail.trackDataPath,
+        title: myProjectsDetail.trackTitle,
+      },
+    ];
+
     try {
       await TrackPlayer.setupPlayer({
         waitForBuffer: true,
       });
-      await TrackPlayer.reset();
       await TrackPlayer.updateOptions({
         android: {
           appKilledPlaybackBehavior: AppKilledPlaybackBehavior.StopPlaybackAndRemoveNotification,
@@ -370,11 +376,8 @@ const EditProject = (props: Props) => {
         compactCapabilities: [Capability.Play, Capability.Pause],
         notificationCapabilities: [Capability.Play, Capability.Pause],
       });
+      await TrackPlayer.reset();
       await TrackPlayer.add(setTrackData);
-      // await TrackPlayer.add({
-      //   url: myProjectsDetail.trackDataPath,
-      //   title: myProjectsDetail.trackTitle,
-      // });
       return true;
     } catch (e) {
       console.log(e);
@@ -668,7 +671,6 @@ const EditProject = (props: Props) => {
     return () => {
       dispatch(setMyProjectsDetail(resetProjectDetail));
       controlPause();
-      // TrackPlayer.reset();
       setIsPlayerInitialized(false);
     };
   }, []);
@@ -727,11 +729,6 @@ const EditProject = (props: Props) => {
       cueActivityEvent(cueC);
       cueActivityEvent(cueD);
       cueActivityEvent(cueE);
-    }
-
-    if (event.type === Event.PlaybackTrackChanged) {
-      // setUpTrackPlayer();
-      console.log(event.type);
     }
   });
 
@@ -868,6 +865,9 @@ const EditProject = (props: Props) => {
 
       // trackDataFileのアップロード
       if (trackDataFile.length > 0) {
+        controlPause();
+        setIsPlayerInitialized(false);
+
         await fileUpload(
           trackDataFile[0]?.uri,
           trackDataFile[0]?.name,
@@ -893,6 +893,18 @@ const EditProject = (props: Props) => {
             linkedMyProjects: [{ projectTitle }],
           }),
         });
+
+        setTrackData = [
+          {
+            url: trackDataDownloadUrl ? trackDataDownloadUrl : "",
+            title: trackDataFile[0]?.name,
+          },
+        ];
+
+        await TrackPlayer.reset();
+        await TrackPlayer.add(setTrackData);
+        setIsPlayerInitialized(true);
+        await TrackPlayer.seekTo(0);
       }
 
       // アートワークもしくはトラックがアップロードされた場合にupdateDocを実行
@@ -1037,7 +1049,7 @@ const EditProject = (props: Props) => {
               onPressAllCueReset={controlAllCueReset}
             />
           </View>
-          {/* <VolumeSeekBar /> */}
+          <VolumeSeekBar />
         </ScrollView>
       </View>
       <Overlay isShow={overlay} />
