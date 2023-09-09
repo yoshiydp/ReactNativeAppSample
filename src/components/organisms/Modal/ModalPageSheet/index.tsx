@@ -21,7 +21,7 @@ import { TrackListDetailType } from "interfaces/trackListInterface";
 import styles from "./ModalPageSheet.scss";
 
 interface Props {
-  navigation: any;
+  navigation?: any;
   trackListDataItems: TrackListDetailType[];
 }
 
