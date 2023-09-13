@@ -359,9 +359,6 @@ const EditProject = (props: Props) => {
     ];
 
     try {
-      await TrackPlayer.setupPlayer({
-        waitForBuffer: true,
-      });
       await TrackPlayer.updateOptions({
         android: {
           appKilledPlaybackBehavior: AppKilledPlaybackBehavior.StopPlaybackAndRemoveNotification,
@@ -660,6 +657,14 @@ const EditProject = (props: Props) => {
     }
   };
 
+  const playerReset = async () => {
+    const tracks = await TrackPlayer.getCurrentTrack();
+    if (tracks) {
+      await TrackPlayer.remove(tracks);
+    }
+    setIsPlayerInitialized(false);
+  };
+
   useEffect(() => {
     const playerInitialized = async () => {
       const isInit = await setUpTrackPlayer();
@@ -670,8 +675,7 @@ const EditProject = (props: Props) => {
     getTrackListData();
     return () => {
       dispatch(setMyProjectsDetail(resetProjectDetail));
-      controlPause();
-      setIsPlayerInitialized(false);
+      playerReset();
     };
   }, []);
 
@@ -903,12 +907,11 @@ const EditProject = (props: Props) => {
 
         await TrackPlayer.reset();
         await TrackPlayer.add(setTrackData);
-        setIsPlayerInitialized(true);
         await TrackPlayer.seekTo(0);
       }
 
       // アートワークもしくはトラックがアップロードされた場合にupdateDocを実行
-      if (artWork.length || modalProjectSettingsProjectTitle.length || trackDataFile.length > 0) {
+      if (artWork.length || modalProjectSettingsProjectTitle.length || trackDataFile.length) {
         // 編集前の現在のプロジェクトデータを削除
         updateDoc(docRef, {
           myProjectsData: arrayRemove({ ...myProjectsDetail }),
@@ -931,29 +934,29 @@ const EditProject = (props: Props) => {
             artWorkPath: artWorkDownloadUrl ? artWorkDownloadUrl : myProjectsDetail.artWorkPath,
             cueButtons: [
               {
-                flag: cueA[0].flag ? cueA[0].flag : cueButtons[0].flag,
-                name: cueButtons[0].name,
-                position: cueButtons[0].position,
+                flag: trackDataFile.length ? false : cueButtons[0].flag,
+                name: trackDataFile.length ? "Cue A" : cueButtons[0].name,
+                position: trackDataFile.length ? 0 : cueButtons[0].position,
               },
               {
-                flag: cueB[0].flag ? cueB[0].flag : cueButtons[1].flag,
-                name: cueButtons[1].name,
-                position: cueButtons[1].position,
+                flag: trackDataFile.length ? false : cueButtons[1].flag,
+                name: trackDataFile.length ? "Cue B" : cueButtons[1].name,
+                position: trackDataFile.length ? 0 : cueButtons[1].position,
               },
               {
-                flag: cueC[0].flag ? cueC[0].flag : cueButtons[2].flag,
-                name: cueButtons[2].name,
-                position: cueButtons[2].position,
+                flag: trackDataFile.length ? false : cueButtons[2].flag,
+                name: trackDataFile.length ? "Cue C" : cueButtons[2].name,
+                position: trackDataFile.length ? 0 : cueButtons[2].position,
               },
               {
-                flag: cueD[0].flag ? cueD[0].flag : cueButtons[3].flag,
-                name: cueButtons[3].name,
-                position: cueButtons[3].position,
+                flag: trackDataFile.length ? false : cueButtons[3].flag,
+                name: trackDataFile.length ? "Cue D" : cueButtons[3].name,
+                position: trackDataFile.length ? 0 : cueButtons[3].position,
               },
               {
-                flag: cueE[0].flag ? cueE[0].flag : cueButtons[4].flag,
-                name: cueButtons[4].name,
-                position: cueButtons[4].position,
+                flag: trackDataFile.length ? false : cueButtons[4].flag,
+                name: trackDataFile.length ? "Cue E" : cueButtons[4].name,
+                position: trackDataFile.length ? 0 : cueButtons[4].position,
               },
             ],
           }),
@@ -978,33 +981,37 @@ const EditProject = (props: Props) => {
           artWorkPath: artWorkDownloadUrl ? artWorkDownloadUrl : myProjectsDetail.artWorkPath,
           cueButtons: [
             {
-              flag: cueA[0].flag ? cueA[0].flag : cueButtons[0].flag,
-              name: cueButtons[0].name,
-              position: cueButtons[0].position,
+              flag: trackDataFile.length ? false : cueButtons[0].flag,
+              name: trackDataFile.length ? "Cue A" : cueButtons[0].name,
+              position: trackDataFile.length ? 0 : cueButtons[0].position,
             },
             {
-              flag: cueB[0].flag ? cueB[0].flag : cueButtons[1].flag,
-              name: cueButtons[1].name,
-              position: cueButtons[1].position,
+              flag: trackDataFile.length ? false : cueButtons[1].flag,
+              name: trackDataFile.length ? "Cue B" : cueButtons[1].name,
+              position: trackDataFile.length ? 0 : cueButtons[1].position,
             },
             {
-              flag: cueC[0].flag ? cueC[0].flag : cueButtons[2].flag,
-              name: cueButtons[2].name,
-              position: cueButtons[2].position,
+              flag: trackDataFile.length ? false : cueButtons[2].flag,
+              name: trackDataFile.length ? "Cue C" : cueButtons[2].name,
+              position: trackDataFile.length ? 0 : cueButtons[2].position,
             },
             {
-              flag: cueD[0].flag ? cueD[0].flag : cueButtons[3].flag,
-              name: cueButtons[3].name,
-              position: cueButtons[3].position,
+              flag: trackDataFile.length ? false : cueButtons[3].flag,
+              name: trackDataFile.length ? "Cue D" : cueButtons[3].name,
+              position: trackDataFile.length ? 0 : cueButtons[3].position,
             },
             {
-              flag: cueE[0].flag ? cueE[0].flag : cueButtons[4].flag,
-              name: cueButtons[4].name,
-              position: cueButtons[4].position,
+              flag: trackDataFile.length ? false : cueButtons[4].flag,
+              name: trackDataFile.length ? "Cue E" : cueButtons[4].name,
+              position: trackDataFile.length ? 0 : cueButtons[4].position,
             },
           ],
         })
       );
+      // 新しいトラックがアップロードされた場合に実行
+      if (trackDataFile.length) {
+        controlAllCueReset();
+      }
       dispatch(hideModalProjectSettings());
       dispatch(hideOverlay());
       dispatch(setProjectSettingsTitle(modalProjectSettingsProjectTitle));
