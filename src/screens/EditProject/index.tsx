@@ -120,7 +120,6 @@ const EditProject = (props: Props) => {
   const storage = getStorage();
 
   type SetTrackDataType = {
-    id: number;
     url: string;
     title: string;
   };
@@ -354,7 +353,6 @@ const EditProject = (props: Props) => {
   const setUpTrackPlayer = async () => {
     setTrackData = [
       {
-        id: 0,
         url: myProjectsDetail.trackDataPath,
         title: myProjectsDetail.trackTitle,
       },
@@ -902,7 +900,6 @@ const EditProject = (props: Props) => {
 
         setTrackData = [
           {
-            id: 1,
             url: trackDataDownloadUrl ? trackDataDownloadUrl : "",
             title: trackDataFile[0]?.name,
           },
