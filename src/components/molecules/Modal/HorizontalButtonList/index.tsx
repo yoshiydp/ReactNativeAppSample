@@ -1,5 +1,5 @@
-import React from "react";
-import { View, TouchableOpacity, Text } from "react-native";
+import React, { useState } from "react";
+import { View } from "react-native";
 import { useDispatch } from "react-redux";
 import { firebaseAuth, db, storage } from "src/config/firebase";
 import { doc, updateDoc, arrayRemove, arrayUnion } from "firebase/firestore";
@@ -14,6 +14,9 @@ import { setMyProjectsDetail } from "store/MyProjectsDetailSlice";
 import { setCueA, setCueB, setCueC, setCueD, setCueE } from "store/CueButtonsSlice";
 import { inactiveTrackListModalFlag } from "store/TrackListModalFlagSlice";
 import { inactiveEditProjectModalFlag } from "store/EditProjectModalFlagSlice";
+
+// Components
+import ButtonPlain from "components/atoms/ButtonPlain";
 
 // Styles
 import styles from "./HorizontalButtonList.scss";
@@ -44,6 +47,7 @@ const HorizontalButtonList = (props: Props) => {
   const cueE = useSelector((state) => state.cueButtons.cueE);
   const trackDataFile = useSelector((state) => state.newProject.trackDataFile);
   const trackListDetailTitle = useSelector((state) => state.trackListDetail.trackTitle);
+  const [disabled, setDisabled] = useState<boolean>(false);
   const { uid }: any = firebaseAuth.currentUser;
 
   // 初期レンダリング時のプロジェクトデータ
@@ -68,47 +72,6 @@ const HorizontalButtonList = (props: Props) => {
     cueButtons: myProjectsDetail.cueButtons,
   };
 
-  // ProjectSettingsで再編集されたプロジェクトデータ
-  // const setProjectSettingsMyProjectData = {
-  //   projectTitle: projectSettingsTitle,
-  //   lyric: textEditorValue,
-  //   trackDataPath: projectSettingsTrackDataPath,
-  //   trackTitle: trackDataFile.length
-  //     ? trackDataFile[0]?.name
-  //     : trackListDetailTitle.length
-  //     ? trackListDetailTitle
-  //     : myProjectsDetail.trackTitle,
-  //   artistName: "",
-  //   artWorkPath: projectSettingsArtWorkPath,
-  //   cueButtons: [
-  //     {
-  //       flag: cueA[0].flag ? cueA[0].flag : cueButtons[0].flag,
-  //       name: cueButtons[0].name,
-  //       position: cueButtons[0].position,
-  //     },
-  //     {
-  //       flag: cueB[0].flag ? cueB[0].flag : cueButtons[1].flag,
-  //       name: cueButtons[1].name,
-  //       position: cueButtons[1].position,
-  //     },
-  //     {
-  //       flag: cueC[0].flag ? cueC[0].flag : cueButtons[2].flag,
-  //       name: cueButtons[2].name,
-  //       position: cueButtons[2].position,
-  //     },
-  //     {
-  //       flag: cueD[0].flag ? cueD[0].flag : cueButtons[3].flag,
-  //       name: cueButtons[3].name,
-  //       position: cueButtons[3].position,
-  //     },
-  //     {
-  //       flag: cueE[0].flag ? cueE[0].flag : cueButtons[4].flag,
-  //       name: cueButtons[4].name,
-  //       position: cueButtons[4].position,
-  //     },
-  //   ],
-  // };
-
   // Unmountしたときにデータの中身をリセット
   const resetMyProjectsDetail = {
     projectTitle: "",
@@ -130,6 +93,7 @@ const HorizontalButtonList = (props: Props) => {
     try {
       if (!uid) return;
       const docRef = doc(db, "users", uid);
+      setDisabled(true);
 
       // MyProjectsからのモーダル表示の処理
       if (myProjectsModalFlag) {
@@ -241,6 +205,7 @@ const HorizontalButtonList = (props: Props) => {
         dispatch(setCueE([{ flag: false }, { name: "" }, { position: 0 }]));
         props.navigation.navigate("MainTabBar");
       }
+      setDisabled(false);
     }
   };
 
@@ -252,18 +217,28 @@ const HorizontalButtonList = (props: Props) => {
     if (trackListModalFlag) dispatch(inactiveTrackListModalFlag());
   };
 
+  const buttonYesStyle = styles.buttonYes;
+
+  const buttonCancelStyle = styles.buttonCancel;
+
   return (
     <View style={styles.container}>
       <View style={styles.border}></View>
       <View style={styles.item}>
-        <TouchableOpacity onPress={onPressSubmit}>
-          <Text style={styles.buttonYes}>{centerModalSubmitTextState}</Text>
-        </TouchableOpacity>
+        <ButtonPlain
+          styles={buttonYesStyle}
+          onPressEvent={onPressSubmit}
+          disabled={disabled}
+          text={centerModalSubmitTextState}
+        />
       </View>
       <View style={styles.item}>
-        <TouchableOpacity onPress={onPressCancel}>
-          <Text style={styles.buttonCancel}>Cancel</Text>
-        </TouchableOpacity>
+        <ButtonPlain
+          styles={buttonCancelStyle}
+          onPressEvent={onPressCancel}
+          disabled={disabled}
+          text="Cancel"
+        />
       </View>
     </View>
   );
