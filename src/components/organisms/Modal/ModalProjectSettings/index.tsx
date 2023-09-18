@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { Modal, ScrollView, View, Text, KeyboardAvoidingView } from "react-native";
 import { useDispatch } from "react-redux";
-import TrackPlayer, { useTrackPlayerEvents, Event } from "react-native-track-player";
 
 // Store
 import { useSelector } from "store/index";
