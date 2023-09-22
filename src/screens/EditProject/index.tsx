@@ -646,6 +646,7 @@ const EditProject = (props: Props) => {
     const docSnap = await getDoc(docRef);
     if (docSnap.exists()) {
       const trackListData = docSnap.data().trackListData;
+      console.log("trackListData: ", trackListData);
       const sorted = trackListData.sort((a: any, b: any) => {
         a = a.trackTitle.toString().toLowerCase();
         b = b.trackTitle.toString().toLowerCase();
@@ -846,6 +847,7 @@ const EditProject = (props: Props) => {
 
     let artWorkDownloadUrl;
     let trackDataDownloadUrl;
+    let trackTitleCheckFlag;
 
     try {
       dispatch(showLoadingFullScreen());
@@ -869,35 +871,52 @@ const EditProject = (props: Props) => {
 
       // trackDataFileのアップロード
       if (trackDataFile.length) {
-        await fileUpload(
-          trackDataFile[0]?.uri,
-          trackDataFile[0]?.name,
-          trackDataFile[0]?.type,
-          "/track_data_files/"
-        );
-
-        await getDownloadURL(ref(storage, uid + "/track_data_files/" + trackDataFile[0]?.name))
-          .then((url) => {
-            trackDataDownloadUrl = url;
-            console.log("trackDataDownloadUrl: " + trackDataDownloadUrl);
-          })
-          .catch((error) => {
-            console.log(error);
+        // トラックデータが存在している場合
+        if (trackListItems.length) {
+          // トラックデータの中にすでに同じ名前のファイルが存在するかどうか
+          trackListItems.some((item) => {
+            if (item.trackTitle === trackDataFile[0]?.name) {
+              console.log(item.trackTitle === trackDataFile[0]?.name);
+              trackTitleCheckFlag = false;
+            }
           });
+        } else {
+          console.log("false");
+          await fileUpload(
+            trackDataFile[0]?.uri,
+            trackDataFile[0]?.name,
+            trackDataFile[0]?.type,
+            "/track_data_files/"
+          );
+          await getDownloadURL(ref(storage, uid + "/track_data_files/" + trackDataFile[0]?.name))
+            .then((url) => {
+              trackDataDownloadUrl = url;
+              console.log("trackDataDownloadUrl: " + trackDataDownloadUrl);
+            })
+            .catch((error) => {
+              console.log(error);
+            });
+          await updateDoc(doc(db, "users", uid), {
+            trackListData: arrayUnion({
+              trackDataPath: trackDataDownloadUrl ? trackDataDownloadUrl : "",
+              trackTitle: trackDataFile[0]?.name,
+              artistName: "",
+              artWorkPath: artWorkDownloadUrl ? artWorkDownloadUrl : "",
+              linkedMyProjects: [{ projectTitle }],
+            }),
+          });
+        }
 
-        await updateDoc(doc(db, "users", uid), {
-          trackListData: arrayUnion({
-            trackDataPath: trackDataDownloadUrl ? trackDataDownloadUrl : "",
-            trackTitle: trackDataFile[0]?.name,
-            artistName: "",
-            artWorkPath: artWorkDownloadUrl ? artWorkDownloadUrl : "",
-            linkedMyProjects: [{ projectTitle }],
-          }),
-        });
+        // console.log("trackDataFile: ", trackDataFile[0]);
+        // dispatch(showCenterModal());
+        // dispatch(setCenterModalTitle(TEXT.MODAL_TITLE_SAVE_PROJECT));
       }
 
       // トラックデータをリアルタイムで差し替え
       if (trackDataFile.length || trackListDetailTitle.length) {
+        // トラック場合は以下を実行不可とする
+        if (!trackTitleCheckFlag) return;
+
         controlPause();
         setIsPlayerInitialized(false);
 
@@ -919,6 +938,10 @@ const EditProject = (props: Props) => {
         await TrackPlayer.reset();
         await TrackPlayer.add(setTrackData);
         await TrackPlayer.seekTo(0);
+
+        if (trackListDetailTitle.length) {
+          console.log("trackListDetailTitle: ", trackListDetailTitle);
+        }
       }
 
       // アートワーク or
