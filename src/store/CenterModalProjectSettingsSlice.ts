@@ -3,7 +3,7 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 interface CenterModalProjectSettingsStateType {
   centerModal: boolean;
   message: string;
-  dataTitle: string;
+  trackTitle: string;
   notes: string;
   submitButtonText: string;
 }
@@ -11,7 +11,7 @@ interface CenterModalProjectSettingsStateType {
 const initialState: CenterModalProjectSettingsStateType = {
   centerModal: false,
   message: "",
-  dataTitle: "",
+  trackTitle: "",
   notes: "",
   submitButtonText: "Yes",
 };
@@ -32,11 +32,11 @@ export const CenterModalProjectSettingsSlice = createSlice({
     ) => {
       state.message = action.payload;
     },
-    setCenterModalProjectSettingsDataTitle: (
-      state: { dataTitle: string },
+    setCenterModalProjectSettingsTrackTitle: (
+      state: { trackTitle: string },
       action: PayloadAction<string>
     ) => {
-      state.dataTitle = action.payload;
+      state.trackTitle = action.payload;
     },
     setCenterModalProjectSettingsNotes: (
       state: { notes: string },
@@ -57,7 +57,7 @@ export const {
   showCenterModalProjectSettings,
   hideCenterModalProjectSettings,
   setCenterModalProjectSettingsMessage,
-  setCenterModalProjectSettingsDataTitle,
+  setCenterModalProjectSettingsTrackTitle,
   setCenterModalProjectSettingsNotes,
   setCenterModalProjectSettingsSubmitButtonText,
 } = CenterModalProjectSettingsSlice.actions;
