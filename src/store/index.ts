@@ -1,6 +1,7 @@
 import { configureStore } from "@reduxjs/toolkit";
 import { useSelector as rawUseSelector, TypedUseSelectorHook } from "react-redux";
 import centerModalReducer from "./CenterModalSlice";
+import centerModalProjectSettingsReducer from "./CenterModalProjectSettingsSlice";
 import cueButtonsReducer from "./CueButtonsSlice";
 import editCueNameTextFieldReducer from "./EditCueNameTextFieldSlice";
 import editProjectModalFlagReducer from "./EditProjectModalFlagSlice";
@@ -24,6 +25,7 @@ import trackListModalFlagReducer from "./TrackListModalFlagSlice";
 export const store = configureStore({
   reducer: {
     centerModal: centerModalReducer,
+    centerModalProjectSettings: centerModalProjectSettingsReducer,
     cueButtons: cueButtonsReducer,
     editCueNameTextField: editCueNameTextFieldReducer,
     editProjectModalFlag: editProjectModalFlagReducer,
