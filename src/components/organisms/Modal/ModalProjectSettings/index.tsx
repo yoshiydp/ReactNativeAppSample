@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { Modal, ScrollView, View, Text, KeyboardAvoidingView } from "react-native";
 import { useDispatch } from "react-redux";
-import TrackPlayer, { useTrackPlayerEvents, Event } from "react-native-track-player";
 
 // Store
 import { useSelector } from "store/index";
@@ -15,6 +14,7 @@ import ControlSetArtwork from "components/molecules/ControlSetArtwork";
 import ControlButtonList from "components/molecules/ControlButtonList";
 import ButtonSquare from "components/atoms/ButtonSquare";
 import LoadingFullScreen from "components/molecules/Loading/LoadingFullScreen";
+import CenterModalProjectSettings from "components/organisms/Modal/CenterModalProjectSettings";
 
 // Interfaces
 import { SettingsFormControlsType } from "interfaces/formControlsInterface";
@@ -30,6 +30,7 @@ interface Props {
   controlButtonItems: ControlButtonsType[];
   buttonText: string;
   submitEvent?: () => void;
+  navigation: any;
 }
 
 const ModalProjectSettings = (props: Props) => {
@@ -44,6 +45,9 @@ const ModalProjectSettings = (props: Props) => {
   const trackDataFile = useSelector((state) => state.newProject.trackDataFile);
   const trackListDetailTitle = useSelector((state) => state.trackListDetail.trackTitle);
   const loadingFullScreen = useSelector((state) => state.loadingFullScreen.loadingFullScreen);
+  const centerModalProjectSettings = useSelector(
+    (state) => state.centerModalProjectSettings.centerModal
+  );
   const [targetWidth, setTargetWidth] = useState<number>(0);
 
   const getTargetWidth = (object: any) => {
@@ -104,6 +108,10 @@ const ModalProjectSettings = (props: Props) => {
         ></View>
       </View>
       <LoadingFullScreen isShow={loadingFullScreen} />
+      <CenterModalProjectSettings
+        isShow={centerModalProjectSettings}
+        navigation={props.navigation}
+      />
     </Modal>
   );
 };

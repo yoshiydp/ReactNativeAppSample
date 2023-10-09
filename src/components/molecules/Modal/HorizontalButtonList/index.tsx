@@ -1,9 +1,16 @@
-import React from "react";
-import { View, TouchableOpacity, Text } from "react-native";
+import React, { useState } from "react";
+import { View } from "react-native";
+import TrackPlayer, { State, usePlaybackState } from "react-native-track-player";
 import { useDispatch } from "react-redux";
-import { firebaseAuth, db, storage } from "src/config/firebase";
-import { doc, updateDoc, arrayRemove, arrayUnion } from "firebase/firestore";
-import { ref, deleteObject } from "firebase/storage";
+import { firebaseAuth, db } from "src/config/firebase";
+import { doc, updateDoc, arrayUnion, arrayRemove } from "firebase/firestore";
+import {
+  getStorage,
+  ref,
+  uploadBytesResumable,
+  getDownloadURL,
+  deleteObject,
+} from "firebase/storage";
 
 // Store
 import { useSelector } from "store/index";
@@ -14,6 +21,17 @@ import { setMyProjectsDetail } from "store/MyProjectsDetailSlice";
 import { setCueA, setCueB, setCueC, setCueD, setCueE } from "store/CueButtonsSlice";
 import { inactiveTrackListModalFlag } from "store/TrackListModalFlagSlice";
 import { inactiveEditProjectModalFlag } from "store/EditProjectModalFlagSlice";
+import { hideModalProjectSettings } from "store/ModalProjectSettingsSlice";
+import { setProjectSettingsArtWorkPath, setProjectSettingsTitle } from "store/ProjectSettingsSlice";
+import { inactiveProjectSettingsModalFlag } from "store/ProjectSettingsModalFlagSlice";
+import { hideCenterModalProjectSettings } from "store/CenterModalProjectSettingsSlice";
+import { hideLoadingFullScreen } from "store/LoadingFullScreenSlice";
+
+// Components
+import ButtonPlain from "components/atoms/ButtonPlain";
+
+// Interfaces
+import { SetCueActivityType } from "interfaces/cueButtonsInterface";
 
 // Styles
 import styles from "./HorizontalButtonList.scss";
@@ -24,6 +42,7 @@ interface Props {
 
 const HorizontalButtonList = (props: Props) => {
   const dispatch = useDispatch();
+  const playbackState = usePlaybackState();
   const centerModalSubmitTextState = useSelector((state) => state.centerModal.submitButtonText);
   const myProjectsItems = useSelector((state) => state.myProjectsItems.myProjectsItems);
   const myProjectsDetail = useSelector((state) => state.myProjectsDetail);
@@ -44,7 +63,33 @@ const HorizontalButtonList = (props: Props) => {
   const cueE = useSelector((state) => state.cueButtons.cueE);
   const trackDataFile = useSelector((state) => state.newProject.trackDataFile);
   const trackListDetailTitle = useSelector((state) => state.trackListDetail.trackTitle);
+  const projectSettingsModalFlag = useSelector((state) => state.projectSettingsModalFlag.modalFlag);
+  const modalProjectSettingsProjectTitle = useSelector(
+    (state) => state.modalProjectSettings.modalProjectSettingsProjectTitle
+  );
+  const artWork = useSelector((state) => state.newProject.artWork);
+  const trackListDetailDataPath = useSelector((state) => state.trackListDetail.trackDataPath);
+  const modalProjectSettingsArtWorkPath = useSelector(
+    (state) => state.modalProjectSettings.modalProjectSettingsArtWorkPath
+  );
+  const [disabled, setDisabled] = useState<boolean>(false);
+  const [isPlayerInitialized, setIsPlayerInitialized] = useState<boolean | undefined>(false);
+  const [projectTitle, setProjectTitle] = useState<string>("");
+  const [start, setStart] = useState<boolean>(true);
+  const [pause, setPause] = useState<boolean>(false);
+  const [cueActivity, setCueActivity] = useState<SetCueActivityType>({ flag: false, name: "" });
   const { uid }: any = firebaseAuth.currentUser;
+  if (!uid) return;
+  const docRef = doc(db, "users", uid);
+  const storage = getStorage();
+
+  type SetTrackDataType = {
+    url: string;
+    title: string;
+  };
+
+  // トラックデータの情報を格納
+  let setTrackData: SetTrackDataType[] = [];
 
   // 初期レンダリング時のプロジェクトデータ
   const initialMyProjectData = {
@@ -68,47 +113,6 @@ const HorizontalButtonList = (props: Props) => {
     cueButtons: myProjectsDetail.cueButtons,
   };
 
-  // ProjectSettingsで再編集されたプロジェクトデータ
-  // const setProjectSettingsMyProjectData = {
-  //   projectTitle: projectSettingsTitle,
-  //   lyric: textEditorValue,
-  //   trackDataPath: projectSettingsTrackDataPath,
-  //   trackTitle: trackDataFile.length
-  //     ? trackDataFile[0]?.name
-  //     : trackListDetailTitle.length
-  //     ? trackListDetailTitle
-  //     : myProjectsDetail.trackTitle,
-  //   artistName: "",
-  //   artWorkPath: projectSettingsArtWorkPath,
-  //   cueButtons: [
-  //     {
-  //       flag: cueA[0].flag ? cueA[0].flag : cueButtons[0].flag,
-  //       name: cueButtons[0].name,
-  //       position: cueButtons[0].position,
-  //     },
-  //     {
-  //       flag: cueB[0].flag ? cueB[0].flag : cueButtons[1].flag,
-  //       name: cueButtons[1].name,
-  //       position: cueButtons[1].position,
-  //     },
-  //     {
-  //       flag: cueC[0].flag ? cueC[0].flag : cueButtons[2].flag,
-  //       name: cueButtons[2].name,
-  //       position: cueButtons[2].position,
-  //     },
-  //     {
-  //       flag: cueD[0].flag ? cueD[0].flag : cueButtons[3].flag,
-  //       name: cueButtons[3].name,
-  //       position: cueButtons[3].position,
-  //     },
-  //     {
-  //       flag: cueE[0].flag ? cueE[0].flag : cueButtons[4].flag,
-  //       name: cueButtons[4].name,
-  //       position: cueButtons[4].position,
-  //     },
-  //   ],
-  // };
-
   // Unmountしたときにデータの中身をリセット
   const resetMyProjectsDetail = {
     projectTitle: "",
@@ -126,10 +130,230 @@ const HorizontalButtonList = (props: Props) => {
     ],
   };
 
+  const fileUpload = async (
+    fileUri: string,
+    fileName: string,
+    fileType: string,
+    directory: string
+  ) => {
+    if (!uid) return;
+    const blob: any = await new Promise((resolve, reject) => {
+      const xhr = new XMLHttpRequest();
+      xhr.onload = () => {
+        resolve(xhr.response);
+      };
+      xhr.onerror = () => {
+        reject(new TypeError("Network request failed"));
+      };
+      xhr.responseType = "blob";
+      xhr.open("GET", fileUri, true);
+      xhr.send(null);
+    });
+
+    const storageRef = ref(storage, uid + directory + fileName);
+    const metadata = {
+      name: fileName,
+      contentType: fileType,
+    };
+
+    try {
+      await uploadBytesResumable(storageRef, blob, metadata);
+    } catch (error) {
+      console.error("Upload failed", error);
+    }
+  };
+
+  const controlPause = async () => {
+    if (playbackState === State.Playing) {
+      await TrackPlayer.pause();
+      console.log("controlPause!");
+      setStart(true);
+      setPause(false);
+    }
+  };
+
+  // ModalProjectSettingsの編集を保存する
+  const saveProjectSettings = async () => {
+    // プロジェクトタイトルが未入力の場合は以下を実行不可とする
+    if (!modalProjectSettingsProjectTitle) return;
+
+    let artWorkDownloadUrl;
+    let trackDataDownloadUrl;
+
+    try {
+      dispatch(hideCenterModalProjectSettings());
+      // artWorkのアップロード
+      if (artWork.length) {
+        await fileUpload(artWork[0]?.uri, artWork[0]?.fileName, artWork[0]?.type, "/artworks/");
+        await getDownloadURL(ref(storage, uid + "/artworks/" + artWork[0]?.fileName))
+          .then((url) => {
+            artWorkDownloadUrl = url;
+            // setProjectSettingsArtWorkUrl(url);
+            console.log("artWorkDownloadUrl: " + artWorkDownloadUrl);
+            dispatch(setProjectSettingsArtWorkPath(artWorkDownloadUrl));
+            console.log("modalProjectSettingsArtWorkPath: ", modalProjectSettingsArtWorkPath);
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+      }
+
+      // trackDataFileのアップロード
+      if (trackDataFile.length) {
+        await fileUpload(
+          trackDataFile[0]?.uri,
+          trackDataFile[0]?.name,
+          trackDataFile[0]?.type,
+          "/track_data_files/"
+        );
+        await getDownloadURL(ref(storage, uid + "/track_data_files/" + trackDataFile[0]?.name))
+          .then((url) => {
+            trackDataDownloadUrl = url;
+            console.log("trackDataDownloadUrl: " + trackDataDownloadUrl);
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+        await updateDoc(doc(db, "users", uid), {
+          trackListData: arrayUnion({
+            trackDataPath: trackDataDownloadUrl ? trackDataDownloadUrl : "",
+            trackTitle: trackDataFile[0]?.name,
+            artistName: "",
+            artWorkPath: artWorkDownloadUrl ? artWorkDownloadUrl : "",
+            linkedMyProjects: [{ projectTitle }],
+          }),
+        });
+      }
+
+      // トラックデータをリアルタイムで差し替え
+      if (trackDataFile.length || trackListDetailTitle.length) {
+        controlPause();
+        setIsPlayerInitialized(false);
+
+        setTrackData = [
+          {
+            url: trackDataDownloadUrl
+              ? trackDataDownloadUrl
+              : trackListDetailDataPath
+              ? trackListDetailDataPath
+              : "",
+            title: trackDataFile.length
+              ? trackDataFile[0]?.name
+              : trackListDetailTitle.length
+              ? trackListDetailTitle
+              : "",
+          },
+        ];
+
+        await TrackPlayer.reset();
+        await TrackPlayer.add(setTrackData);
+        await TrackPlayer.seekTo(0);
+      }
+
+      // アートワーク or
+      // 新規トラックデータをアップロード or
+      // トラックリスト内のデータを設定した場合にupdateDocを実行
+      if (
+        artWork.length ||
+        modalProjectSettingsProjectTitle.length ||
+        trackDataFile.length ||
+        trackListDetailTitle.length
+      ) {
+        // 編集前の現在のプロジェクトデータを削除
+        updateDoc(docRef, {
+          myProjectsData: arrayRemove({ ...myProjectsDetail }),
+        });
+
+        // 編集後のプロジェクトデータを追加
+        updateDoc(docRef, {
+          myProjectsData: arrayUnion({
+            projectTitle: modalProjectSettingsProjectTitle,
+            lyric: textEditorValue,
+            trackDataPath: trackDataDownloadUrl
+              ? trackDataDownloadUrl
+              : trackListDetailDataPath
+              ? trackListDetailDataPath
+              : myProjectsDetail.trackDataPath,
+            trackTitle: trackDataFile.length
+              ? trackDataFile[0]?.name
+              : trackListDetailTitle.length
+              ? trackListDetailTitle
+              : myProjectsDetail.trackTitle,
+            artistName: "",
+            artWorkPath: artWorkDownloadUrl ? artWorkDownloadUrl : myProjectsDetail.artWorkPath,
+            cueButtons: [
+              {
+                flag:
+                  trackDataFile.length || trackListDetailTitle.length ? false : cueButtons[0].flag,
+                name:
+                  trackDataFile.length || trackListDetailTitle.length
+                    ? "Cue A"
+                    : cueButtons[0].name,
+                position:
+                  trackDataFile.length || trackListDetailTitle.length ? 0 : cueButtons[0].position,
+              },
+              {
+                flag:
+                  trackDataFile.length || trackListDetailTitle.length ? false : cueButtons[1].flag,
+                name:
+                  trackDataFile.length || trackListDetailTitle.length
+                    ? "Cue B"
+                    : cueButtons[1].name,
+                position:
+                  trackDataFile.length || trackListDetailTitle.length ? 0 : cueButtons[1].position,
+              },
+              {
+                flag:
+                  trackDataFile.length || trackListDetailTitle.length ? false : cueButtons[2].flag,
+                name:
+                  trackDataFile.length || trackListDetailTitle.length
+                    ? "Cue C"
+                    : cueButtons[2].name,
+                position:
+                  trackDataFile.length || trackListDetailTitle.length ? 0 : cueButtons[2].position,
+              },
+              {
+                flag:
+                  trackDataFile.length || trackListDetailTitle.length ? false : cueButtons[3].flag,
+                name:
+                  trackDataFile.length || trackListDetailTitle.length
+                    ? "Cue D"
+                    : cueButtons[3].name,
+                position:
+                  trackDataFile.length || trackListDetailTitle.length ? 0 : cueButtons[3].position,
+              },
+              {
+                flag:
+                  trackDataFile.length || trackListDetailTitle.length ? false : cueButtons[4].flag,
+                name:
+                  trackDataFile.length || trackListDetailTitle.length
+                    ? "Cue E"
+                    : cueButtons[4].name,
+                position:
+                  trackDataFile.length || trackListDetailTitle.length ? 0 : cueButtons[4].position,
+              },
+            ],
+          }),
+        });
+      }
+    } catch (error: any) {
+      console.log(error);
+    } finally {
+      if (projectSettingsModalFlag) {
+        dispatch(hideLoadingFullScreen());
+        dispatch(inactiveProjectSettingsModalFlag());
+        dispatch(hideModalProjectSettings());
+        dispatch(hideOverlay());
+        dispatch(setProjectSettingsTitle(modalProjectSettingsProjectTitle));
+      }
+    }
+  };
+
   const onPressSubmit = async () => {
     try {
       if (!uid) return;
       const docRef = doc(db, "users", uid);
+      setDisabled(true);
 
       // MyProjectsからのモーダル表示の処理
       if (myProjectsModalFlag) {
@@ -179,8 +403,6 @@ const HorizontalButtonList = (props: Props) => {
 
         // 削除するトラックデータに紐づいているプロジェクトデータを更新
         myProjectsItems.filter(async (items: any, index: number) => {
-          console.log(items.trackTitle);
-          console.log(items.trackTitle === trackListDetail.trackTitle);
           if (items.trackTitle === trackListDetail.trackTitle) {
             await updateDoc(docRef, {
               myProjectsData: arrayRemove({
@@ -208,7 +430,7 @@ const HorizontalButtonList = (props: Props) => {
       }
 
       // EditProjectからのモーダル表示の処理
-      if (editProjectModalFlag) {
+      if (editProjectModalFlag && !projectSettingsModalFlag) {
         console.log("editProjectModalFlag!");
         await updateDoc(docRef, {
           myProjectsData: arrayRemove({ ...initialMyProjectData }),
@@ -216,6 +438,12 @@ const HorizontalButtonList = (props: Props) => {
         await updateDoc(docRef, {
           myProjectsData: arrayUnion({ ...setTextValueMyProjectData }),
         });
+      }
+
+      // ProjectSettingsModalからのモーダル表示の処理
+      if (!editProjectModalFlag && projectSettingsModalFlag) {
+        console.log("projectSettingsModalFlag!");
+        await saveProjectSettings();
       }
     } catch (error: any) {
       console.log(error);
@@ -241,6 +469,7 @@ const HorizontalButtonList = (props: Props) => {
         dispatch(setCueE([{ flag: false }, { name: "" }, { position: 0 }]));
         props.navigation.navigate("MainTabBar");
       }
+      setDisabled(false);
     }
   };
 
@@ -250,20 +479,35 @@ const HorizontalButtonList = (props: Props) => {
     dispatch(hideCenterModal());
     if (myProjectsModalFlag) dispatch(inactiveMyProjectsModalFlag());
     if (trackListModalFlag) dispatch(inactiveTrackListModalFlag());
+    if (projectSettingsModalFlag) {
+      dispatch(hideCenterModalProjectSettings());
+      dispatch(hideLoadingFullScreen());
+      dispatch(inactiveProjectSettingsModalFlag());
+    }
   };
+
+  const buttonYesStyle = styles.buttonYes;
+
+  const buttonCancelStyle = styles.buttonCancel;
 
   return (
     <View style={styles.container}>
       <View style={styles.border}></View>
       <View style={styles.item}>
-        <TouchableOpacity onPress={onPressSubmit}>
-          <Text style={styles.buttonYes}>{centerModalSubmitTextState}</Text>
-        </TouchableOpacity>
+        <ButtonPlain
+          styles={buttonYesStyle}
+          onPressEvent={onPressSubmit}
+          disabled={disabled}
+          text={centerModalSubmitTextState}
+        />
       </View>
       <View style={styles.item}>
-        <TouchableOpacity onPress={onPressCancel}>
-          <Text style={styles.buttonCancel}>Cancel</Text>
-        </TouchableOpacity>
+        <ButtonPlain
+          styles={buttonCancelStyle}
+          onPressEvent={onPressCancel}
+          disabled={disabled}
+          text="Cancel"
+        />
       </View>
     </View>
   );
