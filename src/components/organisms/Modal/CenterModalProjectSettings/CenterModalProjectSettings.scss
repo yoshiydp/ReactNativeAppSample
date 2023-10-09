@@ -1,0 +1,40 @@
+@use "src/globalStyles/" as g;
+
+.container {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  min-width: 280px;
+  min-height: 100px;
+  padding: 0 32px;
+  background: g.colors(white, base);
+  border-radius: 10px;
+}
+
+%title {
+  font-size: 18px;
+  font-weight: bold;
+  text-align: center;
+}
+
+.title {
+  padding-top: 24px;
+  font-size: 18px;
+  @extend %title;
+}
+
+.dataTitle {
+  padding: 2px 4px;
+  margin-top: 12px;
+  overflow: hidden;
+  font-family: g.$font-dm-serif-display;
+  background: g.colors(gray, type4);
+  border-radius: 5px;
+  @extend %title;
+}
+
+.notes {
+  margin-top: 12px;
+  font-size: 10px;
+  text-align: center;
+}

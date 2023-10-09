@@ -1,6 +1,7 @@
 import { configureStore } from "@reduxjs/toolkit";
 import { useSelector as rawUseSelector, TypedUseSelectorHook } from "react-redux";
 import centerModalReducer from "./CenterModalSlice";
+import centerModalProjectSettingsReducer from "./CenterModalProjectSettingsSlice";
 import cueButtonsReducer from "./CueButtonsSlice";
 import editCueNameTextFieldReducer from "./EditCueNameTextFieldSlice";
 import editProjectModalFlagReducer from "./EditProjectModalFlagSlice";
@@ -14,6 +15,7 @@ import myProjectsModalFlagReducer from "./MyProjectsModalFlagSlice";
 import newProjectReducer from "./NewProjectSlice";
 import overlayReducer from "./OverlaySlice";
 import projectSettingsReducer from "./ProjectSettingsSlice";
+import projectSettingsModalFlagReducer from "./ProjectSettingsModalFlagSlice";
 import subscribeReducer from "./SubscribeSlice";
 import textEditorReducer from "./TextEditorSlice";
 import trackListDetailReducer from "./TrackListDetailSlice";
@@ -23,6 +25,7 @@ import trackListModalFlagReducer from "./TrackListModalFlagSlice";
 export const store = configureStore({
   reducer: {
     centerModal: centerModalReducer,
+    centerModalProjectSettings: centerModalProjectSettingsReducer,
     cueButtons: cueButtonsReducer,
     editCueNameTextField: editCueNameTextFieldReducer,
     editProjectModalFlag: editProjectModalFlagReducer,
@@ -36,6 +39,7 @@ export const store = configureStore({
     newProject: newProjectReducer,
     overlay: overlayReducer,
     projectSettings: projectSettingsReducer,
+    projectSettingsModalFlag: projectSettingsModalFlagReducer,
     subscribe: subscribeReducer,
     textEditor: textEditorReducer,
     trackListDetail: trackListDetailReducer,

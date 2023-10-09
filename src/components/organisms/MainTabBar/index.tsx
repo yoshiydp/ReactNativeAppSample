@@ -18,7 +18,7 @@ import MyAccountScreen from "screens/MyAccount";
 
 // Components
 import MainTabMenu from "components/organisms/MainTabMenu";
-import CenterModal from "components/organisms/CenterModal";
+import CenterModal from "components/organisms/Modal/CenterModal";
 import Overlay from "components/atoms/Overlay";
 import Icon from "components/atoms/Icon";
 
