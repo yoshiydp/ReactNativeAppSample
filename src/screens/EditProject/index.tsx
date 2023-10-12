@@ -653,7 +653,6 @@ const EditProject = (props: Props) => {
     const docSnap = await getDoc(docRef);
     if (docSnap.exists()) {
       const trackListData = docSnap.data().trackListData;
-      console.log("trackListData: ", trackListData);
       const sorted = trackListData.sort((a: any, b: any) => {
         a = a.trackTitle.toString().toLowerCase();
         b = b.trackTitle.toString().toLowerCase();
