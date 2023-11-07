@@ -214,12 +214,29 @@ const HorizontalButtonList = (props: Props) => {
             console.log(error);
           });
         await updateDoc(doc(db, "users", uid), {
-          trackListData: arrayUnion({
-            trackDataPath: trackDataDownloadUrl ? trackDataDownloadUrl : "",
-            trackTitle: trackDataFile[0]?.name,
+          trackListData: arrayRemove({
+            trackDataPath: myProjectsDetail.trackDataPath,
+            trackTitle: myProjectsDetail.trackTitle,
             artistName: "",
-            artWorkPath: artWorkDownloadUrl ? artWorkDownloadUrl : "",
-            linkedMyProjects: [{ projectTitle }],
+            artWorkPath: myProjectsDetail.artWorkPath,
+            linkedMyProjects: [{ projectTitle: myProjectsDetail.projectTitle }],
+          }),
+        });
+        await updateDoc(doc(db, "users", uid), {
+          trackListData: arrayUnion({
+            trackDataPath: trackDataDownloadUrl
+              ? trackDataDownloadUrl
+              : myProjectsDetail.trackDataPath,
+            trackTitle: trackDataFile.length ? trackDataFile[0]?.name : myProjectsDetail.trackTitle,
+            artistName: "",
+            artWorkPath: artWorkDownloadUrl ? artWorkDownloadUrl : myProjectsDetail.artWorkPath,
+            linkedMyProjects: [
+              {
+                projectTitle: modalProjectSettingsProjectTitle.length
+                  ? modalProjectSettingsProjectTitle
+                  : myProjectsDetail.projectTitle,
+              },
+            ],
           }),
         });
       }
