@@ -32,6 +32,7 @@ import ButtonPlain from "components/atoms/ButtonPlain";
 
 // Interfaces
 import { SetCueActivityType } from "interfaces/cueButtonsInterface";
+import { TrackListDetailType } from "interfaces/trackListInterface";
 
 // Styles
 import styles from "./HorizontalButtonList.scss";
@@ -74,7 +75,6 @@ const HorizontalButtonList = (props: Props) => {
   );
   const [disabled, setDisabled] = useState<boolean>(false);
   const [isPlayerInitialized, setIsPlayerInitialized] = useState<boolean | undefined>(false);
-  const [projectTitle, setProjectTitle] = useState<string>("");
   const [start, setStart] = useState<boolean>(true);
   const [pause, setPause] = useState<boolean>(false);
   const [cueActivity, setCueActivity] = useState<SetCueActivityType>({ flag: false, name: "" });
@@ -213,14 +213,13 @@ const HorizontalButtonList = (props: Props) => {
           .catch((error) => {
             console.log(error);
           });
-        await updateDoc(doc(db, "users", uid), {
-          trackListData: arrayRemove({
-            trackDataPath: myProjectsDetail.trackDataPath,
-            trackTitle: myProjectsDetail.trackTitle,
-            artistName: "",
-            artWorkPath: myProjectsDetail.artWorkPath,
-            linkedMyProjects: [{ projectTitle: myProjectsDetail.projectTitle }],
-          }),
+        trackListItems.filter(async (item: TrackListDetailType) => {
+          if (item.trackTitle === trackDataFile[0]?.name) {
+            console.log("item: ", item);
+            await updateDoc(doc(db, "users", uid), {
+              trackListData: arrayRemove(item),
+            });
+          }
         });
         await updateDoc(doc(db, "users", uid), {
           trackListData: arrayUnion({
@@ -449,7 +448,7 @@ const HorizontalButtonList = (props: Props) => {
         });
 
         // 削除するプロジェクトに紐づいているトラックデータのlinkedMyProjectsを更新
-        trackListItems.filter(async (items: any, index: number) => {
+        trackListItems.filter(async (items: any) => {
           await items.linkedMyProjects.some(async (linkedMyProjects: any) => {
             if (linkedMyProjects.projectTitle === myProjectsDetail.projectTitle) {
               await updateDoc(docRef, {
@@ -461,7 +460,6 @@ const HorizontalButtonList = (props: Props) => {
                   linkedMyProjects: [{ projectTitle: myProjectsDetail.projectTitle }],
                 }),
               });
-
               await updateDoc(docRef, {
                 trackListData: arrayUnion({
                   trackDataPath: items.trackDataPath,
@@ -516,7 +514,7 @@ const HorizontalButtonList = (props: Props) => {
       }
 
       // EditProjectからのモーダル表示の処理
-      if (editProjectModalFlag && !projectSettingsModalFlag) {
+      if (editProjectModalFlag) {
         console.log("editProjectModalFlag!");
         await updateDoc(docRef, {
           myProjectsData: arrayRemove({ ...initialMyProjectData }),
@@ -527,7 +525,7 @@ const HorizontalButtonList = (props: Props) => {
       }
 
       // ProjectSettingsModalからのモーダル表示の処理
-      if (!editProjectModalFlag && projectSettingsModalFlag) {
+      if (projectSettingsModalFlag) {
         console.log("projectSettingsModalFlag!");
         await saveProjectSettings();
       }
