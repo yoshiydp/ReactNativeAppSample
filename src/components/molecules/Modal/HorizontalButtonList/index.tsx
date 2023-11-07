@@ -188,7 +188,6 @@ const HorizontalButtonList = (props: Props) => {
         await getDownloadURL(ref(storage, uid + "/artworks/" + artWork[0]?.fileName))
           .then((url) => {
             artWorkDownloadUrl = url;
-            // setProjectSettingsArtWorkUrl(url);
             console.log("artWorkDownloadUrl: " + artWorkDownloadUrl);
             dispatch(setProjectSettingsArtWorkPath(artWorkDownloadUrl));
             console.log("modalProjectSettingsArtWorkPath: ", modalProjectSettingsArtWorkPath);
@@ -215,12 +214,29 @@ const HorizontalButtonList = (props: Props) => {
             console.log(error);
           });
         await updateDoc(doc(db, "users", uid), {
-          trackListData: arrayUnion({
-            trackDataPath: trackDataDownloadUrl ? trackDataDownloadUrl : "",
-            trackTitle: trackDataFile[0]?.name,
+          trackListData: arrayRemove({
+            trackDataPath: myProjectsDetail.trackDataPath,
+            trackTitle: myProjectsDetail.trackTitle,
             artistName: "",
-            artWorkPath: artWorkDownloadUrl ? artWorkDownloadUrl : "",
-            linkedMyProjects: [{ projectTitle }],
+            artWorkPath: myProjectsDetail.artWorkPath,
+            linkedMyProjects: [{ projectTitle: myProjectsDetail.projectTitle }],
+          }),
+        });
+        await updateDoc(doc(db, "users", uid), {
+          trackListData: arrayUnion({
+            trackDataPath: trackDataDownloadUrl
+              ? trackDataDownloadUrl
+              : myProjectsDetail.trackDataPath,
+            trackTitle: trackDataFile.length ? trackDataFile[0]?.name : myProjectsDetail.trackTitle,
+            artistName: "",
+            artWorkPath: artWorkDownloadUrl ? artWorkDownloadUrl : myProjectsDetail.artWorkPath,
+            linkedMyProjects: [
+              {
+                projectTitle: modalProjectSettingsProjectTitle.length
+                  ? modalProjectSettingsProjectTitle
+                  : myProjectsDetail.projectTitle,
+              },
+            ],
           }),
         });
       }
@@ -340,6 +356,76 @@ const HorizontalButtonList = (props: Props) => {
       console.log(error);
     } finally {
       if (projectSettingsModalFlag) {
+        dispatch(
+          setMyProjectsDetail({
+            projectTitle: modalProjectSettingsProjectTitle,
+            lyric: textEditorValue,
+            trackDataPath: trackDataDownloadUrl
+              ? trackDataDownloadUrl
+              : trackListDetailDataPath
+              ? trackListDetailDataPath
+              : myProjectsDetail.trackDataPath,
+            trackTitle: trackDataFile.length
+              ? trackDataFile[0]?.name
+              : trackListDetailTitle.length
+              ? trackListDetailTitle
+              : myProjectsDetail.trackTitle,
+            artistName: "",
+            artWorkPath: artWorkDownloadUrl ? artWorkDownloadUrl : myProjectsDetail.artWorkPath,
+            cueButtons: [
+              {
+                flag:
+                  trackDataFile.length || trackListDetailTitle.length ? false : cueButtons[0].flag,
+                name:
+                  trackDataFile.length || trackListDetailTitle.length
+                    ? "Cue A"
+                    : cueButtons[0].name,
+                position:
+                  trackDataFile.length || trackListDetailTitle.length ? 0 : cueButtons[0].position,
+              },
+              {
+                flag:
+                  trackDataFile.length || trackListDetailTitle.length ? false : cueButtons[1].flag,
+                name:
+                  trackDataFile.length || trackListDetailTitle.length
+                    ? "Cue B"
+                    : cueButtons[1].name,
+                position:
+                  trackDataFile.length || trackListDetailTitle.length ? 0 : cueButtons[1].position,
+              },
+              {
+                flag:
+                  trackDataFile.length || trackListDetailTitle.length ? false : cueButtons[2].flag,
+                name:
+                  trackDataFile.length || trackListDetailTitle.length
+                    ? "Cue C"
+                    : cueButtons[2].name,
+                position:
+                  trackDataFile.length || trackListDetailTitle.length ? 0 : cueButtons[2].position,
+              },
+              {
+                flag:
+                  trackDataFile.length || trackListDetailTitle.length ? false : cueButtons[3].flag,
+                name:
+                  trackDataFile.length || trackListDetailTitle.length
+                    ? "Cue D"
+                    : cueButtons[3].name,
+                position:
+                  trackDataFile.length || trackListDetailTitle.length ? 0 : cueButtons[3].position,
+              },
+              {
+                flag:
+                  trackDataFile.length || trackListDetailTitle.length ? false : cueButtons[4].flag,
+                name:
+                  trackDataFile.length || trackListDetailTitle.length
+                    ? "Cue E"
+                    : cueButtons[4].name,
+                position:
+                  trackDataFile.length || trackListDetailTitle.length ? 0 : cueButtons[4].position,
+              },
+            ],
+          })
+        );
         dispatch(hideLoadingFullScreen());
         dispatch(inactiveProjectSettingsModalFlag());
         dispatch(hideModalProjectSettings());
