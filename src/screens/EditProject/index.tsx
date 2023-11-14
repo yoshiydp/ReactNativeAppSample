@@ -933,12 +933,12 @@ const EditProject = (props: Props) => {
         trackListDetailTitle.length
       ) {
         // 編集前の現在のプロジェクトデータを削除
-        updateDoc(docRef, {
+        await updateDoc(docRef, {
           myProjectsData: arrayRemove({ ...myProjectsDetail }),
         });
 
         // 編集後のプロジェクトデータを追加
-        updateDoc(docRef, {
+        await updateDoc(docRef, {
           myProjectsData: arrayUnion({
             projectTitle: modalProjectSettingsProjectTitle,
             lyric: textEditorValue,
@@ -1004,6 +1004,93 @@ const EditProject = (props: Props) => {
                     : cueButtons[4].name,
                 position:
                   trackDataFile.length || trackListDetailTitle.length ? 0 : cueButtons[4].position,
+              },
+            ],
+          }),
+        });
+      }
+
+      // 変更前のtrackListDataを削除
+      console.log("trackListData arrayRemove");
+      await updateDoc(docRef, {
+        trackListData: arrayRemove({
+          trackDataPath: myProjectsDetail.trackDataPath,
+          trackTitle: myProjectsDetail.trackTitle,
+          artistName: "",
+          artWorkPath: myProjectsDetail.artWorkPath,
+          linkedMyProjects: [
+            {
+              projectTitle: myProjectsDetail.projectTitle,
+            },
+          ],
+        }),
+      });
+
+      // trackDataFileもしくはtrackListDetailTitleを変更したときにtrackListDataを新規追加
+      if (trackDataFile.length || trackListDetailTitle.length) {
+        console.log("trackDataFile.length || trackListDetailTitle.length updateDoc");
+        // プロジェクトからトラックデータが移行された場合に、変更前のトラックデータにprojectTitleをnullにした場合のtrackListDataを新規追加
+        await updateDoc(docRef, {
+          trackListData: arrayUnion({
+            trackDataPath: myProjectsDetail.trackDataPath,
+            trackTitle: myProjectsDetail.trackTitle,
+            artistName: "",
+            artWorkPath: myProjectsDetail.artWorkPath,
+            linkedMyProjects: [
+              {
+                projectTitle: "",
+              },
+            ],
+          }),
+        });
+
+        await updateDoc(docRef, {
+          trackListData: arrayUnion({
+            trackDataPath: trackDataDownloadUrl
+              ? trackDataDownloadUrl
+              : trackListDetailDataPath
+              ? trackListDetailDataPath
+              : myProjectsDetail.trackDataPath,
+            trackTitle: trackDataFile.length
+              ? trackDataFile[0]?.name
+              : trackListDetailTitle.length
+              ? trackListDetailTitle
+              : myProjectsDetail.trackTitle,
+            artistName: "",
+            artWorkPath: artWorkDownloadUrl ? artWorkDownloadUrl : myProjectsDetail.artWorkPath,
+            linkedMyProjects: [
+              {
+                projectTitle: modalProjectSettingsProjectTitle.length
+                  ? modalProjectSettingsProjectTitle
+                  : myProjectsDetail.projectTitle
+                  ? myProjectsDetail.projectTitle
+                  : "",
+              },
+            ],
+          }),
+        });
+      }
+
+      // アートワークもしくはプロジェクトタイトルのみ変更した場合の処理
+      if (
+        (artWork.length || modalProjectSettingsProjectTitle.length) &&
+        !trackDataFile.length &&
+        !trackListDetailTitle.length
+      ) {
+        console.log("only artWork projectTitle updateDoc");
+        await updateDoc(docRef, {
+          trackListData: arrayUnion({
+            trackDataPath: myProjectsDetail.trackDataPath,
+            trackTitle: myProjectsDetail.trackTitle,
+            artistName: "",
+            artWorkPath: artWorkDownloadUrl ? artWorkDownloadUrl : myProjectsDetail.artWorkPath,
+            linkedMyProjects: [
+              {
+                projectTitle: modalProjectSettingsProjectTitle.length
+                  ? modalProjectSettingsProjectTitle
+                  : myProjectsDetail.projectTitle
+                  ? myProjectsDetail.projectTitle
+                  : "",
               },
             ],
           }),
