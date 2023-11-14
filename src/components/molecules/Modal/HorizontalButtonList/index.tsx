@@ -172,13 +172,13 @@ const HorizontalButtonList = (props: Props) => {
     }
   };
 
+  let artWorkDownloadUrl: string;
+  let trackDataDownloadUrl: string;
+
   // ModalProjectSettingsの編集を保存する
   const saveProjectSettings = async () => {
     // プロジェクトタイトルが未入力の場合は以下を実行不可とする
     if (!modalProjectSettingsProjectTitle) return;
-
-    let artWorkDownloadUrl;
-    let trackDataDownloadUrl;
 
     try {
       dispatch(hideCenterModalProjectSettings());
@@ -219,24 +219,54 @@ const HorizontalButtonList = (props: Props) => {
             await updateDoc(doc(db, "users", uid), {
               trackListData: arrayRemove(item),
             });
+            await updateDoc(doc(db, "users", uid), {
+              trackListData: arrayUnion({
+                trackDataPath: trackDataDownloadUrl
+                  ? trackDataDownloadUrl
+                  : myProjectsDetail.trackDataPath,
+                trackTitle: trackDataFile.length
+                  ? trackDataFile[0]?.name
+                  : myProjectsDetail.trackTitle,
+                artistName: "",
+                artWorkPath: artWorkDownloadUrl ? artWorkDownloadUrl : myProjectsDetail.artWorkPath,
+                linkedMyProjects: [
+                  {
+                    projectTitle: modalProjectSettingsProjectTitle.length
+                      ? modalProjectSettingsProjectTitle
+                      : myProjectsDetail.projectTitle,
+                  },
+                ],
+              }),
+            });
+          } else {
+            console.log("not item");
+            await updateDoc(doc(db, "users", uid), {
+              trackListData: arrayRemove({
+                trackDataPath: myProjectsDetail.trackDataPath,
+                trackTitle: myProjectsDetail.trackTitle,
+                artistName: "",
+                artWorkPath: myProjectsDetail.artWorkPath,
+                linkedMyProjects: [
+                  {
+                    projectTitle: myProjectsDetail.projectTitle,
+                  },
+                ],
+              }),
+            });
+            await updateDoc(doc(db, "users", uid), {
+              trackListData: arrayUnion({
+                trackDataPath: myProjectsDetail.trackDataPath,
+                trackTitle: myProjectsDetail.trackTitle,
+                artistName: "",
+                artWorkPath: myProjectsDetail.artWorkPath,
+                linkedMyProjects: [
+                  {
+                    projectTitle: "",
+                  },
+                ],
+              }),
+            });
           }
-        });
-        await updateDoc(doc(db, "users", uid), {
-          trackListData: arrayUnion({
-            trackDataPath: trackDataDownloadUrl
-              ? trackDataDownloadUrl
-              : myProjectsDetail.trackDataPath,
-            trackTitle: trackDataFile.length ? trackDataFile[0]?.name : myProjectsDetail.trackTitle,
-            artistName: "",
-            artWorkPath: artWorkDownloadUrl ? artWorkDownloadUrl : myProjectsDetail.artWorkPath,
-            linkedMyProjects: [
-              {
-                projectTitle: modalProjectSettingsProjectTitle.length
-                  ? modalProjectSettingsProjectTitle
-                  : myProjectsDetail.projectTitle,
-              },
-            ],
-          }),
         });
       }
 
